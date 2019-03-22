@@ -1,15 +1,21 @@
 {
-    "defaultSeverity": "error",
-    "extends": [
-        "tslint:recommended"
-    ],
-    "linterOptions": {
-        "exclude": [
-            "config/**/*.js",
-            "node_modules/**/*.ts"
-        ]
-    },
-    "jsRules": {},
-    "rules": {},
-    "rulesDirectory": []
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended"
+  ],
+  "linterOptions": {
+    "exclude": [
+      "config/**/*.js",
+      "node_modules/**/*.ts"
+    ]
+  },
+  "jsRules": {},
+  "rules": {
+    "quotemark": [ true, "single", "jsx-double" ],
+    "member-access": [ true, "check-accessor" ],
+    "ordered-imports": false,
+    "interface-name": [true, "never-prefix"],
+    "object-literal-sort-keys": false
+  },
+  "rulesDirectory": []
 }
