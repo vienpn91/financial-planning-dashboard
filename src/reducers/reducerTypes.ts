@@ -1,5 +1,5 @@
-import { AppState } from './app';
-import {Action, ReducersMapObject} from 'redux';
+import { AuthState } from './auth';
+import { Action, ReducersMapObject } from 'redux';
 
 export interface StandardAction<T> {
   type: string;
@@ -9,7 +9,7 @@ export interface StandardAction<T> {
 }
 
 export interface RootState {
-  readonly app: AppState;
+  readonly auth: AuthState;
 }
 
 export type Reducers = ReducersMapObject<RootState>;
@@ -23,6 +23,7 @@ export type MetaAction<Type, Meta, Error> = Action<Type> & {
   error?: Error;
 };
 
-export type PayloadAction<Type, Payload, Meta = void, Error = void> = MetaAction<Type, Meta, Error> & {
+export type PayloadAction<Type, Payload, Meta = void, Error = void> =
+  MetaAction<Type, Meta, Error> & {
   readonly payload: Payload;
 };

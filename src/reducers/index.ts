@@ -2,7 +2,7 @@ import { persistCombineReducers } from 'redux-persist';
 import { Reducer, ReducersMapObject, Store } from 'redux';
 import storage from 'redux-persist/lib/storage';
 
-import AppReducer from './app';
+import AuthReducer from './auth';
 import { Reducers, LoadedState, LoadedReducers } from './reducerTypes';
 
 const config = {
@@ -11,14 +11,10 @@ const config = {
   whitelist: [],
 };
 
-// const reducerMap: ReducersMapObject = {
-//   app: AppReducer.reducer,
-// };
-
 let asyncReducers: LoadedReducers = {};
 export const createRootReducer = (): Reducer<LoadedState> => {
   const initialReducers: ReducersMapObject = {
-    app: AppReducer.reducer,
+    auth: AuthReducer.reducer,
     ...asyncReducers,
   } as Reducers;
   return persistCombineReducers(config, initialReducers);
