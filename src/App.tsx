@@ -5,9 +5,14 @@ import { ThemeProvider } from 'styled-components';
 
 import theme from './common/themes';
 
+import configureStore from './stores/configureStore';
+
+// Import layouts
+import MainLayout from './layouts/MainLayout';
+
+// Import Pages
 import { Home } from './pages';
 
-import configureStore from './stores/configureStore';
 export const store = configureStore();
 
 const AppRouter = (): JSX.Element => {
@@ -15,10 +20,12 @@ const AppRouter = (): JSX.Element => {
     <ThemeProvider theme={theme}>
       <Provider store={store}>
         <Router>
-          <Switch>
-            <Route path="/" exact component={Home} />
-            {/*<Route path="/sign-in" exact component={} />*/}
-          </Switch>
+          <MainLayout>
+            <Switch>
+              <Route path="/" exact component={Home} />
+              {/*<Route path="/sign-in" exact component={} />*/}
+            </Switch>
+          </MainLayout>
         </Router>
       </Provider>
     </ThemeProvider>
