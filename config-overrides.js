@@ -61,6 +61,13 @@ const overrideAntTheme = addLessLoader({
     '@menu-dark-submenu-bg': '#000c17',
     '@menu-dark-highlight-color': '#fff',
     '@menu-dark-item-active-bg': '@primary-color',
+
+    '@btn-primary-bg': '#192a6f99',
+    '@btn-primary-color': '#fff',
+    '@btn-shadow': '0 5px 16 0px rgba(2, 3, 31, 0.23)',
+    '@btn-primary-shadow': '0 5px 16px 0px rgba(2, 3, 31, 0.23)',
+    '@btn-text-shadow': '0 -1px 0 rgba(0, 0, 0, 0.12)',
+    '@btn-disable-border': '#192a6f99',
   },
 });
 
