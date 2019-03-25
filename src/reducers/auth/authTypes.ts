@@ -7,7 +7,7 @@ export interface AuthState {
   error?: boolean;
   token: Map<string, any>;
 
-  [ propsName: string ]: any;
+  [propsName: string]: any;
 }
 
 export const defaultAuthState = {
