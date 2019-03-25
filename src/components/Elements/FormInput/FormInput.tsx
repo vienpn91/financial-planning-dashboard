@@ -3,7 +3,7 @@ import { Field, FieldProps } from 'formik';
 import { Input } from 'antd';
 
 type InputProps = {
-  type: string;
+  type: InputType;
   title?: string;
   name: string;
 } & typeof defaultProps;
@@ -11,10 +11,7 @@ const defaultProps = {
   title: '',
 };
 
-enum InputTypes {
-  text = 'text',
-  password = 'password',
-}
+declare type InputType = 'text' | 'email' | 'password' | 'checkbox' |  'dropdown';
 
 type CustomProps = InputProps & FieldProps<any>;
 
