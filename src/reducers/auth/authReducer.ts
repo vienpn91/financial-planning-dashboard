@@ -5,7 +5,7 @@ import { AuthStateRecord, AuthState, defaultAuthState, AuthActionTypes } from '.
 import { StandardAction } from '../reducerTypes';
 
 export default class AuthReducer {
-  public static reducer: Reducer<AuthState> = (
+  public static reducer: Reducer<AuthState, StandardAction<any>> = (
     state: AuthState = AuthReducer.initialState, action: StandardAction<any>)
     : AuthState => {
     switch (action.type) {
