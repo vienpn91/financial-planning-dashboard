@@ -1099,6 +1099,10 @@
     "@types/unist" "*"
     "@types/vfile-message" "*"
 
+"@types/yup@^0.26.12":
+  version "0.26.12"
+  resolved "https://registry.yarnpkg.com/@types/yup/-/yup-0.26.12.tgz#60fc1a485923a929699d2107fac46e6769707c4a"
+
 "@typescript-eslint/eslint-plugin@^1.5.0":
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-1.5.0.tgz#85c509bcfc2eb35f37958fa677379c80b7a8f66f"
