@@ -1,4 +1,5 @@
 import React from 'react';
+import * as Yup from 'yup';
 import { Row, Col, Form, Button } from 'antd';
 import { LoginFormWrap } from './styled';
 import Input from '../Input/Input';
@@ -8,8 +9,11 @@ import { Formik, Form as Formk, FormikActions } from 'formik';
 
 interface LoginFormValues {
   email: string;
-  password: string;
 }
+
+const CheckEmailSchema = Yup.object().shape({
+  email: Yup.string().required('Enter an email'),
+});
 
 const LoginForm = () => {
   const [step, setStep] = React.useState(1);
@@ -26,8 +30,8 @@ const LoginForm = () => {
               alert(JSON.stringify(values, null, 2));
               actions.setSubmitting(false);
             }}
-            initialValues={{ email: '', password: '' }}
-            // validationSchema={LogInSchema}
+            initialValues={{ email: '' }}
+            validationSchema={CheckEmailSchema}
             enableReinitialize
           >
             <Formk className="login-form">
