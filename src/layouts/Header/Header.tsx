@@ -1,5 +1,6 @@
 import React from 'react';
-import { Layout, Menu } from 'antd';
+import { Layout, Icon, Avatar } from 'antd';
+import { InputSearch, TopSearch, TopMenu, MenuItem } from './styled';
 
 const AntHeader = Layout.Header;
 
@@ -7,17 +8,17 @@ class Header extends React.PureComponent {
   public render(): JSX.Element {
     return (
       <AntHeader className="header">
-        <div className="logo" />
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={[ '2' ]}
-          style={{ lineHeight: '64px' }}
-        >
-          <Menu.Item key="1">nav 1</Menu.Item>
-          <Menu.Item key="2">nav 2</Menu.Item>
-          <Menu.Item key="3">nav 3</Menu.Item>
-        </Menu>
+        <TopMenu>
+          <MenuItem key="1">
+            <TopSearch>
+              <Icon type="search" />
+              <InputSearch placeholder="Search Here" />
+            </TopSearch>
+          </MenuItem>
+          <MenuItem key="2">
+            <Avatar size={32} icon="user" />
+          </MenuItem>
+        </TopMenu>
       </AntHeader>
     );
   }
