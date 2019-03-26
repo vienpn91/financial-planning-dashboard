@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import { Field, FieldProps } from 'formik';
-import { Form, Input, InputNumber, Checkbox, Icon, Select } from 'antd';
-const { TextArea } = Input;
+import { Form, InputNumber, Checkbox, Icon, Select } from 'antd';
+// const { TextArea } = Input;
+import Input from '../../Input/Input';
 
 interface InputProps {
   type: InputType;
@@ -65,12 +66,9 @@ class FormInput extends PureComponent<InputProps, {}> {
 
     return (
       <Form.Item validateStatus={errorMsg ? 'error' : ''} help={errorMsg || ''}>
-        <Select
-          {...field}
-          {...restProps}
-          onChange={(newValue: any) => setFieldValue(field.name, newValue)}
-        >
-          {options && options.length > 0 &&
+        <Select {...field} {...restProps} onChange={(newValue: any) => setFieldValue(field.name, newValue)}>
+          {options &&
+            options.length > 0 &&
             options.map((option) => (
               <Select.Option value={option.value} key={option.value}>
                 {option.label}
