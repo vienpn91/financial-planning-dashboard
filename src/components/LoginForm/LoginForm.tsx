@@ -32,6 +32,7 @@ const LoginForm = () => {
           >
             <Formk className="login-form">
               <FormInput type="text" name="email" placeholder={'Email'} />
+              <FormInput type="password" name="password" placeholder={'Pasword'} />
               <Form.Item>
                 <Button
                   size={'large'}
