@@ -1,15 +1,20 @@
 import React from 'react';
-import Yup from 'yup';
+import * as Yup from 'yup';
 import _ from 'lodash';
-import { Formik, Form as Formk, FormikActions, Field } from 'formik';
+import { withFormik, Formik, Form as Formk, FormikActions } from 'formik';
 import { FormInput } from '../../components/Elements/index';
-import { Icon, Button, Form } from 'antd';
+import { Icon, Button } from 'antd';
 import { Link } from 'react-router-dom';
 
 interface LoginFormValues {
   email: string;
   password: string;
 }
+
+// const LogInSchema = Yup.object().shape({
+//   email: Yup.string().email('Invalid email').required('Required'),
+//   password: Yup.string().required('Require'),
+// });
 
 class Home extends React.PureComponent {
   public render(): JSX.Element {
@@ -25,7 +30,7 @@ class Home extends React.PureComponent {
             actions.setSubmitting(false);
           }}
           initialValues={{ email: '', password: '' }}
-          // validationSchema={NewEventFormSchema}
+          // validationSchema={LogInSchema}
           enableReinitialize
         >
           <Formk>
@@ -37,15 +42,15 @@ class Home extends React.PureComponent {
               prefix={<Icon type="lock" theme="filled" />}
             />
             <FormInput type="checkbox" name="checkbox" placeholder="Remember me" />
-            <Form.Item>
-              <Link to="/#forgot-password">Forgot Password</Link>
-            </Form.Item>
-            <FormInput type="number" name="quantity" placeholder="Quantiy" min={0} max={10} />
-            <FormInput type="select" name="select" placeholder="Select" showSearch={true} options={options} />
-            {/* <FormInput type="date" name="date" placeholder="Date" /> */}
-            {/* <FormInput type="textarea" name="textarea" placeholder="Text Area" /> */}
-            {/* <Field name="email" component={InputField} prefix={<Icon type="mail" theme="filled" />} />  */}
-            <Button type="primary">Log In</Button>
+            <Link to="/#forgot-password">Forgot Password</Link>
+            <Button type="primary" htmlType="submit">
+              Log In
+            </Button>
+
+            <div>
+              <FormInput type="number" name="quantity" placeholder="Quantiy" min={0} max={10} />
+              <FormInput type="select" name="select" placeholder="Select" showSearch={true} options={options} />
+            </div>
           </Formk>
         </Formik>
       </div>
