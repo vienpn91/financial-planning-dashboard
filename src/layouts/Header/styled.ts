@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Input, Menu } from 'antd';
+import { Input } from 'antd';
 
 export const TopMenu = styled.div`
   display: flex;

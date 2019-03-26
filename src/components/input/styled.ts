@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Input } from 'antd';
 
-export const InputWrapper= styled.div`
+export const InputWrapper = styled.div`
   position: relative;
 `;
 
@@ -17,7 +17,7 @@ export const InputLogin = styled(Input)`
   }
   &:focus{
     outline: none;
-    transition: all ease 300ms;
+    transition: all ease 200ms;
     box-shadow: none;
     border-color: rgb(116, 126, 169);
     & + span{
@@ -35,7 +35,7 @@ export const InputLogin = styled(Input)`
 
 export const InputLabel = styled.span`
   position: absolute;
-  transition: all ease 300ms;
+  transition: all ease 200ms;
   font-size: 16px;
   background: transparent;
   left: 20px;

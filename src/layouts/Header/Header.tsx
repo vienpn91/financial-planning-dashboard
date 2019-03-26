@@ -1,8 +1,5 @@
 import React from 'react';
-import { Layout, Icon } from 'antd';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
-
+import { Layout, Icon, Avatar } from 'antd';
 import { InputSearch, TopSearch, TopMenu, MenuItem } from './styled';
 
 const AntHeader = Layout.Header;
@@ -19,7 +16,7 @@ class Header extends React.PureComponent {
             </TopSearch>
           </MenuItem>
           <MenuItem key="2">
-            <FontAwesomeIcon icon={faUserCircle} size="lg" />
+            <Avatar size={32} icon="user" />
           </MenuItem>
         </TopMenu>
       </AntHeader>

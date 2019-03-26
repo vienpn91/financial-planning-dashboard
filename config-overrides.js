@@ -43,7 +43,6 @@ const overrideAntTheme = addLessLoader({
     '@layout-trigger-color-light': '@text-color',
     '@font-family': 'Nunito Sans',
 
-
     '@menu-inline-toplevel-item-height': '40px',
     '@menu-item-height': '40px',
     '@menu-collapsed-width': '80px',

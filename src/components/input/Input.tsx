@@ -1,12 +1,16 @@
 import React from 'react';
 import { InputWrapper, InputLogin, InputLabel } from './styled';
 
-class Input extends React.PureComponent {
+export interface InputProps {
+  placeholder?: string;
+}
+class Input extends React.PureComponent<InputProps> {
   public render(): JSX.Element {
+    const { placeholder } = this.props;
     return (
       <InputWrapper>
         <InputLogin />
-        <InputLabel>Username</InputLabel>
+        <InputLabel>{placeholder}</InputLabel>
       </InputWrapper>
     );
   }

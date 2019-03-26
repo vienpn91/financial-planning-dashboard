@@ -1,7 +1,8 @@
 import React from 'react';
 import { Row, Col, Form, Button } from 'antd';
-import { LoginFormWrap, TitleLogin } from './styled';
-import Input from '../../components/input/Input';
+import { LoginFormWrap } from './styled';
+import Input from '../Input/Input';
+import Heading from '../Heading/Heading';
 
 class LoginForm extends React.PureComponent {
   public render(): JSX.Element {
@@ -9,10 +10,10 @@ class LoginForm extends React.PureComponent {
       <LoginFormWrap>
         <Row gutter={16}>
           <Col xs={{ span: 16, offset: 1 }} lg={{ span: 16, offset: 4}}>
-            <TitleLogin>Sign In</TitleLogin>
+            <Heading titleText={'Sign In'} level={2} className="default" />
             <Form className="login-form">
               <Form.Item>
-                <Input />
+                <Input placeholder={'Username'} />
               </Form.Item>
               <Form.Item>
                 <Button size={'large'} type="primary" htmlType="submit" className="login-form-button">
