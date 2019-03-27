@@ -4,6 +4,7 @@ import { Row, Col, Form, Button } from 'antd';
 import { LoginFormWrap } from './styled';
 import Heading from '../Heading/Heading';
 import { FormInput } from '../Elements';
+import posed, { PoseGroup } from 'react-pose';
 import { Formik, Form as Formk, FormikActions, FormikState } from 'formik';
 
 const sleep = (timeout: number) => {
@@ -13,7 +14,14 @@ const sleep = (timeout: number) => {
     }, timeout);
   });
 };
-
+const EmailAnimation = posed.div({
+  enter: { left: 0, position: 'relative' },
+  exit: { left: -500, position: 'relative' },
+});
+const PasswordAnimation = posed.div({
+  enter: { left: 0, position: 'relative' },
+  exit: { left: 500, position: 'relative' },
+});
 interface LoginFormValues {
   email: string;
   password: string;
@@ -42,7 +50,7 @@ const LoginForm: React.FC = () => {
   return (
     <LoginFormWrap>
       <Row gutter={16}>
-        <Col xs={{ span: 16, offset: 1 }} lg={{ span: 16, offset: 4 }}>
+        <Col xs={{ span: 18, offset: 3 }} lg={{ span: 18, offset: 3 }}>
           <Heading titleText={'Sign In'} level={2} className="default" />
           <Formik
             onSubmit={(values: LoginFormValues, actions: FormikActions<LoginFormValues>) => {
@@ -63,15 +71,23 @@ const LoginForm: React.FC = () => {
           >
             {(formState: FormikState<LoginFormValues>) => (
               <Formk className="login-form">
-                {step === 1 ? (
-                  <FormInput type="text" name="email" placeholder={'Email'} />
-                ) : (
-                  <FormInput type="password" name="password" placeholder={'Password'} />
-                )}
+                  {step === 1 ? (
+                    <PoseGroup>
+                      <EmailAnimation key="1">
+                        <FormInput type="text" name="email" placeholder={'Email'} />
+                      </EmailAnimation>
+                    </PoseGroup>
+                  ) : (
+                    <PoseGroup>
+                      <PasswordAnimation key="2">
+                        <FormInput type="password" name="password" placeholder={'Password'} />
+                      </PasswordAnimation>
+                    </PoseGroup>
+                  )}
                 <Form.Item>
                   {step === 1 ? (
                     <Button
-                      size={'large'}
+                      size={'default'}
                       type="primary"
                       className="login-form-button"
                       onClick={checkEmail}
@@ -81,13 +97,13 @@ const LoginForm: React.FC = () => {
                       Next
                     </Button>
                   ) : (
-                    <Button size={'large'} type="primary" htmlType="submit" className="login-form-button">
+                    <Button size={'default'} type="primary" htmlType="submit" className="login-form-button">
                       Log In
                     </Button>
                   )}
                   {/* For testing transition form */}
                   <Button
-                    size={'large'}
+                    size={'default'}
                     type="primary"
                     className="login-form-button"
                     onClick={() => setStep((prevStep) => prevStep - 1)}
