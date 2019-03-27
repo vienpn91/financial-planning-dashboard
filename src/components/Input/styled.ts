@@ -19,7 +19,7 @@ const generalInput = css`
   }
 `;
 
-export const InputLabel = styled.span`
+export const InputLabel = styled.p`
   position: absolute;
   transition: all ease 200ms;
   font-size: 16px;
@@ -32,32 +32,23 @@ export const InputLabel = styled.span`
 
 export const InputWrapper = styled.div`
   position: relative;
+  margin-bottom: 10px;
+  input:not([value=""]) {
+    & + p {
+      top: -10px;
+      font-size: 14px;
+      background: #fff;
+      height: 20px;
+      line-height: 20px;
+      z-index: 1;
+      padding: 0px 10px;
+      left: 10px;
+    }
+  }
   input{
     ${generalInput};
     &:focus {
-      & + span {
-        top: -10px;
-        font-size: 14px;
-        background: #fff;
-        height: 20px;
-        line-height: 20px;
-        z-index: 1;
-        padding: 0px 10px;
-        left: 10px;k
-      }
-    }
-  }
-`;
-
-export const InputLogin = styled(Input)``;
-
-export const PasswordWrapper = styled.div`
-  position: relative;
-  input {
-    ${generalInput};
-    padding: 0 30px 0 20px;
-    &:focus {
-      .title {
+      & + p {
         top: -10px;
         font-size: 14px;
         background: #fff;
@@ -71,5 +62,56 @@ export const PasswordWrapper = styled.div`
   }
 `;
 
-export const PasswordLogin = styled(Input.Password)`
+export const InputLogin = styled(Input)``;
+
+export const PasswordWrapper = styled.div`
+  position: relative;
+  margin-bottom: 10px;
+  .title{
+    display: none;
+  }
+  input {
+    ${generalInput};
+    z-index: 2;
+    padding: 0 30px 0 20px;
+
+    &:focus {
+      & + span {
+        &:after{
+          top: -26px;
+          padding: 0px 10px;
+          right: 292px;
+        }
+      }
+    }
+    &:not([value=""]) {
+      & + span {
+        &:after{
+          top: -26px;
+          padding: 0px 10px;
+          right: 292px;
+        }
+      }
+    }
+  }
+`;
+
+export const PasswordLogin = styled(Input.Password).attrs({
+  className: 'password',
+  })`
+  & > span{
+    &:after{
+     content:'Password';
+      top: -3px;
+      font-size: 14px;
+      position: absolute;
+      transition: all ease 200ms;
+      background: #fff;
+      height: 20px;
+      line-height: 20px;
+      color: #b9bdcd;
+      z-index: -1;
+      right: 300px
+    }
+  }
 `;

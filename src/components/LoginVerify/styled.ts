@@ -15,7 +15,7 @@ export const LoginVerifyWrap = styled.section`
       margin-top: 10px;
       float: right;
       margin-bottom: 30px;
-      margin-left : 8px;
+      margin-left : 10px;
     }
     .verify-form{
       display: flex;

@@ -8,9 +8,13 @@ export const LoginFormWrap = styled.section`
     overflow: hidden;
     width: 534px;
     border-radius: 10px;
+    .ant-btn-primary[disabled]{
+      border: none;
+    }
     .login-form-button{
       margin-top: 10px;
       float: right;
+      margin-left : 10px;
       margin-bottom: 30px;
     }
 `;

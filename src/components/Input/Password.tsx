@@ -10,8 +10,8 @@ class Password extends React.PureComponent<InputProps> {
     const { placeholder, ...props } = this.props;
     return (
       <PasswordWrapper>
-        <PasswordLogin {...props} />
         <InputLabel className="title">{placeholder}</InputLabel>
+        <PasswordLogin {...props} />
       </PasswordWrapper>
     );
   }
