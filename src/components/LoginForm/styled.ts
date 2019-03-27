@@ -1,5 +1,5 @@
 
-import styled,{ keyframes } from 'styled-components';
+import styled from 'styled-components';
 
 export const LoginFormWrap = styled.section`
     position: relative;
@@ -8,11 +8,9 @@ export const LoginFormWrap = styled.section`
     overflow: hidden;
     width: 534px;
     border-radius: 10px;
-
     .login-form-button{
       margin-top: 10px;
       float: right;
       margin-bottom: 30px;
-      margin-left : 8px;
     }
 `;

@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Field, FieldProps } from 'formik';
-import { Form, InputNumber, Checkbox, Icon, Select } from 'antd';
-// const { TextArea } = Input;
-import Input from '../../Input/Input';
+import { Form, InputNumber, Checkbox, Select } from 'antd';
+import { Input, Password } from '../../Input';
 
 interface InputProps {
   type: InputType;
@@ -34,10 +33,11 @@ class FormInput extends PureComponent<InputProps, {}> {
     const { field, form, ...restProps } = props;
     const { touched, errors } = form;
     const errorMsg = touched[field.name] && errors[field.name];
+    const InputComponent = restProps.type === 'password' ? Password : Input;
 
     return (
       <Form.Item validateStatus={errorMsg ? 'error' : ''} help={errorMsg || ''}>
-        <Input {...field} {...restProps} />
+        <InputComponent {...field} {...restProps} />
       </Form.Item>
     );
   }
