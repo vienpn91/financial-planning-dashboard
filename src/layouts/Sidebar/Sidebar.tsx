@@ -1,38 +1,89 @@
 import React from 'react';
-import { Layout, Menu, Icon } from 'antd';
+import { Menu, Icon, Layout, Avatar} from 'antd';
 
-const { SubMenu } = Menu;
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
 const { Sider } = Layout;
+import { ClientInfo, FullName, ClientItem, StatusList, StatusItem, DateItem, StatusTags, ClientSide } from './styled';
+
+/* ClientItem
+*    ClientInfo
+*      Avatar
+*      Full Name
+*
+*    StatusList
+*      StatusItem
+*      StatusItem
+*      StatusItem
+*/
 
 class Sidebar extends React.PureComponent {
+  public state = {
+    collapsed: false,
+  };
+  public toggleCollapsed = () => {
+    this.setState({
+      collapsed: !this.state.collapsed,
+    });
+  }
   public render(): JSX.Element {
     return (
-      <Sider width={200} style={{ background: '#fff' }}>
-        <Menu
+      <Sider width={295} trigger={null} collapsible collapsed={this.state.collapsed}>
+        <Icon
+          className="trigger IconSider"
+          type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
+          onClick={this.toggleCollapsed}
+        />
+        <ClientSide
+          defaultSelectedKeys={['1']}
+          defaultOpenKeys={['sub1']}
           mode="inline"
-          defaultSelectedKeys={[ '1' ]}
-          defaultOpenKeys={[ 'sub1' ]}
-          style={{ height: '100%', borderRight: 0 }}
         >
-          <SubMenu key="sub1" title={<span><Icon type="user" />subnav 1</span>}>
-            <Menu.Item key="1">option1</Menu.Item>
-            <Menu.Item key="2">option2</Menu.Item>
-            <Menu.Item key="3">option3</Menu.Item>
-            <Menu.Item key="4">option4</Menu.Item>
-          </SubMenu>
-          <SubMenu key="sub2" title={<span><Icon type="laptop" />subnav 2</span>}>
-            <Menu.Item key="5">option5</Menu.Item>
-            <Menu.Item key="6">option6</Menu.Item>
-            <Menu.Item key="7">option7</Menu.Item>
-            <Menu.Item key="8">option8</Menu.Item>
-          </SubMenu>
-          <SubMenu key="sub3" title={<span><Icon type="notification" />subnav 3</span>}>
-            <Menu.Item key="9">option9</Menu.Item>
-            <Menu.Item key="10">option10</Menu.Item>
-            <Menu.Item key="11">option11</Menu.Item>
-            <Menu.Item key="12">option12</Menu.Item>
-          </SubMenu>
-        </Menu>
+          <ClientItem
+            key="sub1"
+            title = {
+              <ClientInfo>
+                <Avatar
+                  size={46}
+                  style={{ color: '#fff', backgroundColor: '#3B415C' }}>
+                  JS
+                </Avatar>
+                <FullName>John Samual</FullName>
+              </ClientInfo>
+            }
+          >
+            <StatusList key="1">
+              <StatusItem>
+                <DateItem>15/03/2018</DateItem>
+                <StatusTags tagName="position">Position</StatusTags>
+              </StatusItem>
+            </StatusList>
+            <StatusList key="2">
+              <StatusItem>
+                <DateItem>23/02/2017</DateItem>
+                <StatusTags tagName="strategy">Strategy</StatusTags>
+              </StatusItem>
+            </StatusList>
+            <StatusList key="3">
+              <StatusItem>
+                <DateItem>23/02/2017</DateItem>
+                <StatusTags tagName="products">Products</StatusTags>
+              </StatusItem>
+            </StatusList>
+            <StatusList key="4">
+              <StatusItem>
+                <DateItem>23/02/2017</DateItem>
+                <StatusTags tagName="advice">Advice</StatusTags>
+              </StatusItem>
+            </StatusList>
+            <StatusList key="5">
+              <StatusItem>
+                <DateItem>23/02/2017</DateItem>
+                <StatusTags tagName="done">Done</StatusTags>
+              </StatusItem>
+            </StatusList>
+          </ClientItem>
+        </ClientSide>
       </Sider>
     );
   }

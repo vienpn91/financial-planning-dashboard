@@ -1,11 +1,15 @@
 import React from 'react';
+import { Layout } from 'antd';
+import { HomePage } from './styled';
 
+const { Content } = Layout;
 class Home extends React.PureComponent {
   public render(): JSX.Element {
     return (
-      <div>
-        Homepage
-      </div>
+      <HomePage>
+        <Content>
+        </Content>
+      </HomePage>
     );
   }
 }

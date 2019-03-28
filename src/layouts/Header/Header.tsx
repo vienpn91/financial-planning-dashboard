@@ -8,7 +8,7 @@ class Header extends React.PureComponent {
   public render(): JSX.Element {
     return (
       <AntHeader className="header">
-        <TopMenu>
+        <TopMenu className="topmenu">
           <MenuItem key="1">
             <TopSearch>
               <Icon type="search" />

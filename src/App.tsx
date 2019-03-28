@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch, RouteComponentProps } from 'rea
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 
-import theme from './common/themes';
+import { myTheme } from './common/themes';
 
 import configureStore from './stores/configureStore';
 
@@ -40,16 +40,16 @@ const PrivateRoute: React.SFC<DefaultProps> = (props) => {
 
   return (
     <Route {...rest} render={(matchProps: RouteComponentProps) => (
-      <LoginLayout>
+      <MainLayout>
         <Component {...matchProps}/>
-      </LoginLayout>
+      </MainLayout>
     )} />
   );
 };
 
 const AppRouter = (): JSX.Element => {
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={myTheme}>
       <Provider store={store}>
         <Router>
           <Switch>

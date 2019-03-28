@@ -13,9 +13,13 @@ export const LoginVerifyWrap = styled.section`
     }
     .login-form-button{
       margin-top: 10px;
+      box-shadow: 0 3px 7px -2px rgba(0, 0, 0, 0.5);
       float: right;
-      margin-bottom: 30px;
+      width: 76px;
+      height: 32px;
+      border: none;
       margin-left : 10px;
+      margin-bottom: 30px;
     }
     .verify-form{
       display: flex;
