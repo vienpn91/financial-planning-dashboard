@@ -72,11 +72,12 @@ export const PasswordWrapper = styled.div`
   }
   input {
     ${generalInput};
-    z-index: 2;
+    z-index: 9;
     padding: 0 30px 0 20px;
 
     &:focus {
       & + span {
+        z-index: 10;
         &:after{
           top: -26px;
           padding: 0px 10px;
@@ -86,6 +87,7 @@ export const PasswordWrapper = styled.div`
     }
     &:not([value=""]) {
       & + span {
+        z-index: 10;
         &:after{
           top: -26px;
           padding: 0px 10px;

@@ -1,11 +1,11 @@
 {
   "plugins": [
     [
-      "import",
+      "babel-plugin-styled-components",
       {
-        "libraryName": "antd",
-        "libraryDirectory": "es",
-        "style": "css"
+        "displayName": true,
+        "fileName": true,
+        "ssr": false
       }
     ]
   ]

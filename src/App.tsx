@@ -40,9 +40,9 @@ const PrivateRoute: React.SFC<DefaultProps> = (props) => {
 
   return (
     <Route {...rest} render={(matchProps: RouteComponentProps) => (
-      <LoginLayout>
+      <MainLayout>
         <Component {...matchProps}/>
-      </LoginLayout>
+      </MainLayout>
     )} />
   );
 };

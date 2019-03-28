@@ -1,4 +1,4 @@
-const { override, fixBabelImports, addLessLoader } = require('customize-cra');
+const { override, fixBabelImports, addLessLoader, useBabelRc } = require('customize-cra');
 
 const babelConfig = fixBabelImports('import', {
   libraryName: 'antd',
@@ -73,4 +73,4 @@ const overrideAntTheme = addLessLoader({
   },
 });
 
-module.exports = override(babelConfig, overrideAntTheme);
+module.exports = override(babelConfig, overrideAntTheme, useBabelRc());
