@@ -9,11 +9,14 @@ export const LoginFormWrap = styled.section`
     width: 534px;
     border-radius: 10px;
     .ant-btn-primary[disabled]{
-      border: none;
     }
     .login-form-button{
       margin-top: 10px;
+      box-shadow: 0 3px 7px -2px rgba(0, 0, 0, 0.5);
       float: right;
+      width: 76px;
+      border: none;
+      height: 32px;
       margin-left : 10px;
       margin-bottom: 30px;
     }

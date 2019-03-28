@@ -1,9 +1,21 @@
 import React from 'react';
-import { Menu, Icon, Layout} from 'antd';
+import { Menu, Icon, Layout, Avatar} from 'antd';
 
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 const { Sider } = Layout;
+import { ClientInfo, FullName, ClientItem, StatusList, StatusItem, DateItem, StatusTags, ClientSide } from './styled';
+
+/* ClientItem
+*    ClientInfo
+*      Avatar
+*      Full Name
+*
+*    StatusList
+*      StatusItem
+*      StatusItem
+*      StatusItem
+*/
 
 class Sidebar extends React.PureComponent {
   public state = {
@@ -16,42 +28,62 @@ class Sidebar extends React.PureComponent {
   }
   public render(): JSX.Element {
     return (
-      <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
-         <Icon
-              className="trigger"
-              type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-              onClick={this.toggleCollapsed}
-            />
-        <Menu
+      <Sider width={295} trigger={null} collapsible collapsed={this.state.collapsed}>
+        <Icon
+          className="trigger IconSider"
+          type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
+          onClick={this.toggleCollapsed}
+        />
+        <ClientSide
           defaultSelectedKeys={['1']}
           defaultOpenKeys={['sub1']}
           mode="inline"
         >
-          <SubMenu key="sub1" title={<span><Icon type="mail" /><span>Navigation One</span></span>}>
-            <MenuItemGroup key="g1" title="Item 1">
-              <Menu.Item key="1">Option 1</Menu.Item>
-              <Menu.Item key="2">Option 2</Menu.Item>
-            </MenuItemGroup>
-            <MenuItemGroup key="g2" title="Item 2">
-              <Menu.Item key="3">Option 3</Menu.Item>
-              <Menu.Item key="4">Option 4</Menu.Item>
-            </MenuItemGroup>
-          </SubMenu>
-          <SubMenu key="sub2" title={<span><Icon type="appstore" /><span>Navigation Two</span></span>}>
-            <Menu.Item key="5">Option 5</Menu.Item>
-            <Menu.Item key="6">Option 6</Menu.Item>
-            <SubMenu key="sub3" title="Submenu">
-              <Menu.Item key="7">Option 7</Menu.Item>
-              <Menu.Item key="8">Option 8</Menu.Item>
-            </SubMenu>
-          </SubMenu>
-          <SubMenu key="sub4" title={<span><Icon type="setting" /><span>Navigation Three</span></span>}>
-            <Menu.Item key="9">Option 9</Menu.Item>
-            <Menu.Item key="10">Option 10</Menu.Item>
-            <Menu.Item key="11">Option 11</Menu.Item>
-            <Menu.Item key="12">Option 12</Menu.Item>
-          </SubMenu>
-        </Menu>
+          <ClientItem
+            key="sub1"
+            title = {
+              <ClientInfo>
+                <Avatar
+                  size={46}
+                  style={{ color: '#fff', backgroundColor: '#3B415C' }}>
+                  JS
+                </Avatar>
+                <FullName>John Samual</FullName>
+              </ClientInfo>
+            }
+          >
+            <StatusList key="1">
+              <StatusItem>
+                <DateItem>15/03/2018</DateItem>
+                <StatusTags tagName="position">Position</StatusTags>
+              </StatusItem>
+            </StatusList>
+            <StatusList key="2">
+              <StatusItem>
+                <DateItem>23/02/2017</DateItem>
+                <StatusTags tagName="strategy">Strategy</StatusTags>
+              </StatusItem>
+            </StatusList>
+            <StatusList key="3">
+              <StatusItem>
+                <DateItem>23/02/2017</DateItem>
+                <StatusTags tagName="products">Products</StatusTags>
+              </StatusItem>
+            </StatusList>
+            <StatusList key="4">
+              <StatusItem>
+                <DateItem>23/02/2017</DateItem>
+                <StatusTags tagName="advice">Advice</StatusTags>
+              </StatusItem>
+            </StatusList>
+            <StatusList key="5">
+              <StatusItem>
+                <DateItem>23/02/2017</DateItem>
+                <StatusTags tagName="done">Done</StatusTags>
+              </StatusItem>
+            </StatusList>
+          </ClientItem>
+        </ClientSide>
       </Sider>
     );
   }
