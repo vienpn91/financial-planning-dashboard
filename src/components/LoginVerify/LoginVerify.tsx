@@ -1,6 +1,6 @@
 import React, { createRef } from 'react';
 import { Row, Col, Form, Button, Icon } from 'antd';
-import { LoginVerifyWrap, SubHeading, ResendCode } from './styled';
+import { LoginVerifyWrap, ResendCode, ButtonVerify } from './styled';
 import Heading from '../Heading/Heading';
 import { FormInput } from '../Elements';
 import { get, every } from 'lodash-es';
@@ -56,70 +56,64 @@ const LoginVerify: React.FC<LoginVerifyProp> = ({
 
   return (
     <LoginVerifyWrap>
-      <Row gutter={16}>
-        <Col xs={{ span: 16, offset: 1 }} lg={{ span: 20, offset: 2 }}>
-          <Heading titleText={'Just one more step'} level={2} className="default" />
-          <SubHeading>Enter the code sent to {phone}</SubHeading>
-          <div className="verify-form">
-            <FormInput
-              type="text"
-              name="code[0]"
-              autoFocus
-              maxLength={1}
-              onKeyUp={(e, value) => onKeyUp(e, value, code2)}
-              useNumberOnly
-              ref={code1}
-            />
-            <FormInput
-              type="text"
-              name="code[1]"
-              maxLength={1}
-              onKeyUp={(e, value) => onKeyUp(e, value, code3, code1)}
-              useNumberOnly
-              ref={code2}
-            />
-            <FormInput
-              type="text"
-              name="code[2]"
-              maxLength={1}
-              onKeyUp={(e, value) => onKeyUp(e, value, code4, code2)}
-              useNumberOnly
-              ref={code3}
-            />
-            <FormInput
-              type="text"
-              name="code[3]"
-              maxLength={1}
-              onKeyUp={(e, value) => onKeyUp(e, value, undefined, code3)}
-              useNumberOnly
-              ref={code4}
-            />
-            <div className="otp-error has-error">
-              <div className="ant-form-explain">{error}</div>
-            </div>
-            <ResendCode>
-              <Icon type="exclamation-circle" theme="filled" />
-              <span>Didn’t receive the code? </span>
-              <a href="#">Resend</a>
-            </ResendCode>
-            <Form.Item>
-              <Button
-                size={'large'}
-                type="primary"
-                htmlType="submit"
-                className="login-form-button"
-                disabled={loading || !isFullFilledCode}
-                loading={loading}
-              >
-                Submit
-              </Button>
-              <Button size={'large'} type="default" className="login-form-button">
-                Cancel
-              </Button>
-            </Form.Item>
-          </div>
-        </Col>
-      </Row>
+      <div className="verify-form">
+        <FormInput
+          type="text"
+          name="code[0]"
+          autoFocus
+          maxLength={1}
+          onKeyUp={(e, value) => onKeyUp(e, value, code2)}
+          useNumberOnly
+          ref={code1}
+        />
+        <FormInput
+          type="text"
+          name="code[1]"
+          maxLength={1}
+          onKeyUp={(e, value) => onKeyUp(e, value, code3, code1)}
+          useNumberOnly
+          ref={code2}
+        />
+        <FormInput
+          type="text"
+          name="code[2]"
+          maxLength={1}
+          onKeyUp={(e, value) => onKeyUp(e, value, code4, code2)}
+          useNumberOnly
+          ref={code3}
+        />
+        <FormInput
+          type="text"
+          name="code[3]"
+          maxLength={1}
+          onKeyUp={(e, value) => onKeyUp(e, value, undefined, code3)}
+          useNumberOnly
+          ref={code4}
+        />
+        <div className="otp-error has-error">
+          <div className="ant-form-explain">{error}</div>
+        </div>
+        <ResendCode>
+          <Icon type="exclamation-circle" theme="filled" />
+          <span>Didn’t receive the code? </span>
+          <a href="#">Resend</a>
+        </ResendCode>
+        <Form.Item>
+          <ButtonVerify
+            size={'large'}
+            type="primary"
+            htmlType="submit"
+            className="login-form-button"
+            disabled={loading || !isFullFilledCode}
+            loading={loading}
+          >
+            Submit
+          </ButtonVerify>
+          <ButtonVerify size={'large'} type="default" className="login-form-button">
+            Cancel
+          </ButtonVerify>
+        </Form.Item>
+      </div>
     </LoginVerifyWrap>
   );
 };

@@ -2,7 +2,8 @@ import * as React from 'react';
 import { FormInput } from '../Elements';
 import { FormikProps } from 'formik';
 import { LoginFormValues } from './LoginForm';
-import { Button, Form } from 'antd';
+import { Form } from 'antd';
+import { ButtonSignIn } from './styled';
 
 const Page1: React.FC<{
   loading: boolean;
@@ -20,12 +21,12 @@ const Page1: React.FC<{
   return (
     <>
       <FormInput type="text" name="email" placeholder="Email" autoFocus={true} onPressEnter={nextPage} />
-      <div className="has-error">
-        <div className="ant-form-explain">{error}</div>
-      </div>
+        <div className="has-error">
+          <div className="ant-form-explain">{error}</div>
+        </div>
 
       <Form.Item>
-        <Button
+        <ButtonSignIn
           size={'large'}
           type="primary"
           className="login-form-button"
@@ -34,7 +35,7 @@ const Page1: React.FC<{
           disabled={Boolean(formProps.errors.email || !formProps.values.email)}
         >
           Next
-        </Button>
+        </ButtonSignIn>
       </Form.Item>
     </>
   );

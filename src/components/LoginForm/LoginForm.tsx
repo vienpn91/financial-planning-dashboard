@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import { connect } from 'react-redux';
 import { RootState, StandardAction } from '../../reducers/reducerTypes';
 import { Row, Col } from 'antd';
-import { LoginFormWrap } from './styled';
+import { LoginFormWrap, SubHeading } from './styled';
 import Heading from '../Heading/Heading';
 import posed, { PoseGroup } from 'react-pose';
 import { Formik, Form as Formk, FormikActions, FormikProps } from 'formik';
@@ -22,35 +22,31 @@ const delay = (timeout: number) => {
 };
 const EmailAnimation = posed.div({
   enter: {
-    left: 0,
-    position: 'relative',
+    x: 0,
+    transition: { duration: 300 },
   },
   exit: {
-    left: -500,
-    position: 'relative',
+    x: -500,
   },
 });
 const PasswordAnimation = posed.div({
   enter: {
-    left: 0,
-    position: 'relative',
+    x: 0,
+    transition: { duration: 300 },
   },
   exit: {
-    left: ({ isMoveToRight }: { isMoveToRight: boolean }) => {
-      console.log('Move to', isMoveToRight ? 'right' : 'left');
+    x: ({ isMoveToRight }: { isMoveToRight: boolean }) => {
       return isMoveToRight ? 500 : -500;
     },
-    position: 'relative',
   },
 });
 const VerifyCodeAnimation = posed.div({
   enter: {
-    left: 0,
-    position: 'relative',
+    x: 0,
+    transition: { duration: 300 },
   },
   exit: {
-    left: 500,
-    position: 'relative',
+    x: 500,
   },
 });
 
@@ -96,7 +92,18 @@ class LoginForm extends React.PureComponent<LoginProp, LoginState> {
       <LoginFormWrap>
         <Row gutter={16}>
           <Col xs={{ span: 18, offset: 3 }} lg={{ span: 18, offset: 3 }}>
-            <Heading titleText={'Sign In'} level={2} className="default" />
+            {page === 0 && (
+              <Heading titleText={'Sign In'} level={2} className="default" />
+            )}
+            {page === 1 && (
+              <Heading titleText={'Sign In'} level={2} className="default" />
+            )}
+            {page === 2 && (
+              <div>
+                <Heading titleText={'Just one more step'} level={2} className="subHeading" />
+                <SubHeading>Enter the code sent to {'+61XXXX4286'}</SubHeading>
+              </div>
+            )}
             <Formik
               onSubmit={(values: LoginFormValues, actions: FormikActions<LoginFormValues>) => {
                 this.setLoading(true);
