@@ -1,5 +1,4 @@
 import styled, { StyledComponent, StyledFunction } from 'styled-components';
-import { Button } from 'antd';
 interface SelectProps {
   readonly select: string;
 }
@@ -21,16 +20,7 @@ export const HomePage = styled.div<SelectProps>`
       margin-bottom: 10px!important;
     }
 `;
-export const ButtonModalFixed = styled(Button).attrs({
-  className : 'btn-modal-fixed',
-})`
-  width: 52px!important;
-  height: 52px!important;;
-  font-size: 19px;
-  position: fixed;
-  bottom: 47px;
-  right: 47px;
-`;
+
 export const HomeDesc = styled.span`
   font-size: 22px;
   color: #515c83;
