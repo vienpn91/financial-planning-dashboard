@@ -87,11 +87,6 @@ class Sidebar extends React.PureComponent {
           mode="inline"
         >
           { this.ClientItemRender() }
-          { this.ClientItemRender() }
-          { this.ClientItemRender() }
-          { this.ClientItemRender() }
-          { this.ClientItemRender() }
-          { this.ClientItemRender() }
         </ClientSide>
         <ButtonSideBar size="large" type="primary">
           <Icon type="plus" />

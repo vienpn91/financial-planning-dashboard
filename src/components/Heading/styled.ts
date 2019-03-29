@@ -2,10 +2,10 @@
 import styled, { css } from 'styled-components';
 
 export const HeadingWrapper = styled.section`
-  color: #000;
+  color: #515c83;
   &.default{
     color: #252525;
-  }
+  } 
   .ant-typography{
     font-size: 34px;
     color: inherit;
