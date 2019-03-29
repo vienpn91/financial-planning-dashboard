@@ -1,8 +1,8 @@
-import {persistCombineReducers} from 'redux-persist';
-import {Reducer, ReducersMapObject, Store} from 'redux';
+import { persistCombineReducers } from 'redux-persist';
+import { Reducer, ReducersMapObject, Store } from 'redux';
 import storage from 'redux-persist/lib/storage';
 
-import {Reducers, LoadedState, LoadedReducers} from './reducerTypes';
+import { Reducers, LoadedState, LoadedReducers } from './reducerTypes';
 
 // Import other reducers
 import AuthReducer from './auth';
@@ -10,7 +10,7 @@ import AuthReducer from './auth';
 const config = {
   key: 'root',
   storage,
-  whitelist: []
+  whitelist: [],
 };
 
 let asyncReducers: LoadedReducers = {};
@@ -23,6 +23,6 @@ export const createRootReducer = (): Reducer<LoadedState> => {
 };
 
 export const injectReducer = (store: Store<LoadedState>, reducers: LoadedReducers) => {
-  asyncReducers = {...asyncReducers, ...reducers};
+  asyncReducers = { ...asyncReducers, ...reducers };
   store.replaceReducer(createRootReducer());
 };

@@ -7,7 +7,7 @@ export interface RequestConfig extends AxiosRequestConfig {
 }
 
 class ApiUtils {
-  public static BASE_URL: string = 'http://api.financial/';
+  public static BASE_URL: string = 'https://13.229.27.66/';
   public static API_VERSION_NONE: string = '';
   public static API_VERSION_1: string = 'v1';
   public static API_VERSION_2: string = 'v2';

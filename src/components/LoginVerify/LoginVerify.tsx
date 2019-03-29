@@ -1,58 +1,123 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import { Row, Col, Form, Button, Icon } from 'antd';
 import { LoginVerifyWrap, SubHeading, ResendCode } from './styled';
 import Heading from '../Heading/Heading';
 import { FormInput } from '../Elements';
-import { Formik, Form as Formk, FormikActions } from 'formik';
+import { get, every } from 'lodash-es';
+import { FormikProps } from 'formik';
+import { LoginFormValues } from '../LoginForm/LoginForm';
 
-interface LoginFormValues {
-  email: string;
-  password: string;
+interface LoginVerifyProp {
+  loading: boolean;
+  formProps: FormikProps<LoginFormValues>;
+  phone: string;
+  onSubmit: () => void;
+  error?: string;
 }
 
-const LoginVerify = () => {
+const LoginVerify: React.FC<LoginVerifyProp> = ({
+  loading = false,
+  error,
+  formProps,
+  phone = '+61XXXX4286',
+  onSubmit,
+}) => {
+  const isFullFilledCode =
+    formProps.values.code &&
+    formProps.values.code.length === 4 &&
+    every(formProps.values.code, (code: string) => code && code.length);
+  const onKeyUp = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+    value: string | undefined,
+    nextFocus?: React.RefObject<any>,
+    prevFocus?: React.RefObject<any>,
+  ) => {
+    // "Backspace"
+    if (event.keyCode === 8) {
+      if (prevFocus && get(prevFocus, 'current.myInput.current.myRef.current.focus')) {
+        prevFocus.current.myInput.current.myRef.current.focus();
+      }
+    } else {
+      if (value) {
+        if (nextFocus && get(nextFocus, 'current.myInput.current.myRef.current.focus')) {
+          nextFocus.current.myInput.current.myRef.current.focus();
+        } else {
+          if (isFullFilledCode && !loading) {
+            onSubmit();
+          }
+        }
+      }
+    }
+  };
+  const code1 = createRef<any>();
+  const code2 = createRef<any>();
+  const code3 = createRef<any>();
+  const code4 = createRef<any>();
+
   return (
     <LoginVerifyWrap>
       <Row gutter={16}>
         <Col xs={{ span: 16, offset: 1 }} lg={{ span: 20, offset: 2 }}>
           <Heading titleText={'Just one more step'} level={2} className="default" />
-          <SubHeading>Enter the code sent to +61XXXX4286</SubHeading>
-          <Formik
-            onSubmit={(values: LoginFormValues, actions: FormikActions<LoginFormValues>) => {
-              alert(JSON.stringify(values, null, 2));
-              actions.setSubmitting(false);
-            }}
-            initialValues={{ email: '', password: '' }}
-            enableReinitialize
-          >
-            <Formk className="verify-form">
-              <FormInput type="text" name="number-1" placeholder={''} />
-              <FormInput type="text" name="number-2" placeholder={''} />
-              <FormInput type="text" name="number-3" placeholder={''} />
-              <FormInput type="text" name="number-4" placeholder={''} />
-              <ResendCode>
-                <Icon type="exclamation-circle" theme="filled" />
-                <span>Didn’t receive the code? </span>
-                <a href="#">Resend</a>
-              </ResendCode>
-              <Form.Item>
-                <Button
-                  size={'large'}
-                  type="primary"
-                  className="login-form-button"
-                >
-                  Submit
-                </Button>
-                <Button
-                  size={'large'}
-                  type="default"
-                  className="login-form-button"
-                >
-                  Cancel
-                </Button>
-              </Form.Item>
-            </Formk>
-          </Formik>
+          <SubHeading>Enter the code sent to {phone}</SubHeading>
+          <div className="verify-form">
+            <FormInput
+              type="text"
+              name="code[0]"
+              autoFocus
+              maxLength={1}
+              onKeyUp={(e, value) => onKeyUp(e, value, code2)}
+              useNumberOnly
+              ref={code1}
+            />
+            <FormInput
+              type="text"
+              name="code[1]"
+              maxLength={1}
+              onKeyUp={(e, value) => onKeyUp(e, value, code3, code1)}
+              useNumberOnly
+              ref={code2}
+            />
+            <FormInput
+              type="text"
+              name="code[2]"
+              maxLength={1}
+              onKeyUp={(e, value) => onKeyUp(e, value, code4, code2)}
+              useNumberOnly
+              ref={code3}
+            />
+            <FormInput
+              type="text"
+              name="code[3]"
+              maxLength={1}
+              onKeyUp={(e, value) => onKeyUp(e, value, undefined, code3)}
+              useNumberOnly
+              ref={code4}
+            />
+            <div className="otp-error has-error">
+              <div className="ant-form-explain">{error}</div>
+            </div>
+            <ResendCode>
+              <Icon type="exclamation-circle" theme="filled" />
+              <span>Didn’t receive the code? </span>
+              <a href="#">Resend</a>
+            </ResendCode>
+            <Form.Item>
+              <Button
+                size={'large'}
+                type="primary"
+                htmlType="submit"
+                className="login-form-button"
+                disabled={loading || !isFullFilledCode}
+                loading={loading}
+              >
+                Submit
+              </Button>
+              <Button size={'large'} type="default" className="login-form-button">
+                Cancel
+              </Button>
+            </Form.Item>
+          </div>
         </Col>
       </Row>
     </LoginVerifyWrap>

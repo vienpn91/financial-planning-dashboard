@@ -1,13 +1,22 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, createRef } from 'react';
 import { Field, FieldProps } from 'formik';
-import { Form, InputNumber, Checkbox, Select } from 'antd';
+import { Form, Checkbox, Select, InputNumber } from 'antd';
 import { Input, Password } from '../../Input';
+import { isFunction } from 'lodash-es';
 
 interface InputProps {
   type: InputType;
   name: string;
   placeholder?: string;
   prefix?: React.ReactNode;
+  autoFocus?: boolean;
+  useNumberOnly?: boolean;
+  ref?: React.RefObject<any>;
+  handleChange?: (e: any, name?: string, value?: any) => void;
+  onPressEnter?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  onKeyUp?: (event: React.KeyboardEvent<HTMLInputElement>, value: any) => void;
+  // Input
+  maxLength?: number;
   // Input Number
   min?: number;
   max?: number;
@@ -25,25 +34,36 @@ class FormInput extends PureComponent<InputProps, {}> {
     placeholder: '',
   };
 
+  private myInput = createRef<any>();
+
   public render(): React.ReactNode {
     return <Field {...this.props} component={this.renderFormInput} />;
   }
 
   private renderInputText = (props: CustomProps): React.ReactNode => {
-    const { field, form, ...restProps } = props;
+    const {
+      field,
+      form,
+      ref,
+      ...restProps
+    } = props;
     const { touched, errors } = form;
     const errorMsg = touched[field.name] && errors[field.name];
     const InputComponent = restProps.type === 'password' ? Password : Input;
 
     return (
       <Form.Item validateStatus={errorMsg ? 'error' : ''} help={errorMsg || ''}>
-        <InputComponent {...field} {...restProps} />
+        <InputComponent
+          ref={this.myInput}
+          {...field}
+          {...restProps}
+        />
       </Form.Item>
     );
   }
 
   private renderInputNumber = (props: CustomProps): React.ReactNode => {
-    const { field, form, prefix, type, ...restProps } = props;
+    const { field, form, prefix, type, onKeyUp, handleChange, ...restProps } = props;
     const { touched, errors, setFieldValue } = form;
     const errorMsg = touched[field.name] && errors[field.name];
 
