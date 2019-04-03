@@ -36,12 +36,12 @@ const overrideAntTheme = addLessLoader({
     '@layout-trigger-color': '#fff',
     '@layout-zero-trigger-width': '36px',
     '@layout-zero-trigger-height': '42px',
+    '@font-variant-base': 'tabular-nums',
 
     // Layout light theme
     '@layout-sider-background-light': '#fff',
     '@layout-trigger-background-light': '#fff',
     '@layout-trigger-color-light': '@text-color',
-    '@font-family': 'Nunito Sans',
 
     '@menu-inline-toplevel-item-height': '30px',
     '@menu-item-height': '30px',
