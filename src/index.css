@@ -16,3 +16,27 @@ code {
 .client-item-modify .ant-menu-vertical.ant-menu-sub{
   min-width: 260px;
 }
+.modal-customize .ant-modal-content{
+  border-radius: 10px;
+  padding: 0px 45px;
+}
+.modal-customize .ant-modal-title{
+  font-size: 32px;
+  color: #515c83;
+  text-align: center;
+}
+.modal-customize  .ant-modal-close{
+  display: none;
+}
+.modal-customize .ant-modal-header{
+  padding-top: 55px;
+  border-bottom: none;
+}
+.modal-customize  .ant-modal-footer{
+  border-top: none;
+  padding: 25px 20px 40px;
+}
+.modal-customize  .ant-modal-footer .ant-btn{
+  border: none;
+  margin-left: 20px;
+}

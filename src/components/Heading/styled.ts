@@ -2,14 +2,19 @@
 import styled, { css } from 'styled-components';
 
 export const HeadingWrapper = styled.section`
-  color: #000;
   &.default{
     color: #252525;
+  }
+  &.subHeading{
+    color: #515c83;
+    .ant-typography{
+      margin: 35px 0px 0px 0px;
+    }
   }
   .ant-typography{
     font-size: 34px;
     color: inherit;
     text-align: center;
-    margin: 35px 0px 45px 0px;
+    margin: 35px 0px 35px 0px;
   }
 `;
