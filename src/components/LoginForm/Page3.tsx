@@ -7,12 +7,12 @@ import LoginVerify from '../LoginVerify/LoginVerify';
 
 const Page3: React.FC<{
   loading: boolean;
-  phone?: string;
+  message?: string;
   formProps: FormikProps<LoginFormValues>;
   onSubmit: () => void;
   error?: string;
-}> = ({ loading, formProps, error, onSubmit, phone = '+61XXXX4286' }) => (
-  <LoginVerify loading={loading} error={error} formProps={formProps} phone={phone} onSubmit={onSubmit} />
+}> = ({ loading = false, formProps, error, onSubmit, message = '' }) => (
+  <LoginVerify loading={loading} error={error} formProps={formProps} message={message} onSubmit={onSubmit} />
 );
 
 export default Page3;

@@ -1,7 +1,7 @@
 import { fromJS } from 'immutable';
 import { Reducer } from 'redux';
 
-import { AuthStateRecord, AuthState, defaultAuthState, AuthActionTypes } from './authTypes';
+import { AuthStateRecord, AuthState, defaultAuthState, AuthActionTypes, LoginPayload } from './authTypes';
 import { StandardAction } from '../reducerTypes';
 
 export default class AuthReducer {
@@ -9,14 +9,14 @@ export default class AuthReducer {
     state: AuthState = AuthReducer.initialState, action: StandardAction<any>)
     : AuthState => {
     switch (action.type) {
-      case AuthActionTypes.CHECK_EMAIL_REQUEST:
-      case AuthActionTypes.CHECK_EMAIL_SUCCESS:
-      case AuthActionTypes.CHECK_EMAIL_FAILURE:
-        return AuthReducer.checkEmailHandler(state, action);
-      case AuthActionTypes.AUTH_LOGIN_START:
-      case AuthActionTypes.AUTH_LOGIN_COMPLETED:
-      case AuthActionTypes.AUTH_LOGIN_FAILED:
-        return AuthReducer.loginHandler(state, action);
+      case AuthActionTypes.VERIFY_EMAIL_REQUEST:
+      case AuthActionTypes.VERIFY_EMAIL_SUCCESS:
+      case AuthActionTypes.VERIFY_EMAIL_FAILURE:
+        return AuthReducer.verifyEmailHandler(state, action);
+      case AuthActionTypes.VERIFY_PASSWORD_REQUEST:
+      case AuthActionTypes.VERIFY_PASSWORD_SUCCESS:
+      case AuthActionTypes.VERIFY_PASSWORD_FAILURE:
+        return AuthReducer.verifyPasswordHandler(state, action);
       default:
         return state;
     }
@@ -24,20 +24,20 @@ export default class AuthReducer {
 
   private static readonly initialState = new AuthStateRecord(defaultAuthState);
 
-  private static checkEmailHandler(state: AuthState, action: StandardAction<any>): AuthState {
+  private static verifyEmailHandler(state: AuthState, action: StandardAction<any>): AuthState {
     switch (action.type) {
-      case AuthActionTypes.CHECK_EMAIL_REQUEST:
+      case AuthActionTypes.VERIFY_EMAIL_REQUEST:
         return state
           .set('loading', true)
           .set('error', '');
 
-      case AuthActionTypes.CHECK_EMAIL_SUCCESS:
+      case AuthActionTypes.VERIFY_EMAIL_SUCCESS:
         return state.merge(fromJS({
           loading: false,
-          token: action.payload,
+          page: 2,
         }));
 
-      case AuthActionTypes.CHECK_EMAIL_FAILURE:
+      case AuthActionTypes.VERIFY_EMAIL_FAILURE:
         return state
           .set('loading', false)
           .set('error', action.error);
@@ -47,23 +47,26 @@ export default class AuthReducer {
     }
   }
 
-  private static loginHandler(state: AuthState, action: StandardAction<any>): AuthState {
+  private static verifyPasswordHandler(state: AuthState, action: StandardAction<any>): AuthState {
     switch (action.type) {
-      case AuthActionTypes.AUTH_LOGIN_START:
+      case AuthActionTypes.VERIFY_PASSWORD_REQUEST:
         return state
           .set('loading', true)
-          .set('error', '');
+          .set('error', '')
+          .set('message', '');
 
-      case AuthActionTypes.AUTH_LOGIN_COMPLETED:
+      case AuthActionTypes.VERIFY_PASSWORD_SUCCESS:
         return state.merge(fromJS({
           loading: false,
-          token: action.payload,
+          message: action.payload.message,
+          page: 3,
         }));
 
-      case AuthActionTypes.AUTH_LOGIN_FAILED:
+      case AuthActionTypes.VERIFY_PASSWORD_FAILURE:
         return state
           .set('loading', false)
-          .set('error', action.error);
+          .set('error', action.error)
+          .set('message', '');
 
       default:
         return state;

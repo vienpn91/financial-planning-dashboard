@@ -10,12 +10,12 @@ import {
 import { createPayloadAction } from '../reducerHelpers';
 
 export default class AuthActions {
-  public static checkEmail = (payload: CheckEmailPayload): CheckEmailAction =>
-    createPayloadAction(AuthActionTypes.CHECK_EMAIL_REQUEST, payload)
+  public static verifyEmail = (payload: CheckEmailPayload): CheckEmailAction =>
+    createPayloadAction(AuthActionTypes.VERIFY_EMAIL_REQUEST, payload)
 
-  public static login = (payload: LoginPayload): LoginAction =>
-    createPayloadAction(AuthActionTypes.AUTH_LOGIN_START, payload)
+  public static verifyPassword = (payload: LoginPayload): LoginAction =>
+    createPayloadAction(AuthActionTypes.VERIFY_PASSWORD_REQUEST, payload)
 
   public static loginCompleted = (payload: TokenPayload): TokenAction =>
-    createPayloadAction(AuthActionTypes.AUTH_LOGIN_COMPLETED, payload)
+    createPayloadAction(AuthActionTypes.VERIFY_PASSWORD_SUCCESS, payload)
 }

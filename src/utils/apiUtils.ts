@@ -28,6 +28,7 @@ ApiUtils.HTTP.interceptors.request.use((extendedConfig: RequestConfig) => {
   const config: RequestConfig = Object.assign({}, extendedConfig);
   const accessToken = ApiUtils.getAccessToken() || null;
 
+  config.withCredentials = true;
   config.headers.Authorization = `Bearer ${accessToken}`;
 
   let endPoint;
@@ -38,8 +39,8 @@ ApiUtils.HTTP.interceptors.request.use((extendedConfig: RequestConfig) => {
     case ApiUtils.API_VERSION_NONE:
       endPoint = ApiUtils.BASE_URL.slice(0, ApiUtils.BASE_URL.lastIndexOf('/'));
       break;
-
     case ApiUtils.API_VERSION_1:
+      endPoint = ApiUtils.BASE_URL + ApiUtils.API_VERSION_1;
     default:
       endPoint = ApiUtils.BASE_URL + ApiUtils.API_VERSION_1;
       break;
