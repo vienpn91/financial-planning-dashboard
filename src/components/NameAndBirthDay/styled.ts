@@ -29,7 +29,6 @@ export const ModalFormHome = styled(Form)`
   .ant-form-item-label{
     line-height: 24px;
     label{
-      font-weight: 600;
       font-size: 12px;
       color: #515c83;
     }
