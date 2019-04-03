@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Button, Form } from 'antd';
 
-export const ModalOnHome = styled.section`
+export const ModalNameBirthDay = styled.section`
 `;
 
 export const ButtonModalFixed = styled(Button).attrs({

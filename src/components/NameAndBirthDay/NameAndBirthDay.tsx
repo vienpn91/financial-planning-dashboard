@@ -1,11 +1,11 @@
 import React from 'react';
 import { Modal, Icon, Button, Form, Input, DatePicker } from 'antd';
-import { ModalOnHome, ButtonModalFixed, TitleForm, ModalFormHome } from './styled';
+import { ModalNameBirthDay, ButtonModalFixed, TitleForm, ModalFormHome } from './styled';
 
 const modalStyled = {
  
 }
-class ModalHome extends React.PureComponent {
+class NameAndBirthDay extends React.PureComponent {
   public state = {
     ModalText: 'What’s your name?',
     visible: false,
@@ -38,7 +38,7 @@ class ModalHome extends React.PureComponent {
       rules: [{ type: 'object', required: true, message: 'Please select time!' }],
     };
     return (
-      <ModalOnHome>
+      <ModalNameBirthDay>
         <ButtonModalFixed onClick={this.showModal} size="large" shape="circle" type="primary">
             <Icon type="plus" />
         </ButtonModalFixed>
@@ -73,9 +73,9 @@ class ModalHome extends React.PureComponent {
             </Form.Item>
           </ModalFormHome>
         </Modal>
-      </ModalOnHome>
+      </ModalNameBirthDay>
     );
   }
 }
 
-export default ModalHome;
+export default NameAndBirthDay;
