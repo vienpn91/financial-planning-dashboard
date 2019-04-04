@@ -4,7 +4,14 @@ import { Form as Formk, FormikProps } from 'formik';
 import Page1 from './Page1';
 import Page2 from './Page2';
 import Page3 from './Page3';
-import { CheckEmailAction, CheckEmailPayload, LoginPayload, LoginAction } from '../../reducers/auth';
+import {
+  CheckEmailAction,
+  CheckEmailPayload,
+  LoginPayload,
+  LoginAction,
+  OTPPayload,
+  VerifyOTPAction,
+} from '../../reducers/auth';
 
 const EmailAnimation = posed.div({
   enter: {
@@ -48,8 +55,9 @@ interface LoginProp {
   error?: string;
   message?: string;
   formProps: FormikProps<LoginFormValues>;
-  checkEmailAction: (payload: CheckEmailPayload) => CheckEmailAction;
-  loginAction: (payload: LoginPayload) => LoginAction;
+  verifyEmail: (payload: CheckEmailPayload) => CheckEmailAction;
+  verifyPassword: (payload: LoginPayload) => LoginAction;
+  verifyOTP: (payload: OTPPayload) => VerifyOTPAction;
 }
 
 interface LoginState {
@@ -73,7 +81,7 @@ class LoginWizard extends React.PureComponent<LoginProp, LoginState> {
               <Page1
                 loading={loading}
                 formProps={formProps}
-                onSubmit={() => this.checkEmail(formProps.values.email)}
+                onSubmit={this.verifyEmail}
                 error={error}
               />
             </EmailAnimation>
@@ -83,12 +91,7 @@ class LoginWizard extends React.PureComponent<LoginProp, LoginState> {
               <Page2
                 loading={loading}
                 formProps={formProps}
-                onSubmit={() =>
-                  this.login({
-                    email: formProps.values.email,
-                    password: formProps.values.password,
-                  })
-                }
+                onSubmit={this.verifyPassword}
                 error={error}
               />
             </PasswordAnimation>
@@ -131,17 +134,23 @@ class LoginWizard extends React.PureComponent<LoginProp, LoginState> {
     this.setState({ isMoveToRight });
   }
 
-  private checkEmail = (email: string) => {
-    const { checkEmailAction } = this.props;
+  private verifyEmail = () => {
+    const { formProps, verifyEmail } = this.props;
+    const {
+      values: { email },
+    } = formProps;
     if (email) {
-      checkEmailAction({ email });
+      verifyEmail({ email });
     }
   }
 
-  private login = ({ email, password }: { email: string; password: string }) => {
-    const { loginAction } = this.props;
+  private verifyPassword = () => {
+    const { formProps, verifyPassword } = this.props;
+    const {
+      values: { email, password },
+    } = formProps;
     if (email && password) {
-      loginAction({ email, password });
+      verifyPassword({ email, password });
     }
   }
 }

@@ -1,22 +1,24 @@
 import React from 'react';
+import { bindActionCreators, Dispatch } from 'redux';
+import { connect } from 'react-redux';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Row, Col } from 'antd';
+
 import { LoginFormWrap } from './styled';
 import Heading from '../Heading/Heading';
 import { Formik, FormikActions } from 'formik';
 import LoginWizard from './LoginWizard';
-import { bindActionCreators, Dispatch } from 'redux';
 import { StandardAction, RootState } from '../../reducers/reducerTypes';
-import { AuthActions, CheckEmailPayload, CheckEmailAction, LoginPayload, LoginAction } from '../../reducers/auth';
-import { connect } from 'react-redux';
-
-const delay = (timeout: number) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve();
-    }, timeout);
-  });
-};
+import {
+  AuthActions,
+  CheckEmailPayload,
+  CheckEmailAction,
+  LoginPayload,
+  LoginAction,
+  OTPPayload,
+  VerifyOTPAction,
+} from '../../reducers/auth';
 
 export interface LoginFormValues {
   email: string;
@@ -37,11 +39,12 @@ interface LoginProp {
   loading?: boolean;
   error?: string;
   message?: string;
-  checkEmailAction: (payload: CheckEmailPayload) => CheckEmailAction;
-  loginAction: (payload: LoginPayload) => LoginAction;
+  verifyEmail: (payload: CheckEmailPayload) => CheckEmailAction;
+  verifyPassword: (payload: LoginPayload) => LoginAction;
+  verifyOTP: (payload: OTPPayload) => VerifyOTPAction;
 }
 
-const LoginForm: React.FC<LoginProp> = (props) => {
+const LoginForm: React.FC<LoginProp & RouteComponentProps> = (props) => {
   return (
     <LoginFormWrap>
       <Row gutter={16}>
@@ -49,11 +52,17 @@ const LoginForm: React.FC<LoginProp> = (props) => {
           {props.page !== 3 && <Heading titleText={'Sign In'} level={2} className="default" />}
           <Formik
             onSubmit={(values: LoginFormValues, actions: FormikActions<LoginFormValues>) => {
-              console.log('Verify code', values);
-
-              delay(500).then(() => {
-                actions.setSubmitting(false);
-              });
+              if (values.code && values.code.length === 4) {
+                props.verifyOTP({
+                  otp: values.code.join(''),
+                  callback: (error) => {
+                    if (!error) {
+                      props.history.push('/');
+                    }
+                    actions.setSubmitting(false);
+                  },
+                });
+              }
             }}
             initialValues={{ email: '', password: '', code: [] }}
             validationSchema={LoginSchema}
@@ -67,17 +76,18 @@ const LoginForm: React.FC<LoginProp> = (props) => {
 };
 
 const mapStateToProps = (state: RootState) => ({
-  page: state.auth.page,
-  loading: state.auth.loading,
-  error: state.auth.error,
-  message: state.auth.message,
+  page: state.auth.get('page'),
+  loading: state.auth.get('loading'),
+  error: state.auth.get('error'),
+  message: state.auth.get('message'),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<StandardAction<any>>) =>
   bindActionCreators(
     {
-      checkEmailAction: AuthActions.verifyEmail,
-      loginAction: AuthActions.verifyPassword,
+      verifyEmail: AuthActions.verifyEmail,
+      verifyPassword: AuthActions.verifyPassword,
+      verifyOTP: AuthActions.verifyOTP,
     },
     dispatch,
   );
@@ -85,4 +95,4 @@ const mapDispatchToProps = (dispatch: Dispatch<StandardAction<any>>) =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(LoginForm);
+)(withRouter(LoginForm));
