@@ -4,10 +4,14 @@ const { Sider } = Layout;
 import { get } from 'lodash-es';
 
 const SubMenu = Menu.SubMenu;
-export const ClientInfo = styled.div``;
+export const ClientInfo = styled.div.attrs({
+  className: 'client-Info',
+})`
+
+`;
 
 export const SiderCollapsible = styled(Sider).attrs({
-  className: 'client-side-modify',
+  className: 'client-side-collapsible',
   })`
   &.ant-layout-sider-collapsed{
     .btn-sidebar{
@@ -23,7 +27,10 @@ export const SiderCollapsible = styled(Sider).attrs({
 `;
 // ant-menu-submenu-open ant-menu-submenu-active
 // aria-owns="sub"
-export const FullName = styled.span`
+export const FullName = styled.span.attrs({
+   className: 'client-full-name',
+})`
+
   font-size: 18px;
   color: #515C83;
   margin-left: 15px;
@@ -32,13 +39,22 @@ export const ClientSide = styled(Menu).attrs({
     className: 'client-side-modify',
   })`
   height: calc(100vh - 90px);
-  overflow-y: scroll;
+  overflow-y: overlay;
   overflow-x: hidden;
   border-right: none!important;
   &.ant-menu-inline-collapsed{
     & > .ant-menu-submenu {
       & > .ant-menu-submenu-title{
         padding: 0px 5px !important;
+        .client-Info{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 70px;
+        }
+        .client-full-name{
+          display: none;
+        }
       }
     }
   }
