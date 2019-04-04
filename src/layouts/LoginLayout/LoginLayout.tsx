@@ -11,7 +11,6 @@ class MainLayout extends React.PureComponent {
 
     return (
       <Layout>
-        <Header />
         <Layout>
           <Content>
             {children}
