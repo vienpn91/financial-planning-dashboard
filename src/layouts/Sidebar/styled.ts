@@ -1,5 +1,5 @@
 import styled, { StyledComponent, StyledFunction, css } from 'styled-components';
-import { Menu, Button, Layout  } from 'antd';
+import { Menu, Button, Layout, Skeleton  } from 'antd';
 const { Sider } = Layout;
 import { get } from 'lodash-es';
 
@@ -139,4 +139,9 @@ export const ButtonSideBar = styled(Button).attrs({
   font-size: 18px;
   display: block;
   margin: 15px auto;
+`;
+export const SkeletonClient = styled(Skeleton).attrs({
+  className : 'Skeleton-Client',
+})`
+  padding: 15px;
 `;

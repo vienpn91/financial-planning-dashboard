@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Avatar } from 'antd';
+import { Skeleton, Icon, Avatar } from 'antd';
 
 import {
   SiderCollapsible,
@@ -11,6 +11,7 @@ import {
   DateItem,
   StatusTags,
   ClientSide,
+  SkeletonClient
 } from './styled';
 import { default as ModalNameAndBirthDay } from '../../components/NameAndBirthDay/NameAndBirthDay';
 
@@ -28,6 +29,7 @@ import { default as ModalNameAndBirthDay } from '../../components/NameAndBirthDa
 class Sidebar extends React.PureComponent {
   public state = {
     collapsed: false,
+    loading: true,
   };
   public toggleCollapsed = () => {
     this.setState({
@@ -35,49 +37,52 @@ class Sidebar extends React.PureComponent {
     });
   }
   public ClientItemRender = () => {
+    const { loading } = this.state;
     return (
-      <ClientItem
-        key="sub1"
-        title={
-          <ClientInfo>
-            <Avatar size={46} style={{ color: '#fff', backgroundColor: '#3B415C' }}>
-              JS
-            </Avatar>
-            <FullName>John Samual</FullName>
-          </ClientInfo>
-        }
-      >
-        <StatusList key="1">
-          <StatusItem>
-            <DateItem>15/03/2018</DateItem>
-            <StatusTags tagName="position">Position</StatusTags>
-          </StatusItem>
-        </StatusList>
-        <StatusList key="2">
-          <StatusItem>
-            <DateItem>23/02/2017</DateItem>
-            <StatusTags tagName="strategy">Strategy</StatusTags>
-          </StatusItem>
-        </StatusList>
-        <StatusList key="3">
-          <StatusItem>
-            <DateItem>23/02/2017</DateItem>
-            <StatusTags tagName="products">Products</StatusTags>
-          </StatusItem>
-        </StatusList>
-        <StatusList key="4">
-          <StatusItem>
-            <DateItem>23/02/2017</DateItem>
-            <StatusTags tagName="advice">Advice</StatusTags>
-          </StatusItem>
-        </StatusList>
-        <StatusList key="5">
-          <StatusItem>
-            <DateItem>23/02/2017</DateItem>
-            <StatusTags tagName="done">Done</StatusTags>
-          </StatusItem>
-        </StatusList>
-      </ClientItem>
+      <SkeletonClient loading={loading} active avatar>
+        <ClientItem
+          key="sub1"
+          title={
+            <ClientInfo>
+              <Avatar size={46} style={{ color: '#fff', backgroundColor: '#3B415C' }}>
+                JS
+              </Avatar>
+              <FullName>John Samual</FullName>
+            </ClientInfo>
+          }
+        >
+          <StatusList key="1">
+            <StatusItem>
+              <DateItem>15/03/2018</DateItem>
+              <StatusTags tagName="position">Position</StatusTags>
+            </StatusItem>
+          </StatusList>
+          <StatusList key="2">
+            <StatusItem>
+              <DateItem>23/02/2017</DateItem>
+              <StatusTags tagName="strategy">Strategy</StatusTags>
+            </StatusItem>
+          </StatusList>
+          <StatusList key="3">
+            <StatusItem>
+              <DateItem>23/02/2017</DateItem>
+              <StatusTags tagName="products">Products</StatusTags>
+            </StatusItem>
+          </StatusList>
+          <StatusList key="4">
+            <StatusItem>
+              <DateItem>23/02/2017</DateItem>
+              <StatusTags tagName="advice">Advice</StatusTags>
+            </StatusItem>
+          </StatusList>
+          <StatusList key="5">
+            <StatusItem>
+              <DateItem>23/02/2017</DateItem>
+              <StatusTags tagName="done">Done</StatusTags>
+            </StatusItem>
+          </StatusList>
+        </ClientItem>
+      </SkeletonClient>
     );
   }
   public render(): JSX.Element {
