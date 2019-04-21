@@ -30,4 +30,14 @@ describe('<Page1/>', () => {
   it('does not throw error with expected props', () => {
     expect(component.length).toBe(1);
   });
+
+  it('renders error message', () => {
+    const errorMessage = 'test error message';
+
+    const component = setup({
+      error: errorMessage,
+    });
+
+    expect(component.find('.ant-form-explain').text()).toBe(errorMessage);
+  });
 });
