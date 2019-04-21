@@ -9,10 +9,10 @@ import { LoginFormValues } from '../LoginForm';
 const mockOnSubmit = jest.fn();
 
 interface Page1Props {
-  loading: boolean;
+  loading?: boolean;
   error?: string;
-  formProps: FormikProps<LoginFormValues>;
-  onSubmit: () => void;
+  formProps?: FormikProps<LoginFormValues>;
+  onSubmit?: () => void;
 }
 
 const setup = (props: Page1Props = {}, email = null, emailError = null) => {
