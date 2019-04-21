@@ -106,8 +106,18 @@ describe('<Page1/>', () => {
       expect(mockOnSubmit).toHaveBeenCalledTimes(1);
     });
 
-    it('onSubmit is not called if there is email error', () => {
+    it('onSubmit is not called if there is an email error', () => {
       const inputComponent = setupInputComponent('email', 'email error');
+
+      inputComponent.props().onPressEnter({
+        preventDefault: () => {},
+      });
+
+      expect(mockOnSubmit).toHaveBeenCalledTimes(0);
+    });
+
+    it('onSubmit is not called if email is empty', () => {
+      const inputComponent = setupInputComponent('');
 
       inputComponent.props().onPressEnter({
         preventDefault: () => {},
