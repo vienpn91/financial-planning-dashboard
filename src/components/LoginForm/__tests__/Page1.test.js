@@ -57,4 +57,19 @@ describe('<Page1/>', () => {
 
     expect(component.find(ButtonSignIn).props().disabled).toBe(true);
   });
+
+  it('button onClick calls onSubmit', () => {
+    const mockOnSubmit = jest.fn();
+
+    const component = setup({
+      onSubmit: mockOnSubmit,
+    });
+
+    component
+      .find(ButtonSignIn)
+      .props()
+      .onClick();
+
+    expect(mockOnSubmit).toHaveBeenCalledTimes(1);
+  });
 });
