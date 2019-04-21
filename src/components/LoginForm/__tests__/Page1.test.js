@@ -2,6 +2,9 @@ import { shallow } from 'enzyme';
 
 import Page1 from '../Page1';
 import { ButtonSignIn } from '../styled';
+import { FormInput } from '../../Elements';
+
+const mockOnSubmit = jest.fn();
 
 const defaultProps = {
   loading: false,
@@ -10,12 +13,16 @@ const defaultProps = {
     values: {},
     errors: {},
   },
-  onSubmit: () => {},
 };
 
 const setup = (props = {}) => {
+  mockOnSubmit.mockClear();
+
   const setupProps = {
     ...defaultProps,
+
+    onSubmit: mockOnSubmit,
+
     ...props,
   };
 
@@ -59,17 +66,35 @@ describe('<Page1/>', () => {
   });
 
   it('button onClick calls onSubmit', () => {
-    const mockOnSubmit = jest.fn();
-
-    const component = setup({
-      onSubmit: mockOnSubmit,
-    });
-
     component
       .find(ButtonSignIn)
       .props()
       .onClick();
 
     expect(mockOnSubmit).toHaveBeenCalledTimes(1);
+  });
+
+  describe('<FormInput/> control when Enter pressed', () => {
+    let inputComponent = null;
+    beforeEach(() => {
+      const component = setup({
+        formProps: {
+          values: {
+            email: 'email',
+          },
+          errors: {},
+        },
+      });
+
+      inputComponent = component.find(FormInput);
+    });
+
+    it('onSubmit called', () => {
+      inputComponent.props().onPressEnter({
+        preventDefault: () => {},
+      });
+
+      expect(mockOnSubmit).toHaveBeenCalledTimes(1);
+    });
   });
 });
