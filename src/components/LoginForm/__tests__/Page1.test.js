@@ -45,4 +45,16 @@ describe('<Page1/>', () => {
   it('renders disabled button when no email', () => {
     expect(component.find(ButtonSignIn).props().disabled).toBe(true);
   });
+
+  it('renders disabled button when email error', () => {
+    const errorMessage = 'email error message';
+
+    const component = setup({
+      errors: {
+        email: errorMessage,
+      },
+    });
+
+    expect(component.find(ButtonSignIn).props().disabled).toBe(true);
+  });
 });
