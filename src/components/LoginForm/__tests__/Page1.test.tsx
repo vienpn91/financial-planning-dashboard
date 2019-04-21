@@ -124,7 +124,7 @@ describe('<Page1/>', () => {
     });
 
     it('does not call `onSubmit` if no email and no email error', () => {
-      const inputComponent = setup({}).find(FormInput);
+      const inputComponent = component.find(FormInput);
 
       inputComponent.props().onPressEnter({
         preventDefault,
