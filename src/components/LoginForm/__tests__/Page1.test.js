@@ -105,5 +105,15 @@ describe('<Page1/>', () => {
 
       expect(mockOnSubmit).toHaveBeenCalledTimes(1);
     });
+
+    it('onSubmit is not called if there is email error', () => {
+      const inputComponent = setupInputComponent('email', 'email error');
+
+      inputComponent.props().onPressEnter({
+        preventDefault: () => {},
+      });
+
+      expect(mockOnSubmit).toHaveBeenCalledTimes(0);
+    });
   });
 });
