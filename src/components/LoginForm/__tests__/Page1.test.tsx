@@ -81,6 +81,14 @@ describe('<Page1/>', () => {
       expect(wrapper.find(ButtonSignIn).props().disabled).toBe(true);
     });
 
+    it('is setting `loading` prop', () => {
+      const wrapper = setup({
+        loading: true,
+      });
+
+      expect(wrapper.find(ButtonSignIn).props().loading).toBe(true);
+    });
+
     it('onClick calls onSubmit', () => {
       component
         .find(ButtonSignIn)
