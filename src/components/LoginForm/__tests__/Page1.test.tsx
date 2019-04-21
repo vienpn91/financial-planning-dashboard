@@ -99,32 +99,45 @@ describe('<Page1/>', () => {
     });
   });
 
-  describe('<FormInput/> control when Enter pressed', () => {
-    it('onSubmit called', () => {
+  describe('<FormInput/> when Enter pressed', () => {
+    // tslint:disable-next-line:no-empty
+    const preventDefault = () => {};
+
+    it('onSubmit is called if there is an email and no email error', () => {
       const inputComponent = setup({}, 'email').find(FormInput);
 
       inputComponent.props().onPressEnter({
-        preventDefault: () => {},
+        preventDefault,
       });
 
       expect(mockOnSubmit).toHaveBeenCalledTimes(1);
     });
 
-    it('onSubmit is not called if there is an email error', () => {
+    it('onSubmit is not called if there is an email and an email error', () => {
       const inputComponent = setup({}, 'email', 'email error').find(FormInput);
 
       inputComponent.props().onPressEnter({
-        preventDefault: () => {},
+        preventDefault,
       });
 
       expect(mockOnSubmit).toHaveBeenCalledTimes(0);
     });
 
-    it('onSubmit is not called if email is empty', () => {
-      const inputComponent = setup({}, '').find(FormInput);
+    it('onSubmit is not called if no email and no email error', () => {
+      const inputComponent = setup({}).find(FormInput);
 
       inputComponent.props().onPressEnter({
-        preventDefault: () => {},
+        preventDefault,
+      });
+
+      expect(mockOnSubmit).toHaveBeenCalledTimes(0);
+    });
+
+    it('onSubmit is not called if no email and an email error', () => {
+      const inputComponent = setup({}, null, 'email error').find(FormInput);
+
+      inputComponent.props().onPressEnter({
+        preventDefault,
       });
 
       expect(mockOnSubmit).toHaveBeenCalledTimes(0);
