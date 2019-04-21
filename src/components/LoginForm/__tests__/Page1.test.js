@@ -1,6 +1,7 @@
 import { shallow } from 'enzyme';
 
 import Page1 from '../Page1';
+import { ButtonSignIn } from '../styled';
 
 const defaultProps = {
   loading: false,
@@ -39,5 +40,9 @@ describe('<Page1/>', () => {
     });
 
     expect(component.find('.ant-form-explain').text()).toBe(errorMessage);
+  });
+
+  it('renders disabled button when no email', () => {
+    expect(component.find(ButtonSignIn).props().disabled).toBe(true);
   });
 });
