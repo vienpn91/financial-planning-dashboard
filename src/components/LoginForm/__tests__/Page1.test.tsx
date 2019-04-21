@@ -89,7 +89,7 @@ describe('<Page1/>', () => {
       expect(wrapper.find(ButtonSignIn).props().loading).toBe(true);
     });
 
-    it('onClick calls onSubmit', () => {
+    it('on onClick calls `onSubmit`', () => {
       component
         .find(ButtonSignIn)
         .props()
@@ -103,7 +103,7 @@ describe('<Page1/>', () => {
     // tslint:disable-next-line:no-empty
     const preventDefault = () => {};
 
-    it('onSubmit is called if there is an email and no email error', () => {
+    it('calls `onSubmit` if there is an email and no email error', () => {
       const inputComponent = setup({}, 'email').find(FormInput);
 
       inputComponent.props().onPressEnter({
@@ -113,7 +113,7 @@ describe('<Page1/>', () => {
       expect(mockOnSubmit).toHaveBeenCalledTimes(1);
     });
 
-    it('onSubmit is not called if there is an email and an email error', () => {
+    it('does not call `onSubmit` if there is an email and an email error', () => {
       const inputComponent = setup({}, 'email', 'email error').find(FormInput);
 
       inputComponent.props().onPressEnter({
@@ -123,7 +123,7 @@ describe('<Page1/>', () => {
       expect(mockOnSubmit).toHaveBeenCalledTimes(0);
     });
 
-    it('onSubmit is not called if no email and no email error', () => {
+    it('does not call `onSubmit` if no email and no email error', () => {
       const inputComponent = setup({}).find(FormInput);
 
       inputComponent.props().onPressEnter({
@@ -133,7 +133,7 @@ describe('<Page1/>', () => {
       expect(mockOnSubmit).toHaveBeenCalledTimes(0);
     });
 
-    it('onSubmit is not called if no email and an email error', () => {
+    it('does not call `onSubmit` if no email and an email error', () => {
       const inputComponent = setup({}, null, 'email error').find(FormInput);
 
       inputComponent.props().onPressEnter({
