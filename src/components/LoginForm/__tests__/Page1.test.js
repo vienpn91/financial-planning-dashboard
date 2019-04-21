@@ -3,10 +3,16 @@ import { shallow } from 'enzyme';
 import Page1 from '../Page1';
 import { ButtonSignIn } from '../styled';
 import { FormInput } from '../../Elements';
+import { FormikProps } from 'formik';
+import { LoginFormValues } from '../LoginForm';
 
 const mockOnSubmit = jest.fn();
 
-const defaultProps = {
+const defaultProps: {
+  loading: boolean,
+  error?: string,
+  formProps: FormikProps<LoginFormValues>,
+} = {
   loading: false,
   error: null,
   formProps: {
@@ -75,21 +81,24 @@ describe('<Page1/>', () => {
   });
 
   describe('<FormInput/> control when Enter pressed', () => {
-    let inputComponent = null;
-    beforeEach(() => {
+    const setupInputComponent = (email, emailError = null) => {
       const component = setup({
         formProps: {
           values: {
-            email: 'email',
+            email: email,
           },
-          errors: {},
+          errors: {
+            email: emailError,
+          },
         },
       });
 
-      inputComponent = component.find(FormInput);
-    });
+      return component.find(FormInput);
+    };
 
     it('onSubmit called', () => {
+      const inputComponent = setupInputComponent('email');
+
       inputComponent.props().onPressEnter({
         preventDefault: () => {},
       });
