@@ -8,17 +8,17 @@ import { LoginFormValues } from '../LoginForm';
 
 const mockOnSubmit = jest.fn();
 
-interface Page1Props {
+interface ComponentProps {
   loading?: boolean;
   error?: string;
   formProps?: FormikProps<LoginFormValues>;
   onSubmit?: () => void;
 }
 
-const setup = (props: Page1Props = {}, email = null, emailError = null) => {
+const setup = (props: ComponentProps = {}, email = null, emailError = null) => {
   mockOnSubmit.mockClear();
 
-  const setupProps: Page1Props = {
+  const setupProps: ComponentProps = {
     loading: false,
     error: null,
     formProps: {
