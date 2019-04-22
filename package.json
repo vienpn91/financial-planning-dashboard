@@ -54,6 +54,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@types/enzyme": "^3.9.1",
     "@types/lodash-es": "^4.17.3",
     "@types/react-redux": "^7.0.5",
     "@types/react-router-dom": "^4.3.1",
