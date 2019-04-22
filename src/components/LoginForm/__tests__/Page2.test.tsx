@@ -18,7 +18,7 @@ interface ComponentProps {
 const setup = (props: ComponentProps = {}, password = null, passwordError = null) => {
   mockOnSubmit.mockClear();
 
-  const setupProps: ComponentProps = {
+  const setupProps = {
     loading: false,
     error: null,
     formProps: {
