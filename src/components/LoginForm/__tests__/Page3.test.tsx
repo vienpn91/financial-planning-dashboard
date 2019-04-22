@@ -50,5 +50,15 @@ describe('<Page3/>', () => {
 
       expect(wrapper.find(LoginVerify).props().loading).toBe(true);
     });
+
+    it('sets `error`', () => {
+      const errorMessage = 'error message';
+
+      const wrapper = setup({
+        error: errorMessage,
+      });
+
+      expect(wrapper.find(LoginVerify).props().error).toBe(errorMessage);
+    });
   });
 });
