@@ -2,7 +2,7 @@ import { shallow } from 'enzyme';
 import { FormikProps } from 'formik';
 
 import Page3 from '../Page3';
-// import LoginVerify from '../LoginVerify/LoginVerify';
+import LoginVerify from '../../LoginVerify/LoginVerify';
 import { LoginFormValues } from '../LoginForm';
 
 const mockOnSubmit = jest.fn();
@@ -20,6 +20,7 @@ const setup = (props: ComponentProps = {}) => {
 
   const setupProps: ComponentProps = {
     loading: false,
+    message: null,
     error: null,
     formProps: {},
 
@@ -39,5 +40,15 @@ describe('<Page3/>', () => {
 
   it('does not throw error with expected props', () => {
     expect(component.length).toBe(1);
+  });
+
+  describe('<LoginVerify/>', () => {
+    it('sets `loading`', () => {
+      const wrapper = setup({
+        loading: true,
+      });
+
+      expect(wrapper.find(LoginVerify).props().loading).toBe(true);
+    });
   });
 });
