@@ -73,5 +73,15 @@ describe('<Page3/>', () => {
 
       expect(wrapper.find(LoginVerify).props().formProps).toBe(formProps);
     });
+
+    it('sets `message`', () => {
+      const message = 'message';
+
+      const wrapper = setup({
+        message,
+      });
+
+      expect(wrapper.find(LoginVerify).props().message).toBe(message);
+    });
   });
 });
