@@ -18,10 +18,10 @@ interface ComponentProps {
 const setup = (props: ComponentProps = {}) => {
   mockOnSubmit.mockClear();
 
-  const setupProps: ComponentProps = {
+  const setupProps = {
     loading: false,
-    message: null,
-    error: null,
+    message: undefined,
+    error: undefined,
     formProps: {},
 
     onSubmit: mockOnSubmit,
@@ -82,6 +82,10 @@ describe('<Page3/>', () => {
       });
 
       expect(wrapper.find(LoginVerify).props().message).toBe(message);
+    });
+
+    it('sets `onSubmit`', () => {
+      expect(component.find(LoginVerify).props().onSubmit).toBe(mockOnSubmit);
     });
   });
 });
