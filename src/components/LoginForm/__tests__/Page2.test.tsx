@@ -58,6 +58,12 @@ describe('<Page2/>', () => {
     expect(wrapper.find('.ant-form-explain').text()).toBe(errorMessage);
   });
 
+  it('has password input control of type `password`', () => {
+    const inputComponent = component.find(FormInput);
+
+    expect(inputComponent.props().type).toBe('password');
+  });
+
   describe('<ButtonSignIn/>', () => {
     it('is enabled when there is an password and no password error', () => {
       const wrapper = setup({}, 'password');
