@@ -53,23 +53,23 @@ class Sidebar extends React.PureComponent<SidebarProps> {
           }
         >
           <SubList key="1">
-            <Icon type="environment" />
+            <i className="icon-current" />
             <span>Current</span>
           </SubList>
           <SubList key="2">
-            <Icon type="solution" />
+            <i className="icon-strategy" />
             <span>Strategy</span>
           </SubList>
           <SubList key="3">
-            <Icon type="area-chart" />
+            <i className="icon-projections" />
             <span>Switching</span>
           </SubList>
           <SubList key="4">
-            <Icon type="file" />
+            <i className="icon-documents" />
             <span>Documents</span>
           </SubList>
           <SubList key="5">
-            <Icon type="file-ppt" />
+            <i className="icon-presentation" />
             <span>Presentation</span>
           </SubList>
         </ClientItem>

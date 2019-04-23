@@ -97,13 +97,24 @@ export const SubList = styled(Menu.Item).attrs({
   height: 34px!important;
   color: #737c9c;
   font-size: 18px!important;
+  i{
+    margin-right: 14px;
+  }
   &:first-child{
     margin-top: 10px!important;
+  }
+  &:hover{
+    color: #082074!important;
+    border-left: 1px solid #082074;
+    background: transparent !important;
   }
   &.ant-menu-item-selected{
     color: #082074;
     border-left: 1px solid #082074;
     background: transparent !important;
+    i{
+      color: #082074;
+    }
   }
 `;
 
