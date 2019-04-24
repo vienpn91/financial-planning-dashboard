@@ -11,16 +11,6 @@ const { Content } = Layout;
 
 class Home extends React.PureComponent {
   public render(): JSX.Element {
-    const dropdownData = [{
-      key: 1,
-      link : 'http://google.com',
-      value: 'Tao la Tao',
-     },
-     {
-       key: 2,
-       link: 'http://google.com',
-       value: 'Tao la Tao',
-    }];
     return (
       <HomePage select="true">
         <Content>
@@ -29,11 +19,6 @@ class Home extends React.PureComponent {
           <ButtonModalFixed size="large" shape="circle" type="primary">
             <Icon type="plus" />
           </ButtonModalFixed>
-          <EntryPicker
-              type="Week"
-              placeholder="text"
-            />
-           <EntryTextBox />
         </Content>
       </HomePage>
     );

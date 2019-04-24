@@ -1,15 +1,15 @@
 import React, { PureComponent } from 'react';
-import { DatePicker } from 'antd';
-import { EntryPickerTable } from './styled';
+import { InputNumber, Input } from 'antd';
+import { EntryInputNumberWrapper, EntryInputWrapper } from './styled';
 
-const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 
 interface EntryPickerProps {
   type: PickerType;
-  placeholder?: string;
+  defaultValue?: number;
+  textStyle: string;
 }
 
-declare type PickerType = 'Month' | 'Range' | 'Week' | 'Date';
+declare type PickerType = 'Rates' | 'Percent' | 'Default';
 
 class EntryTextBox extends PureComponent<EntryPickerProps, {}> {
   protected static defaultProps = {
@@ -17,37 +17,37 @@ class EntryTextBox extends PureComponent<EntryPickerProps, {}> {
   };
 
   public render(): React.ReactNode {
-    const { type, placeholder } = this.props;
+    const { type, defaultValue, textStyle } = this.props;
     switch (type) {
-      case 'Month':
+      case 'Rates':
         return(
-          <EntryTextboxWrapper className={type}>
-            <MonthPicker  placeholder={placeholder}/>
-          </EntryTextboxWrapper>
+          <EntryInputNumberWrapper className={textStyle}>
+             <InputNumber
+                defaultValue={defaultValue}
+                formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+              />
+          </EntryInputNumberWrapper>
         );
-      case 'Range':
+      case 'Percent':
         return(
-          <EntryPickerTable className={type}>
-            <RangePicker />
-          </EntryPickerTable>
+          <EntryInputNumberWrapper className={textStyle}>
+            <InputNumber
+              defaultValue={defaultValue}
+              formatter={value => `${value}%`}
+            />
+          </EntryInputNumberWrapper>
         );
-      case 'Week':
+      case 'Default':
         return(
-          <EntryPickerTable className={type}>
-            <WeekPicker  placeholder={placeholder} />
-          </EntryPickerTable>
-        );
-      case 'Date':
-        return(
-          <EntryPickerTable className={type}>
-            <DatePicker  placeholder={placeholder}/>
-          </EntryPickerTable>
+          <EntryInputWrapper className={textStyle}>
+            <Input />
+          </EntryInputWrapper>
         );
       default:
         return(
-          <EntryPickerTable className={type}>
-            <DatePicker  placeholder={placeholder}/>
-          </EntryPickerTable>
+          <EntryInputWrapper className={textStyle}>
+            <Input />
+          </EntryInputWrapper>
         );
     }
   }
