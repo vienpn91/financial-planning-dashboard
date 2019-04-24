@@ -6,7 +6,7 @@ import {
   ClientInfo,
   FullName,
   ClientItem,
-  StatusList,
+  SubList,
   StatusItem,
   DateItem,
   StatusTags,
@@ -20,13 +20,16 @@ import { default as ModalNameAndBirthDay } from '../../components/NameAndBirthDa
  *      Avatar
  *      Full Name
  *
- *    StatusList
+ *    SubsList
  *      StatusItem
  *      StatusItem
  *      StatusItem
  */
 
-class Sidebar extends React.PureComponent {
+interface SidebarProps {
+  tagName?: string;
+}
+class Sidebar extends React.PureComponent<SidebarProps> {
   public state = {
     collapsed: false,
     loading: true,
@@ -36,51 +39,39 @@ class Sidebar extends React.PureComponent {
       collapsed: !this.state.collapsed,
     });
   }
-  public ClientItemRender = () => {
+  public ClientItemRender = (tagName: string) => {
     const { loading } = this.state;
     return (
       <SkeletonClient loading={loading} active avatar>
         <ClientItem
-          key="sub1"
+          key={tagName}
           title={
-            <ClientInfo>
-              <Avatar size={46} style={{ color: '#fff', backgroundColor: '#3B415C' }}>
-                JS
-              </Avatar>
-              <FullName>John Samual</FullName>
-            </ClientInfo>
-          }
-        >
-          <StatusList key="1">
             <StatusItem>
               <DateItem>15/03/2018</DateItem>
-              <StatusTags tagName="position">Position</StatusTags>
+              <StatusTags tagName={tagName}>{tagName}</StatusTags>
             </StatusItem>
-          </StatusList>
-          <StatusList key="2">
-            <StatusItem>
-              <DateItem>23/02/2017</DateItem>
-              <StatusTags tagName="strategy">Strategy</StatusTags>
-            </StatusItem>
-          </StatusList>
-          <StatusList key="3">
-            <StatusItem>
-              <DateItem>23/02/2017</DateItem>
-              <StatusTags tagName="products">Products</StatusTags>
-            </StatusItem>
-          </StatusList>
-          <StatusList key="4">
-            <StatusItem>
-              <DateItem>23/02/2017</DateItem>
-              <StatusTags tagName="advice">Advice</StatusTags>
-            </StatusItem>
-          </StatusList>
-          <StatusList key="5">
-            <StatusItem>
-              <DateItem>23/02/2017</DateItem>
-              <StatusTags tagName="done">Done</StatusTags>
-            </StatusItem>
-          </StatusList>
+          }
+        >
+          <SubList key="1">
+            <i className="icon-current" />
+            <span>Current</span>
+          </SubList>
+          <SubList key="2">
+            <i className="icon-strategy" />
+            <span>Strategy</span>
+          </SubList>
+          <SubList key="3">
+            <i className="icon-projections" />
+            <span>Switching</span>
+          </SubList>
+          <SubList key="4">
+            <i className="icon-documents" />
+            <span>Documents</span>
+          </SubList>
+          <SubList key="5">
+            <i className="icon-presentation" />
+            <span>Presentation</span>
+          </SubList>
         </ClientItem>
       </SkeletonClient>
     );
@@ -88,13 +79,24 @@ class Sidebar extends React.PureComponent {
   public render(): JSX.Element {
     return (
       <SiderCollapsible width={295} trigger={null} collapsible collapsed={this.state.collapsed}>
+        <ClientInfo>
+          <Avatar size={56} style={{ color: '#fff', backgroundColor: '#383f5b' }}>
+            JS
+          </Avatar>
+          <FullName>John Samual</FullName>
+        </ClientInfo>
         <Icon
           className="trigger IconSider"
           type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
           onClick={this.toggleCollapsed}
         />
         <ClientSide defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} mode="inline">
-          {this.ClientItemRender()}
+          {this.ClientItemRender('new')}
+          {this.ClientItemRender('position')}
+          {this.ClientItemRender('strategy')}
+          {this.ClientItemRender('products')}
+          {this.ClientItemRender('advice')}
+          {this.ClientItemRender('done')}
         </ClientSide>
         <ModalNameAndBirthDay />
       </SiderCollapsible>

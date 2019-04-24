@@ -7,7 +7,13 @@ const { Sider } = Layout;
 const SubMenu = Menu.SubMenu;
 export const ClientInfo = styled.div.attrs({
   className: 'client-Info',
-})`
+  })`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0px 15px;
+  cursor: pointer;
 `;
 
 export const SiderCollapsible = styled(Sider).attrs({
@@ -23,6 +29,20 @@ export const SiderCollapsible = styled(Sider).attrs({
         display:none;
       }
     }
+    .client-Info{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 70px;
+    }
+    .client-full-name{
+      display: none;
+    }
+    & > .ant-menu-submenu {
+      & > .ant-menu-submenu-title{
+        padding: 0px 5px !important;
+      }
+    }
   }
 `;
 // ant-menu-submenu-open ant-menu-submenu-active
@@ -30,7 +50,7 @@ export const SiderCollapsible = styled(Sider).attrs({
 export const FullName = styled.span.attrs({
    className: 'client-full-name',
 })`
-
+  margin-top: 10px;
   font-size: 18px;
   color: #515C83;
   margin-left: 15px;
@@ -42,53 +62,60 @@ export const ClientSide = styled(Menu).attrs({
   overflow-y: overlay;
   overflow-x: hidden;
   border-right: none!important;
-  &.ant-menu-inline-collapsed{
-    & > .ant-menu-submenu {
-      & > .ant-menu-submenu-title{
-        padding: 0px 5px !important;
-        .client-Info{
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          height: 70px;
-        }
-        .client-full-name{
-          display: none;
-        }
-      }
-    }
-  }
+ 
 `;
 
 export const ClientItem = styled(SubMenu).attrs({
     className: 'client-item-modify',
   })`
+  margin-bottom: 15px;
   .ant-menu-submenu-title{
-    height: 70px!important;
-    line-height: 68px!important;
-    width: calc(100% - 10px)!important;
+    height: 40px!important;
+    background: #f4f6fb;
+    line-height: 40px!important;
+    width: calc(100% - 40px)!important;
     margin: 0 auto !important;
-    border-radius: 5px;
-    /* background: #E0E3E8; */
+    box-shadow: 0px 2px 7px -2px #acacad;
+    border-radius: 8px;
     position: relative;
     &:hover{
       background-color: #E0E3E8;
     }
   }
   .ant-menu-sub{
-    border-top: 1px solid #D8D8D8!important;
-    border-bottom: 1px solid #D8D8D8!important;
-    padding-top: 5px!important;
-    margin-top: 5px !important;
+    width: calc(100% - 40px)!important;
+    margin: 0 auto;
   }
 `;
 
-export const StatusList = styled(Menu.Item).attrs({
-    className: 'status-list-modify',
+export const SubList = styled(Menu.Item).attrs({
+    className: 'sub-list-modify',
   })`
-  /* overflow: hidden; */
-  /* width: 100%!important; */
   margin: 0px !important;
+  border-left: 1px solid #e4e8eb;
+  padding-left: 30px!important;
+  height: 34px!important;
+  color: #737c9c;
+  font-size: 18px!important;
+  i{
+    margin-right: 14px;
+  }
+  &:first-child{
+    margin-top: 10px!important;
+  }
+  &:hover{
+    color: #082074!important;
+    border-left: 1px solid #082074;
+    background: transparent !important;
+  }
+  &.ant-menu-item-selected{
+    color: #082074;
+    border-left: 1px solid #082074;
+    background: transparent !important;
+    i{
+      color: #082074;
+    }
+  }
 `;
 
 export const StatusItem = styled.div`
@@ -101,7 +128,7 @@ export const DateItem = styled.span`
   font-size: 12px;
   position: relative;
   padding-left: 20px;
-  color: #515C83;
+  color: #697396;
   &:after{
     content: '';
     width: 10px;
@@ -122,12 +149,14 @@ interface StatusTags {
 export const StatusTags = styled.span<StatusTags>`
   font-size: 10px;
   width: 96px;
+  text-transform: capitalize;
   display: inline-block;
-  height: 17px;
-  border-radius: 8px;
+  height: 20px;
+  border-radius: 3px;
   text-align: center;
   line-height: 17px;
   color: ${({ tagName, theme }) => get(theme, `colors.text-${tagName}`)};
+  border: 1px solid ${({ tagName, theme }) => get(theme, `colors.border-${tagName}`)};
   background-color: ${({ tagName, theme }) => get(theme, `colors.bg-${tagName}`)};
 `;
 export const ButtonSideBar = styled(Button).attrs({
