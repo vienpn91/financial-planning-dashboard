@@ -108,6 +108,7 @@ export const ClientItem = styled(SubMenu).attrs({
   .ant-menu-sub{
     width: calc(100% - 40px)!important;
     margin: 0 auto;
+    background-color: transparent!important;
   }
 `;
 
