@@ -12,6 +12,7 @@ import {
   StatusTags,
   ClientSide,
   SkeletonClient,
+  ClientRoot
 } from './styled';
 import { default as ModalNameAndBirthDay } from '../../components/NameAndBirthDay/NameAndBirthDay';
 
@@ -77,24 +78,29 @@ class Sidebar extends React.PureComponent<SidebarProps> {
   public render(): JSX.Element {
     return (
       <SiderCollapsible width={295} trigger={null} collapsible collapsed={this.state.collapsed}>
-        <ClientInfo>
-          <Avatar size={56} style={{ color: '#fff', backgroundColor: '#383f5b' }}>
-            JS
-          </Avatar>
-          <FullName>John Samual</FullName>
-        </ClientInfo>
         <Icon
           className="trigger IconSider"
           type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
           onClick={this.toggleCollapsed}
         />
         <ClientSide defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} mode="inline">
-          {this.ClientItemRender('new')}
-          {this.ClientItemRender('position')}
-          {this.ClientItemRender('strategy')}
-          {this.ClientItemRender('products')}
-          {this.ClientItemRender('advice')}
-          {this.ClientItemRender('done')}
+          <ClientRoot
+            key="sub1"
+            title={
+              <ClientInfo>
+                <Avatar size={56} style={{ color: '#fff', backgroundColor: '#383f5b' }}>
+                  JS
+                </Avatar>
+                <FullName>John Samual</FullName>
+              </ClientInfo>
+            }>
+            {this.ClientItemRender('new')}
+            {this.ClientItemRender('position')}
+            {this.ClientItemRender('strategy')}
+            {this.ClientItemRender('products')}
+            {this.ClientItemRender('advice')}
+            {this.ClientItemRender('done')}
+          </ClientRoot>
         </ClientSide>
         <ModalNameAndBirthDay />
       </SiderCollapsible>

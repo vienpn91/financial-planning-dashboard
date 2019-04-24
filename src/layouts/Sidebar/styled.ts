@@ -62,16 +62,39 @@ export const ClientSide = styled(Menu).attrs({
   overflow-y: overlay;
   overflow-x: hidden;
   border-right: none!important;
- 
 `;
 
+export const ClientRoot = styled(SubMenu).attrs({
+  className: 'client-item-root',
+})`
+i.ant-menu-submenu-arrow{
+  display: none;
+}
+& > .ant-menu-submenu-title{
+    height: 138px!important;
+    background: transparent;
+    line-height: 40px!important;
+    width: calc(100% - 40px)!important;
+    margin: 0 auto !important;
+    box-shadow: none;
+    border-radius: 0;
+    position: relative;
+  &:hover{
+    background-color: transparent;
+  }
+}
+`;
 export const ClientItem = styled(SubMenu).attrs({
     className: 'client-item-modify',
   })`
   margin-bottom: 15px;
+  i.ant-menu-submenu-arrow{
+    display: block;
+  }
   .ant-menu-submenu-title{
     height: 40px!important;
     background: #f4f6fb;
+    padding-left: 24px !important;
     line-height: 40px!important;
     width: calc(100% - 40px)!important;
     margin: 0 auto !important;
@@ -85,6 +108,7 @@ export const ClientItem = styled(SubMenu).attrs({
   .ant-menu-sub{
     width: calc(100% - 40px)!important;
     margin: 0 auto;
+    background-color: transparent!important;
   }
 `;
 
