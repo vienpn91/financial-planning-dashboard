@@ -11,7 +11,7 @@ import {
   DateItem,
   StatusTags,
   ClientSide,
-  SkeletonClient
+  SkeletonClient,
 } from './styled';
 import { default as ModalNameAndBirthDay } from '../../components/NameAndBirthDay/NameAndBirthDay';
 
@@ -42,38 +42,36 @@ class Sidebar extends React.PureComponent<SidebarProps> {
   public ClientItemRender = (tagName: string) => {
     const { loading } = this.state;
     return (
-      <SkeletonClient loading={loading} active avatar>
-        <ClientItem
-          key={tagName}
-          title={
-            <StatusItem>
-              <DateItem>15/03/2018</DateItem>
-              <StatusTags tagName={tagName}>{tagName}</StatusTags>
-            </StatusItem>
-          }
-        >
-          <SubList key="1">
-            <i className="icon-current" />
-            <span>Current</span>
-          </SubList>
-          <SubList key="2">
-            <i className="icon-strategy" />
-            <span>Strategy</span>
-          </SubList>
-          <SubList key="3">
-            <i className="icon-projections" />
-            <span>Switching</span>
-          </SubList>
-          <SubList key="4">
-            <i className="icon-documents" />
-            <span>Documents</span>
-          </SubList>
-          <SubList key="5">
-            <i className="icon-presentation" />
-            <span>Presentation</span>
-          </SubList>
-        </ClientItem>
-      </SkeletonClient>
+      <ClientItem
+        key={tagName}
+        title={
+          <StatusItem>
+            <DateItem>15/03/2018</DateItem>
+            <StatusTags tagName={tagName}>{tagName}</StatusTags>
+          </StatusItem>
+        }
+      >
+        <SubList key="1">
+          <i className="icon-current" />
+          <span>Current</span>
+        </SubList>
+        <SubList key="2">
+          <i className="icon-strategy" />
+          <span>Strategy</span>
+        </SubList>
+        <SubList key="3">
+          <i className="icon-projections" />
+          <span>Switching</span>
+        </SubList>
+        <SubList key="4">
+          <i className="icon-documents" />
+          <span>Documents</span>
+        </SubList>
+        <SubList key="5">
+          <i className="icon-presentation" />
+          <span>Presentation</span>
+        </SubList>
+      </ClientItem>
     );
   }
   public render(): JSX.Element {
