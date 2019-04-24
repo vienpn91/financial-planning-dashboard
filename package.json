@@ -54,6 +54,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@types/enzyme": "^3.9.1",
     "@types/lodash-es": "^4.17.3",
     "@types/react-redux": "^7.0.5",
     "@types/react-router-dom": "^4.3.1",
@@ -65,6 +66,8 @@
     "@typescript-eslint/parser": "^1.5.0",
     "babel-plugin-import": "^1.11.0",
     "babel-plugin-styled-components": "^1.10.0",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.12.1",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^4.1.0",
     "eslint-config-react-app": "^3.0.8",
