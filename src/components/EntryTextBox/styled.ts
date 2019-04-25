@@ -48,3 +48,19 @@ export const EntryInputWrapper = styled.section`
     }
   }
 `;
+export const EntryInputDefault = styled.section`
+  width: 170px;
+  display: inline-block;
+  &.default{
+    input{
+      padding: 0 10px;
+      font-size: 14px;
+      width: 100%;
+      &:focus{
+        border: 1px solid #000;
+        outline: none;
+        box-shadow: none;
+      }
+    }
+  }
+`;

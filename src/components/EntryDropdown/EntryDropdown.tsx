@@ -3,6 +3,8 @@ import { Menu, Dropdown, Icon, Button } from 'antd';
 import { EntryDropdownWrapper, EntryDropdownDefault } from './styled';
 export interface EntryDropdownProps {
   titleText?: string;
+  textSize?: string;
+  fontWeight?: string;
   type?: DropdownType;
   subDropdown?: Array<{ key: number; link: string ; value: string; }>;
 }
@@ -22,10 +24,10 @@ export interface EntryDropdownProps {
 *     subDropdown={dropdownData}
 *   />
 */
-declare type DropdownType = 'Default' | 'Inline' ;
+declare type DropdownType = 'default' | 'inline' ;
 class EntryDropdown extends React.PureComponent<EntryDropdownProps> {
   public render(): JSX.Element {
-    const { titleText , subDropdown, type } = this.props;
+    const { titleText , subDropdown, type, textSize, fontWeight } = this.props;
     const menu = (
       <Menu>
         {subDropdown &&
@@ -38,9 +40,9 @@ class EntryDropdown extends React.PureComponent<EntryDropdownProps> {
       </Menu>
     );
     switch (type) {
-      case 'Inline':
+      case 'inline':
         return(
-          <EntryDropdownWrapper>
+          <EntryDropdownWrapper className={'text-' + textSize + ' font-' + fontWeight}>
             <Dropdown overlay={menu} trigger={['click']}>
               <a className="ant-dropdown-link" href="#">
                 {titleText} <Icon type="down" />
@@ -48,9 +50,9 @@ class EntryDropdown extends React.PureComponent<EntryDropdownProps> {
             </Dropdown>
           </EntryDropdownWrapper>
         );
-      case 'Default':
+      case 'default':
         return(
-          <EntryDropdownDefault>
+          <EntryDropdownDefault className={'text-' + textSize + 'font-' + fontWeight}>
             <Dropdown overlay={menu}>
               <Button>
                 {titleText} <Icon type="down" />
@@ -60,7 +62,7 @@ class EntryDropdown extends React.PureComponent<EntryDropdownProps> {
         );
       default:
         return(
-          <EntryDropdownDefault>
+          <EntryDropdownDefault className={'text-' + textSize + 'font-' + fontWeight}>
             <Dropdown overlay={menu}>
               <Button>
                 {titleText} <Icon type="down" />

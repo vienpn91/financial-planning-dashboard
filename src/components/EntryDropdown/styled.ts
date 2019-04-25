@@ -2,6 +2,17 @@
 import styled, { css } from 'styled-components';
 
 export const EntryDropdownWrapper = styled.section`
+  display: inline;
+  width: auto;
+  &.font-bold{
+    font-weight: 800;
+  }
+  &.text-small{
+    font-size: 12px
+  }
+  &.text-default{
+    font-size: 14px
+  }
   i[aria-label="icon: down"]{
     opacity: 0;
   }
@@ -17,5 +28,13 @@ export const EntryDropdownWrapper = styled.section`
   }
 `;
 export const EntryDropdownDefault = styled.section`
-  
+  &.font-bold{
+    font-weight: 800;
+  }
+  &.text-small{
+    font-size: 12px
+  }
+  &.text-default{
+    font-size: 14px
+  }
 `;

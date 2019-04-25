@@ -19,32 +19,47 @@ class EntryTables extends React.PureComponent {
       <div>
         This super has a taxable component of
         <EntryTextBox
-          type="Rates"
+          type="rates"
           textStyle="bold"
           defaultNumber={1000}
         /> and a tax-free component of
          <EntryTextBox
-          type="Percent"
+          type="percent"
           textStyle="bold"
           defaultNumber={50}
         />
-        <EntryPicker
-          type="Date" placeholder="Start"/>
-
-        <EntryTextBox
-          type="Inline"
+         <EntryTextBox
+          type="inline"
           textStyle="default"
-          defaultText="taodagtext"
+          defaultText="Textbox no border"
         />
+         <EntryTextBox
+          type="default"
+          textStyle="default"
+          defaultText="Textbox width border"
+        />
+        <EntryPicker
+          type="Date" placeholder="Start"
+        />
+
         and a tax-free component of
+
         <EntryDropdown
-          type="Inline"
+          type="inline"
           titleText="Click Me"
+          textSize="small"
+          fontWeight="bold"
+          subDropdown={dropdownData}
+        />
+        <EntryDropdown
+          type="inline"
+          titleText="Click Me"
+          textSize="default"
           subDropdown={dropdownData}
         />
          <EntryDropdown
-          type="Default"
-          titleText="Click Me"
+          type="default"
+          titleText="default Click Me"
           subDropdown={dropdownData}
         />
       </div>
