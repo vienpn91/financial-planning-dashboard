@@ -37,13 +37,8 @@ class EntryTables extends React.PureComponent {
           type="default"
           textStyle="default"
           defaultText="Textbox width border"
-        />
-        <EntryPicker
-          type="Date" placeholder="Start"
-        />
-
+        />    
         and a tax-free component of
-
         <EntryDropdown
           type="inline"
           titleText="Click Me"
@@ -62,6 +57,29 @@ class EntryTables extends React.PureComponent {
           titleText="default Click Me"
           subDropdown={dropdownData}
         />
+        <EntryPicker
+          type="date"
+          placeholder="Start"
+          border="none"
+        />
+         <EntryPicker
+          type="date"
+          placeholder="Start"
+          border="none"
+          textType="small"
+          fontStyle="bold"
+        />
+        <EntryPicker
+          type="date"
+          textType="small"
+          fontStyle="bold"
+        />
+         <EntryPicker
+          type="week"
+          placeholder="Week"
+        />
+
+
       </div>
     )
   }

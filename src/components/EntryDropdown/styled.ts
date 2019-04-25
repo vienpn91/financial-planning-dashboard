@@ -28,6 +28,7 @@ export const EntryDropdownWrapper = styled.section`
   }
 `;
 export const EntryDropdownDefault = styled.section`
+  display: inline;
   &.font-bold{
     font-weight: 800;
   }

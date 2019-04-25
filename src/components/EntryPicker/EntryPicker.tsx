@@ -7,9 +7,12 @@ const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 interface EntryPickerProps {
   type: PickerType;
   placeholder?: string;
+  border?: string;
+  textType?: string;
+  fontStyle?: string;
 }
 
-declare type PickerType = 'Month' | 'Range' | 'Week' | 'Date';
+declare type PickerType = 'month' | 'range' | 'week' | 'date';
 
 class EntryPicker extends PureComponent<EntryPickerProps, {}> {
   protected static defaultProps = {
@@ -17,35 +20,45 @@ class EntryPicker extends PureComponent<EntryPickerProps, {}> {
   };
 
   public render(): React.ReactNode {
-    const { type, placeholder } = this.props;
+    const { type, placeholder, fontStyle, textType, border } = this.props;
     switch (type) {
-      case 'Month':
+      case 'month':
         return(
-          <EntryPickerTable className={type}>
+          <EntryPickerTable
+            className={'picker-' + type + ' has-' + border + ' font-' + fontStyle + ' text-' + textType}
+          >
             <MonthPicker  placeholder={placeholder}/>
           </EntryPickerTable>
         );
-      case 'Range':
+      case 'range':
         return(
-          <EntryPickerTable className={type}>
+          <EntryPickerTable
+            className={'picker-' + type + ' has-' + border + ' font-' + fontStyle + ' text-' + textType}
+          >
             <RangePicker />
           </EntryPickerTable>
         );
-      case 'Week':
+      case 'week':
         return(
-          <EntryPickerTable className={type}>
+          <EntryPickerTable
+            className={'picker-' + type + ' has-' + border + ' font-' + fontStyle + ' text-' + textType}
+          >
             <WeekPicker  placeholder={placeholder} />
           </EntryPickerTable>
         );
-      case 'Date':
+      case 'date':
         return(
-          <EntryPickerTable className={type}>
+          <EntryPickerTable
+            className={'picker-' + type + ' has-' + border + ' font-' + fontStyle + ' text-' + textType}
+          >
             <DatePicker  placeholder={placeholder}/>
           </EntryPickerTable>
         );
       default:
         return(
-          <EntryPickerTable className={type}>
+          <EntryPickerTable
+            className={'picker-' + type + ' has-' + border + ' font-' + fontStyle + ' text-' + textType}
+          >
             <DatePicker  placeholder={placeholder}/>
           </EntryPickerTable>
         );

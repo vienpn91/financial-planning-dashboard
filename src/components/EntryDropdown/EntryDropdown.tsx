@@ -52,7 +52,7 @@ class EntryDropdown extends React.PureComponent<EntryDropdownProps> {
         );
       case 'default':
         return(
-          <EntryDropdownDefault className={'text-' + textSize + 'font-' + fontWeight}>
+          <EntryDropdownDefault className={'text-' + textSize + ' font-' + fontWeight}>
             <Dropdown overlay={menu}>
               <Button>
                 {titleText} <Icon type="down" />
@@ -62,7 +62,7 @@ class EntryDropdown extends React.PureComponent<EntryDropdownProps> {
         );
       default:
         return(
-          <EntryDropdownDefault className={'text-' + textSize + 'font-' + fontWeight}>
+          <EntryDropdownDefault className={'text-' + textSize + ' font-' + fontWeight}>
             <Dropdown overlay={menu}>
               <Button>
                 {titleText} <Icon type="down" />
