@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
-import { DatePicker } from 'antd';
-import { EntryPickerTable } from './styled';
+import { DatePicker, Button } from 'antd';
+import { EntryPickerTable, DateButtonCustom } from './styled';
 
 const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 
@@ -12,7 +12,7 @@ interface EntryPickerProps {
   fontStyle?: string;
 }
 
-declare type PickerType = 'month' | 'range' | 'week' | 'date';
+declare type PickerType = 'month' | 'range' | 'week' | 'date' | 'custom';
 
 class EntryPicker extends PureComponent<EntryPickerProps, {}> {
   protected static defaultProps = {
@@ -54,6 +54,22 @@ class EntryPicker extends PureComponent<EntryPickerProps, {}> {
             <DatePicker  placeholder={placeholder}/>
           </EntryPickerTable>
         );
+      case 'custom':
+        return(
+          <EntryPickerTable
+            className={'picker-' + type + ' has-' + border + ' font-' + fontStyle + ' text-' + textType}
+          >
+            <DatePicker 
+              renderExtraFooter={() =>
+                <DateButtonCustom>
+                  <Button type="primary">Retired</Button>
+                </DateButtonCustom>
+              }
+              showToday={false}
+            />
+          </EntryPickerTable>
+        );
+
       default:
         return(
           <EntryPickerTable

@@ -6,7 +6,7 @@ export const EntryPickerTable = styled.section`
   margin-right: 10px;
   margin: 5px 0px 5px 10px;
   .ant-input{
-    width: 110px;
+    width: 125px;
   }
   &.has-none{
     .anticon-calendar{
@@ -29,4 +29,7 @@ export const EntryPickerTable = styled.section`
       font-weight: 800;
     }
   }
+`;
+export const DateButtonCustom = styled.div`
+  padding: 8px 0px;
 `;
