@@ -4,9 +4,6 @@ import { HomePage, HomeDesc } from './styled';
 import Heading from '../../components/Heading/Heading';
 import { ButtonModalFixed } from '../../components/NameAndBirthDay/styled';
 import EntryTables from '../../components/EntryTables/EntryTables';
-import EntryDropdown from '../../components/EntryDropdown/EntryDropdown';
-import EntryTextBox from '../../components/EntryTextBox/EntryTextBox';
-import EntryPicker from '../../components/EntryPicker/EntryPicker';
 const { Content } = Layout;
 
 class Home extends React.PureComponent {
@@ -19,6 +16,7 @@ class Home extends React.PureComponent {
           <ButtonModalFixed size="large" shape="circle" type="primary">
             <Icon type="plus" />
           </ButtonModalFixed>
+          <EntryTables />
         </Content>
       </HomePage>
     );

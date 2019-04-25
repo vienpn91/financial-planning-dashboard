@@ -5,11 +5,12 @@ import { EntryInputNumberWrapper, EntryInputWrapper } from './styled';
 
 interface EntryPickerProps {
   type: PickerType;
-  defaultValue?: number;
+  defaultNumber?: number;
+  defaultText?: string;
   textStyle: string;
 }
 
-declare type PickerType = 'Rates' | 'Percent' | 'Default';
+declare type PickerType = 'Rates' | 'Percent' | 'Default' | 'Inline';
 
 class EntryTextBox extends PureComponent<EntryPickerProps, {}> {
   protected static defaultProps = {
@@ -17,13 +18,13 @@ class EntryTextBox extends PureComponent<EntryPickerProps, {}> {
   };
 
   public render(): React.ReactNode {
-    const { type, defaultValue, textStyle } = this.props;
+    const { type, defaultNumber, textStyle, defaultText } = this.props;
     switch (type) {
       case 'Rates':
         return(
           <EntryInputNumberWrapper className={textStyle}>
              <InputNumber
-                defaultValue={defaultValue}
+                defaultValue={defaultNumber}
                 formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
               />
           </EntryInputNumberWrapper>
@@ -32,10 +33,16 @@ class EntryTextBox extends PureComponent<EntryPickerProps, {}> {
         return(
           <EntryInputNumberWrapper className={textStyle}>
             <InputNumber
-              defaultValue={defaultValue}
+              defaultValue={defaultNumber}
               formatter={value => `${value}%`}
             />
           </EntryInputNumberWrapper>
+        );
+      case 'Inline':
+        return(
+          <EntryInputWrapper className={textStyle}>
+            <Input defaultValue={defaultText} />
+          </EntryInputWrapper>
         );
       case 'Default':
         return(

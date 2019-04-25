@@ -1,8 +1,9 @@
 import React from 'react';
-import { Menu, Dropdown, Icon } from 'antd';
-import { EntryDropdownWrapper } from './styled';
+import { Menu, Dropdown, Icon, Button } from 'antd';
+import { EntryDropdownWrapper, EntryDropdownDefault } from './styled';
 export interface EntryDropdownProps {
   titleText?: string;
+  type?: DropdownType;
   subDropdown?: Array<{ key: number; link: string ; value: string; }>;
 }
 /* Example follow
@@ -21,9 +22,10 @@ export interface EntryDropdownProps {
 *     subDropdown={dropdownData}
 *   />
 */
+declare type DropdownType = 'Default' | 'Inline' ;
 class EntryDropdown extends React.PureComponent<EntryDropdownProps> {
   public render(): JSX.Element {
-    const { titleText , subDropdown } = this.props;
+    const { titleText , subDropdown, type } = this.props;
     const menu = (
       <Menu>
         {subDropdown &&
@@ -35,15 +37,38 @@ class EntryDropdown extends React.PureComponent<EntryDropdownProps> {
         ))}
       </Menu>
     );
-    return (
-      <EntryDropdownWrapper>
-        <Dropdown overlay={menu} trigger={['click']}>
-          <a className="ant-dropdown-link" href="#">
-            {titleText} <Icon type="down" />
-          </a>
-        </Dropdown>
-      </EntryDropdownWrapper>
-    );
+    switch (type) {
+      case 'Inline':
+        return(
+          <EntryDropdownWrapper>
+            <Dropdown overlay={menu} trigger={['click']}>
+              <a className="ant-dropdown-link" href="#">
+                {titleText} <Icon type="down" />
+              </a>
+            </Dropdown>
+          </EntryDropdownWrapper>
+        );
+      case 'Default':
+        return(
+          <EntryDropdownDefault>
+            <Dropdown overlay={menu}>
+              <Button>
+                {titleText} <Icon type="down" />
+              </Button>
+            </Dropdown>
+          </EntryDropdownDefault>
+        );
+      default:
+        return(
+          <EntryDropdownDefault>
+            <Dropdown overlay={menu}>
+              <Button>
+                {titleText} <Icon type="down" />
+              </Button>
+            </Dropdown>
+          </EntryDropdownDefault>
+        );
+    }
   }
 }
 

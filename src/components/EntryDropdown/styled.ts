@@ -16,3 +16,6 @@ export const EntryDropdownWrapper = styled.section`
     }
   }
 `;
+export const EntryDropdownDefault = styled.section`
+  
+`;
