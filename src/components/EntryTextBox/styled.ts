@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 
 export const EntryInputNumberWrapper = styled.section`
   display: inline;
+  cursor: pointer;
   &.bold{
     .ant-input-number{
       border: 1px solid transparent;
@@ -10,12 +11,13 @@ export const EntryInputNumberWrapper = styled.section`
       width: auto;
       transition: all 300ms ease;
       .ant-input-number-handler-wrap{
-          opacity: 0;
+        opacity: 0;
       }
       &.ant-input-number-focused{
         border: 1px solid #d9d9d9;
         width: 90px;
         transition: width 300ms ease;
+        box-shadow: none;
         .ant-input-number-handler-wrap{
           opacity: 1;
         }

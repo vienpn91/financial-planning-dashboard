@@ -5,6 +5,10 @@ export const EntryDropdownWrapper = styled.section`
   display: inline;
   margin-left: 8px;
   width: auto;
+  a{
+    color: #202c56;
+    text-decoration: none;
+  }
   &.font-bold{
     font-weight: 800;
   }

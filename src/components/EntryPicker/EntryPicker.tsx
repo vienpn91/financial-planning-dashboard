@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
 import { DatePicker, Button } from 'antd';
+import moment from 'moment';
+import 'moment/locale/zh-cn';
 import { EntryPickerTable, DateButtonCustom } from './styled';
 
 const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
@@ -15,9 +17,16 @@ interface EntryPickerProps {
 declare type PickerType = 'month' | 'range' | 'week' | 'date' | 'custom';
 
 class EntryPicker extends PureComponent<EntryPickerProps, {}> {
+
   protected static defaultProps = {
     placeholder: '',
   };
+  public state = {
+    dateValue: null,
+  };
+  public handleOpenChange = () => {
+    console.log('đa');
+  }
 
   public render(): React.ReactNode {
     const { type, placeholder, fontStyle, textType, border } = this.props;
@@ -59,10 +68,14 @@ class EntryPicker extends PureComponent<EntryPickerProps, {}> {
           <EntryPickerTable
             className={'picker-' + type + ' has-' + border + ' font-' + fontStyle + ' text-' + textType}
           >
-            <DatePicker 
+            <DatePicker
+              value={moment('2015-01-01', 'YYYY-MM-DD')}
               renderExtraFooter={() =>
                 <DateButtonCustom>
-                  <Button type="primary">Retired</Button>
+                  <Button
+                    type="primary"
+                    onClick={this.handleOpenChange}
+                  >Retired</Button>
                 </DateButtonCustom>
               }
               showToday={false}
