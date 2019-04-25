@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 
 export const EntryDropdownWrapper = styled.section`
   display: inline;
+  margin-left: 8px;
   width: auto;
   &.font-bold{
     font-weight: 800;
