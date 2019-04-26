@@ -7,7 +7,7 @@ const { Sider } = Layout;
 const SubMenu = Menu.SubMenu;
 export const ClientInfo = styled.div.attrs({
   className: 'client-Info',
-  })`
+})`
   display: flex;
   flex-direction: column;
   justify-content: center;
