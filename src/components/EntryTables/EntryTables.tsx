@@ -73,7 +73,7 @@ class EntryTables extends React.PureComponent {
           type="date"
           textType="small"
           fontStyle="bold"
-        />
+        />``
          <EntryPicker
           type="week"
           placeholder="Week"
