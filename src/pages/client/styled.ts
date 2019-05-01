@@ -27,3 +27,10 @@ export const TextTitle = styled.span`
   margin-left: 10px;
 
 `;
+
+export const ContributionTableContainer = styled.section`
+  color: #072074;
+  font-size: 21px;
+  margin-left: 10px;
+
+`;

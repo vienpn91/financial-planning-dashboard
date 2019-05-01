@@ -1,5 +1,6 @@
 import React from 'react';
 import { get } from 'lodash';
+import ContributionWidhdrawalsTable from '../client/tables/ContributionWidhdrawalsTable';
 
 export interface BasicInformation {
   description: string;
@@ -28,6 +29,7 @@ const ExpandedAssetsRow: React.FC<BasicInformation> = (props) => {
       <p>
         Client is seeking advice for <b>{lookingForCoupleAdvice ? 'couple' : 'couple'}</b>
       </p>
+      <ContributionWidhdrawalsTable />
     </div>
   );
 };
