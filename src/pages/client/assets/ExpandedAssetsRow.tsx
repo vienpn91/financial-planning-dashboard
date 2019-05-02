@@ -1,9 +1,11 @@
 import React from 'react';
 import { get } from 'lodash';
 import ContributionWithdrawalsTable from './ContributionWithdrawalsTable';
+import SGContributionTable from './SGContributionTable';
 
 export interface AssetProps {
   description: string;
+  type: string;
   expandable: {
     riskProfile: string;
     lookingForCoupleAdvice?: boolean;
@@ -33,7 +35,8 @@ const ExpandedAssetsRow: React.FC<AssetProps> = (props) => {
       <p>
         Client is seeking advice for <b>{lookingForCoupleAdvice ? 'couple' : 'couple'}</b>
       </p>
-      <ContributionWithdrawalsTable />
+      {props.type === 'Super' && <SGContributionTable />}
+      {props.type !== 'Lifestyle' && <ContributionWithdrawalsTable />}
     </div>
   );
 };

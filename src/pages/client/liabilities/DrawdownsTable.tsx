@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Icon, Popconfirm, Table } from 'antd';
-import { ContributionTableContainer, HeaderTitleTable, TextTitle } from '../styled';
+import { InnerTableContainer, DivideLine, HeaderTitleTable, TextTitle } from '../styled';
 
 class DrawdownsTable extends PureComponent {
   public state = {
@@ -17,6 +17,18 @@ class DrawdownsTable extends PureComponent {
   };
 
   public columns = [
+    {
+      title: '',
+      key: 'operation',
+      className: 'operation',
+      width: 1,
+      render: (text: any, record: any) =>
+        this.state.dataSource.length >= 1 ? (
+          <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
+            <Icon type="close-square" theme="twoTone" style={{ fontSize: '16px' }} />
+          </Popconfirm>
+        ) : null,
+    },
     {
       title: 'Type',
       dataIndex: 'type',
@@ -71,20 +83,25 @@ class DrawdownsTable extends PureComponent {
         onCell: (record: any) => ({
           record,
           editable: true,
-          dataIndex: col.dataIndex,
           title: col.title,
         }),
       };
     });
 
     return (
-      <ContributionTableContainer>
+      <InnerTableContainer>
         <HeaderTitleTable small={true}>
           <Icon type={'plus-square'} theme={'filled'} onClick={this.handleAdd} />
           <TextTitle small={true}>{'Drawdowns'}</TextTitle>
+          <DivideLine />
         </HeaderTitleTable>
-        <Table columns={columns} scroll={{ x: 950, y: 320 }} dataSource={dataSource} pagination={false} />
-      </ContributionTableContainer>
+        <Table
+          columns={columns}
+          dataSource={dataSource}
+          pagination={false}
+          size={'small'}
+        />
+      </InnerTableContainer>
     );
   }
 }

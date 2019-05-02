@@ -1,13 +1,10 @@
 import React, { PureComponent } from 'react';
-import { Icon, Popconfirm, Table } from 'antd';
+import { Icon, Popconfirm } from 'antd';
 import { TableEntryContainer, HeaderTitleTable, TextTitle } from '../styled';
-import ExpandedLiabilitiesRow from './ExpandedInsuranceRow';
-import ExpandedInsuranceRow from "./ExpandedInsuranceRow";
+import ExpandedInsuranceRow from './ExpandedInsuranceRow';
+import GeneralTable from '../GeneralTable';
 
 class InsuranceTable extends PureComponent {
-  protected static defaultProps = {
-    expanded: true,
-  };
   public state = {
     dataSource: [
       {
@@ -115,7 +112,6 @@ class InsuranceTable extends PureComponent {
         onCell: (record: any) => ({
           record,
           editable: true,
-          dataIndex: col.dataIndex,
           title: col.title,
         }),
       };
@@ -127,7 +123,7 @@ class InsuranceTable extends PureComponent {
           <Icon type={'plus-square'} theme={'filled'} onClick={this.handleAdd} />
           <TextTitle>{'Insurance'}</TextTitle>
         </HeaderTitleTable>
-        <Table
+        <GeneralTable
           loading={false}
           columns={columns}
           dataSource={dataSource}

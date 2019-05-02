@@ -1,11 +1,9 @@
 import React, { PureComponent } from 'react';
-import { Icon, Popconfirm, Table } from 'antd';
+import { Icon, Popconfirm } from 'antd';
 import { HeaderTitleTable, TableEntryContainer, TextTitle } from '../styled';
+import GeneralTable from '../GeneralTable';
 
 class ExpenditureTable extends PureComponent {
-  protected static defaultProps = {
-    expanded: true,
-  };
   public state = {
     dataSource: [
       {
@@ -111,7 +109,6 @@ class ExpenditureTable extends PureComponent {
         onCell: (record: any) => ({
           record,
           editable: true,
-          dataIndex: col.dataIndex,
           title: col.title,
         }),
       };
@@ -123,7 +120,7 @@ class ExpenditureTable extends PureComponent {
           <Icon type={'plus-square'} theme={'filled'} onClick={this.handleAdd} />
           <TextTitle>{'Expenditure'}</TextTitle>
         </HeaderTitleTable>
-        <Table columns={columns} dataSource={dataSource} pagination={false} />
+        <GeneralTable columns={columns} dataSource={dataSource} pagination={false} />
       </TableEntryContainer>
     );
   }

@@ -1,12 +1,10 @@
 import React, { PureComponent } from 'react';
-import { Icon, Popconfirm, Table } from 'antd';
+import { Icon, Popconfirm } from 'antd';
 import ExpandedAssetsRow from './ExpandedAssetsRow';
 import { TableEntryContainer, HeaderTitleTable, TextTitle } from '../styled';
+import GeneralTable from '../GeneralTable';
 
 class AssetsTable extends PureComponent {
-  protected static defaultProps = {
-    expanded: true,
-  };
   public state = {
     dataSource: [
       {
@@ -39,8 +37,8 @@ class AssetsTable extends PureComponent {
       },
       {
         key: '2',
-        description: 'Home',
-        type: 'Lifestyle',
+        description: 'Pension',
+        type: 'Account Based',
         owner: 'Client',
         value: 25000,
         investment: 'Primary Reside',
@@ -54,11 +52,11 @@ class AssetsTable extends PureComponent {
       },
       {
         key: '3',
-        description: 'Home',
-        type: 'Lifestyle',
+        description: 'QSuper',
+        type: 'Super',
         owner: 'Client',
         value: 25000,
-        investment: 'Primary Reside',
+        investment: 'Moderate',
         from: 'Existing',
         to: 'Retain',
         expandable: {
@@ -159,7 +157,6 @@ class AssetsTable extends PureComponent {
         onCell: (record: any) => ({
           record,
           editable: true,
-          dataIndex: col.dataIndex,
           title: col.title,
         }),
       };
@@ -171,7 +168,7 @@ class AssetsTable extends PureComponent {
           <Icon type={'plus-square'} theme={'filled'} onClick={this.handleAdd} />
           <TextTitle>{'Assets'}</TextTitle>
         </HeaderTitleTable>
-        <Table
+        <GeneralTable
           loading={false}
           columns={columns}
           dataSource={dataSource}

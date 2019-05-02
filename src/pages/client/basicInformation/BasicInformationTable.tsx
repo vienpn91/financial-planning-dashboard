@@ -1,12 +1,10 @@
 import React, { PureComponent } from 'react';
-import { Icon, Table } from 'antd';
+import { Icon } from 'antd';
 import ExpandedBasicInformationRow from './ExpandedBasicInformationRow';
 import { HeaderTitleTable, TableEntryContainer, TextTitle } from '../styled';
+import GeneralTable from '../GeneralTable';
 
 class BasicInformationTable extends PureComponent {
-  protected static defaultProps = {
-    expanded: true,
-  };
   public state = {
     dataSource: [
       {
@@ -96,7 +94,6 @@ class BasicInformationTable extends PureComponent {
         onCell: (record: any) => ({
           record,
           editable: true,
-          dataIndex: col.dataIndex,
           title: col.title,
         }),
       };
@@ -108,7 +105,7 @@ class BasicInformationTable extends PureComponent {
           <Icon type={'user'} />
           <TextTitle>{'Basic Information'}</TextTitle>
         </HeaderTitleTable>
-        <Table
+        <GeneralTable
           columns={columns}
           dataSource={dataSource}
           expandedRowRender={ExpandedBasicInformationRow}
