@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Icon, Popconfirm, Table } from 'antd';
+import {HeaderTitleTable, TableEntryContainer, TextTitle} from '../styled';
 
 class ExpenditureTable extends PureComponent {
   protected static defaultProps = {
@@ -26,7 +27,7 @@ class ExpenditureTable extends PureComponent {
       title: 'Description',
       dataIndex: 'description',
       width: 140,
-      fixed: 'left',
+      // fixed: 'left',
     },
     {
       title: 'Type',
@@ -66,7 +67,7 @@ class ExpenditureTable extends PureComponent {
     {
       title: 'Action',
       key: 'operation',
-      fixed: 'right',
+      // fixed: 'right',
       width: 100,
       render: (text: any, record: any) =>
         this.state.dataSource.length >= 1 ? (
@@ -105,7 +106,7 @@ class ExpenditureTable extends PureComponent {
     const columns = this.columns.map((col) => {
       return {
         ...col,
-        fixed: col.fixed || false,
+        fixed: false,
         onCell: (record: any) => ({
           record,
           editable: true,
@@ -116,19 +117,17 @@ class ExpenditureTable extends PureComponent {
     });
 
     return (
-      <>
-        <div>
+      <TableEntryContainer>
+        <HeaderTitleTable>
           <Icon type={'plus-square'} theme={'filled'} onClick={this.handleAdd} />
-          {'Expenditure'}
-        </div>
+          <TextTitle>{'Expenditure'}</TextTitle>
+        </HeaderTitleTable>
         <Table
-          // @ts-ignore
           columns={columns}
-          scroll={{ x: 950, y: 320 }}
           dataSource={dataSource}
           pagination={false}
         />
-      </>
+      </TableEntryContainer>
     );
   }
 }

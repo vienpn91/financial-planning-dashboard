@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
-import { Icon, Popconfirm, Table } from 'antd';
-import ExpandedBasicInformationRow, {BasicInformation} from '../ExpandedBasicInformationRow';
+import { Icon, Table } from 'antd';
+import ExpandedBasicInformationRow from '../ExpandedBasicInformationRow';
+import {HeaderTitleTable, TableEntryContainer, TextTitle} from '../styled';
 
 class BasicInformationTable extends PureComponent {
   protected static defaultProps = {
@@ -77,7 +78,7 @@ class BasicInformationTable extends PureComponent {
       title: 'Retirement Year',
       dataIndex: 'retirementYear',
       key: '5',
-      width: 140,
+      width: 150,
     },
     {
       title: 'Marital State',
@@ -92,7 +93,6 @@ class BasicInformationTable extends PureComponent {
       return {
         ...col,
         fixed: false,
-        // fixed: col.fixed || false,
         onCell: (record: any) => ({
           record,
           editable: true,
@@ -103,20 +103,18 @@ class BasicInformationTable extends PureComponent {
     });
 
     return (
-      <>
-        <div>
+      <TableEntryContainer>
+        <HeaderTitleTable>
           <Icon type={'user'} />
-          {'Basic Information'}
-        </div>
+          <TextTitle>{'Basic Information'}</TextTitle>
+        </HeaderTitleTable>
         <Table
-          // @ts-ignore
           columns={columns}
-          // scroll={{ x: 850, y: 300 }}
           dataSource={dataSource}
           expandedRowRender={ExpandedBasicInformationRow}
           pagination={false}
         />
-      </>
+      </TableEntryContainer>
     );
   }
 }

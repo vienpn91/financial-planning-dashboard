@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Icon, Popconfirm, Table } from 'antd';
-import { ContributionTableContainer } from '../styled';
+import {ContributionTableContainer, HeaderTitleTable, TextTitle} from '../styled';
 
 class ContributionWidhdrawalsTable extends PureComponent {
   public state = {
@@ -100,7 +100,7 @@ class ContributionWidhdrawalsTable extends PureComponent {
     const columns = this.columns.map((col) => {
       return {
         ...col,
-        fixed: col.fixed || false,
+        fixed: false,
         onCell: (record: any) => ({
           record,
           editable: true,
@@ -112,12 +112,11 @@ class ContributionWidhdrawalsTable extends PureComponent {
 
     return (
       <ContributionTableContainer>
-        <div>
+        <HeaderTitleTable small={true}>
           <Icon type={'plus-square'} theme={'filled'} onClick={this.handleAdd} />
-          {'Contribution/Widhdrawals'}
-        </div>
+          <TextTitle small={true}>{'Contribution/Withdrawals'}</TextTitle>
+        </HeaderTitleTable>
         <Table
-          // @ts-ignore
           columns={columns}
           scroll={{ x: 950, y: 320 }}
           dataSource={dataSource}
