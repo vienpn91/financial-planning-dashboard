@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { Icon, Popconfirm, Table } from 'antd';
 import {ContributionTableContainer, HeaderTitleTable, TextTitle} from '../styled';
 
-class ContributionWidhdrawalsTable extends PureComponent {
+class ContributionWithdrawalsTable extends PureComponent {
   public state = {
     dataSource: [
       {
@@ -39,18 +39,6 @@ class ContributionWidhdrawalsTable extends PureComponent {
 
   public columns = [
     {
-      title: 'Action',
-      key: 'operation',
-      fixed: 'left',
-      width: 100,
-      render: (text: any, record: any) =>
-        this.state.dataSource.length >= 1 ? (
-          <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
-            <a href="javascript:">Delete</a>
-          </Popconfirm>
-        ) : null,
-    },
-    {
       title: 'Type',
       dataIndex: 'type',
       width: 140,
@@ -72,6 +60,18 @@ class ContributionWidhdrawalsTable extends PureComponent {
       dataIndex: 'to',
       key: '3',
       width: 120,
+    },
+    {
+      title: 'Action',
+      key: 'operation',
+      // fixed: 'left',
+      width: 100,
+      render: (text: any, record: any) =>
+        this.state.dataSource.length >= 1 ? (
+          <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
+            <a href="javascript:">Delete</a>
+          </Popconfirm>
+        ) : null,
     },
   ];
 
@@ -127,4 +127,4 @@ class ContributionWidhdrawalsTable extends PureComponent {
   }
 }
 
-export default ContributionWidhdrawalsTable;
+export default ContributionWithdrawalsTable;

@@ -3,7 +3,7 @@ import { Icon, Popconfirm, Table } from 'antd';
 import ExpandedAssetsRow from '../ExpandedAssetsRow';
 import { TableEntryContainer, HeaderTitleTable, TextTitle } from '../styled';
 
-class AssetsTable extends PureComponent {
+class LiabilitiesTable extends PureComponent {
   protected static defaultProps = {
     expanded: true,
   };
@@ -18,6 +18,7 @@ class AssetsTable extends PureComponent {
         investment: 'Primary Reside',
         from: 'Existing',
         to: 'Retain',
+        render: <a href="javascript:;">{'123 google'}</a>,
         expandable: {
           riskProfile: 'defensive',
         },
@@ -68,7 +69,7 @@ class AssetsTable extends PureComponent {
         },
       },
     ],
-    count: 4,
+    count: 2,
   };
 
   public columns = [
@@ -113,42 +114,7 @@ class AssetsTable extends PureComponent {
       key: '6',
       width: 120,
     },
-    {
-      title: 'Action',
-      key: 'operation',
-      // fixed: 'left',
-      width: 100,
-      render: (text: any, record: any) =>
-        this.state.dataSource.length >= 1 ? (
-          <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
-            <a href="javascript:">Delete</a>
-          </Popconfirm>
-        ) : null,
-    },
   ];
-
-  public handleDelete = (key: string) => {
-    const dataSource = [...this.state.dataSource];
-    this.setState({ dataSource: dataSource.filter((item) => item.key !== key) });
-  }
-
-  public handleAdd = () => {
-    const { count, dataSource } = this.state;
-    const newData = {
-      key: count,
-      description: '',
-      type: '',
-      owner: '',
-      value: 0,
-      indexation: '',
-      from: '',
-      to: '',
-    };
-    this.setState({
-      dataSource: [...dataSource, newData],
-      count: count + 1,
-    });
-  }
 
   public render() {
     const { dataSource } = this.state;
@@ -168,11 +134,11 @@ class AssetsTable extends PureComponent {
     return (
       <TableEntryContainer>
         <HeaderTitleTable>
-          <Icon type={'plus-square'} theme={'filled'} onClick={this.handleAdd} />
+          <Icon type={'plus-square'} theme={'filled'}/>
           <TextTitle>{'Assets'}</TextTitle>
         </HeaderTitleTable>
         <Table
-          loading={false}
+          loading= {false}
           columns={columns}
           dataSource={dataSource}
           expandedRowRender={ExpandedAssetsRow}
@@ -183,4 +149,4 @@ class AssetsTable extends PureComponent {
   }
 }
 
-export default AssetsTable;
+export default LiabilitiesTable;
