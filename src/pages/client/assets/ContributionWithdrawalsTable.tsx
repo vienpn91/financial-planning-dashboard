@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Icon, Popconfirm, Table } from 'antd';
-import {ContributionTableContainer, HeaderTitleTable, TextTitle} from '../styled';
+import { ContributionTableContainer, HeaderTitleTable, TextTitle } from '../styled';
 
 class ContributionWithdrawalsTable extends PureComponent {
   public state = {
@@ -26,15 +26,8 @@ class ContributionWithdrawalsTable extends PureComponent {
         from: 'start',
         to: 'End',
       },
-      {
-        key: '3',
-        type: 'Custom',
-        value: 15000,
-        from: 'start',
-        to: 'End',
-      },
     ],
-    count: 4,
+    count: 3,
   };
 
   public columns = [
@@ -60,18 +53,6 @@ class ContributionWithdrawalsTable extends PureComponent {
       dataIndex: 'to',
       key: '3',
       width: 120,
-    },
-    {
-      title: 'Action',
-      key: 'operation',
-      // fixed: 'left',
-      width: 100,
-      render: (text: any, record: any) =>
-        this.state.dataSource.length >= 1 ? (
-          <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
-            <a href="javascript:">Delete</a>
-          </Popconfirm>
-        ) : null,
     },
   ];
 
@@ -116,12 +97,7 @@ class ContributionWithdrawalsTable extends PureComponent {
           <Icon type={'plus-square'} theme={'filled'} onClick={this.handleAdd} />
           <TextTitle small={true}>{'Contribution/Withdrawals'}</TextTitle>
         </HeaderTitleTable>
-        <Table
-          columns={columns}
-          scroll={{ x: 950, y: 320 }}
-          dataSource={dataSource}
-          pagination={false}
-        />
+        <Table columns={columns} scroll={{ x: 950, y: 320 }} dataSource={dataSource} pagination={false} />
       </ContributionTableContainer>
     );
   }

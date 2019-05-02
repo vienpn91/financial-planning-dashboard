@@ -4,6 +4,7 @@ import IncomeTable from './income/IncomeTable';
 import ExpenditureTable from './expenditure/ExpenditureTable';
 import AssetsTable from './assets/AssetsTable';
 import LiabilitiesTable from './liabilities/LiabilitiesTable';
+import InsuranceTable from './insurance/InsuranceTable';
 
 interface DataEntryProps {
   tabName: string;
@@ -18,6 +19,7 @@ class DataEntry extends PureComponent<DataEntryProps> {
         <ExpenditureTable />
         <AssetsTable />
         <LiabilitiesTable />
+        <InsuranceTable />
       </div>
     );
   }

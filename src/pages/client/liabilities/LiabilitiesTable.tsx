@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Icon, Popconfirm, Table } from 'antd';
-import ExpandedAssetsRow from '../assets/ExpandedAssetsRow';
 import { TableEntryContainer, HeaderTitleTable, TextTitle } from '../styled';
-import ExpandedLiabilitiesRow from "./ExpandedLiabilitiesRow";
+import ExpandedLiabilitiesRow from './ExpandedLiabilitiesRow';
 
 class LiabilitiesTable extends PureComponent {
   protected static defaultProps = {
@@ -38,38 +37,8 @@ class LiabilitiesTable extends PureComponent {
           lookingForCoupleAdvice: false,
         },
       },
-      {
-        key: '2',
-        description: 'Home',
-        type: 'Lifestyle',
-        owner: 'Client',
-        value: 25000,
-        investment: 'Primary Reside',
-        from: 'Existing',
-        to: 'Retain',
-        expandable: {
-          riskProfile: 'defensive',
-          hasPrivateHealthInsurance: true,
-          lookingForCoupleAdvice: false,
-        },
-      },
-      {
-        key: '3',
-        description: 'Home',
-        type: 'Lifestyle',
-        owner: 'Client',
-        value: 25000,
-        investment: 'Primary Reside',
-        from: 'Existing',
-        to: 'Retain',
-        expandable: {
-          riskProfile: 'defensive',
-          hasPrivateHealthInsurance: true,
-          lookingForCoupleAdvice: false,
-        },
-      },
     ],
-    count: 4,
+    count: 2,
   };
 
   public columns = [

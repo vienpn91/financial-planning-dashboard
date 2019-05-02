@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Icon, Popconfirm, Table } from 'antd';
-import {HeaderTitleTable, TableEntryContainer, TextTitle} from '../styled';
+import { HeaderTitleTable, TableEntryContainer, TextTitle } from '../styled';
 
 class IncomeTable extends PureComponent {
   protected static defaultProps = {
@@ -133,11 +133,7 @@ class IncomeTable extends PureComponent {
           <Icon type={'plus-square'} theme={'filled'} onClick={this.handleAdd} />
           <TextTitle>{'Income'}</TextTitle>
         </HeaderTitleTable>
-        <Table
-          columns={columns}
-          dataSource={dataSource}
-          pagination={false}
-        />
+        <Table columns={columns} dataSource={dataSource} pagination={false} />
       </TableEntryContainer>
     );
   }

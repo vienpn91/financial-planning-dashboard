@@ -1,8 +1,9 @@
 import React from 'react';
 import { get } from 'lodash';
-import ContributionWithdrawalsTable from './ContributionWithdrawalsTable';
+import PremiumFeeDetailsTable from './PremiumFeeDetailsTable';
+import CoverDetailsTable from "./CoverDetailsTable";
 
-export interface AssetProps {
+export interface LiabilityProps {
   description: string;
   expandable: {
     riskProfile: string;
@@ -15,7 +16,7 @@ const profileText = {
   highGrowth: 'high growth',
 };
 
-const ExpandedAssetsRow: React.FC<AssetProps> = (props) => {
+const ExpandedInsuranceRow: React.FC<LiabilityProps> = (props) => {
   const { expandable } = props;
   const { riskProfile, lookingForCoupleAdvice } = expandable;
   return (
@@ -33,9 +34,10 @@ const ExpandedAssetsRow: React.FC<AssetProps> = (props) => {
       <p>
         Client is seeking advice for <b>{lookingForCoupleAdvice ? 'couple' : 'couple'}</b>
       </p>
-      <ContributionWithdrawalsTable />
+      <PremiumFeeDetailsTable />
+      <CoverDetailsTable />
     </div>
   );
 };
 
-export default ExpandedAssetsRow;
+export default ExpandedInsuranceRow;

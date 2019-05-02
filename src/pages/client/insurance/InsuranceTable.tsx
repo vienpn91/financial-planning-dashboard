@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react';
 import { Icon, Popconfirm, Table } from 'antd';
-import { HeaderTitleTable, TableEntryContainer, TextTitle } from '../styled';
+import { TableEntryContainer, HeaderTitleTable, TextTitle } from '../styled';
+import ExpandedLiabilitiesRow from './ExpandedInsuranceRow';
+import ExpandedInsuranceRow from "./ExpandedInsuranceRow";
 
-class ExpenditureTable extends PureComponent {
+class InsuranceTable extends PureComponent {
   protected static defaultProps = {
     expanded: true,
   };
@@ -10,13 +12,16 @@ class ExpenditureTable extends PureComponent {
     dataSource: [
       {
         key: '0',
-        description: 'Living Expenses',
-        type: 'employment',
+        description: 'Home Loan',
+        type: 'None-Deducti...',
         owner: 'Client',
-        value: 1000,
-        indexation: 'inflationCPI',
-        from: 'start',
-        to: 'end',
+        value: 2512000,
+        investment: 'Primary Reside',
+        from: 'Existing',
+        to: 'Retain',
+        expandable: {
+          riskProfile: 'defensive',
+        },
       },
     ],
     count: 1,
@@ -27,13 +32,12 @@ class ExpenditureTable extends PureComponent {
       title: 'Description',
       dataIndex: 'description',
       width: 140,
-      // fixed: 'left',
     },
     {
       title: 'Type',
       dataIndex: 'type',
       key: '1',
-      width: 120,
+      width: 150,
     },
     {
       title: 'Owner',
@@ -45,13 +49,13 @@ class ExpenditureTable extends PureComponent {
       title: 'Value',
       dataIndex: 'value',
       key: '3',
-      width: 120,
+      width: 150,
     },
     {
-      title: 'Indexation',
-      dataIndex: 'indexation',
+      title: 'Investment',
+      dataIndex: 'investment',
       key: '4',
-      width: 120,
+      width: 160,
     },
     {
       title: 'From',
@@ -121,12 +125,18 @@ class ExpenditureTable extends PureComponent {
       <TableEntryContainer>
         <HeaderTitleTable>
           <Icon type={'plus-square'} theme={'filled'} onClick={this.handleAdd} />
-          <TextTitle>{'Expenditure'}</TextTitle>
+          <TextTitle>{'Insurance'}</TextTitle>
         </HeaderTitleTable>
-        <Table columns={columns} dataSource={dataSource} pagination={false} />
+        <Table
+          loading={false}
+          columns={columns}
+          dataSource={dataSource}
+          expandedRowRender={ExpandedInsuranceRow}
+          pagination={false}
+        />
       </TableEntryContainer>
     );
   }
 }
 
-export default ExpenditureTable;
+export default InsuranceTable;

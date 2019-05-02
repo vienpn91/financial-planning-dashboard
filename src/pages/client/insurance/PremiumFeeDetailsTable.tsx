@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { Icon, Popconfirm, Table } from 'antd';
 import { ContributionTableContainer, HeaderTitleTable, TextTitle } from '../styled';
 
-class DrawdownsTable extends PureComponent {
+class PremiumFeeDetailsTable extends PureComponent {
   public state = {
     dataSource: [
       {
@@ -12,8 +12,29 @@ class DrawdownsTable extends PureComponent {
         from: 'start',
         to: 'End',
       },
+      {
+        key: '1',
+        type: 'Custom',
+        value: 10000,
+        from: 'start',
+        to: 'End',
+      },
+      {
+        key: '2',
+        type: 'Custom',
+        value: 25000,
+        from: 'start',
+        to: 'End',
+      },
+      {
+        key: '3',
+        type: 'Custom',
+        value: 15000,
+        from: 'start',
+        to: 'End',
+      },
     ],
-    count: 1,
+    count: 4,
   };
 
   public columns = [
@@ -81,7 +102,7 @@ class DrawdownsTable extends PureComponent {
       <ContributionTableContainer>
         <HeaderTitleTable small={true}>
           <Icon type={'plus-square'} theme={'filled'} onClick={this.handleAdd} />
-          <TextTitle small={true}>{'Drawdowns'}</TextTitle>
+          <TextTitle small={true}>{'Premium & Fee Details'}</TextTitle>
         </HeaderTitleTable>
         <Table columns={columns} scroll={{ x: 950, y: 320 }} dataSource={dataSource} pagination={false} />
       </ContributionTableContainer>
@@ -89,4 +110,4 @@ class DrawdownsTable extends PureComponent {
   }
 }
 
-export default DrawdownsTable;
+export default PremiumFeeDetailsTable;

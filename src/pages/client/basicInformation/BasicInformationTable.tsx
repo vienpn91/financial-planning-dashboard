@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Icon, Table } from 'antd';
 import ExpandedBasicInformationRow from './ExpandedBasicInformationRow';
-import {HeaderTitleTable, TableEntryContainer, TextTitle} from '../styled';
+import { HeaderTitleTable, TableEntryContainer, TextTitle } from '../styled';
 
 class BasicInformationTable extends PureComponent {
   protected static defaultProps = {
