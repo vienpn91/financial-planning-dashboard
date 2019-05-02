@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Icon, Table } from 'antd';
-import ExpandedBasicInformationRow from '../ExpandedBasicInformationRow';
+import ExpandedBasicInformationRow from './ExpandedBasicInformationRow';
 import {HeaderTitleTable, TableEntryContainer, TextTitle} from '../styled';
 
 class BasicInformationTable extends PureComponent {

@@ -63,6 +63,7 @@ class ExpenditureTable extends PureComponent {
       title: 'To',
       dataIndex: 'to',
       key: '6',
+      width: 120,
     },
     {
       title: 'Action',

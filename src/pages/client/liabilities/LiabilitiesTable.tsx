@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react';
 import { Icon, Popconfirm, Table } from 'antd';
-import {HeaderTitleTable, TableEntryContainer, TextTitle} from "../styled";
+import ExpandedAssetsRow from '../assets/ExpandedAssetsRow';
+import { TableEntryContainer, HeaderTitleTable, TextTitle } from '../styled';
+import ExpandedLiabilitiesRow from "./ExpandedLiabilitiesRow";
 
-class IncomeTable extends PureComponent {
+class LiabilitiesTable extends PureComponent {
   protected static defaultProps = {
     expanded: true,
   };
@@ -10,26 +12,64 @@ class IncomeTable extends PureComponent {
     dataSource: [
       {
         key: '0',
-        description: 'Salary',
-        type: 'employment',
+        description: 'Home Loan',
+        type: 'None-Deducti...',
         owner: 'Client',
-        value: 1000,
-        indexation: 'salaryInflation',
-        from: 'start',
-        to: 'clientRetirement',
+        value: 2512000,
+        investment: 'Primary Reside',
+        from: 'Existing',
+        to: 'Retain',
+        expandable: {
+          riskProfile: 'defensive',
+        },
       },
       {
         key: '1',
-        description: 'Rental',
-        type: 'taxable',
-        owner: 'Partner',
-        value: 1000,
-        indexation: 'inflationCPI',
-        from: 'start',
-        to: 'end',
+        description: 'Shares',
+        type: 'Direct Invest',
+        owner: 'Client',
+        value: 1000000,
+        investment: 'Australian Equity',
+        from: 'Existing',
+        to: 'Retain',
+        expandable: {
+          riskProfile: 'defensive',
+          hasPrivateHealthInsurance: true,
+          lookingForCoupleAdvice: false,
+        },
+      },
+      {
+        key: '2',
+        description: 'Home',
+        type: 'Lifestyle',
+        owner: 'Client',
+        value: 25000,
+        investment: 'Primary Reside',
+        from: 'Existing',
+        to: 'Retain',
+        expandable: {
+          riskProfile: 'defensive',
+          hasPrivateHealthInsurance: true,
+          lookingForCoupleAdvice: false,
+        },
+      },
+      {
+        key: '3',
+        description: 'Home',
+        type: 'Lifestyle',
+        owner: 'Client',
+        value: 25000,
+        investment: 'Primary Reside',
+        from: 'Existing',
+        to: 'Retain',
+        expandable: {
+          riskProfile: 'defensive',
+          hasPrivateHealthInsurance: true,
+          lookingForCoupleAdvice: false,
+        },
       },
     ],
-    count: 2,
+    count: 4,
   };
 
   public columns = [
@@ -37,13 +77,12 @@ class IncomeTable extends PureComponent {
       title: 'Description',
       dataIndex: 'description',
       width: 140,
-      // fixed: 'left',
     },
     {
       title: 'Type',
       dataIndex: 'type',
       key: '1',
-      width: 120,
+      width: 150,
     },
     {
       title: 'Owner',
@@ -55,13 +94,13 @@ class IncomeTable extends PureComponent {
       title: 'Value',
       dataIndex: 'value',
       key: '3',
-      width: 120,
+      width: 150,
     },
     {
-      title: 'Indexation',
-      dataIndex: 'indexation',
+      title: 'Investment',
+      dataIndex: 'investment',
       key: '4',
-      width: 120,
+      width: 160,
     },
     {
       title: 'From',
@@ -73,6 +112,7 @@ class IncomeTable extends PureComponent {
       title: 'To',
       dataIndex: 'to',
       key: '6',
+      width: 120,
     },
     {
       title: 'Action',
@@ -130,11 +170,13 @@ class IncomeTable extends PureComponent {
       <TableEntryContainer>
         <HeaderTitleTable>
           <Icon type={'plus-square'} theme={'filled'} onClick={this.handleAdd} />
-          <TextTitle>{'Income'}</TextTitle>
+          <TextTitle>{'Liabilities'}</TextTitle>
         </HeaderTitleTable>
         <Table
+          loading={false}
           columns={columns}
           dataSource={dataSource}
+          expandedRowRender={ExpandedLiabilitiesRow}
           pagination={false}
         />
       </TableEntryContainer>
@@ -142,4 +184,4 @@ class IncomeTable extends PureComponent {
   }
 }
 
-export default IncomeTable;
+export default LiabilitiesTable;

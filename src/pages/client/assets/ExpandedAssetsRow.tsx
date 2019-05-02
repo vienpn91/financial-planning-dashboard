@@ -1,8 +1,8 @@
 import React from 'react';
 import { get } from 'lodash';
-import ContributionWithdrawalsTable from './tables/ContributionWithdrawalsTable';
+import ContributionWithdrawalsTable from './ContributionWithdrawalsTable';
 
-export interface BasicInformation {
+export interface AssetProps {
   description: string;
   expandable: {
     riskProfile: string;
@@ -15,7 +15,7 @@ const profileText = {
   highGrowth: 'high growth',
 };
 
-const ExpandedAssetsRow: React.FC<BasicInformation> = (props) => {
+const ExpandedAssetsRow: React.FC<AssetProps> = (props) => {
   const { expandable } = props;
   const { riskProfile, lookingForCoupleAdvice } = expandable;
   return (

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Icon, Popconfirm, Table } from 'antd';
-import ExpandedAssetsRow from '../ExpandedAssetsRow';
+import ExpandedAssetsRow from './ExpandedAssetsRow';
 import { TableEntryContainer, HeaderTitleTable, TextTitle } from '../styled';
 
 class AssetsTable extends PureComponent {

@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react';
-import BasicInformationTable from './tables/BasicInformationTable';
-import IncomeTable from './tables/IncomeTable';
-import ExpenditureTable from './tables/ExpenditureTable';
-import AssetsTable from './tables/AssetsTable';
+import BasicInformationTable from './basicInformation/BasicInformationTable';
+import IncomeTable from './income/IncomeTable';
+import ExpenditureTable from './expenditure/ExpenditureTable';
+import AssetsTable from './assets/AssetsTable';
+import LiabilitiesTable from './liabilities/LiabilitiesTable';
 
 interface DataEntryProps {
   tabName: string;
@@ -16,6 +17,7 @@ class DataEntry extends PureComponent<DataEntryProps> {
         <IncomeTable />
         <ExpenditureTable />
         <AssetsTable />
+        <LiabilitiesTable />
       </div>
     );
   }
