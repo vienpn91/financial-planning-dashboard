@@ -126,7 +126,7 @@ class LiabilitiesTable extends PureComponent {
         fixed: false,
         onCell: (record: any) => ({
           record,
-          editable: true,
+          editable: 'true',
           title: col.title,
         }),
       };
