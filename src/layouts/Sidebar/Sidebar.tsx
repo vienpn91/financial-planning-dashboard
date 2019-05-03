@@ -12,7 +12,7 @@ import {
   StatusTags,
   ClientSide,
   SkeletonClient,
-  ClientRoot
+  ClientRoot,
 } from './styled';
 import { default as ModalNameAndBirthDay } from '../../components/NameAndBirthDay/NameAndBirthDay';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
@@ -69,23 +69,23 @@ class Sidebar extends React.PureComponent<SidebarProps & RouteComponentProps> {
           </StatusItem>
         }
       >
-        <SubList key="1" onClick={() => this.showTable('current')}>
+        <SubList key={tagName + '1'} onClick={() => this.showTable('current')}>
           <i className="icon-current" />
           <span>Current</span>
         </SubList>
-        <SubList key="2" onClick={() => this.showTable('strategy')}>
+        <SubList key={tagName + '2'} onClick={() => this.showTable('strategy')}>
           <i className="icon-strategy" />
           <span>Strategy</span>
         </SubList>
-        <SubList key="3" onClick={() => this.showTable('switching')}>
+        <SubList key={tagName + '3'} onClick={() => this.showTable('switching')}>
           <i className="icon-projections" />
           <span>Switching</span>
         </SubList>
-        <SubList key="4" onClick={() => this.showTable('documents')}>
+        <SubList key={tagName + '4'} onClick={() => this.showTable('documents')}>
           <i className="icon-documents" />
           <span>Documents</span>
         </SubList>
-        <SubList key="5" onClick={() => this.showTable('presentation')}>
+        <SubList key={tagName + '5'} onClick={() => this.showTable('presentation')}>
           <i className="icon-presentation" />
           <span>Presentation</span>
         </SubList>
@@ -101,9 +101,9 @@ class Sidebar extends React.PureComponent<SidebarProps & RouteComponentProps> {
           type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
           onClick={this.toggleCollapsed}
         />
-        <ClientSide defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} mode="inline">
+        <ClientSide mode="inline">
           <ClientRoot
-            key="sub1"
+            key="user1"
             title={
               <ClientInfo onClick={this.selectClient}>
                 <Avatar size={56} style={{ color: '#fff', backgroundColor: '#383f5b' }}>
@@ -111,7 +111,8 @@ class Sidebar extends React.PureComponent<SidebarProps & RouteComponentProps> {
                 </Avatar>
                 <FullName>John Samual</FullName>
               </ClientInfo>
-            }>
+            }
+          >
             {this.ClientItemRender('new')}
             {this.ClientItemRender('position')}
             {this.ClientItemRender('strategy')}

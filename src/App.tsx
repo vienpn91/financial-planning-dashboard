@@ -18,7 +18,7 @@ import ApiUtils from './utils/apiUtils';
 
 export const { store, persistor } = configureStore();
 
-interface DefaultProps {
+interface RouteProps {
   component: any;
   path?: string;
   exact?: boolean;
@@ -26,7 +26,7 @@ interface DefaultProps {
   [propsName: string]: any;
 }
 
-const PublicRoute: React.SFC<DefaultProps> = (props) => {
+const PublicRoute: React.FC<RouteProps> = (props) => {
   const { component: Component, ...rest } = props;
 
   return (
@@ -41,7 +41,7 @@ const PublicRoute: React.SFC<DefaultProps> = (props) => {
   );
 };
 
-const PrivateRoute: React.SFC<DefaultProps> = (props) => {
+const PrivateRoute: React.FC<RouteProps> = (props) => {
   const { component: Component, ...rest } = props;
   if (!ApiUtils.getAccessToken()) {
     return <Redirect to="/sign-in" />;
@@ -59,6 +59,10 @@ const PrivateRoute: React.SFC<DefaultProps> = (props) => {
   );
 };
 
+const NotFound: React.FC<RouteProps> = () => {
+  return <Redirect to="/" />;
+};
+
 const AppRouter = (): JSX.Element => {
   return (
     <ThemeProvider theme={myTheme}>
@@ -70,6 +74,7 @@ const AppRouter = (): JSX.Element => {
               <PrivateRoute exact path="/" component={Home} />
               <PrivateRoute exact path="/client/:clientId/:tabName" component={Client} />
               <PrivateRoute expact path="/client/:clientId" component={Client} />
+              <PrivateRoute component={NotFound} />
             </Switch>
           </Router>
         </PersistGate>
