@@ -85,7 +85,7 @@ class ExpenditureTable extends PureComponent {
   public handleAdd = () => {
     const { count, dataSource } = this.state;
     const newData = {
-      key: count,
+      key: `${count}`,
       description: '',
       type: '',
       owner: '',
@@ -94,8 +94,9 @@ class ExpenditureTable extends PureComponent {
       from: '',
       to: '',
     };
+    dataSource.unshift(newData);
     this.setState({
-      dataSource: [...dataSource, newData],
+      dataSource,
       count: count + 1,
     });
   }

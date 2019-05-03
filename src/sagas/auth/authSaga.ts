@@ -8,7 +8,7 @@ import { RootState } from '../../reducers/reducerTypes';
 import { APIResponse } from '../../utils/apiUtils';
 
 function getAPIErrorMessage(error?: any, defaultMessage: string = 'Internal server error') {
-  return get(error, 'data.error', defaultMessage);
+  return get(error, 'dataSource.error', defaultMessage);
 }
 
 export default class AuthSaga {

@@ -4,6 +4,10 @@ import { HeaderTitleTable, TableEntryContainer, TextTitle } from '../styled';
 import GeneralTable from '../GeneralTable';
 
 class IncomeTable extends PureComponent {
+  public handlers = {
+    onAdd: () => {},
+    onDelete: () => {},
+  };
   public state = {
     dataSource: [
       {
@@ -90,12 +94,13 @@ class IncomeTable extends PureComponent {
   public handleDelete = (key: string) => {
     const dataSource = [...this.state.dataSource];
     this.setState({ dataSource: dataSource.filter((item) => item.key !== key) });
+    this.handlers.onDelete();
   }
 
   public handleAdd = () => {
     const { count, dataSource } = this.state;
     const newData = {
-      key: count,
+      key: `${count}`,
       description: '',
       type: '',
       owner: '',
@@ -104,10 +109,12 @@ class IncomeTable extends PureComponent {
       from: '',
       to: '',
     };
+    dataSource.unshift(newData);
     this.setState({
-      dataSource: [...dataSource, newData],
+      dataSource,
       count: count + 1,
     });
+    this.handlers.onAdd();
   }
 
   public render() {
@@ -127,10 +134,15 @@ class IncomeTable extends PureComponent {
     return (
       <TableEntryContainer>
         <HeaderTitleTable>
-          <Icon type={'plus-square'} theme={'filled'} onClick={this.handleAdd} />
+          <Icon type={'plus-square'} theme={'filled'} onClick={this.handleAdd}/>
           <TextTitle>{'Income'}</TextTitle>
         </HeaderTitleTable>
-        <GeneralTable columns={columns} dataSource={dataSource} pagination={false} />
+        <GeneralTable
+          getHandlers={(handlers: any) => (this.handlers = handlers)}
+          columns={columns}
+          dataSource={dataSource}
+          pagination={false}
+        />
       </TableEntryContainer>
     );
   }

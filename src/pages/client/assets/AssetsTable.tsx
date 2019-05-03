@@ -114,6 +114,7 @@ class AssetsTable extends PureComponent {
     {
       title: 'Action',
       key: 'operation',
+      dataIndex: '',
       // fixed: 'left',
       width: 100,
       render: (text: any, record: any) =>
@@ -133,17 +134,21 @@ class AssetsTable extends PureComponent {
   public handleAdd = () => {
     const { count, dataSource } = this.state;
     const newData = {
-      key: count,
+      key: `${count}`,
       description: '',
       type: '',
       owner: '',
       value: 0,
-      indexation: '',
+      investment: '',
       from: '',
       to: '',
+      expandable: {
+        riskProfile: '',
+      },
     };
+    dataSource.unshift(newData);
     this.setState({
-      dataSource: [...dataSource, newData],
+      dataSource,
       count: count + 1,
     });
   }

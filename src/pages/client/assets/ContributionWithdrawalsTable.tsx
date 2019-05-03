@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Icon, Popconfirm, Table } from 'antd';
+import {Icon, Popconfirm, Table} from 'antd';
 import { InnerTableContainer, HeaderTitleTable, TextTitle, DivideLine } from '../styled';
 
 class ContributionWithdrawalsTable extends PureComponent {
@@ -39,7 +39,7 @@ class ContributionWithdrawalsTable extends PureComponent {
       render: (text: any, record: any) =>
         this.state.dataSource.length >= 1 ? (
           <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
-            <Icon type="close-square" theme="twoTone" style={{ fontSize: '16px' }}  />
+            <Icon type="close-square" theme="twoTone" style={{ fontSize: '16px' }} />
           </Popconfirm>
         ) : null,
     },
