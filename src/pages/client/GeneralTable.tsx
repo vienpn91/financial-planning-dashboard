@@ -1,10 +1,11 @@
 import React, { PureComponent } from 'react';
-import { Table } from 'antd';
+import { Popconfirm, Table } from 'antd';
 import { ExpandIconProps, TableProps } from 'antd/lib/table';
 import Icon from 'antd/es/icon';
 import { TweenOneGroup } from 'rc-tween-one';
 import { isFunction } from 'lodash';
-import EditableCell, { EditableFormRow } from './assets/EditableCell';
+import EditableCell from './assets/EditableCell';
+import { FormikProps } from 'formik';
 
 function CustomExpandIcon(props: ExpandIconProps<any>) {
   if (!props.expandable) {
@@ -28,7 +29,10 @@ function CustomExpandIcon(props: ExpandIconProps<any>) {
 interface GeneralTableProps {
   columns: any;
   dataSource: object[];
+  newRowData?: object;
+  tableName?: string;
   getHandlers?: (arg: any) => void;
+  formProps?: FormikProps<any>;
 }
 
 class GeneralTable extends PureComponent<GeneralTableProps & TableProps<any>> {
@@ -38,6 +42,7 @@ class GeneralTable extends PureComponent<GeneralTableProps & TableProps<any>> {
 
   public state = {
     dataSource: this.props.dataSource,
+    count: this.props.dataSource.length,
   };
 
   public enterAnim = [
@@ -84,7 +89,16 @@ class GeneralTable extends PureComponent<GeneralTableProps & TableProps<any>> {
   }
 
   public onAdd = () => {
+    const { count, dataSource } = this.state;
+    const { newRowData } = this.props;
+    const newData = {
+      ...newRowData,
+      key: `${count}`,
+    };
+    dataSource.push(newData);
     this.setState({
+      dataSource,
+      count: count + 1,
       isPageTween: false,
     });
   }
@@ -99,25 +113,60 @@ class GeneralTable extends PureComponent<GeneralTableProps & TableProps<any>> {
     });
   }
 
-  public handleSave = (row: any) => {
+  public handleDelete = (key: string) => {
+    const { formProps, tableName } = this.props;
+    const dataSource = [...this.state.dataSource];
+    this.setState({ dataSource: dataSource.filter((item) => item.key !== key) });
+
+    if (formProps && tableName) {
+      const { setFieldValue, values } = formProps;
+      if (values && values[tableName]) {
+        values[tableName].splice(key, 1);
+        setFieldValue(tableName, values);
+      }
+    }
+  }
+
+  public handleSave = (arg: { tableName: string; rowIndex: string; dataIndex: number; value: any; record: any }) => {
+    const { tableName, rowIndex, dataIndex, value, record } = arg;
     const newData = [...this.state.dataSource];
-    const index = newData.findIndex((data) => row.key === data.key);
+    const index = newData.findIndex((data) => record.key === data.key);
     const item = newData[index];
     newData.splice(index, 1, {
       ...item,
-      ...row,
+      [dataIndex]: value,
     });
     this.setState({ dataSource: newData });
   }
 
   public render() {
-    const columns = this.props.columns.map((col: any) => {
+    const { dataSource } = this.state;
+    const { columns: propColumns, dataSource: propDataSource, tableName, ...props } = this.props;
+    const columns = propColumns.map((col: any) => {
+      if (col.key === 'operation') {
+        return {
+          ...col,
+          title: 'Action',
+          key: 'operation',
+          width: 100,
+          render: (text: any, record: any) =>
+            this.state.dataSource.length >= 1 ? (
+              <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
+                <a href="javascript:">Delete</a>
+              </Popconfirm>
+            ) : null,
+        };
+      }
       if (!col.editable) {
         return col;
       }
+
       return {
         ...col,
-        onCell: (record: any) => ({
+        onCell: (record: any, rowIndex: number) => ({
+          rowIndex,
+          tableName,
+          type: col.type || 'text',
           record,
           editable: col.editable,
           dataIndex: col.dataIndex,
@@ -126,14 +175,17 @@ class GeneralTable extends PureComponent<GeneralTableProps & TableProps<any>> {
         }),
       };
     });
+    const components = { body: { wrapper: this.animTag, cell: EditableCell } };
+
     return (
       <Table
         className={this.props.className}
         expandIcon={CustomExpandIcon}
         rowClassName={() => 'editable-row'}
-        components={{ body: { wrapper: this.animTag, row: EditableFormRow, cell: EditableCell } }}
-        {...this.props}
+        components={components}
+        {...props}
         columns={columns}
+        dataSource={dataSource}
         onChange={this.pageChange}
       />
     );

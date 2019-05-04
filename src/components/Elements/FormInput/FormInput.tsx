@@ -1,8 +1,7 @@
 import React, { PureComponent, createRef } from 'react';
-import { Field, FieldProps } from 'formik';
+import { FastField, Field, FieldProps } from 'formik';
 import { Form, Checkbox, Select, InputNumber } from 'antd';
 import { Input, Password } from '../../Input';
-import { isFunction } from 'lodash';
 
 interface InputProps {
   type: InputType;
@@ -11,8 +10,10 @@ interface InputProps {
   prefix?: React.ReactNode;
   autoFocus?: boolean;
   useNumberOnly?: boolean;
+  useFastField?: boolean;
   ref?: React.RefObject<any>;
   handleChange?: (e: any, name?: string, value?: any) => void;
+  handleBlur?: (e: React.FocusEvent) => void;
   onPressEnter?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   onKeyUp?: (event: React.KeyboardEvent<HTMLInputElement>, value: any) => void;
   // Input
@@ -36,34 +37,32 @@ class FormInput extends PureComponent<InputProps, {}> {
 
   private myInput = createRef<any>();
 
+  public focusInput = () => {
+    this.myInput.current.focusInput();
+  }
+
   public render(): React.ReactNode {
+    if (this.props.useFastField) {
+      return <FastField {...this.props} component={this.renderFormInput} />;
+    }
     return <Field {...this.props} component={this.renderFormInput} />;
   }
 
   private renderInputText = (props: CustomProps): React.ReactNode => {
-    const {
-      field,
-      form,
-      ref,
-      ...restProps
-    } = props;
+    const { field, form, ref, useFastField, ...restProps } = props;
     const { touched, errors } = form;
     const errorMsg = touched[field.name] && errors[field.name];
     const InputComponent = restProps.type === 'password' ? Password : Input;
 
     return (
       <Form.Item validateStatus={errorMsg ? 'error' : ''} help={errorMsg || ''}>
-        <InputComponent
-          ref={this.myInput}
-          {...field}
-          {...restProps}
-        />
+        <InputComponent ref={this.myInput} {...field} {...restProps} />
       </Form.Item>
     );
   }
 
   private renderInputNumber = (props: CustomProps): React.ReactNode => {
-    const { field, form, prefix, type, onKeyUp, handleChange, ...restProps } = props;
+    const { field, form, prefix, type, onKeyUp, handleChange, useFastField, ...restProps } = props;
     const { touched, errors, setFieldValue } = form;
     const errorMsg = touched[field.name] && errors[field.name];
 

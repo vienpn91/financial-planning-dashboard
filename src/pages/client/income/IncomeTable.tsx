@@ -2,44 +2,52 @@ import React, { PureComponent } from 'react';
 import { Icon, Popconfirm } from 'antd';
 import { HeaderTitleTable, TableEntryContainer, TextTitle } from '../styled';
 import GeneralTable from '../GeneralTable';
+import { FormikProps } from 'formik';
 
-class IncomeTable extends PureComponent {
+interface IncomeTableProps {
+  formProps: FormikProps<any>;
+  tableName?: string;
+}
+
+class IncomeTable extends PureComponent<IncomeTableProps> {
+  protected static defaultProps = { tableName: 'income' };
+
   public handlers = {
     onAdd: () => {},
     onDelete: () => {},
   };
-  public state = {
-    dataSource: [
-      {
-        key: '0',
-        description: 'Salary',
-        type: 'employment',
-        owner: 'Client',
-        value: 1000,
-        indexation: 'salaryInflation',
-        from: 'start',
-        to: 'clientRetirement',
-      },
-      {
-        key: '1',
-        description: 'Rental',
-        type: 'taxable',
-        owner: 'Partner',
-        value: 1000,
-        indexation: 'inflationCPI',
-        from: 'start',
-        to: 'end',
-      },
-    ],
-    count: 2,
-  };
+
+  public dataSource = [
+    {
+      // you have to count from 0
+      key: '0',
+      description: 'Salary',
+      type: 'employment',
+      owner: 'Client',
+      value: 1000,
+      indexation: 'salaryInflation',
+      from: 'start',
+      to: 'clientRetirement',
+    },
+    {
+      key: '1',
+      description: 'Rental',
+      type: 'taxable',
+      owner: 'Partner',
+      value: 1000,
+      indexation: 'inflationCPI',
+      from: 'start',
+      to: 'end',
+    },
+  ];
 
   public columns = [
     {
       title: 'Description',
       dataIndex: 'description',
       width: 140,
-      // fixed: 'left',
+      type: 'text',
+      key: '0',
     },
     {
       title: 'Type',
@@ -80,27 +88,24 @@ class IncomeTable extends PureComponent {
     {
       title: 'Action',
       key: 'operation',
-      // fixed: 'right',
       width: 100,
-      render: (text: any, record: any) =>
-        this.state.dataSource.length >= 1 ? (
-          <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
-            <a href="javascript:">Delete</a>
-          </Popconfirm>
-        ) : null,
     },
   ];
 
-  public handleDelete = (key: string) => {
-    const dataSource = [...this.state.dataSource];
-    this.setState({ dataSource: dataSource.filter((item) => item.key !== key) });
-    this.handlers.onDelete();
+  public handleAdd = () => {
+    this.handlers.onAdd();
   }
 
-  public handleAdd = () => {
-    const { count, dataSource } = this.state;
+  public render() {
+    const { tableName, formProps } = this.props;
+    const columns = this.columns.map((col) => {
+      return {
+        ...col,
+        editable: col.key !== 'operation' && 'true',
+        fixed: false,
+      };
+    });
     const newData = {
-      key: `${count}`,
       description: '',
       type: '',
       owner: '',
@@ -109,39 +114,21 @@ class IncomeTable extends PureComponent {
       from: '',
       to: '',
     };
-    dataSource.unshift(newData);
-    this.setState({
-      dataSource,
-      count: count + 1,
-    });
-    this.handlers.onAdd();
-  }
-
-  public render() {
-    const { dataSource } = this.state;
-    const columns = this.columns.map((col) => {
-      return {
-        ...col,
-        fixed: false,
-        onCell: (record: any) => ({
-          record,
-          editable: 'true',
-          title: col.title,
-        }),
-      };
-    });
 
     return (
       <TableEntryContainer>
         <HeaderTitleTable>
-          <Icon type={'plus-square'} theme={'filled'} onClick={this.handleAdd}/>
+          <Icon type={'plus-square'} theme={'filled'} onClick={this.handleAdd} />
           <TextTitle>{'Income'}</TextTitle>
         </HeaderTitleTable>
         <GeneralTable
           getHandlers={(handlers: any) => (this.handlers = handlers)}
           columns={columns}
-          dataSource={dataSource}
+          dataSource={this.dataSource}
           pagination={false}
+          tableName={tableName}
+          newRowData={newData}
+          formProps={formProps}
         />
       </TableEntryContainer>
     );

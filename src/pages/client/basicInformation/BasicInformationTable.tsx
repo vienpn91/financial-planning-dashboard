@@ -46,6 +46,7 @@ class BasicInformationTable extends PureComponent {
       title: 'Description',
       dataIndex: 'description',
       width: 130,
+      key: '0',
       // fixed: 'left',
     },
     {
