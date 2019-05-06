@@ -2,11 +2,12 @@
 import React from 'react';
 import { get, isFunction } from 'lodash';
 import { FormInput } from '../../../components/Elements/FormInput';
+import { InputType } from '../../../components/Elements/FormInput/FormInput';
 
 interface EditableProps {
   editable?: boolean;
   title: string;
-  type?: string;
+  type: InputType;
   record: any;
   handleSave: (arg: object) => void;
   tableName?: string;
@@ -50,8 +51,7 @@ export default class EditableCell extends React.Component<EditableProps> {
         {editable ? (
           editing ? (
             <FormInput
-              useFastField
-              type={'text'}
+              type={type}
               name={`${tableName}[${rowIndex}].${dataIndex}`}
               ref={this.input}
               onPressEnter={this.save}

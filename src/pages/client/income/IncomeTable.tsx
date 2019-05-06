@@ -48,6 +48,7 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
       width: 140,
       type: 'text',
       key: '0',
+      editable: false,
     },
     {
       title: 'Type',
@@ -101,7 +102,7 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
     const columns = this.columns.map((col) => {
       return {
         ...col,
-        editable: col.key !== 'operation' && 'true',
+        editable: col.editable === false ? false : col.key !== 'operation' && 'true',
         fixed: false,
       };
     });

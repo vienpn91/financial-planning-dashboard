@@ -2,6 +2,7 @@ import React, { PureComponent, createRef } from 'react';
 import { FastField, Field, FieldProps } from 'formik';
 import { Form, Checkbox, Select, InputNumber } from 'antd';
 import { Input, Password } from '../../Input';
+import EntryPicker from '../../EntryPicker/EntryPicker';
 
 interface InputProps {
   type: InputType;
@@ -26,7 +27,7 @@ interface InputProps {
   showSearch?: boolean;
 }
 
-declare type InputType = 'text' | 'password' | 'number' | 'checkbox' | 'select' | 'date' | 'textarea';
+export declare type InputType = 'text' | 'password' | 'number' | 'checkbox' | 'select' | 'date' | 'textarea';
 
 type CustomProps = FieldProps<any> & InputProps;
 
@@ -112,6 +113,14 @@ class FormInput extends PureComponent<InputProps, {}> {
     );
   }
 
+  private renderDatePicker = (props: CustomProps): React.ReactNode => {
+    return (
+      <Form.Item>
+        <EntryPicker ref={this.myInput} type="date" placeholder="Start" border="none" />
+      </Form.Item>
+    );
+  }
+
   private renderFormInput = (props: CustomProps): React.ReactNode => {
     const { type } = props;
     switch (type) {
@@ -126,7 +135,7 @@ class FormInput extends PureComponent<InputProps, {}> {
       case 'checkbox':
         return this.renderCheckbox(props);
       case 'date':
-        return null;
+        return this.renderDatePicker(props);
       default:
         return this.renderInputText(props);
     }

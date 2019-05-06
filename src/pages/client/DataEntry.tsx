@@ -63,11 +63,11 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
         onSubmit={(values: any, actions: FormikActions<any>) => {
           console.log({ values });
         }}
-        initialValues={{ income: [] }}
+        initialValues={tables}
         enableReinitialize
         render={(formProps: FormikProps<any>) => (
           <Form>
-            <BasicInformationTable data={[]} />
+            <BasicInformationTable data={[]} formProps={formProps} />
             <IncomeTable formProps={formProps} />
             <ExpenditureTable />
             <AssetsTable />
