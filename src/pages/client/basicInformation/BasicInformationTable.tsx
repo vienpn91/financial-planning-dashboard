@@ -4,7 +4,11 @@ import ExpandedBasicInformationRow from './ExpandedBasicInformationRow';
 import { HeaderTitleTable, TableEntryContainer, TextTitle } from '../styled';
 import GeneralTable from '../GeneralTable';
 
-class BasicInformationTable extends PureComponent {
+interface BasicInformationProps {
+  data: object[];
+}
+
+class BasicInformationTable extends PureComponent<BasicInformationProps> {
   public state = {
     dataSource: [
       {

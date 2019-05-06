@@ -5,17 +5,18 @@ import Heading from '../../components/Heading/Heading';
 import { ButtonModalFixed } from '../../components/NameAndBirthDay/styled';
 import { HomeDesc, HomePage } from '../home/styled';
 import { get } from 'lodash';
-import DataEntry from './DataEntry';
+import DataEntryComponent from './DataEntry';
 const { Content } = Layout;
 
 class Client extends React.PureComponent<RouteComponentProps> {
   public render(): JSX.Element {
     const { match } = this.props;
     const clientId = get(match, 'params.clientId');
+    const tagName = get(match, 'params.tagName');
     const tabName = get(match, 'params.tabName');
 
-    return tabName ? (
-      <DataEntry tabName={tabName} />
+    return tagName ? (
+      <DataEntryComponent tagName={tagName} clientId={clientId} tabName={tabName} />
     ) : (
       <HomePage select>
         <Content>

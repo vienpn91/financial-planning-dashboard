@@ -12,7 +12,7 @@ export interface RequestConfig extends AxiosRequestConfig {
 }
 
 export interface APIResponse {
-  data: string;
+  data: object;
   error: string;
   message: string;
   success: boolean;

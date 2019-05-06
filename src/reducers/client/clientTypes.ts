@@ -1,19 +1,31 @@
 import { Record } from 'immutable';
+import { map } from 'lodash';
 import { PayloadAction } from '../reducerTypes';
 
-export interface TaskList {
+export interface Table {
+  basicInformation?: object[];
+  income?: object[];
+  expenditure?: object[];
+  assets?: object[];
+  liabilities?: object[];
+  insurance?: object[];
+}
+
+export interface DataEntry {
+  tabName: string;
+  tables: Table;
+}
+
+export interface Tag {
   name: string;
   date: string;
-  dataEntries?: Array<{
-    tabName: string;
-    tables: Array<{ tableKey: string; tableName: string; [key: string]: any }>;
-  }>;
+  dataEntries?: DataEntry[];
 }
 
 export interface Client {
-  clientID: string;
+  clientId: string;
   clientName: string;
-  taskList?: TaskList[];
+  tagList?: Tag[];
 }
 
 export interface ClientState {
@@ -24,30 +36,26 @@ export interface ClientState {
   [propsName: string]: any;
 }
 
+export const getDefaultTagList = () => {
+  const tagList = ['new', 'position', 'strategy', 'products', 'advice', 'done'];
+  const tabList = ['current', 'strategy', 'switching', 'documents', 'presentation'];
+
+  return map(tagList, (tag) => ({
+    name: tag,
+    date: '20/03/2019',
+    dataEntries: map(tabList, (tab) => ({
+      tabName: tab,
+      tables: {},
+    })),
+  }));
+};
+
 export const defaultClientState: ClientState = {
   clients: [
     {
-      clientID: '123456',
+      clientId: '123456',
       clientName: 'John Samual',
-      taskList: [
-        {
-          name: 'New',
-          date: '20/03/2019',
-          dataEntries: [
-            {
-              tabName: 'Current',
-              tables: [
-                // { tableKey: 'basicInformation', tableName: 'Basic Information' },
-                // { tableKey: 'income', tableName: 'Income' },
-                // { tableKey: 'expenditure', tableName: 'Expenditure' },
-                // { tableKey: 'assets', tableName: 'Assets' },
-                // { tableKey: 'liabilities', tableName: 'Liabilities' },
-                // { tableKey: 'insurance', tableName: 'Insurance' },
-              ],
-            },
-          ],
-        },
-      ],
+      tagList: getDefaultTagList(),
     },
   ],
   loading: false,
@@ -73,7 +81,7 @@ export enum ClientActionTypes {
 
 export interface FetchDataEntryPayload {
   clientId: string;
-  taskName: string;
+  tagName: string;
   tabName: string;
 }
 

@@ -43,11 +43,11 @@ class Sidebar extends React.PureComponent<SidebarProps & RouteComponentProps> {
     });
   }
 
-  public showTable = (tabName: string) => {
+  public showTable = (tagName: string, tabName: string) => {
     const { history } = this.props;
     const clientId = '123456';
 
-    history.push(`/client/${clientId}/${tabName}`);
+    history.push(`/client/${clientId}/${tagName}/${tabName}`);
   }
 
   public selectClient = () => {
@@ -69,23 +69,23 @@ class Sidebar extends React.PureComponent<SidebarProps & RouteComponentProps> {
           </StatusItem>
         }
       >
-        <SubList key={tagName + '1'} onClick={() => this.showTable('current')}>
+        <SubList key={tagName + '1'} onClick={() => this.showTable(tagName, 'current')}>
           <i className="icon-current" />
           <span>Current</span>
         </SubList>
-        <SubList key={tagName + '2'} onClick={() => this.showTable('strategy')}>
+        <SubList key={tagName + '2'} onClick={() => this.showTable(tagName, 'strategy')}>
           <i className="icon-strategy" />
           <span>Strategy</span>
         </SubList>
-        <SubList key={tagName + '3'} onClick={() => this.showTable('switching')}>
+        <SubList key={tagName + '3'} onClick={() => this.showTable(tagName, 'switching')}>
           <i className="icon-projections" />
           <span>Switching</span>
         </SubList>
-        <SubList key={tagName + '4'} onClick={() => this.showTable('documents')}>
+        <SubList key={tagName + '4'} onClick={() => this.showTable(tagName, 'documents')}>
           <i className="icon-documents" />
           <span>Documents</span>
         </SubList>
-        <SubList key={tagName + '5'} onClick={() => this.showTable('presentation')}>
+        <SubList key={tagName + '5'} onClick={() => this.showTable(tagName, 'presentation')}>
           <i className="icon-presentation" />
           <span>Presentation</span>
         </SubList>
