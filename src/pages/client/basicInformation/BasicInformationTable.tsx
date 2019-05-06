@@ -12,7 +12,7 @@ interface BasicInformationProps {
 }
 
 class BasicInformationTable extends PureComponent<BasicInformationProps> {
-  protected static defaultProps = { tableName: 'income' };
+  protected static defaultProps = { tableName: 'basicInformation' };
 
   public handlers = {
     onAdd: () => {},
