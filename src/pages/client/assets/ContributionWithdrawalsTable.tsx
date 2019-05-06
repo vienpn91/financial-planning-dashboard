@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import {Icon, Popconfirm, Table} from 'antd';
 import { InnerTableContainer, HeaderTitleTable, TextTitle, DivideLine } from '../styled';
+import { TweenOneGroup } from 'rc-tween-one';
 
 class ContributionWithdrawalsTable extends PureComponent {
   public state = {
@@ -68,6 +69,42 @@ class ContributionWithdrawalsTable extends PureComponent {
     },
   ];
 
+  public enterAnim = [
+    {
+      opacity: 0,
+      x: 30,
+      duration: 0,
+      backgroundColor: '#fffeee',
+    },
+    {
+      duration: 200,
+      type: 'from',
+      delay: 250,
+      ease: 'easeOutQuad',
+    },
+    {
+      opacity: 1,
+      x: 0,
+      duration: 250,
+      ease: 'easeOutQuad',
+    },
+    { delay: 1000, backgroundColor: 'initial' },
+  ];
+  public leaveAnim = [{ duration: 250, opacity: 0 }, { duration: 200, ease: 'easeOutQuad' }];
+
+  public animTag = ($props: any) => {
+    return (
+      <TweenOneGroup
+        component="tbody"
+        enter={this.enterAnim}
+        leave={this.leaveAnim}
+        appear={false}
+        exclusive
+        {...$props}
+      />
+    );
+  }
+
   public handleDelete = (key: string) => {
     const dataSource = [...this.state.dataSource];
     this.setState({ dataSource: dataSource.filter((item) => item.key !== key) });
@@ -101,7 +138,7 @@ class ContributionWithdrawalsTable extends PureComponent {
         }),
       };
     });
-
+    const components = { body: { wrapper: this.animTag, } };
     return (
       <InnerTableContainer>
         <HeaderTitleTable small={true}>
@@ -109,7 +146,7 @@ class ContributionWithdrawalsTable extends PureComponent {
           <TextTitle small={true}>{'Contribution/Withdrawals'}</TextTitle>
           <DivideLine />
         </HeaderTitleTable>
-        <Table columns={columns} dataSource={dataSource} pagination={false} size={'small'} />
+        <Table columns={columns} dataSource={dataSource} pagination={false} components={components} size={'small'} />
       </InnerTableContainer>
     );
   }

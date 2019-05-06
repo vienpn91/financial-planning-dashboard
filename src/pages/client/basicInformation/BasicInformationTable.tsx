@@ -107,6 +107,7 @@ class BasicInformationTable extends PureComponent {
           <TextTitle>{'Basic Information'}</TextTitle>
         </HeaderTitleTable>
         <GeneralTable
+          className={'basic-information-table'}
           columns={columns}
           dataSource={dataSource}
           expandedRowRender={ExpandedBasicInformationRow}

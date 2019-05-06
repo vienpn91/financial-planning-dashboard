@@ -12,6 +12,19 @@ export const TableEntryContainer = styled.section.attrs({
   className: 'table-entry-container',
 })`
   padding: 20px;
+  .ant-table-tbody{
+    & > tr {
+      &:hover{
+        }
+      }
+    }
+  }
+  .ant-table-expand-icon-th,
+  .ant-table-row-expand-icon-cell{
+    width: 40px;
+    padding: 16px 0px;
+    min-width: 40px;
+  }
   .ant-table-thead > tr > th{
     background-color: #eaedef;
     color: #505c84;
@@ -47,6 +60,9 @@ export const DivideLine = styled.span`
 export const InnerTableContainer = styled.section`
   color: #072074;
   font-size: 21px;
+  .ant-table-wrapper{
+    margin-left: -38px;
+  }
   .ant-table-small {
     border: none;
     & > .ant-table-content > .ant-table-body {
@@ -72,9 +88,8 @@ export const InnerTableContainer = styled.section`
     & > .ant-table-content > .ant-table-body > table > .ant-table-tbody > tr > td {
       border-bottom: none;
       padding: 2px 0;
+      width: 20px;
       &.operation {
-        position: absolute;
-        left: -50px;
       }
     }
   }
