@@ -59,34 +59,32 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
     const { tables } = this.props;
 
     return (
-      <>
-        <Formik
-          onSubmit={(values: any, actions: FormikActions<any>) => {
-            console.log({ values });
-          }}
-          initialValues={{ income: [] }}
-          enableReinitialize
-          render={(formProps: FormikProps<any>) => (
-            <Form>
-              <BasicInformationTable data={[]} />
-              <IncomeTable formProps={formProps} />
-              <ExpenditureTable />
-              <AssetsTable />
-              <LiabilitiesTable />
-              <InsuranceTable />
+      <Formik
+        onSubmit={(values: any, actions: FormikActions<any>) => {
+          console.log({ values });
+        }}
+        initialValues={{ income: [] }}
+        enableReinitialize
+        render={(formProps: FormikProps<any>) => (
+          <Form>
+            <BasicInformationTable data={[]} />
+            <IncomeTable formProps={formProps} />
+            <ExpenditureTable />
+            <AssetsTable />
+            <LiabilitiesTable />
+            <InsuranceTable />
 
-              <div>
-                <Button htmlType={'button'} type={'default'}>
-                  Discard
-                </Button>
-                <Button htmlType={'submit'} type={'primary'}>
-                  Submit
-                </Button>
-              </div>
-            </Form>
-          )}
-        />
-      </>
+            <div>
+              <Button htmlType={'button'} type={'default'}>
+                Discard
+              </Button>
+              <Button htmlType={'submit'} type={'primary'}>
+                Submit
+              </Button>
+            </div>
+          </Form>
+        )}
+      />
     );
   }
 }

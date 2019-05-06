@@ -66,7 +66,7 @@ export default class ClientReducer {
                   }
 
                   return {
-                    tableName: tabName,
+                    tabName,
                     tables: action.payload.dataEntry,
                   };
                 }),
