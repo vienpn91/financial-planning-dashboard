@@ -58,7 +58,7 @@ export default class EditableCell extends React.Component<EditableProps> {
               handleBlur={this.save}
             />
           ) : (
-            <div className="editable-cell-value-wrap" style={{ paddingRight: 24 }} onClick={this.toggleEdit}>
+            <div className="editable-cell-value-wrap" onClick={this.toggleEdit}>
               {restProps.children}
             </div>
           )
