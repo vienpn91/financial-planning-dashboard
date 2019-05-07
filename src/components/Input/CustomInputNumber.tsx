@@ -1,15 +1,12 @@
 import React from 'react';
 import { InputWrapper, InputLabel } from './styled';
 import { InputNumber } from 'antd';
-import { FormikHandlers } from 'formik';
-import { get, isFunction } from 'lodash';
+import { get } from 'lodash';
 
 interface CustomInputNumberProps {
   name: string;
   value: any;
   setFieldValue?: (field: string, value: any) => void;
-  // onChange: FormikHandlers['handleChange'];
-  // onBlur: FormikHandlers['handleBlur'];
   placeholder?: string;
   autoFocus?: boolean;
   ref?: React.RefObject<any>;
@@ -20,7 +17,6 @@ class CustomInputNumber extends React.PureComponent<CustomInputNumberProps> {
 
   public focusInput = () => {
     if (get(this.myRef, 'current.focus')) {
-      debugger;
       this.myRef.current.focus();
     }
   }
@@ -28,7 +24,6 @@ class CustomInputNumber extends React.PureComponent<CustomInputNumberProps> {
   public handleChange = (value: any) => {
     const { setFieldValue, name } = this.props;
 
-    debugger;
     if (setFieldValue) {
       setFieldValue(name, value);
     }
@@ -59,11 +54,7 @@ class CustomInputNumber extends React.PureComponent<CustomInputNumberProps> {
 
     return (
       <InputWrapper>
-        <InputNumber
-          {...props}
-          ref={this.myRef}
-          onChange={this.handleChange}
-        />
+        <InputNumber {...props} ref={this.myRef} onChange={this.handleChange} />
         {placeholder && <InputLabel>{placeholder}</InputLabel>}
       </InputWrapper>
     );
