@@ -1,9 +1,10 @@
 import React, { PureComponent, createRef } from 'react';
 import { FastField, Field, FieldProps } from 'formik';
-import { Form, Checkbox, InputNumber } from 'antd';
+import { Form, Checkbox } from 'antd';
 import { Input, Password } from '../../Input';
 import EntryPicker from '../../EntryPicker/EntryPicker';
-import Select from '../../Input/Select';
+import Select from '../../Input/CustomSelect';
+import CustomInputNumber from '../../Input/CustomInputNumber';
 
 interface InputProps {
   type: InputType;
@@ -20,7 +21,7 @@ interface InputProps {
   onKeyUp?: (event: React.KeyboardEvent<HTMLInputElement>, value: any) => void;
   // Input
   maxLength?: number;
-  // Input Number
+  // CustomInputNumber Number
   min?: number;
   max?: number;
   // Select
@@ -71,7 +72,7 @@ class FormInput extends PureComponent<InputProps, {}> {
 
     return (
       <Form.Item validateStatus={errorMsg ? 'error' : ''} help={errorMsg || ''}>
-        <InputNumber {...field} {...restProps} onChange={(value) => setFieldValue(field.name, value)} />
+        <CustomInputNumber ref={this.myInput} {...field} {...restProps} setFieldValue={setFieldValue} />
       </Form.Item>
     );
   }

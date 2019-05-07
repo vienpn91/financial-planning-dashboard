@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputWrapper, InputLogin, InputLabel } from './styled';
+import { InputWrapper, InputLabel } from './styled';
 import { FormikHandlers } from 'formik';
 import { get, isFunction } from 'lodash';
 import { Select } from 'antd';
@@ -19,7 +19,7 @@ interface InputProps {
   setFieldValue?: (field: string, value: any) => void;
 }
 
-class Input extends React.PureComponent<InputProps> {
+class CustomSelect extends React.PureComponent<InputProps> {
   public readonly myRef = React.createRef<any>();
 
   public focusInput = () => {
@@ -65,4 +65,4 @@ class Input extends React.PureComponent<InputProps> {
   }
 }
 
-export default Input;
+export default CustomSelect;

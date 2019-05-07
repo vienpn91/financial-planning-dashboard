@@ -54,18 +54,30 @@ class AssetsTable extends PureComponent<AssetsTableProps, AssetsTableState> {
       dataIndex: 'owner',
       key: '2',
       width: '13%',
+      type: 'select',
+      options: [
+        { value: 'client', label: 'Client' },
+      ],
     },
     {
       title: 'Value',
       dataIndex: 'value',
       key: '3',
       width: '13%',
+      type: 'number',
     },
     {
       title: 'Investment',
       dataIndex: 'investment',
       key: '4',
       width: '13%',
+      type: 'select',
+      options: [
+        { value: 'primaryResidence', label: 'Primary Residence' },
+        { value: 'australianEquity', label: 'Australian Equity' },
+        { value: 'preservation', label: 'Preservation' },
+        { value: 'moderate', label: 'Moderate' },
+      ],
     },
     {
       title: 'From',
