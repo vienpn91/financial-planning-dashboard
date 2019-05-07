@@ -53,18 +53,18 @@ class AssetsTable extends PureComponent<AssetsTableProps, AssetsTableState> {
       title: 'Owner',
       dataIndex: 'owner',
       key: '2',
-      width: '13%',
       type: 'select',
       options: [
         { value: 'client', label: 'Client' },
       ],
+      width: 'calc(13% - 20px)',
     },
     {
       title: 'Value',
       dataIndex: 'value',
       key: '3',
-      width: '13%',
       type: 'number',
+      width: 'calc(13% - 20px)',
     },
     {
       title: 'Investment',

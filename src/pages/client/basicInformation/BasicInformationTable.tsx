@@ -59,7 +59,7 @@ class BasicInformationTable extends PureComponent<BasicInformationProps> {
       dataIndex: 'description',
       key: '0',
       editable: false,
-      width: '15%',
+      width: 'calc(15% - 20px)',
     },
     {
       title: 'First Name',
@@ -101,7 +101,7 @@ class BasicInformationTable extends PureComponent<BasicInformationProps> {
       dataIndex: 'maritalState',
       key: '6',
       type: 'select',
-      width: '15%',
+      width: 'calc(15% - 20px)',
     },
   ];
 

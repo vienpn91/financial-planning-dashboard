@@ -50,13 +50,13 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
       type: 'text',
       key: '0',
       editable: false,
-      width: '13%',
+      width: 'calc(13% - 20px)',
     },
     {
       title: 'Type',
       dataIndex: 'type',
       key: '1',
-      width: '12%',
+      width: 'calc(12% - 20px)',
       type: 'select',
     },
     {
@@ -84,8 +84,8 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
       title: 'From',
       dataIndex: 'from',
       key: '5',
-      width: '13%',
       type: 'date',
+      width: '13%',
     },
     {
       title: 'To',

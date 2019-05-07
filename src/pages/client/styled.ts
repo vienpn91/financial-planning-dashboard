@@ -63,6 +63,10 @@ export const TableEntryContainer = styled.section.attrs({
       }
     }
   }
+  .ant-calendar-picker-clear, 
+  .ant-calendar-picker-icon{
+    right: 20px
+  }
   .ant-table-expand-icon-col{
     width: 40px;
   }
