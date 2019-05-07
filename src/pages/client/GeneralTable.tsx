@@ -32,7 +32,8 @@ interface GeneralTableProps {
   newRowData?: object;
   tableName?: string;
   getHandlers?: (arg: any) => void;
-  formProps?: FormikProps<any>;
+  handleDelete?: (key: number) => void;
+  handleAdd?: () => void;
 }
 
 class GeneralTable extends PureComponent<GeneralTableProps & TableProps<any>> {
@@ -114,20 +115,24 @@ class GeneralTable extends PureComponent<GeneralTableProps & TableProps<any>> {
   }
 
   public handleDelete = (key: string) => {
-    const { formProps, tableName } = this.props;
+    const { handleDelete, tableName } = this.props;
     const dataSource = [...this.state.dataSource];
     this.setState({ dataSource: dataSource.filter((item) => item.key !== key) });
 
-    if (formProps && tableName) {
-      const { setFieldValue, values } = formProps;
-      if (values && values[tableName]) {
-        values[tableName].splice(key, 1);
-        setFieldValue(tableName, values);
-      }
+    if (isFunction(handleDelete)) {
+      handleDelete(key);
     }
+
+    // if (formProps && tableName) {
+    //   const { setFieldValue, values } = formProps;
+    //   if (values && values[tableName]) {
+    //     values[tableName].splice(key, 1);
+    //     setFieldValue(tableName, values);
+    //   }
+    // }
   }
 
-  public handleSave = (arg: { tableName: string; rowIndex: string; dataIndex: number; value: any; record: any }) => {
+  public handleSave = (arg: { tableName: string; rowIndex: number; dataIndex: number; value: any; record: any }) => {
     const { tableName, rowIndex, dataIndex, value, record } = arg;
     const newData = [...this.state.dataSource];
     const index = newData.findIndex((data) => record.key === data.key);

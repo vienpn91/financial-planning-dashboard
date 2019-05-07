@@ -68,8 +68,19 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
           enableReinitialize
           render={(formProps: FormikProps<any>) => (
             <Form>
-              <BasicInformationTable data={[]} formProps={formProps} />
-              {/*<IncomeTable formProps={formProps} />*/}
+              <BasicInformationTable data={tables && tables.basicInformation || []} formProps={formProps} />
+            </Form>
+          )}
+        />
+        <Formik
+          onSubmit={(values: any, actions: FormikActions<any>) => {
+            console.log({ values });
+          }}
+          initialValues={tables}
+          enableReinitialize
+          render={(formProps: FormikProps<any>) => (
+            <Form>
+              <IncomeTable formProps={formProps} />
               {/*<ExpenditureTable />*/}
               {/*<AssetsTable />*/}
               {/*<LiabilitiesTable />*/}
@@ -94,10 +105,9 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
           enableReinitialize
           render={(formProps: FormikProps<any>) => (
             <Form>
-              {/*<BasicInformationTable data={[]} formProps={formProps} />*/}
-              <IncomeTable formProps={formProps} />
+              {/*<IncomeTable formProps={formProps} />*/}
               {/*<ExpenditureTable />*/}
-              {/*<AssetsTable />*/}
+              <AssetsTable />
               {/*<LiabilitiesTable />*/}
               {/*<InsuranceTable />*/}
 

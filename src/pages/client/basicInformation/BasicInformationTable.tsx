@@ -130,7 +130,6 @@ class BasicInformationTable extends PureComponent<BasicInformationProps> {
           pagination={false}
           tableName={tableName}
           newRowData={newData}
-          formProps={formProps}
           expandedRowRender={ExpandedBasicInformationRow}
         />
       </TableEntryContainer>

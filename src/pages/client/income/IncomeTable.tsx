@@ -97,6 +97,19 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
     this.handlers.onAdd();
   }
 
+  public handleDelete = (key: number) => {
+    const { formProps, tableName } = this.props;
+    console.log('delete key', key);
+
+    if (formProps && tableName) {
+      const { setFieldValue, values } = formProps;
+      if (values && values[tableName]) {
+        values[tableName].splice(key, 1);
+        setFieldValue(tableName, values);
+      }
+    }
+  }
+
   public render() {
     const { tableName, formProps } = this.props;
     const columns = this.columns.map((col) => {
@@ -129,7 +142,8 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
           pagination={false}
           tableName={tableName}
           newRowData={newData}
-          formProps={formProps}
+          handleDelete={this.handleDelete}
+          handleAdd={this.handleAdd}
         />
       </TableEntryContainer>
     );

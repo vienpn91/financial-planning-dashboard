@@ -55,7 +55,7 @@ export default class EditableCell extends React.Component<EditableProps> {
               name={`${tableName}[${rowIndex}].${dataIndex}`}
               ref={this.input}
               onPressEnter={this.save}
-              handleBlur={this.save}
+              // handleBlur={this.save}
             />
           ) : (
             <div className="editable-cell-value-wrap" onClick={this.toggleEdit}>
