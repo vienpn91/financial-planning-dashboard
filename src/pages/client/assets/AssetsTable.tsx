@@ -4,9 +4,8 @@ import ExpandedAssetsRow from './ExpandedAssetsRow';
 import { TableEntryContainer, HeaderTitleTable, TextTitle } from '../styled';
 import GeneralTable from '../GeneralTable';
 import { FormikProps } from 'formik';
-import { map, isFunction } from 'lodash';
-
-const addKeyToArray = (array: object[]) => map(array, (d, index: number) => ({ key: index, ...d }));
+import { isFunction } from 'lodash';
+import {addKeyToArray} from "../DataEntry";
 
 interface AssetsTableProps {
   data: object[];

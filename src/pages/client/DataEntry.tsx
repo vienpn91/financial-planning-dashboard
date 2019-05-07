@@ -10,7 +10,7 @@ import { Form, Formik, FormikActions, FormikProps } from 'formik';
 import { Button } from 'antd';
 import { connect } from 'react-redux';
 import { RootState, StandardAction } from '../../reducers/reducerTypes';
-import { find } from 'lodash';
+import { find, map, isArray } from 'lodash';
 import {
   Client,
   Tag,
@@ -30,6 +30,15 @@ interface DataEntryProps {
   loading?: boolean;
   fetchDataEntry?: (payload: FetchDataEntryPayload) => FetchDataEntryAction;
 }
+
+export const addKeyToArray = (array: object[], defaultValue?: any) => {
+  if (isArray(array)) {
+    return map(array, (d, index: number) => ({key: index, ...d}));
+  }
+
+  return defaultValue;
+}
+
 
 class DataEntryComponent extends PureComponent<DataEntryProps> {
   public componentDidMount() {
@@ -66,7 +75,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
             // set state
             console.log(values);
           }}
-          initialValues={{ assets: (tables && tables.assets) || [] }}
+          initialValues={{ assets: (tables ? addKeyToArray(tables.assets || []) : []) }}
           enableReinitialize={true}
           render={(props: FormikProps<any>) => {
             const addRow = (row: any) => {
@@ -76,7 +85,9 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
               props.setFieldValue('assets', assets);
             };
             const deleteRow = (key: number) => {
-              console.log('deleteRow', key);
+              const assets = props.values.assets.filter((asset: any) => asset.key !== key);
+
+              props.setFieldValue('assets', assets);
             };
 
             return (
