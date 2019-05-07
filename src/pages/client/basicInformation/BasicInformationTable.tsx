@@ -56,45 +56,44 @@ class BasicInformationTable extends PureComponent<BasicInformationProps> {
     {
       title: 'Description',
       dataIndex: 'description',
-      width: 130,
       key: '0',
       editable: false,
     },
     {
       title: 'First Name',
       dataIndex: 'firstName',
+      type: 'text',
       key: '1',
-      width: 120,
     },
     {
       title: 'Last Name',
       dataIndex: 'lastName',
       key: '2',
-      width: 120,
+      type: 'text',
     },
     {
       title: 'DOB',
       dataIndex: 'dob',
       key: '3',
-      width: 120,
       type: 'date',
     },
     {
       title: 'Emp Status',
       dataIndex: 'empStatus',
       key: '4',
-      width: 120,
+      type: 'select',
     },
     {
       title: 'Retirement Year',
       dataIndex: 'retirementYear',
       key: '5',
-      width: 150,
+      type: 'date',
     },
     {
       title: 'Marital State',
       dataIndex: 'maritalState',
       key: '6',
+      type: 'select',
     },
   ];
 
@@ -129,6 +128,7 @@ class BasicInformationTable extends PureComponent<BasicInformationProps> {
           dataSource={this.dataSource}
           pagination={false}
           tableName={tableName}
+          className="basic-information-table"
           newRowData={newData}
           expandedRowRender={ExpandedBasicInformationRow}
         />

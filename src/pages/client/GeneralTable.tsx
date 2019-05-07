@@ -181,10 +181,8 @@ class GeneralTable extends PureComponent<GeneralTableProps & TableProps<any>> {
       };
     });
     const components = { body: { wrapper: this.animTag, cell: EditableCell } };
-
     return (
       <Table
-        className={this.props.className}
         expandIcon={CustomExpandIcon}
         rowClassName={() => 'editable-row'}
         components={components}
@@ -192,6 +190,7 @@ class GeneralTable extends PureComponent<GeneralTableProps & TableProps<any>> {
         columns={columns}
         dataSource={dataSource}
         onChange={this.pageChange}
+        className={`table-general ` + this.props.className}
       />
     );
   }

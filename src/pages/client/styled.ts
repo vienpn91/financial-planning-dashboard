@@ -32,7 +32,7 @@ export const TableEntryContainer = styled.section.attrs({
     background-color: #eaedef;
     color: #505c84;
     padding: 16px 10px;
-    font-weight: 900;
+    font-weight: 600;
   }
 `;
 
