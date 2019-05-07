@@ -19,6 +19,9 @@ export const TableEntryContainer = styled.section.attrs({
       margin: 0px;
       width: 100%;
       .ant-form-item-children{
+        .picker-date{
+          margin: 0px;
+        }
         & > div{
           margin: 0px;
         }
@@ -28,6 +31,8 @@ export const TableEntryContainer = styled.section.attrs({
       border-color: #d9d9d9;
       margin-left: -10px;
       cursor: pointer;
+      box-shadow: none;
+      background: transparent;
       min-height: 35px;
       border-radius: 4px;
       display: flex;
@@ -39,6 +44,10 @@ export const TableEntryContainer = styled.section.attrs({
       padding: 0 10px;
       transition: all 300ms ease;
       height: 35px;
+      &: focus{
+        border-right-width: none;
+        box-shadow: none;
+      }
     }
   }
   .ant-table-tbody{
