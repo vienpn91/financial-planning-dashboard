@@ -89,7 +89,14 @@ export const TableEntryContainer = styled.section.attrs({
     font-weight: 600;
   }
 `;
-
+export const ActionTableGeneral = styled.section`
+  display: flex;
+  margin-top: 20px;
+  flex: 0 0 100%;
+  .ant-btn{
+    margin-right: 15px;
+  }
+`;
 export const HeaderTitleTable = styled.div.attrs({
   className: 'table-entry-header',
 })<HeaderTitleTableProps>`

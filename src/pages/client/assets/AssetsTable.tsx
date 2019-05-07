@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Button, Icon, Popconfirm } from 'antd';
 import ExpandedAssetsRow from './ExpandedAssetsRow';
-import { TableEntryContainer, HeaderTitleTable, TextTitle } from '../styled';
+import { TableEntryContainer, HeaderTitleTable, TextTitle, ActionTableGeneral } from '../styled';
 import GeneralTable from '../GeneralTable';
 import { FormikProps } from 'formik';
 import { isFunction } from 'lodash';
@@ -95,6 +95,7 @@ class AssetsTable extends PureComponent<AssetsTableProps, AssetsTableState> {
       title: 'Action',
       key: 'operation',
       editable: false,
+      width: '10%',
     },
   ];
 
@@ -184,7 +185,7 @@ class AssetsTable extends PureComponent<AssetsTableProps, AssetsTableState> {
           ...col,
           title: 'Action',
           key: 'operation',
-          width: 100,
+          width: '10%',
           render: (text: any, record: any) => (
             <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
               <a href="javascript:">Delete</a>
@@ -225,14 +226,14 @@ class AssetsTable extends PureComponent<AssetsTableProps, AssetsTableState> {
           expandedRowRender={ExpandedAssetsRow}
           className={'assets-table'}
         />
-        <div>
+        <ActionTableGeneral>
           <Button htmlType={'button'} type={'default'} onClick={this.handleResetForm}>
             Discard
           </Button>
           <Button htmlType={'submit'} type={'primary'}>
             Submit
           </Button>
-        </div>
+        </ActionTableGeneral>
       </TableEntryContainer>
     );
   }
