@@ -5,7 +5,6 @@ import Icon from 'antd/es/icon';
 import { TweenOneGroup } from 'rc-tween-one';
 import { isFunction } from 'lodash';
 import EditableCell from './assets/EditableCell';
-import { FormikProps } from 'formik';
 
 function CustomExpandIcon(props: ExpandIconProps<any>) {
   if (!props.expandable) {
@@ -29,11 +28,6 @@ function CustomExpandIcon(props: ExpandIconProps<any>) {
 interface GeneralTableProps {
   columns: any;
   dataSource: object[];
-  newRowData?: object;
-  tableName?: string;
-  getHandlers?: (arg: any) => void;
-  handleDelete?: (key: string) => void;
-  handleAdd?: () => void;
 }
 
 class GeneralTable extends PureComponent<GeneralTableProps & TableProps<any>> {
@@ -69,13 +63,6 @@ class GeneralTable extends PureComponent<GeneralTableProps & TableProps<any>> {
   ];
   public leaveAnim = [{ duration: 250, opacity: 0 }, { duration: 200, ease: 'easeOutQuad' }];
 
-  public componentDidMount() {
-    const { getHandlers } = this.props;
-    if (isFunction(getHandlers)) {
-      getHandlers({ onAdd: this.onAdd, onDelete: this.onDelete });
-    }
-  }
-
   public animTag = ($props: any) => {
     return (
       <TweenOneGroup
@@ -89,38 +76,16 @@ class GeneralTable extends PureComponent<GeneralTableProps & TableProps<any>> {
     );
   }
 
-  public onAdd = () => {
-    const { count, dataSource } = this.state;
-    const { newRowData } = this.props;
-    const newData = {
-      ...newRowData,
-      key: `${count}`,
-    };
-    dataSource.push(newData);
-    this.setState({
-      dataSource,
-      count: count + 1,
-      isPageTween: false,
-    });
-  }
-
-  public onDelete = () => {
-    this.setState({ isPageTween: false });
-  }
-
   public pageChange = () => {
     this.setState({
       isPageTween: true,
     });
   }
 
-  public handleDelete = (key: string) => {
-    const { handleDelete, tableName } = this.props;
-    const dataSource = [...this.state.dataSource];
-    this.setState({ dataSource: dataSource.filter((item) => item.key !== key) });
-
+  public handleDelete = (key: number, record: any) => {
+    const { handleDelete, } = this.props;
     if (isFunction(handleDelete)) {
-      handleDelete(key);
+      handleDelete(key, record);
     }
 
     // if (formProps && tableName) {
@@ -145,8 +110,7 @@ class GeneralTable extends PureComponent<GeneralTableProps & TableProps<any>> {
   }
 
   public render() {
-    const { dataSource } = this.state;
-    const { columns: propColumns, dataSource: propDataSource, tableName, ...props } = this.props;
+    const { columns: propColumns, dataSource, tableName, ...props } = this.props;
     const columns = propColumns.map((col: any) => {
       if (col.key === 'operation') {
         return {
@@ -154,12 +118,11 @@ class GeneralTable extends PureComponent<GeneralTableProps & TableProps<any>> {
           title: 'Action',
           key: 'operation',
           width: 100,
-          render: (text: any, record: any) =>
-            this.state.dataSource.length >= 1 ? (
-              <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
-                <a href="javascript:">Delete</a>
-              </Popconfirm>
-            ) : null,
+          render: (text: any, record: any) => (
+            <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key, record)}>
+              <a href="javascript:">Delete</a>
+            </Popconfirm>
+          ),
         };
       }
       if (!col.editable) {

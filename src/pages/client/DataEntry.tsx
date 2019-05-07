@@ -27,6 +27,7 @@ interface DataEntryProps {
   tabName: string;
 
   tables?: Table;
+  loading?: boolean;
   fetchDataEntry?: (payload: FetchDataEntryPayload) => FetchDataEntryAction;
 }
 
@@ -56,72 +57,44 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
   }
 
   public render() {
-    const { tables } = this.props;
+    const { tables, loading } = this.props;
 
     return (
       <>
         <Formik
           onSubmit={(values: any, actions: FormikActions<any>) => {
+            // set state
             console.log({ values });
           }}
-          initialValues={tables}
-          enableReinitialize
-          render={(formProps: FormikProps<any>) => (
-            <Form>
-              <BasicInformationTable data={tables && tables.basicInformation || []} formProps={formProps} />
-            </Form>
-          )}
+          initialValues={(tables && tables.assets) || []}
+          render={(props: FormikProps<any>) => <AssetsTable data={(tables && tables.assets) || []} loading={loading} />}
         />
-        <Formik
-          onSubmit={(values: any, actions: FormikActions<any>) => {
-            console.log({ values });
-          }}
-          initialValues={tables}
-          enableReinitialize
-          render={(formProps: FormikProps<any>) => (
-            <Form>
-              <IncomeTable formProps={formProps} />
-              {/*<ExpenditureTable />*/}
-              {/*<AssetsTable />*/}
-              {/*<LiabilitiesTable />*/}
-              {/*<InsuranceTable />*/}
-
-              {/*<div>*/}
-              {/*  <Button htmlType={'button'} type={'default'}>*/}
-              {/*    Discard*/}
-              {/*  </Button>*/}
-              {/*  <Button htmlType={'submit'} type={'primary'}>*/}
-              {/*    Submit*/}
-              {/*  </Button>*/}
-              {/*</div>*/}
-            </Form>
-          )}
-        />
-        <Formik
-          onSubmit={(values: any, actions: FormikActions<any>) => {
-            console.log({ values });
-          }}
-          initialValues={tables}
-          enableReinitialize
-          render={(formProps: FormikProps<any>) => (
-            <Form>
-              {/*<IncomeTable formProps={formProps} />*/}
-              {/*<ExpenditureTable />*/}
-              <AssetsTable />
-              {/*<LiabilitiesTable />*/}
-              {/*<InsuranceTable />*/}
-
-              {/*<div>*/}
-              {/*  <Button htmlType={'button'} type={'default'}>*/}
-              {/*    Discard*/}
-              {/*  </Button>*/}
-              {/*  <Button htmlType={'submit'} type={'primary'}>*/}
-              {/*    Submit*/}
-              {/*  </Button>*/}
-              {/*</div>*/}
-            </Form>
-          )}
-        />
+        {/*<BasicInformationTable data={tables && tables.basicInformation || []} setFieldValue={formProps.setFieldValue} />*/}
+        {/*<ExpenditureTable />*/}
+        {/*<AssetsTable />*/}
+        {/*<LiabilitiesTable />*/}
+        {/*<InsuranceTable />*/}
+        {/*<div>*/}
+        {/*  <Button htmlType={'button'} type={'default'}>*/}
+        {/*    Discard*/}
+        {/*  </Button>*/}
+        {/*  <Button htmlType={'submit'} type={'primary'}>*/}
+        {/*    Submit*/}
+        {/*  </Button>*/}
+        {/*</div>*/}
+        {/*<IncomeTable formProps={formProps} />*/}
+        {/*<ExpenditureTable />*/}
+        {/*<AssetsTable />*/}
+        {/*<LiabilitiesTable />*/}
+        {/*<InsuranceTable />*/}
+        {/*<div>*/}
+        {/*  <Button htmlType={'button'} type={'default'}>*/}
+        {/*    Discard*/}
+        {/*  </Button>*/}
+        {/*  <Button htmlType={'submit'} type={'primary'}>*/}
+        {/*    Submit*/}
+        {/*  </Button>*/}
+        {/*</div>*/}
       </>
     );
   }
@@ -130,6 +103,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
 const mapStateToProps = (state: RootState, ownProps: DataEntryProps) => {
   let tables;
   const clients = state.client.get('clients');
+  const loading = state.client.get('loading');
   const clientId = ownProps.clientId;
   const tagName = ownProps.tagName;
   const tabName = ownProps.tabName;
@@ -147,6 +121,7 @@ const mapStateToProps = (state: RootState, ownProps: DataEntryProps) => {
 
   return {
     tables,
+    loading,
   };
 };
 

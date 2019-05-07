@@ -5,8 +5,10 @@ import GeneralTable from '../GeneralTable';
 import { FormikProps } from 'formik';
 
 interface IncomeTableProps {
-  formProps: FormikProps<any>;
+  formProps?: FormikProps<any>;
   tableName?: string;
+  data: object[];
+  setFieldValue?: (field: string, value: any) => void;
 }
 
 class IncomeTable extends PureComponent<IncomeTableProps> {
@@ -103,16 +105,16 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
     this.handlers.onAdd();
   }
 
-  public handleDelete = (key: string) => {
-    const { formProps, tableName } = this.props;
-    console.log('delete key', key);
+  public handleDelete = (key: number, record: any) => {
+    const { setFieldValue, tableName } = this.props;
+    console.log('delete', { key, record });
 
-    if (formProps && tableName) {
-      const { setFieldValue, values } = formProps;
-      if (values && values[tableName]) {
-        values[tableName].splice(key, 1);
-        setFieldValue(tableName, values);
-      }
+    if (setFieldValue && tableName) {
+      debugger;
+      // if (values && values[tableName]) {
+      //   values[tableName].splice(key, 1);
+      //   setFieldValue(tableName, values);
+      // }
     }
   }
 

@@ -6,9 +6,10 @@ import GeneralTable from '../GeneralTable';
 import { FormikProps } from 'formik';
 
 interface BasicInformationProps {
-  formProps: FormikProps<any>;
+  formProps?: FormikProps<any>;
   data: object[];
   tableName?: string;
+  setFieldValue: (field: string, value: any) => void;
 }
 
 class BasicInformationTable extends PureComponent<BasicInformationProps> {
