@@ -5,7 +5,7 @@ import { TableEntryContainer, HeaderTitleTable, TextTitle } from '../styled';
 import GeneralTable from '../GeneralTable';
 import { FormikProps } from 'formik';
 import { isFunction } from 'lodash';
-import {addKeyToArray} from "../DataEntry";
+import { addKeyToArray } from '../DataEntry';
 
 interface AssetsTableProps {
   data: object[];

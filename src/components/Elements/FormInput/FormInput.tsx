@@ -15,7 +15,7 @@ interface InputProps {
   useFastField?: boolean;
   ref?: React.RefObject<any>;
   handleChange?: (e: any, name?: string, value?: any) => void;
-  handleBlur?: (e: React.FocusEvent) => void;
+  handleBlur?: (e: React.FocusEvent | string) => void;
   onPressEnter?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   onKeyUp?: (event: React.KeyboardEvent<HTMLInputElement>, value: any) => void;
   // Input
@@ -26,6 +26,7 @@ interface InputProps {
   // Select
   options?: Array<{ value: string | number; label: string }>;
   showSearch?: boolean;
+  defaultOpen?: boolean;
 }
 
 export declare type InputType = 'text' | 'password' | 'number' | 'checkbox' | 'select' | 'date' | 'textarea';
@@ -77,7 +78,7 @@ class FormInput extends PureComponent<InputProps, {}> {
 
   private renderSelect = (props: CustomProps): React.ReactNode => {
     const {
-      field: { onChange, onBlur, ...field },
+      field: { onChange, ...field },
       form: { touched, errors, setFieldValue },
       type,
       ...restProps

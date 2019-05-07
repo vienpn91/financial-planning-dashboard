@@ -8,13 +8,13 @@ interface InputProps {
   name: string;
   value: any;
   // onChange: FormikHandlers['handleChange'];
-  // onBlur: FormikHandlers['handleBlur'];
+  onBlur: FormikHandlers['handleBlur'];
   placeholder?: string;
   prefix?: React.ReactNode;
   autoFocus?: boolean;
   ref?: React.RefObject<any>;
   handleChange?: (e: any, name?: string, value?: any) => void;
-  handleBlur?: (e: React.FocusEvent) => void;
+  handleBlur?: (e: React.FocusEvent | string) => void;
   options?: Array<{label: string, value: any}>;
   setFieldValue?: (field: string, value: any) => void;
 }
@@ -36,21 +36,21 @@ class Input extends React.PureComponent<InputProps> {
     }
   }
 
-  // public handleBlur = (e: React.FocusEvent) => {
-  //   const { onBlur, handleBlur } = this.props;
+  public handleBlur = (e: React.FocusEvent | string) => {
+    const { onBlur, handleBlur } = this.props;
 
-  //   onBlur(e);
-  //   if (handleBlur && isFunction(handleBlur)) {
-  //     handleBlur(e);
-  //   }
-  // }
+    onBlur(e);
+    if (handleBlur && isFunction(handleBlur)) {
+      handleBlur(e);
+    }
+  }
 
   public render(): JSX.Element {
     const { placeholder, options, ...props } = this.props;
 
     return (
       <InputWrapper>
-        <Select {...props} onChange={this.handleChange} ref={this.myRef}>
+        <Select {...props} onChange={this.handleChange} ref={this.myRef} onBlur={this.handleBlur}>
           {options &&
             options.length > 0 &&
             options.map((option) => (
