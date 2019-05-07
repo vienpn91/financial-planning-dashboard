@@ -11,7 +11,36 @@ interface TextTitleProps {
 export const TableEntryContainer = styled.section.attrs({
   className: 'table-entry-container',
 })`
+
   padding: 20px;
+  /* table layout here */
+  .table-general{
+    .ant-row.ant-form-item{
+      margin: 0px;
+      width: 100%;
+      .ant-form-item-children{
+        & > div{
+          margin: 0px;
+        }
+      }
+    }
+    input{
+      border-color: #d9d9d9;
+      margin-left: -10px;
+      cursor: pointer;
+      min-height: 35px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 0 10px;
+      transition: all 300ms ease;
+      height: 35px;
+    }
+  }
   .ant-table-tbody{
     & > tr {
       &:hover{

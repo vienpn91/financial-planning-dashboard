@@ -1,8 +1,9 @@
 import React, { PureComponent, createRef } from 'react';
 import { FastField, Field, FieldProps } from 'formik';
-import { Form, Checkbox, Select, InputNumber } from 'antd';
+import { Form, Checkbox, InputNumber } from 'antd';
 import { Input, Password } from '../../Input';
 import EntryPicker from '../../EntryPicker/EntryPicker';
+import Select from '../../Input/Select';
 
 interface InputProps {
   type: InputType;
@@ -78,7 +79,6 @@ class FormInput extends PureComponent<InputProps, {}> {
     const {
       field: { onChange, onBlur, ...field },
       form: { touched, errors, setFieldValue },
-      options,
       type,
       ...restProps
     } = props;
@@ -86,15 +86,7 @@ class FormInput extends PureComponent<InputProps, {}> {
 
     return (
       <Form.Item validateStatus={errorMsg ? 'error' : ''} help={errorMsg || ''}>
-        <Select {...field} {...restProps} onChange={(newValue: any) => setFieldValue(field.name, newValue)}>
-          {options &&
-            options.length > 0 &&
-            options.map((option) => (
-              <Select.Option value={option.value} key={option.value}>
-                {option.label}
-              </Select.Option>
-            ))}
-        </Select>
+        <Select ref={this.myInput} {...field} {...restProps} setFieldValue={setFieldValue} />
       </Form.Item>
     );
   }
