@@ -56,7 +56,6 @@ export default class EditableCell extends React.Component<EditableProps> {
 
   public render() {
     const { editing } = this.state;
-    // @ts-ignore
     const {
       editable,
       dataIndex,
@@ -80,6 +79,13 @@ export default class EditableCell extends React.Component<EditableProps> {
         break;
       }
     }
+    const appendProps = { defaultOpen: false };
+
+    if (this.props.type === 'select') {
+      appendProps.defaultOpen = true;
+    } else {
+      delete appendProps.defaultOpen;
+    }
 
     return (
       <td {...restProps}>
@@ -92,7 +98,7 @@ export default class EditableCell extends React.Component<EditableProps> {
               onPressEnter={this.save}
               options={options}
               handleBlur={this.save}
-              defaultOpen={true}
+              {...appendProps}
             />
           ) : (
             <div className="editable-cell-value-wrap" onClick={this.toggleEdit}>
