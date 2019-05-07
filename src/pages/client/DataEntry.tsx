@@ -54,7 +54,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
     if (fetchDataEntry) {
       fetchDataEntry(params);
     }
-  }
+  };
 
   public render() {
     const { tables, loading } = this.props;
@@ -64,10 +64,34 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
         <Formik
           onSubmit={(values: any, actions: FormikActions<any>) => {
             // set state
-            console.log({ values });
+            console.log(values);
           }}
-          initialValues={(tables && tables.assets) || []}
-          render={(props: FormikProps<any>) => <AssetsTable data={(tables && tables.assets) || []} loading={loading} />}
+          initialValues={{ assets: (tables && tables.assets) || [] }}
+          enableReinitialize={true}
+          render={(props: FormikProps<any>) => {
+            const addRow = (row: any) => {
+              const assets = [...props.values.assets];
+              assets.unshift(row);
+
+              props.setFieldValue('assets', assets);
+            };
+            const deleteRow = (key: number) => {
+              console.log('deleteRow', key);
+            };
+
+            return (
+              <Form>
+                <AssetsTable
+                  resetForm={props.resetForm}
+                  setFieldValue={props.setFieldValue}
+                  data={(tables && tables.assets) || []}
+                  loading={loading}
+                  addRow={addRow}
+                  deleteRow={deleteRow}
+                />
+              </Form>
+            );
+          }}
         />
         {/*<BasicInformationTable data={tables && tables.basicInformation || []} setFieldValue={formProps.setFieldValue} />*/}
         {/*<ExpenditureTable />*/}

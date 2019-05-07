@@ -131,13 +131,10 @@ class BasicInformationTable extends PureComponent<BasicInformationProps> {
           <TextTitle>{'Basic Information'}</TextTitle>
         </HeaderTitleTable>
         <GeneralTable
-          getHandlers={(handlers: any) => (this.handlers = handlers)}
           columns={columns}
           dataSource={this.dataSource}
           pagination={false}
-          tableName={tableName}
           className="basic-information-table"
-          newRowData={newData}
           expandedRowRender={ExpandedBasicInformationRow}
         />
       </TableEntryContainer>

@@ -1,9 +1,8 @@
 import React, { PureComponent } from 'react';
-import { Popconfirm, Table } from 'antd';
+import { Table } from 'antd';
 import { ExpandIconProps, TableProps } from 'antd/lib/table';
 import Icon from 'antd/es/icon';
 import { TweenOneGroup } from 'rc-tween-one';
-import { isFunction } from 'lodash';
 import EditableCell from './assets/EditableCell';
 
 function CustomExpandIcon(props: ExpandIconProps<any>) {
@@ -33,11 +32,6 @@ interface GeneralTableProps {
 class GeneralTable extends PureComponent<GeneralTableProps & TableProps<any>> {
   protected static defaultProps = {
     className: 'table-enter-leave',
-  };
-
-  public state = {
-    dataSource: this.props.dataSource,
-    count: this.props.dataSource.length,
   };
 
   public enterAnim = [
@@ -82,74 +76,15 @@ class GeneralTable extends PureComponent<GeneralTableProps & TableProps<any>> {
     });
   }
 
-  public handleDelete = (key: number, record: any) => {
-    const { handleDelete, } = this.props;
-    if (isFunction(handleDelete)) {
-      handleDelete(key, record);
-    }
-
-    // if (formProps && tableName) {
-    //   const { setFieldValue, values } = formProps;
-    //   if (values && values[tableName]) {
-    //     values[tableName].splice(key, 1);
-    //     setFieldValue(tableName, values);
-    //   }
-    // }
-  }
-
-  public handleSave = (arg: { tableName: string; rowIndex: number; dataIndex: number; value: any; record: any }) => {
-    const { tableName, rowIndex, dataIndex, value, record } = arg;
-    const newData = [...this.state.dataSource];
-    const index = newData.findIndex((data) => record.key === data.key);
-    const item = newData[index];
-    newData.splice(index, 1, {
-      ...item,
-      [dataIndex]: value,
-    });
-    this.setState({ dataSource: newData });
-  }
-
   public render() {
-    const { columns: propColumns, dataSource, tableName, ...props } = this.props;
-    const columns = propColumns.map((col: any) => {
-      if (col.key === 'operation') {
-        return {
-          ...col,
-          title: 'Action',
-          key: 'operation',
-          width: 100,
-          render: (text: any, record: any) => (
-            <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key, record)}>
-              <a href="javascript:">Delete</a>
-            </Popconfirm>
-          ),
-        };
-      }
-      if (!col.editable) {
-        return col;
-      }
-
-      return {
-        ...col,
-        onCell: (record: any, rowIndex: number) => ({
-          rowIndex,
-          tableName,
-          type: col.type || 'text',
-          record,
-          editable: col.editable,
-          dataIndex: col.dataIndex,
-          title: col.title,
-          handleSave: this.handleSave,
-        }),
-      };
-    });
+    const { columns, dataSource, ...props } = this.props;
     const components = { body: { wrapper: this.animTag, cell: EditableCell } };
     return (
       <Table
+        {...props}
         expandIcon={CustomExpandIcon}
         rowClassName={() => 'editable-row'}
         components={components}
-        {...props}
         columns={columns}
         dataSource={dataSource}
         onChange={this.pageChange}

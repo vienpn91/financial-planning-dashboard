@@ -144,14 +144,9 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
           <TextTitle>{'Income'}</TextTitle>
         </HeaderTitleTable>
         <GeneralTable
-          getHandlers={(handlers: any) => (this.handlers = handlers)}
           columns={columns}
           dataSource={this.dataSource}
           pagination={false}
-          tableName={tableName}
-          newRowData={newData}
-          handleDelete={this.handleDelete}
-          handleAdd={this.handleAdd}
         />
       </TableEntryContainer>
     );

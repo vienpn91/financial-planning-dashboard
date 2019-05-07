@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
-import { Icon, Popconfirm } from 'antd';
+import { Button, Icon, Popconfirm } from 'antd';
 import ExpandedAssetsRow from './ExpandedAssetsRow';
 import { TableEntryContainer, HeaderTitleTable, TextTitle } from '../styled';
 import GeneralTable from '../GeneralTable';
 import { FormikProps } from 'formik';
-import { map, get } from 'lodash';
+import { map, isFunction } from 'lodash';
 
 const addKeyToArray = (array: object[]) => map(array, (d, index: number) => ({ key: index, ...d }));
 
@@ -15,6 +15,9 @@ interface AssetsTableProps {
   formProps?: FormikProps<any>;
   tableName?: string;
   setFieldValue?: (field: string, value: any) => void;
+  resetForm: (nextValues?: any) => void;
+  addRow: (row: any) => void;
+  deleteRow: (key: number) => void;
 }
 
 interface AssetsTableState {
@@ -39,6 +42,13 @@ class AssetsTable extends PureComponent<AssetsTableProps, AssetsTableState> {
       dataIndex: 'type',
       key: '1',
       width: '12%',
+      type: 'select',
+      options: [
+        { value: 'lifestyle', label: 'Lifestyle' },
+        { value: 'directInvestment', label: 'Direct Investment' },
+        { value: 'accountBased', label: 'Account Based' },
+        { value: 'super', label: 'Super' },
+      ],
     },
     {
       title: 'Owner',
@@ -73,6 +83,7 @@ class AssetsTable extends PureComponent<AssetsTableProps, AssetsTableState> {
     {
       title: 'Action',
       key: 'operation',
+      editable: false,
     },
   ];
 
@@ -85,18 +96,25 @@ class AssetsTable extends PureComponent<AssetsTableProps, AssetsTableState> {
     }
   }
 
-  public handleDelete = (key: number, record: any) => {
-    console.log('delete', { key, record });
-    // const dataSource = [...this.state.dataSource];
-    // this.setState({ dataSource: dataSource.filter((item) => item.key !== key) });
+  public handleDelete = (key: number) => {
+    const { deleteRow } = this.props;
+
+    // update formik
+    if (isFunction(deleteRow)) {
+      deleteRow(key);
+    }
+
+    // update table
+    const dataSource = [...this.state.dataSource];
+    this.setState({ dataSource: dataSource.filter((item) => item.key !== key) });
   }
 
   public handleAdd = () => {
-    console.log('handle add');
+    const { addRow } = this.props;
     const { count, dataSource } = this.state;
     const newData = {
       key: count,
-      description: 'Home',
+      description: `Home ${count}`,
       type: 'lifestyle',
       owner: 'Client',
       value: 25000,
@@ -108,6 +126,13 @@ class AssetsTable extends PureComponent<AssetsTableProps, AssetsTableState> {
         growthRate: 12,
       },
     };
+
+    // update formik
+    if (isFunction(addRow)) {
+      addRow(newData);
+    }
+
+    // update table
     dataSource.unshift(newData);
     this.setState({
       dataSource,
@@ -115,17 +140,62 @@ class AssetsTable extends PureComponent<AssetsTableProps, AssetsTableState> {
     });
   }
 
+  public handleSave = (arg: { tableName: string; rowIndex: number; dataIndex: number; value: any; record: any }) => {
+    const { tableName, rowIndex, dataIndex, value, record } = arg;
+    const newData = [...this.state.dataSource];
+    const index = newData.findIndex((data) => record.key === data.key);
+    const item = newData[index];
+    newData.splice(index, 1, {
+      ...item,
+      [dataIndex]: value,
+    });
+    this.setState({ dataSource: newData });
+  }
+
+  public handleResetForm = () => {
+    const { resetForm, data } = this.props;
+    if (isFunction(resetForm)) {
+      resetForm();
+    }
+    this.setState({
+      dataSource: addKeyToArray(data),
+      count: data.length,
+    });
+  }
+
   public render() {
     const { dataSource } = this.state;
     const { loading } = this.props;
     const columns = this.columns.map((col) => {
+      const editable = col.editable === false ? false : 'true';
+      if (col.key === 'operation') {
+        return {
+          ...col,
+          title: 'Action',
+          key: 'operation',
+          width: 100,
+          render: (text: any, record: any) => (
+            <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
+              <a href="javascript:">Delete</a>
+            </Popconfirm>
+          ),
+        };
+      }
+
+      if (!editable) {
+        return col;
+      }
+
       return {
         ...col,
-        fixed: false,
-        onCell: (record: any) => ({
+        onCell: (record: any, rowIndex: number) => ({
+          ...col,
+          rowIndex,
+          tableName: 'assets',
+          type: col.type || 'text',
           record,
-          editable: col.key !== 'operation' && 'true',
-          title: col.title,
+          editable,
+          handleSave: this.handleSave,
         }),
       };
     });
@@ -142,9 +212,16 @@ class AssetsTable extends PureComponent<AssetsTableProps, AssetsTableState> {
           dataSource={dataSource}
           pagination={false}
           expandedRowRender={ExpandedAssetsRow}
-          handleDelete={this.handleDelete}
-          handleAdd={this.handleAdd}
+          className={'assets-table'}
         />
+        <div>
+          <Button htmlType={'button'} type={'default'} onClick={this.handleResetForm}>
+            Discard
+          </Button>
+          <Button htmlType={'submit'} type={'primary'}>
+            Submit
+          </Button>
+        </div>
       </TableEntryContainer>
     );
   }
