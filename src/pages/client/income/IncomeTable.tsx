@@ -97,7 +97,7 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
     this.handlers.onAdd();
   }
 
-  public handleDelete = (key: number) => {
+  public handleDelete = (key: string) => {
     const { formProps, tableName } = this.props;
     console.log('delete key', key);
 

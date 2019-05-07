@@ -32,7 +32,7 @@ interface GeneralTableProps {
   newRowData?: object;
   tableName?: string;
   getHandlers?: (arg: any) => void;
-  handleDelete?: (key: number) => void;
+  handleDelete?: (key: string) => void;
   handleAdd?: () => void;
 }
 
