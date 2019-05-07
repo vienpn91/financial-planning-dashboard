@@ -10,8 +10,7 @@ interface TextTitleProps {
 
 export const TableEntryContainer = styled.section.attrs({
   className: 'table-entry-container',
-})`
-
+  })`
   padding: 20px;
   /* table layout here */
   .table-general{
@@ -26,6 +25,9 @@ export const TableEntryContainer = styled.section.attrs({
           margin: 0px;
         }
       }
+    }
+    .ant-select{
+      margin-left: -10px;
     }
     input{
       border-color: #d9d9d9;
@@ -56,6 +58,9 @@ export const TableEntryContainer = styled.section.attrs({
         }
       }
     }
+  }
+  .ant-form-item-control{
+    line-height: 35px;
   }
   .ant-table-expand-icon-th,
   .ant-table-row-expand-icon-cell{
