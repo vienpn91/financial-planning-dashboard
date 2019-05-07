@@ -73,50 +73,49 @@ class AssetsTable extends PureComponent {
     {
       title: 'Description',
       dataIndex: 'description',
-      width: 140,
+      width: '13%',
     },
     {
       title: 'Type',
       dataIndex: 'type',
       key: '1',
-      width: 150,
+      width: '12%',
     },
     {
       title: 'Owner',
       dataIndex: 'owner',
       key: '2',
-      width: 120,
+      width: '13%',
     },
     {
       title: 'Value',
       dataIndex: 'value',
       key: '3',
-      width: 150,
+      width: '13%',
     },
     {
       title: 'Investment',
       dataIndex: 'investment',
       key: '4',
-      width: 160,
+      width: '13%',
     },
     {
       title: 'From',
       dataIndex: 'from',
       key: '5',
-      width: 120,
+      width: '13%',
     },
     {
       title: 'To',
       dataIndex: 'to',
       key: '6',
-      width: 120,
+      width: '13%',
     },
     {
       title: 'Action',
       key: 'operation',
       dataIndex: '',
-      // fixed: 'left',
-      width: 100,
+      width: '10%',
       render: (text: any, record: any) =>
         this.state.dataSource.length >= 1 ? (
           <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>

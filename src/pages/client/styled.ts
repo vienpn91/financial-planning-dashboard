@@ -20,6 +20,10 @@ export const TableEntryContainer = styled.section.attrs({
       .ant-form-item-children{
         .picker-date{
           margin: 0px;
+          width: 100%;
+          .ant-calendar-picker{
+            width: 100%;
+          }
         }
         & > div{
           margin: 0px;
@@ -58,6 +62,9 @@ export const TableEntryContainer = styled.section.attrs({
         }
       }
     }
+  }
+  .ant-table-expand-icon-col{
+    width: 40px;
   }
   .ant-form-item-control{
     line-height: 35px;
@@ -104,6 +111,41 @@ export const DivideLine = styled.span`
   margin-left: 10px;
 `;
 
+export const InnerTableNoDelContainer = styled.section`
+  color: #072074;
+  font-size: 21px;
+  margin-bottom: 20px;
+  .ant-table-small {
+    border: none;
+    & > .ant-table-content > .ant-table-body {
+      margin: 0;
+    }
+    .ant-table-thead > tr > th {
+      background-color: #eaedef;
+      color: #505c84;
+      font-weight: normal;
+      font-size: 12px;
+    }
+    & > .ant-table-content > .ant-table-body > table > .ant-table-thead > tr > th {
+      border-bottom: none;
+      padding: 0;
+      padding: 2px 0;
+    }
+    & > .ant-table-content > .ant-table-body > table > .ant-table-tbody > tr {
+      position: relative;
+      &:hover:not(.ant-table-expanded-row) > td {
+        background: initial;
+      }
+    }
+    & > .ant-table-content > .ant-table-body > table > .ant-table-tbody > tr > td {
+      border-bottom: none;
+      padding: 2px 0;
+      width: 20px;
+      &.operation {
+      }
+    }
+  }
+`;
 export const InnerTableContainer = styled.section`
   color: #072074;
   font-size: 21px;

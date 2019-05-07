@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Icon, Popconfirm, Table } from 'antd';
-import { InnerTableContainer, HeaderTitleTable, TextTitle, DivideLine } from '../styled';
+import { InnerTableNoDelContainer, HeaderTitleTable, TextTitle, DivideLine } from '../styled';
 
 class SGContributionTable extends PureComponent {
   public state = {
@@ -50,13 +50,13 @@ class SGContributionTable extends PureComponent {
     });
 
     return (
-      <InnerTableContainer>
+      <InnerTableNoDelContainer>
         <HeaderTitleTable small={true}>
           <TextTitle small={true}>{'SG Contribution'}</TextTitle>
           <DivideLine />
         </HeaderTitleTable>
         <Table columns={columns} dataSource={dataSource} pagination={false} size={'small'} />
-      </InnerTableContainer>
+      </InnerTableNoDelContainer>
     );
   }
 }
