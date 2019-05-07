@@ -1,63 +1,39 @@
 import React, { PureComponent } from 'react';
-import { Icon } from 'antd';
+import { Button, Icon } from 'antd';
 import ExpandedBasicInformationRow from './ExpandedBasicInformationRow';
 import { HeaderTitleTable, TableEntryContainer, TextTitle } from '../styled';
 import GeneralTable from '../GeneralTable';
 import { FormikProps } from 'formik';
+import { addKeyToArray } from '../DataEntry';
+import { isFunction } from 'lodash';
 
 interface BasicInformationProps {
-  formProps?: FormikProps<any>;
   data: object[];
+  loading?: boolean;
+
+  formProps?: FormikProps<any>;
   tableName?: string;
-  setFieldValue: (field: string, value: any) => void;
+  setFieldValue?: (field: string, value: any) => void;
+  resetForm: (nextValues?: any) => void;
+  addRow: (row: any) => void;
+  deleteRow: (key: number) => void;
 }
 
-class BasicInformationTable extends PureComponent<BasicInformationProps> {
-  protected static defaultProps = { tableName: 'basicInformation' };
+interface BasicInformationState {
+  dataSource: object[];
+  count: number;
+}
 
-  public handlers = {
-    onAdd: () => {},
-    onDelete: () => {},
+class BasicInformationTable extends PureComponent<BasicInformationProps, BasicInformationState> {
+  public state = {
+    dataSource: addKeyToArray(this.props.data),
+    count: this.props.data.length,
   };
-
-  public dataSource = [
-    {
-      key: '0',
-      description: 'Client',
-      firstName: 'Jack',
-      lastName: 'Rayan',
-      dob: 1555924936,
-      empStatus: 'selfEmployed',
-      retirementYear: 1555924936,
-      maritalState: 'married',
-      expandable: {
-        riskProfile: 'defensive',
-        hasPrivateHealthInsurance: true,
-        lookingForCoupleAdvice: false,
-      },
-    },
-    {
-      key: '1',
-      description: 'Partner',
-      firstName: 'Susane',
-      lastName: 'Diaz',
-      dob: 1555924936,
-      empStatus: 'unemployed',
-      retirementYear: '',
-      maritalState: 'married',
-      expandable: {
-        riskProfile: 'highGrowth',
-        hasPrivateHealthInsurance: false,
-        jointRiskProfile: 'defensive',
-      },
-    },
-  ];
 
   public columns = [
     {
       title: 'Description',
       dataIndex: 'description',
-      key: '0',
       editable: false,
       width: 'calc(15% - 20px)',
     },
@@ -65,64 +41,157 @@ class BasicInformationTable extends PureComponent<BasicInformationProps> {
       title: 'First Name',
       dataIndex: 'firstName',
       type: 'text',
-      key: '1',
       width: '12%',
     },
     {
       title: 'Last Name',
       dataIndex: 'lastName',
-      key: '2',
       type: 'text',
       width: '13%',
     },
     {
       title: 'DOB',
       dataIndex: 'dob',
-      key: '3',
       type: 'date',
       width: '15%',
     },
     {
       title: 'Emp Status',
       dataIndex: 'empStatus',
-      key: '4',
       type: 'select',
       width: '15%',
+      options: [{ value: 'selfEmployed', label: 'Self-employed' }, { value: 'unemployed', label: 'Unemployed' }],
     },
     {
       title: 'Retirement Year',
       dataIndex: 'retirementYear',
-      key: '5',
       type: 'date',
       width: '15%',
     },
     {
       title: 'Marital State',
       dataIndex: 'maritalState',
-      key: '6',
       type: 'select',
       width: 'calc(15% - 20px)',
+      options: [{ value: 'married', label: 'Married' }, { value: 'unMarried', label: 'Unmarried' }],
     },
   ];
 
+  private tableName = 'basicInformation';
+
+  public componentDidUpdate(prevProps: Readonly<BasicInformationProps>, prevState: Readonly<{}>, snapshot?: any): void {
+    if (this.props.loading !== prevProps.loading) {
+      this.setState({
+        dataSource: addKeyToArray(this.props.data),
+        count: this.props.data.length,
+      });
+    }
+  }
+
+  public handleDelete = (key: number) => {
+    const { deleteRow } = this.props;
+
+    // update formik
+    if (isFunction(deleteRow)) {
+      deleteRow(key);
+    }
+
+    // update table
+    const dataSource = [...this.state.dataSource];
+    this.setState({ dataSource: dataSource.filter((item) => item.key !== key) });
+  }
+
+  public handleAdd = () => {
+    const { addRow } = this.props;
+    const { count, dataSource } = this.state;
+
+    // only 1 partner
+    if (dataSource.length === 1) {
+      const newData = {
+        key: count,
+        description: 'Partner',
+        firstName: 'Susane',
+        lastName: 'Diaz',
+        dob: 1555924936,
+        empStatus: 'unemployed',
+        retirementYear: '1555924936',
+        maritalState: 'married',
+        expandable: {
+          riskProfile: 'highGrowth',
+          hasPrivateHealthInsurance: false,
+          jointRiskProfile: 'defensive',
+        },
+      };
+
+      // update formik
+      if (isFunction(addRow)) {
+        addRow(newData);
+      }
+
+      // update table
+      dataSource.push(newData);
+      this.setState({
+        dataSource,
+        count: count + 1,
+      });
+    }
+  }
+
+  public handleSave = (arg: { tableName: string; rowIndex: number; dataIndex: string; value: any; record: any }) => {
+    const { tableName, rowIndex, dataIndex, value, record } = arg;
+    const newData = [...this.state.dataSource];
+    const index = newData.findIndex((data) => record.key === data.key);
+    const item = newData[index];
+    newData.splice(index, 1, {
+      ...item,
+      [dataIndex]: value,
+    });
+    this.setState({ dataSource: newData });
+
+    // side effect
+    if (rowIndex === 0 && dataIndex === 'maritalState') {
+      if (value === 'unMarried') {
+        this.handleDelete(1);
+      }
+      if (value === 'married') {
+        this.handleAdd();
+      }
+    }
+  }
+
+  public handleResetForm = () => {
+    const { resetForm, data } = this.props;
+    if (isFunction(resetForm)) {
+      resetForm();
+    }
+    this.setState({
+      dataSource: addKeyToArray(data),
+      count: data.length,
+    });
+  }
+
   public render() {
-    const { tableName, formProps } = this.props;
+    const { dataSource } = this.state;
+    const { loading } = this.props;
     const columns = this.columns.map((col) => {
+      const editable = col.editable === false ? false : 'true';
+      if (!editable) {
+        return col;
+      }
+
       return {
         ...col,
-        editable: col.editable === false ? false : col.key !== 'operation' && 'true',
-        fixed: false,
+        onCell: (record: any, rowIndex: number) => ({
+          ...col,
+          rowIndex,
+          tableName: this.tableName,
+          type: col.type || 'text',
+          record,
+          editable,
+          handleSave: this.handleSave,
+        }),
       };
     });
-    const newData = {
-      description: '',
-      type: '',
-      owner: '',
-      value: 0,
-      indexation: '',
-      from: '',
-      to: '',
-    };
 
     return (
       <TableEntryContainer>
@@ -131,12 +200,21 @@ class BasicInformationTable extends PureComponent<BasicInformationProps> {
           <TextTitle>{'Basic Information'}</TextTitle>
         </HeaderTitleTable>
         <GeneralTable
+          loading={loading || false}
           columns={columns}
-          dataSource={this.dataSource}
+          dataSource={dataSource}
           pagination={false}
-          className="basic-information-table"
           expandedRowRender={ExpandedBasicInformationRow}
+          className="basic-information-table"
         />
+        <div>
+          <Button htmlType={'button'} type={'default'} onClick={this.handleResetForm}>
+            Discard
+          </Button>
+          <Button htmlType={'submit'} type={'primary'}>
+            Submit
+          </Button>
+        </div>
       </TableEntryContainer>
     );
   }

@@ -99,6 +99,8 @@ class AssetsTable extends PureComponent<AssetsTableProps, AssetsTableState> {
     },
   ];
 
+  private tableName = 'assets';
+
   public componentDidUpdate(prevProps: Readonly<AssetsTableProps>, prevState: Readonly<{}>, snapshot?: any): void {
     if (this.props.loading !== prevProps.loading) {
       this.setState({
@@ -152,7 +154,7 @@ class AssetsTable extends PureComponent<AssetsTableProps, AssetsTableState> {
     });
   }
 
-  public handleSave = (arg: { tableName: string; rowIndex: number; dataIndex: number; value: any; record: any }) => {
+  public handleSave = (arg: { tableName: string; rowIndex: number; dataIndex: string; value: any; record: any }) => {
     const { tableName, rowIndex, dataIndex, value, record } = arg;
     const newData = [...this.state.dataSource];
     const index = newData.findIndex((data) => record.key === data.key);
@@ -203,7 +205,7 @@ class AssetsTable extends PureComponent<AssetsTableProps, AssetsTableState> {
         onCell: (record: any, rowIndex: number) => ({
           ...col,
           rowIndex,
-          tableName: 'assets',
+          tableName: this.tableName,
           type: col.type || 'text',
           record,
           editable,

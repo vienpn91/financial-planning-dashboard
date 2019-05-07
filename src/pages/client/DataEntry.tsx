@@ -33,12 +33,11 @@ interface DataEntryProps {
 
 export const addKeyToArray = (array: object[], defaultValue?: any) => {
   if (isArray(array)) {
-    return map(array, (d, index: number) => ({key: index, ...d}));
+    return map(array, (d, index: number) => ({ key: index, ...d }));
   }
 
   return defaultValue;
-}
-
+};
 
 class DataEntryComponent extends PureComponent<DataEntryProps> {
   public componentDidMount() {
@@ -63,7 +62,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
     if (fetchDataEntry) {
       fetchDataEntry(params);
     }
-  };
+  }
 
   public render() {
     const { tables, loading } = this.props;
@@ -75,7 +74,41 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
             // set state
             console.log(values);
           }}
-          initialValues={{ assets: (tables ? addKeyToArray(tables.assets || []) : []) }}
+          initialValues={{ basicInformation: tables ? addKeyToArray(tables.basicInformation || []) : [] }}
+          enableReinitialize={true}
+          render={(props: FormikProps<any>) => {
+            const addRow = (row: any) => {
+              const basicInformation = [...props.values.basicInformation];
+              basicInformation.unshift(row);
+
+              props.setFieldValue('basicInformation', basicInformation);
+            };
+            const deleteRow = (key: number) => {
+              const basicInformation = props.values.basicInformation.filter((info: any) => info.key !== key);
+
+              props.setFieldValue('basicInformation', basicInformation);
+            };
+
+            return (
+              <Form>
+                <BasicInformationTable
+                  resetForm={props.resetForm}
+                  setFieldValue={props.setFieldValue}
+                  data={(tables && tables.basicInformation) || []}
+                  loading={loading}
+                  addRow={addRow}
+                  deleteRow={deleteRow}
+                />
+              </Form>
+            );
+          }}
+        />
+        <Formik
+          onSubmit={(values: any, actions: FormikActions<any>) => {
+            // set state
+            console.log(values);
+          }}
+          initialValues={{ assets: tables ? addKeyToArray(tables.assets || []) : [] }}
           enableReinitialize={true}
           render={(props: FormikProps<any>) => {
             const addRow = (row: any) => {
