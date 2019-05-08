@@ -178,7 +178,6 @@ class BasicInformationTable extends PureComponent<BasicInformationProps, BasicIn
 
       return {
         ...col,
-        editable,
         onCell: (record: any, rowIndex: number) => ({
           ...col,
           rowIndex,

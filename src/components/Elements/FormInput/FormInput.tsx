@@ -111,13 +111,18 @@ class FormInput extends PureComponent<InputProps, {}> {
   }
 
   private renderDatePicker = (props: CustomProps): React.ReactNode => {
-    const { field: { onChange, onBlur, ...field}, form, type, ...restProps } = props;
-    const { touched, errors } = form;
+    const {
+      field: { onChange, onBlur, ...field },
+      form,
+      type,
+      ...restProps
+    } = props;
+    const { touched, errors, setFieldValue } = form;
     const errorMsg = touched[field.name] && errors[field.name];
 
     return (
       <Form.Item validateStatus={errorMsg ? 'error' : ''} help={errorMsg || ''}>
-        <EntryPicker ref={this.myInput} border="none" {...field} {...restProps} />
+        <EntryPicker ref={this.myInput} border="none" {...field} {...restProps} setFieldValue={setFieldValue} />
       </Form.Item>
     );
   }

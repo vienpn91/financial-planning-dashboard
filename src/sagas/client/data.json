@@ -4,9 +4,9 @@
       "description": "Client",
       "firstName": "Jack",
       "lastName": "Rayan",
-      "dob": "19-01-1970",
+      "dob": "19/01/1970",
       "empStatus": "selfEmployed",
-      "retirementYear": "31-12-2020",
+      "retirementYear": "31/12/2020",
       "maritalState": "married",
       "expandable": {
         "riskProfile": "defensive",
@@ -18,9 +18,9 @@
       "description": "Partner",
       "firstName": "Susane",
       "lastName": "Diaz",
-      "dob": "27-05-1978",
+      "dob": "27/05/1978",
       "empStatus": "unemployed",
-      "retirementYear": "31-12-2020",
+      "retirementYear": "31/12/2020",
       "maritalState": "married",
       "expandable": {
         "riskProfile": "highGrowth",
@@ -95,8 +95,8 @@
         {
           "type": "contribution",
           "value": 10000,
-          "from": "31-12-2020",
-          "to": "31-12-2020"
+          "from": "31/12/2020",
+          "to": "31/12/2020"
         }
       ]
     },
@@ -121,8 +121,8 @@
         {
           "type": "contribution",
           "value": 10000,
-          "from": "31-12-2020",
-          "to": "31-12-2020"
+          "from": "31/12/2020",
+          "to": "31/12/2020"
         }
       ]
     },
@@ -147,8 +147,8 @@
         {
           "type": "contribution",
           "value": 10000,
-          "from": "31-12-2020",
-          "to": "31-12-2020"
+          "from": "31/12/2020",
+          "to": "31/12/2020"
         }
       ],
       "sgContribution": [
