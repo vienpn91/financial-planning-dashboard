@@ -15,7 +15,7 @@ interface InputProps {
   ref?: React.RefObject<any>;
   handleChange?: (e: any, name?: string, value?: any) => void;
   handleBlur?: (e: React.FocusEvent | string) => void;
-  options?: Array<{label: string, value: any}>;
+  options?: Array<{label: string, value: string | number}>;
   setFieldValue?: (field: string, value: any) => void;
 }
 

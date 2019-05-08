@@ -4,6 +4,8 @@ import { reduce, get, isFunction } from 'lodash';
 import { FormInput } from '../../../components/Elements/FormInput';
 import { InputType } from '../../../components/Elements/FormInput/FormInput';
 import { EditableCellWrap, EditableCellGroup, ValueEditCell } from './styled';
+import { PickerType } from '../../../components/EntryPicker/EntryPicker';
+
 interface EditableProps {
   title: string;
   type: InputType;
@@ -13,6 +15,7 @@ interface EditableProps {
   editable?: boolean;
   tableName?: string;
   rowIndex?: number;
+  pickerType?: PickerType;
   options?: Array<{ value: any; label: any }>;
 }
 
@@ -56,7 +59,7 @@ export default class EditableCell extends React.Component<EditableProps> {
   }
 
   public getAppendedProps = (props: EditableProps, editing: boolean = false) => {
-    const { type, options } = props;
+    const { type, options, pickerType } = props;
     const appendProps = [];
 
     switch (type) {
@@ -65,7 +68,7 @@ export default class EditableCell extends React.Component<EditableProps> {
         break;
       }
       case 'date': {
-        appendProps.push({ defaultOpen: editing });
+        appendProps.push({ defaultOpen: editing, pickerType, options });
       }
     }
 
@@ -84,6 +87,7 @@ export default class EditableCell extends React.Component<EditableProps> {
       type,
       tableName,
       options,
+      pickerType,
       ...restProps
     } = this.props;
     const appendedProps = this.getAppendedProps(this.props, editing);

@@ -78,6 +78,12 @@ class IncomeTable extends PureComponent<IncomeTableProps, IncomeTableState> {
       key: '5',
       type: 'date',
       width: '13%',
+      pickerType: 'custom',
+      options: [
+        { value: '23/7/1999', label: 'Start' },
+        { value: '24/6/2004', label: `Client's Retirement` },
+        { value: '31/12/2005', label: `Partner's Retirement` },
+      ],
     },
     {
       title: 'To',
@@ -85,6 +91,12 @@ class IncomeTable extends PureComponent<IncomeTableProps, IncomeTableState> {
       key: '6',
       width: '13%',
       type: 'date',
+      pickerType: 'custom',
+      options: [
+        { value: '1/5/2005', label: 'End' },
+        { value: '25/6/2009', label: `Client's Retirement` },
+        { value: '18/7/2012', label: `Partner's Retirement` },
+      ],
     },
     {
       title: 'Action',

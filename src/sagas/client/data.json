@@ -36,8 +36,8 @@
       "owner": "client",
       "value": 1000,
       "indexation": "salaryInflation",
-      "from": "start",
-      "to": "clientRetirement"
+      "from": "31/12/2020",
+      "to": "31/12/2020"
     },
     {
       "description": "Rental",
@@ -45,8 +45,8 @@
       "owner": "partner",
       "value": 1000,
       "indexation": "inflationCPI",
-      "from": "start",
-      "to": "end"
+      "from": "31/12/2020",
+      "to": "31/12/2020"
     }
   ],
   "expenditure": [

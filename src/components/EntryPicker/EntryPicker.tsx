@@ -6,11 +6,17 @@ import moment, { Moment } from 'moment';
 import { EntryPickerTable, DateButtonCustom } from './styled';
 import { FormikHandlers } from 'formik';
 
-const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
+const { MonthPicker, WeekPicker } = DatePicker;
+
+interface Option {
+  value: string | number;
+  label: string;
+}
 
 interface EntryPickerProps {
   name: string;
   value?: string | number;
+  options?: Option[];
   onBlur?: FormikHandlers['handleBlur'];
   handleChange?: (name?: string, value?: any) => void;
   handleBlur?: (e: React.FocusEvent | string) => void;
@@ -23,15 +29,15 @@ interface EntryPickerProps {
   fontStyle?: string;
   format?: string;
   defaultOpen?: boolean;
-  localeCode?: string;
 }
 
-declare type PickerType = 'month' | 'range' | 'week' | 'date' | 'custom';
+export declare type PickerType = 'month' | 'week' | 'date' | 'custom';
 
 class EntryPicker extends PureComponent<EntryPickerProps, {}> {
   protected static defaultProps = {
     placeholder: '',
     format: 'DD/MM/YYYY',
+    pickerType: 'date',
   };
   public readonly myRef = React.createRef<any>();
   public state = {
@@ -43,14 +49,14 @@ class EntryPicker extends PureComponent<EntryPickerProps, {}> {
       this.myRef.current.focus();
     }
   }
+
   public handleOpenChange = (open: boolean) => {
     this.setState({ open });
   }
 
-  public handleChange = (date: Moment, dateString: string) => {
+  public handleChange = (date: Moment, dateString: string | number) => {
     const { setFieldValue, name, handleBlur } = this.props;
 
-    debugger;
     if (setFieldValue) {
       setFieldValue(name, dateString);
     }
@@ -81,7 +87,7 @@ class EntryPicker extends PureComponent<EntryPickerProps, {}> {
 
   public render(): React.ReactNode {
     const { open } = this.state;
-    const { pickerType, border, fontStyle, value, textType, defaultOpen, format, ...props } = this.props;
+    const { pickerType, border, fontStyle, value, textType, defaultOpen, format, options, ...props } = this.props;
     const className = classNames(
       'picker-' + pickerType + ' has-' + border + ' font-' + fontStyle + ' text-' + textType,
     );
@@ -103,20 +109,6 @@ class EntryPicker extends PureComponent<EntryPickerProps, {}> {
           </EntryPickerTable>
         );
       }
-      case 'range': {
-        const { placeholder, ...restProps } = props;
-        return (
-          <EntryPickerTable className={className}>
-            <RangePicker
-              ref={this.myRef}
-              {...restProps}
-              onOpenChange={this.handleOpenChange}
-              open={open}
-              format={format}
-            />
-          </EntryPickerTable>
-        );
-      }
       case 'week': {
         return (
           <EntryPickerTable className={className}>
@@ -124,6 +116,7 @@ class EntryPicker extends PureComponent<EntryPickerProps, {}> {
               ref={this.myRef}
               defaultValue={momentValue}
               {...props}
+              onChange={this.handleChange}
               onOpenChange={this.handleOpenChange}
               open={open}
               format={format}
@@ -138,6 +131,7 @@ class EntryPicker extends PureComponent<EntryPickerProps, {}> {
               ref={this.myRef}
               defaultValue={momentValue}
               {...props}
+              onChange={this.handleChange}
               onOpenChange={this.handleOpenChange}
               open={open}
               format={format}
@@ -155,6 +149,22 @@ class EntryPicker extends PureComponent<EntryPickerProps, {}> {
               onOpenChange={this.handleOpenChange}
               open={open}
               format={format}
+              renderExtraFooter={() => (
+                <DateButtonCustom>
+                  {options &&
+                    options.map((option: Option, index: number) => (
+                      <Button
+                        type="primary"
+                        htmlType={'button'}
+                        onClick={() => this.handleChange(moment(), option.value)}
+                        key={index}
+                      >
+                        {option.label}
+                      </Button>
+                    ))}
+                </DateButtonCustom>
+              )}
+              showToday={false}
             />
           </EntryPickerTable>
         );
