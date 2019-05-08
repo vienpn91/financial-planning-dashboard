@@ -1,6 +1,6 @@
-// tslint:disable:no-any
 import React from 'react';
-import { get, find, isFunction } from 'lodash';
+import classNames from 'classnames';
+import { reduce, get, isFunction } from 'lodash';
 import { FormInput } from '../../../components/Elements/FormInput';
 import { InputType } from '../../../components/Elements/FormInput/FormInput';
 import { EditableCellWrap, EditableCellGroup, ValueEditCell } from './styled';
@@ -38,7 +38,8 @@ export default class EditableCell extends React.Component<EditableProps> {
     let value;
 
     switch (props.type) {
-      case 'select': {
+      case 'select':
+      case 'date': {
         value = e;
         break;
       }
@@ -52,6 +53,23 @@ export default class EditableCell extends React.Component<EditableProps> {
       handleSave({ tableName, rowIndex, dataIndex, value, record });
     }
     this.toggleEdit();
+  }
+
+  public getAppendedProps = (props: EditableProps, editing: boolean = false) => {
+    const { type, options } = props;
+    const appendProps = [];
+
+    switch (type) {
+      case 'select': {
+        appendProps.push({ defaultOpen: editing, options });
+        break;
+      }
+      case 'date': {
+        appendProps.push({ defaultOpen: editing });
+      }
+    }
+
+    return reduce(appendProps, (accumulator, prop) => ({ ...accumulator, ...prop }), {});
   }
 
   public render() {
@@ -68,24 +86,7 @@ export default class EditableCell extends React.Component<EditableProps> {
       options,
       ...restProps
     } = this.props;
-    let text;
-    switch (this.props.type) {
-      case 'select': {
-        text = get(find(options, (opt) => opt.value === this.props.record[dataIndex]), 'label');
-        break;
-      }
-      default: {
-        text = restProps.children;
-        break;
-      }
-    }
-    const appendProps = { defaultOpen: false };
-
-    if (this.props.type === 'select') {
-      appendProps.defaultOpen = true;
-    } else {
-      delete appendProps.defaultOpen;
-    }
+    const appendedProps = this.getAppendedProps(this.props, editing);
 
     return (
       <td {...restProps}>
@@ -97,20 +98,30 @@ export default class EditableCell extends React.Component<EditableProps> {
                 name={`${tableName}[${rowIndex}].${dataIndex}`}
                 ref={this.input}
                 onPressEnter={this.save}
-                options={options}
                 handleBlur={this.save}
-                {...appendProps}
+                {...appendedProps}
               />
             </EditableCellGroup>
           ) : (
             <EditableCellWrap onClick={this.toggleEdit}>
               <ValueEditCell>
-                {text}
+                <FormInput
+                  className={classNames({ readOnly: true })}
+                  type={type}
+                  name={`${tableName}[${rowIndex}].${dataIndex}`}
+                  {...appendedProps}
+                />
               </ValueEditCell>
             </EditableCellWrap>
           )
         ) : (
-          text
+          <FormInput
+            className={classNames({ readOnly: true, disabled: true })}
+            disabled={true}
+            type={type}
+            name={`${tableName}[${rowIndex}].${dataIndex}`}
+            {...appendedProps}
+          />
         )}
       </td>
     );

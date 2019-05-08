@@ -9,6 +9,9 @@ import CustomInputNumber from '../../Input/CustomInputNumber';
 interface InputProps {
   type: InputType;
   name: string;
+  className?: string;
+  disabled?: boolean;
+  readOnly?: boolean;
   placeholder?: string;
   prefix?: React.ReactNode;
   autoFocus?: boolean;
@@ -108,9 +111,13 @@ class FormInput extends PureComponent<InputProps, {}> {
   }
 
   private renderDatePicker = (props: CustomProps): React.ReactNode => {
+    const { field: { onChange, onBlur, ...field}, form, type, ...restProps } = props;
+    const { touched, errors } = form;
+    const errorMsg = touched[field.name] && errors[field.name];
+
     return (
-      <Form.Item>
-        <EntryPicker ref={this.myInput} type="date" placeholder="Start" border="none" />
+      <Form.Item validateStatus={errorMsg ? 'error' : ''} help={errorMsg || ''}>
+        <EntryPicker ref={this.myInput} border="none" {...field} {...restProps} />
       </Form.Item>
     );
   }

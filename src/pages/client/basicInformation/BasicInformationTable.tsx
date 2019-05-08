@@ -175,12 +175,10 @@ class BasicInformationTable extends PureComponent<BasicInformationProps, BasicIn
     const { loading } = this.props;
     const columns = this.columns.map((col) => {
       const editable = col.editable === false ? false : 'true';
-      if (!editable) {
-        return col;
-      }
 
       return {
         ...col,
+        editable,
         onCell: (record: any, rowIndex: number) => ({
           ...col,
           rowIndex,
