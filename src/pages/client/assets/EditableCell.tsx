@@ -114,7 +114,7 @@ export default class EditableCell extends React.Component<EditableProps> {
               </ValueEditCell>
             </EditableCellWrap>
           )
-        ) : (
+        ) : rowIndex ? (
           <FormInput
             className={classNames({ readOnly: true, disabled: true })}
             disabled={true}
@@ -122,6 +122,8 @@ export default class EditableCell extends React.Component<EditableProps> {
             name={`${tableName}[${rowIndex}].${dataIndex}`}
             {...appendedProps}
           />
+        ) : (
+          restProps.children
         )}
       </td>
     );

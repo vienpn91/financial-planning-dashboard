@@ -54,9 +54,7 @@ class AssetsTable extends PureComponent<AssetsTableProps, AssetsTableState> {
       dataIndex: 'owner',
       key: '2',
       type: 'select',
-      options: [
-        { value: 'client', label: 'Client' },
-      ],
+      options: [{ value: 'client', label: 'Client' }],
       width: 'calc(13% - 20px)',
     },
     {
@@ -180,7 +178,7 @@ class AssetsTable extends PureComponent<AssetsTableProps, AssetsTableState> {
   public render() {
     const { dataSource } = this.state;
     const { loading } = this.props;
-    const columns = this.columns.map((col) => {
+    const columns = this.columns.map((col: any) => {
       const editable = col.editable === false ? false : 'true';
       if (col.key === 'operation') {
         return {
@@ -194,10 +192,6 @@ class AssetsTable extends PureComponent<AssetsTableProps, AssetsTableState> {
             </Popconfirm>
           ),
         };
-      }
-
-      if (!editable) {
-        return col;
       }
 
       return {

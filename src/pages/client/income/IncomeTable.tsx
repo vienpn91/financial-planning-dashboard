@@ -187,10 +187,6 @@ class IncomeTable extends PureComponent<IncomeTableProps, IncomeTableState> {
         };
       }
 
-      if (!editable) {
-        return col;
-      }
-
       return {
         ...col,
         onCell: (record: any, rowIndex: number) => ({
