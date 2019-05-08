@@ -3,9 +3,6 @@ import styled, { css } from 'styled-components';
 
 export const EntryPickerTable = styled.section`
   display: inline-block;
-  .ant-input{
-    width: 125px;
-  }
   &.has-none{
     .anticon-calendar{
       display: none;

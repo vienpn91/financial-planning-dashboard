@@ -139,8 +139,8 @@ class IncomeTable extends PureComponent<IncomeTableProps, IncomeTableState> {
       owner: 'client',
       value: 1000,
       indexation: 'salaryInflation',
-      from: 'start',
-      to: 'clientRetirement',
+      from: '31/12/2020',
+      to: '31/12/2020',
     };
 
     // update formik
