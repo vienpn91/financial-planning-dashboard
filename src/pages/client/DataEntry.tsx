@@ -79,7 +79,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
           render={(props: FormikProps<any>) => {
             const addRow = (row: any) => {
               const basicInformation = [...props.values.basicInformation];
-              basicInformation.unshift(row);
+              basicInformation.push(row);
 
               props.setFieldValue('basicInformation', basicInformation);
             };
@@ -95,6 +95,40 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
                   resetForm={props.resetForm}
                   setFieldValue={props.setFieldValue}
                   data={(tables && tables.basicInformation) || []}
+                  loading={loading}
+                  addRow={addRow}
+                  deleteRow={deleteRow}
+                />
+              </Form>
+            );
+          }}
+        />
+        <Formik
+          onSubmit={(values: any, actions: FormikActions<any>) => {
+            // set state
+            console.log(values);
+          }}
+          initialValues={{ income: tables ? addKeyToArray(tables.income || []) : [] }}
+          enableReinitialize={true}
+          render={(props: FormikProps<any>) => {
+            const addRow = (row: any) => {
+              const income = [...props.values.income];
+              income.unshift(row);
+
+              props.setFieldValue('income', income);
+            };
+            const deleteRow = (key: number) => {
+              const income = props.values.income.filter((info: any) => info.key !== key);
+
+              props.setFieldValue('income', income);
+            };
+
+            return (
+              <Form>
+                <IncomeTable
+                  resetForm={props.resetForm}
+                  setFieldValue={props.setFieldValue}
+                  data={(tables && tables.income) || []}
                   loading={loading}
                   addRow={addRow}
                   deleteRow={deleteRow}

@@ -33,7 +33,7 @@
     {
       "description": "Salary",
       "type": "employment",
-      "owner": "Client",
+      "owner": "client",
       "value": 1000,
       "indexation": "salaryInflation",
       "from": "start",
@@ -42,7 +42,7 @@
     {
       "description": "Rental",
       "type": "taxable",
-      "owner": "Partner",
+      "owner": "partner",
       "value": 1000,
       "indexation": "inflationCPI",
       "from": "start",

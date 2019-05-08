@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Button, Icon } from 'antd';
 import ExpandedBasicInformationRow from './ExpandedBasicInformationRow';
-import { HeaderTitleTable, TableEntryContainer, TextTitle } from '../styled';
+import {ActionTableGeneral, HeaderTitleTable, TableEntryContainer, TextTitle} from '../styled';
 import GeneralTable from '../GeneralTable';
 import { FormikProps } from 'formik';
 import { addKeyToArray } from '../DataEntry';
@@ -207,14 +207,14 @@ class BasicInformationTable extends PureComponent<BasicInformationProps, BasicIn
           expandedRowRender={ExpandedBasicInformationRow}
           className="basic-information-table"
         />
-        <div>
+        <ActionTableGeneral>
           <Button htmlType={'button'} type={'default'} onClick={this.handleResetForm}>
             Discard
           </Button>
           <Button htmlType={'submit'} type={'primary'}>
             Submit
           </Button>
-        </div>
+        </ActionTableGeneral>
       </TableEntryContainer>
     );
   }

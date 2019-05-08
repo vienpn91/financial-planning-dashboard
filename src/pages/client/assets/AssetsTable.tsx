@@ -226,7 +226,7 @@ class AssetsTable extends PureComponent<AssetsTableProps, AssetsTableState> {
           dataSource={dataSource}
           pagination={false}
           expandedRowRender={ExpandedAssetsRow}
-          className={'assets-table'}
+          className={`${this.tableName}-table`}
         />
         <ActionTableGeneral>
           <Button htmlType={'button'} type={'default'} onClick={this.handleResetForm}>

@@ -28,6 +28,7 @@ class EntryPicker extends PureComponent<EntryPickerProps, {}> {
 
   public focusInput = () => {
     if (get(this.myRef, 'current.focus')) {
+      debugger;
       this.myRef.current.focus();
     }
   }
