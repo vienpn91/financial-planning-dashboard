@@ -42,7 +42,7 @@ class CoverDetailsTable extends PureComponent {
       title: '',
       key: 'operation',
       className: 'operation',
-      width: 1,
+      width: 18,
       render: (text: any, record: any) =>
         this.state.dataSource.length >= 1 ? (
           <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
