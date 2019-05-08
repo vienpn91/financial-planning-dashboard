@@ -14,6 +14,9 @@ export const TableEntryContainer = styled.section.attrs({
   padding: 20px;
   /* table layout here */
   .table-general{
+    table{
+      table-layout: fixed;
+    }
     .ant-row.ant-form-item{
       margin: 0px;
       width: 100%;
@@ -56,14 +59,7 @@ export const TableEntryContainer = styled.section.attrs({
       }
     }
   }
-  .ant-table-tbody{
-    & > tr {
-      &:hover{
-        }
-      }
-    }
-  }
-  .ant-calendar-picker-clear, 
+  .ant-calendar-picker-clear,
   .ant-calendar-picker-icon{
     right: 20px
   }

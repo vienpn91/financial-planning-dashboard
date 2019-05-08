@@ -35,7 +35,7 @@ class ContributionWithdrawalsTable extends PureComponent {
     {
       title: '',
       key: 'operation',
-      width: 1,
+      width: 18,
       className: 'operation',
       render: (text: any, record: any) =>
         this.state.dataSource.length >= 1 ? (

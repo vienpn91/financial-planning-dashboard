@@ -3,7 +3,7 @@ import React from 'react';
 import { get, find, isFunction } from 'lodash';
 import { FormInput } from '../../../components/Elements/FormInput';
 import { InputType } from '../../../components/Elements/FormInput/FormInput';
-
+import { EditableCellWrap, EditableCellGroup, ValueEditCell } from './styled';
 interface EditableProps {
   title: string;
   type: InputType;
@@ -91,19 +91,23 @@ export default class EditableCell extends React.Component<EditableProps> {
       <td {...restProps}>
         {editable ? (
           editing ? (
-            <FormInput
-              type={type}
-              name={`${tableName}[${rowIndex}].${dataIndex}`}
-              ref={this.input}
-              onPressEnter={this.save}
-              options={options}
-              handleBlur={this.save}
-              {...appendProps}
-            />
+            <EditableCellGroup>
+              <FormInput
+                type={type}
+                name={`${tableName}[${rowIndex}].${dataIndex}`}
+                ref={this.input}
+                onPressEnter={this.save}
+                options={options}
+                handleBlur={this.save}
+                {...appendProps}
+              />
+            </EditableCellGroup>
           ) : (
-            <div className="editable-cell-value-wrap" onClick={this.toggleEdit}>
-              {text}
-            </div>
+            <EditableCellWrap onClick={this.toggleEdit}>
+              <ValueEditCell>
+                {text}
+              </ValueEditCell>
+            </EditableCellWrap>
           )
         ) : (
           text

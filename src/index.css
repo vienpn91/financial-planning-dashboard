@@ -47,23 +47,3 @@ code {
 .editable-cell {
   position: relative;
 }
-
-.editable-cell-value-wrap {
-  border: 1px solid transparent;
-  cursor: pointer;
-  min-height: 35px;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding: 0 10px;
-  margin-left: -10px;
-}
-
-.editable-row .editable-cell-value-wrap:hover{
-  border-color: #d9d9d9;
-  transition: all 300ms ease;
-};
