@@ -3,9 +3,9 @@ import classNames from 'classnames';
 import { reduce, get, isFunction } from 'lodash';
 import { FormInput } from '../../../components/Elements/FormInput';
 import { InputType } from '../../../components/Elements/FormInput/FormInput';
-import { EditableCellWrap, EditableCellGroup, ValueEditCell } from './styled';
 import { PickerType } from '../../../components/EntryPicker/EntryPicker';
 
+import { EditableCellWrap, ValueEditCell } from './styled';
 interface EditableProps {
   title: string;
   type: InputType;
@@ -96,7 +96,7 @@ export default class EditableCell extends React.Component<EditableProps> {
       <td {...restProps}>
         {editable ? (
           editing ? (
-            <EditableCellGroup>
+            <EditableCellWrap>
               <FormInput
                 type={type}
                 name={`${tableName}[${rowIndex}].${dataIndex}`}
@@ -105,7 +105,7 @@ export default class EditableCell extends React.Component<EditableProps> {
                 handleBlur={this.save}
                 {...appendedProps}
               />
-            </EditableCellGroup>
+            </EditableCellWrap>
           ) : (
             <EditableCellWrap onClick={this.toggleEdit}>
               <ValueEditCell>
@@ -119,13 +119,15 @@ export default class EditableCell extends React.Component<EditableProps> {
             </EditableCellWrap>
           )
         ) : dataIndex ? (
-          <FormInput
-            className={classNames({ readOnly: true, disabled: true })}
-            disabled={true}
-            type={type}
-            name={`${tableName}[${rowIndex}].${dataIndex}`}
-            {...appendedProps}
-          />
+          <EditableCellWrap>
+            <FormInput
+              className={classNames({ readOnly: true, disabled: true })}
+              disabled={true}
+              type={type}
+              name={`${tableName}[${rowIndex}].${dataIndex}`}
+              {...appendedProps}
+            />
+          </EditableCellWrap>
         ) : (
           restProps.children
         )}

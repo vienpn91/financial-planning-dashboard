@@ -36,33 +36,6 @@ export const TableEntryContainer = styled.section.attrs({
     .ant-select{
       margin-left: -10px;
     }
-    input{
-      border-color: #d9d9d9;
-      margin-left: -10px;
-      cursor: pointer;
-      box-shadow: none;
-      background: transparent;
-      min-height: 35px;
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      width: 100%;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      padding: 0 10px;
-      transition: all 300ms ease;
-      height: 35px;
-      &: focus{
-        border-right-width: none;
-        box-shadow: none;
-      }
-    }
-  }
-  .ant-calendar-picker-clear,
-  .ant-calendar-picker-icon{
-    right: 20px
-  }
   .ant-table-expand-icon-col{
     width: 40px;
   }
@@ -89,8 +62,17 @@ export const ActionTableGeneral = styled.section`
   display: flex;
   margin-top: 20px;
   flex: 0 0 100%;
+  justify-content: flex-end;
+  .ant-btn-default{
+    background-color: #212121;
+    color: #fff;
+  }
   .ant-btn{
+    font-weight: 600;
     margin-right: 15px;
+    width: 150px;
+    height: 44px;
+    border-radius: 24px;
   }
 `;
 export const HeaderTitleTable = styled.div.attrs({

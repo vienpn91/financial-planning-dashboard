@@ -3,8 +3,6 @@ import styled, { css } from 'styled-components';
 
 export const EntryPickerTable = styled.section`
   display: inline-block;
-  margin-right: 10px;
-  margin: 5px 0px 5px 10px;
   .ant-input{
     width: 125px;
   }

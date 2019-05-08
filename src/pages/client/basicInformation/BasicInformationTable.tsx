@@ -206,10 +206,12 @@ class BasicInformationTable extends PureComponent<BasicInformationProps, BasicIn
         />
         <ActionTableGeneral>
           <Button htmlType={'button'} type={'default'} onClick={this.handleResetForm}>
-            Discard
+            <Icon type="close" />
+            <span>Discard</span>
           </Button>
           <Button htmlType={'submit'} type={'primary'}>
-            Submit
+            <Icon type="check" />
+            <span>Submit</span>
           </Button>
         </ActionTableGeneral>
       </TableEntryContainer>
