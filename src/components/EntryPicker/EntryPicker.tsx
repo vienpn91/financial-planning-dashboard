@@ -29,6 +29,7 @@ interface EntryPickerProps {
   fontStyle?: string;
   format?: string;
   defaultOpen?: boolean;
+  allowClear?: boolean;
 }
 
 export declare type PickerType = 'month' | 'week' | 'date' | 'custom';
@@ -38,6 +39,7 @@ class EntryPicker extends PureComponent<EntryPickerProps, {}> {
     placeholder: '',
     format: 'DD/MM/YYYY',
     pickerType: 'date',
+    allowClear: false,
   };
   public readonly myRef = React.createRef<any>();
   public state = {
