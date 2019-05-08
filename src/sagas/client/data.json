@@ -52,12 +52,12 @@
   "expenditure": [
     {
       "description": "Living Expenses",
-      "type": "employment",
-      "owner": "Client",
+      "type": "postTax",
+      "owner": "client",
       "value": 1000,
       "indexation": "inflationCPI",
-      "from": "start",
-      "to": "end"
+      "from": "31/12/2020",
+      "to": "31/12/2020"
     }
   ],
   "assets": [

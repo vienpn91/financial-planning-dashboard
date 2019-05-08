@@ -142,6 +142,40 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
             // set state
             console.log(values);
           }}
+          initialValues={{ expenditure: tables ? addKeyToArray(tables.expenditure || []) : [] }}
+          enableReinitialize={true}
+          render={(props: FormikProps<any>) => {
+            const addRow = (row: any) => {
+              const expenditure = [...props.values.expenditure];
+              expenditure.unshift(row);
+
+              props.setFieldValue('expenditure', expenditure);
+            };
+            const deleteRow = (key: number) => {
+              const expenditure = props.values.expenditure.filter((asset: any) => asset.key !== key);
+
+              props.setFieldValue('expenditure', expenditure);
+            };
+
+            return (
+              <Form>
+                <ExpenditureTable
+                  resetForm={props.resetForm}
+                  setFieldValue={props.setFieldValue}
+                  data={(tables && tables.expenditure) || []}
+                  loading={loading}
+                  addRow={addRow}
+                  deleteRow={deleteRow}
+                />
+              </Form>
+            );
+          }}
+        />
+        <Formik
+          onSubmit={(values: any, actions: FormikActions<any>) => {
+            // set state
+            console.log(values);
+          }}
           initialValues={{ assets: tables ? addKeyToArray(tables.assets || []) : [] }}
           enableReinitialize={true}
           render={(props: FormikProps<any>) => {
