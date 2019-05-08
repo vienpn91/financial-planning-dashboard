@@ -6,7 +6,6 @@ import ExpandedLiabilitiesRow from './ExpandedLiabilitiesRow';
 import GeneralTable from '../GeneralTable';
 import { FormikProps } from 'formik';
 import { addKeyToArray } from '../DataEntry';
-import ExpandedAssetsRow from '../assets/ExpandedAssetsRow';
 
 interface LiabilitiesTableProps {
   data: object[];
@@ -131,13 +130,29 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps, LiabilitiesT
     const { count, dataSource } = this.state;
     const newData = {
       key: count,
-      description: 'Salary',
-      type: 'employment',
+      description: 'Loan',
+      type: 'deductible',
       owner: 'client',
-      value: 1000,
-      indexation: 'salaryInflation',
-      from: 'start',
-      to: 'clientRetirement',
+      value: 100000,
+      interest: 4.5,
+      from: 'existing',
+      to: 'retain',
+      expandable: {
+        deductibily: 2,
+        repaymentAmount: 1150,
+        type: 'principalAndInterest',
+        durationLength: 10,
+        durationType: 'years',
+        creditLimit: 5000,
+        associatedAsset: 'Shares',
+      },
+      drawdowns: [
+        {
+          value: 18000,
+          from: 'start',
+          to: 'end',
+        },
+      ],
     };
 
     // update formik
@@ -220,8 +235,8 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps, LiabilitiesT
           columns={columns}
           dataSource={dataSource}
           pagination={false}
-          expandedRowRender={ExpandedAssetsRow}
-          className={'income-table'}
+          expandedRowRender={ExpandedLiabilitiesRow}
+          className={`${this.tableName}-table`}
         />
         <ActionTableGeneral>
           <Button htmlType={'button'} type={'default'} onClick={this.handleResetForm}>

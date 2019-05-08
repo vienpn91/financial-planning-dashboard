@@ -5,7 +5,6 @@ import { isFunction } from 'lodash';
 import GeneralTable from '../GeneralTable';
 import { FormikProps } from 'formik';
 import { addKeyToArray } from '../DataEntry';
-import ExpandedAssetsRow from '../assets/ExpandedAssetsRow';
 
 interface IncomeTableProps {
   data: object[];
@@ -224,8 +223,7 @@ class IncomeTable extends PureComponent<IncomeTableProps, IncomeTableState> {
           columns={columns}
           dataSource={dataSource}
           pagination={false}
-          expandedRowRender={ExpandedAssetsRow}
-          className={'income-table'}
+          className={`${this.tableName}-table`}
         />
         <ActionTableGeneral>
           <Button htmlType={'button'} type={'default'} onClick={this.handleResetForm}>

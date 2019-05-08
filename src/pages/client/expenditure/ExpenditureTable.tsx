@@ -5,7 +5,6 @@ import { isFunction } from 'lodash';
 import { ActionTableGeneral, HeaderTitleTable, TableEntryContainer, TextTitle } from '../styled';
 import GeneralTable from '../GeneralTable';
 import { addKeyToArray } from '../DataEntry';
-import ExpandedAssetsRow from '../assets/ExpandedAssetsRow';
 
 interface ExpenditureTableProps {
   data: object[];
@@ -221,8 +220,7 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps, ExpenditureT
           columns={columns}
           dataSource={dataSource}
           pagination={false}
-          expandedRowRender={ExpandedAssetsRow}
-          className={'income-table'}
+          className={`${this.tableName}-table`}
         />
         <ActionTableGeneral>
           <Button htmlType={'button'} type={'default'} onClick={this.handleResetForm}>

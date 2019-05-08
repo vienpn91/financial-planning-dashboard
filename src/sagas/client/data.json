@@ -164,7 +164,7 @@
     {
       "description": "Home Loan",
       "type": "nonDeductible",
-      "owner": "Client",
+      "owner": "client",
       "value": 100000,
       "interest": 4.5,
       "from": "existing",
@@ -189,7 +189,7 @@
     {
       "description": "Loan",
       "type": "deductible",
-      "owner": "Client",
+      "owner": "client",
       "value": 100000,
       "interest": 4.5,
       "from": "existing",
@@ -215,7 +215,7 @@
   "insurance": [
     {
       "provider": "ABC",
-      "owner": "Client",
+      "owner": "client",
       "premiumFeeDetails": [
         {
           "feeType": "premium",

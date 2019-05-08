@@ -202,7 +202,7 @@ class BasicInformationTable extends PureComponent<BasicInformationProps, BasicIn
           dataSource={dataSource}
           pagination={false}
           expandedRowRender={ExpandedBasicInformationRow}
-          className="basic-information-table"
+          className={`${this.tableName}-table`}
         />
         <ActionTableGeneral>
           <Button htmlType={'button'} type={'default'} onClick={this.handleResetForm}>

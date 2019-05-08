@@ -7,7 +7,6 @@ import AssetsTable from './assets/AssetsTable';
 import LiabilitiesTable from './liabilities/LiabilitiesTable';
 import InsuranceTable from './insurance/InsuranceTable';
 import { Form, Formik, FormikActions, FormikProps } from 'formik';
-import { Button } from 'antd';
 import { connect } from 'react-redux';
 import { RootState, StandardAction } from '../../reducers/reducerTypes';
 import { find, map, isArray } from 'lodash';
@@ -231,6 +230,40 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
                   resetForm={props.resetForm}
                   setFieldValue={props.setFieldValue}
                   data={(tables && tables.liabilities) || []}
+                  loading={loading}
+                  addRow={addRow}
+                  deleteRow={deleteRow}
+                />
+              </Form>
+            );
+          }}
+        />
+        <Formik
+          onSubmit={(values: any, actions: FormikActions<any>) => {
+            // set state
+            console.log(values);
+          }}
+          initialValues={{ insurance: tables ? addKeyToArray(tables.insurance || []) : [] }}
+          enableReinitialize={true}
+          render={(props: FormikProps<any>) => {
+            const addRow = (row: any) => {
+              const insurance = [...props.values.insurance];
+              insurance.unshift(row);
+
+              props.setFieldValue('insurance', insurance);
+            };
+            const deleteRow = (key: number) => {
+              const insurance = props.values.insurance.filter((asset: any) => asset.key !== key);
+
+              props.setFieldValue('insurance', insurance);
+            };
+
+            return (
+              <Form>
+                <InsuranceTable
+                  resetForm={props.resetForm}
+                  setFieldValue={props.setFieldValue}
+                  data={(tables && tables.insurance) || []}
                   loading={loading}
                   addRow={addRow}
                   deleteRow={deleteRow}
