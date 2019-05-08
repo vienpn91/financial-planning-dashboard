@@ -204,33 +204,41 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
               </Form>
             );
           }}
+        />{' '}
+        <Formik
+          onSubmit={(values: any, actions: FormikActions<any>) => {
+            // set state
+            console.log(values);
+          }}
+          initialValues={{ liabilities: tables ? addKeyToArray(tables.liabilities || []) : [] }}
+          enableReinitialize={true}
+          render={(props: FormikProps<any>) => {
+            const addRow = (row: any) => {
+              const liabilities = [...props.values.liabilities];
+              liabilities.unshift(row);
+
+              props.setFieldValue('liabilities', liabilities);
+            };
+            const deleteRow = (key: number) => {
+              const liabilities = props.values.liabilities.filter((asset: any) => asset.key !== key);
+
+              props.setFieldValue('liabilities', liabilities);
+            };
+
+            return (
+              <Form>
+                <LiabilitiesTable
+                  resetForm={props.resetForm}
+                  setFieldValue={props.setFieldValue}
+                  data={(tables && tables.liabilities) || []}
+                  loading={loading}
+                  addRow={addRow}
+                  deleteRow={deleteRow}
+                />
+              </Form>
+            );
+          }}
         />
-        {/*<BasicInformationTable data={tables && tables.basicInformation || []} setFieldValue={formProps.setFieldValue} />*/}
-        {/*<ExpenditureTable />*/}
-        {/*<AssetsTable />*/}
-        {/*<LiabilitiesTable />*/}
-        {/*<InsuranceTable />*/}
-        {/*<div>*/}
-        {/*  <Button htmlType={'button'} type={'default'}>*/}
-        {/*    Discard*/}
-        {/*  </Button>*/}
-        {/*  <Button htmlType={'submit'} type={'primary'}>*/}
-        {/*    Submit*/}
-        {/*  </Button>*/}
-        {/*</div>*/}
-        {/*<IncomeTable formProps={formProps} />*/}
-        {/*<ExpenditureTable />*/}
-        {/*<AssetsTable />*/}
-        {/*<LiabilitiesTable />*/}
-        {/*<InsuranceTable />*/}
-        {/*<div>*/}
-        {/*  <Button htmlType={'button'} type={'default'}>*/}
-        {/*    Discard*/}
-        {/*  </Button>*/}
-        {/*  <Button htmlType={'submit'} type={'primary'}>*/}
-        {/*    Submit*/}
-        {/*  </Button>*/}
-        {/*</div>*/}
       </>
     );
   }

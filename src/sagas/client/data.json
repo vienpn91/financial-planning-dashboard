@@ -185,6 +185,31 @@
           "to": "end"
         }
       ]
+    },
+    {
+      "description": "Loan",
+      "type": "deductible",
+      "owner": "Client",
+      "value": 100000,
+      "interest": 4.5,
+      "from": "existing",
+      "to": "retain",
+      "expandable": {
+        "deductibily": 2,
+        "repaymentAmount": 1150,
+        "type": "principalAndInterest",
+        "durationLength": 10,
+        "durationType": "years",
+        "creditLimit": 5000,
+        "associatedAsset": "Shares"
+      },
+      "drawdowns": [
+        {
+          "value": 18000,
+          "from": "start",
+          "to": "end"
+        }
+      ]
     }
   ],
   "insurance": [
