@@ -41,7 +41,7 @@ code {
 
 .table-enter-leave .ant-table-thead > tr,
 .table-enter-leave .ant-table-tbody > tr {
-  transition: none;
+  transition: height 200ms ease;
 }
 
 .editable-cell {

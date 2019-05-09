@@ -36,26 +36,25 @@ class GeneralTable extends PureComponent<GeneralTableProps & TableProps<any>> {
 
   public enterAnim = [
     {
-      opacity: 0,
-      x: 30,
-      duration: 0,
-      backgroundColor: '#fffeee',
+      opacity: 0, x: 30, backgroundColor: '#fffeee', duration: 0,
     },
     {
+      height: 0,
       duration: 200,
       type: 'from',
       delay: 250,
       ease: 'easeOutQuad',
     },
     {
-      opacity: 1,
-      x: 0,
-      duration: 250,
-      ease: 'easeOutQuad',
+      opacity: 1, x: 0, duration: 250, ease: 'easeOutQuad',
     },
-    { delay: 1000, backgroundColor: 'initial' },
+    { delay: 1000, backgroundColor: '#fff' },
   ];
-  public leaveAnim = [{ duration: 250, opacity: 0 }, { duration: 200, ease: 'easeOutQuad' }];
+  public leaveAnim = [
+    { duration: 250, opacity: 0 },
+    { height: 0, duration: 200, ease: 'easeOutQuad' },
+    { delay: 100, display: 'none', backgroundColor: '#fff'},
+  ];
 
   public animTag = ($props: any) => {
     return (
