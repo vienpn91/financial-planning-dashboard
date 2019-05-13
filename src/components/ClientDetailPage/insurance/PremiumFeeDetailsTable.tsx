@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import { Icon, Popconfirm, Table } from 'antd';
-import { InnerTableContainer, DivideLine, HeaderTitleTable, TextTitle } from '../styled';
+import { DivideLine, HeaderTitleTable, InnerTableContainer, TextTitle } from '../../../pages/client/styled';
 
-class DrawdownsTable extends PureComponent {
+class PremiumFeeDetailsTable extends PureComponent {
   public state = {
     dataSource: [
       {
@@ -12,20 +12,41 @@ class DrawdownsTable extends PureComponent {
         from: 'start',
         to: 'End',
       },
+      {
+        key: '1',
+        type: 'Custom',
+        value: 10000,
+        from: 'start',
+        to: 'End',
+      },
+      {
+        key: '2',
+        type: 'Custom',
+        value: 25000,
+        from: 'start',
+        to: 'End',
+      },
+      {
+        key: '3',
+        type: 'Custom',
+        value: 15000,
+        from: 'start',
+        to: 'End',
+      },
     ],
-    count: 1,
+    count: 4,
   };
 
   public columns = [
     {
       title: '',
       key: 'operation',
+      width: 1,
       className: 'operation',
-      width: 18,
       render: (text: any, record: any) =>
         this.state.dataSource.length >= 1 ? (
           <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
-            <Icon type="close-square" theme="twoTone" style={{ fontSize: '16px' }} />
+            <Icon type="close-square" theme="twoTone" style={{ fontSize: '16px' }}  />
           </Popconfirm>
         ) : null,
     },
@@ -92,18 +113,13 @@ class DrawdownsTable extends PureComponent {
       <InnerTableContainer>
         <HeaderTitleTable small={true}>
           <Icon type={'plus-square'} theme={'filled'} onClick={this.handleAdd} />
-          <TextTitle small={true}>{'Drawdowns'}</TextTitle>
+          <TextTitle small={true}>{'Premium & Fee Details'}</TextTitle>
           <DivideLine />
         </HeaderTitleTable>
-        <Table
-          columns={columns}
-          dataSource={dataSource}
-          pagination={false}
-          size={'small'}
-        />
+        <Table columns={columns} dataSource={dataSource} pagination={false} size={'small'} />
       </InnerTableContainer>
     );
   }
 }
 
-export default DrawdownsTable;
+export default PremiumFeeDetailsTable;

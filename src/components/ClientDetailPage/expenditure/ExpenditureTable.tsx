@@ -1,13 +1,12 @@
 import React, { PureComponent } from 'react';
 import { Button, Icon, Popconfirm } from 'antd';
-import ExpandedAssetsRow from './ExpandedAssetsRow';
-import { TableEntryContainer, HeaderTitleTable, TextTitle, ActionTableGeneral } from '../styled';
-import GeneralTable from '../GeneralTable';
 import { FormikProps } from 'formik';
 import { isFunction } from 'lodash';
+import { ActionTableGeneral, HeaderTitleTable, TableEntryContainer, TextTitle } from '../../../pages/client/styled';
+import GeneralTable from '../GeneralTable';
 import { addKeyToArray } from '../DataEntry';
 
-interface AssetsTableProps {
+interface ExpenditureTableProps {
   data: object[];
   loading?: boolean;
 
@@ -19,12 +18,12 @@ interface AssetsTableProps {
   deleteRow: (key: number) => void;
 }
 
-interface AssetsTableState {
+interface ExpenditureTableState {
   dataSource: object[];
   count: number;
 }
 
-class AssetsTable extends PureComponent<AssetsTableProps, AssetsTableState> {
+class ExpenditureTable extends PureComponent<ExpenditureTableProps, ExpenditureTableState> {
   public state = {
     dataSource: addKeyToArray(this.props.data),
     count: this.props.data.length,
@@ -34,60 +33,66 @@ class AssetsTable extends PureComponent<AssetsTableProps, AssetsTableState> {
     {
       title: 'Description',
       dataIndex: 'description',
-      width: '13%',
+      width: 'calc(13% - 20px)',
     },
     {
       title: 'Type',
       dataIndex: 'type',
       key: '1',
-      width: '12%',
+      width: 'calc(12% - 20px)',
       type: 'select',
-      options: [
-        { value: 'lifestyle', label: 'Lifestyle' },
-        { value: 'directInvestment', label: 'Direct Investment' },
-        { value: 'accountBased', label: 'Account Based' },
-        { value: 'super', label: 'Super' },
-      ],
+      options: [{ value: 'postTax', label: 'Post-tax' }],
     },
     {
       title: 'Owner',
       dataIndex: 'owner',
       key: '2',
+      width: '13%',
       type: 'select',
-      options: [{ value: 'client', label: 'Client' }],
-      width: 'calc(13% - 20px)',
+      options: [{ value: 'client', label: 'Client' }, { value: 'partner', label: 'Partner' }],
     },
     {
       title: 'Value',
       dataIndex: 'value',
       key: '3',
-      type: 'number',
-      width: 'calc(13% - 20px)',
+      width: '13%',
     },
     {
-      title: 'Investment',
-      dataIndex: 'investment',
+      title: 'Indexation',
+      dataIndex: 'indexation',
       key: '4',
       width: '13%',
       type: 'select',
       options: [
-        { value: 'primaryResidence', label: 'Primary Residence' },
-        { value: 'australianEquity', label: 'Australian Equity' },
-        { value: 'preservation', label: 'Preservation' },
-        { value: 'moderate', label: 'Moderate' },
+        { value: 'salaryInflation', label: 'Salary Inflation' },
+        { value: 'inflationCPI', label: 'Inflation (CPI)' },
       ],
     },
     {
       title: 'From',
       dataIndex: 'from',
       key: '5',
+      type: 'date',
       width: '13%',
+      pickerType: 'custom',
+      options: [
+        { value: '23/7/1999', label: 'Start' },
+        { value: '24/6/2004', label: `Client's Retirement` },
+        { value: '31/12/2005', label: `Partner's Retirement` },
+      ],
     },
     {
       title: 'To',
       dataIndex: 'to',
       key: '6',
       width: '13%',
+      type: 'date',
+      pickerType: 'custom',
+      options: [
+        { value: '1/5/2005', label: 'End' },
+        { value: '25/6/2009', label: `Client's Retirement` },
+        { value: '18/7/2012', label: `Partner's Retirement` },
+      ],
     },
     {
       title: 'Action',
@@ -97,9 +102,9 @@ class AssetsTable extends PureComponent<AssetsTableProps, AssetsTableState> {
     },
   ];
 
-  private tableName = 'assets';
+  private tableName = 'expenditure';
 
-  public componentDidUpdate(prevProps: Readonly<AssetsTableProps>, prevState: Readonly<{}>, snapshot?: any): void {
+  public componentDidUpdate(prevProps: Readonly<ExpenditureTableProps>, prevState: Readonly<{}>, snapshot?: any): void {
     if (this.props.loading !== prevProps.loading) {
       this.setState({
         dataSource: addKeyToArray(this.props.data),
@@ -126,17 +131,13 @@ class AssetsTable extends PureComponent<AssetsTableProps, AssetsTableState> {
     const { count, dataSource } = this.state;
     const newData = {
       key: count,
-      description: `Home ${count}`,
-      type: 'lifestyle',
-      owner: 'Client',
-      value: 25000,
-      investment: 'primaryResidence',
-      from: 'existing',
-      to: 'retain',
-      expandable: {
-        costBase: 50000,
-        growthRate: 12,
-      },
+      description: 'Living Expenses',
+      type: 'postTax',
+      owner: 'client',
+      value: 1000,
+      indexation: 'inflationCPI',
+      from: '31/12/2020',
+      to: '31/12/2020',
     };
 
     // update formik
@@ -178,7 +179,7 @@ class AssetsTable extends PureComponent<AssetsTableProps, AssetsTableState> {
   public render() {
     const { dataSource } = this.state;
     const { loading } = this.props;
-    const columns = this.columns.map((col: any) => {
+    const columns = this.columns.map((col) => {
       const editable = col.editable === false ? false : 'true';
       if (col.key === 'operation') {
         return {
@@ -212,14 +213,13 @@ class AssetsTable extends PureComponent<AssetsTableProps, AssetsTableState> {
       <TableEntryContainer>
         <HeaderTitleTable>
           <Icon type={'plus-square'} theme={'filled'} onClick={this.handleAdd} />
-          <TextTitle>{'Assets'}</TextTitle>
+          <TextTitle>{'Expenditure'}</TextTitle>
         </HeaderTitleTable>
         <GeneralTable
           loading={loading || false}
           columns={columns}
           dataSource={dataSource}
           pagination={false}
-          expandedRowRender={ExpandedAssetsRow}
           className={`${this.tableName}-table`}
         />
         <ActionTableGeneral>
@@ -237,4 +237,4 @@ class AssetsTable extends PureComponent<AssetsTableProps, AssetsTableState> {
   }
 }
 
-export default AssetsTable;
+export default ExpenditureTable;

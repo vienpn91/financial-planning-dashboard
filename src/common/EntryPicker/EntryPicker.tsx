@@ -68,25 +68,6 @@ class EntryPicker extends PureComponent<EntryPickerProps, {}> {
     }
   }
 
-  // case 'custom':
-  //   return (
-  //     <EntryPickerTable
-  //       className={'picker-' + pickerType + ' has-' + border + ' font-' + fontStyle + ' text-' + textType}
-  //     >
-  //       <DatePicker
-  //         value={moment('2015-01-01', 'YYYY-MM-DD')}
-  //         renderExtraFooter={() => (
-  //           <DateButtonCustom>
-  //             <Button type="primary" onClick={this.handleOpenChange}>
-  //               Retired
-  //             </Button>
-  //           </DateButtonCustom>
-  //         )}
-  //         showToday={false}
-  //       />
-  //     </EntryPickerTable>
-  //   );
-
   public render(): React.ReactNode {
     const { open } = this.state;
     const { pickerType, border, fontStyle, value, textType, defaultOpen, format, options, ...props } = this.props;

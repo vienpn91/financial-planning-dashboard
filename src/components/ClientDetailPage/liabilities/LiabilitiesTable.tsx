@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Button, Icon, Popconfirm } from 'antd';
 import { isFunction } from 'lodash';
-import { TableEntryContainer, HeaderTitleTable, TextTitle, ActionTableGeneral } from '../styled';
+import { TableEntryContainer, HeaderTitleTable, TextTitle, ActionTableGeneral } from '../../../pages/client/styled';
 import ExpandedLiabilitiesRow from './ExpandedLiabilitiesRow';
 import GeneralTable from '../GeneralTable';
 import { FormikProps } from 'formik';

@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import { Icon, Popconfirm, Table } from 'antd';
-import { DivideLine, HeaderTitleTable, InnerTableContainer, TextTitle } from '../styled';
+import { InnerTableContainer, DivideLine, HeaderTitleTable, TextTitle } from '../../../pages/client/styled';
 
-class PremiumFeeDetailsTable extends PureComponent {
+class CoverDetailsTable extends PureComponent {
   public state = {
     dataSource: [
       {
@@ -41,12 +41,12 @@ class PremiumFeeDetailsTable extends PureComponent {
     {
       title: '',
       key: 'operation',
-      width: 1,
       className: 'operation',
+      width: 18,
       render: (text: any, record: any) =>
         this.state.dataSource.length >= 1 ? (
           <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
-            <Icon type="close-square" theme="twoTone" style={{ fontSize: '16px' }}  />
+            <Icon type="close-square" theme="twoTone" style={{ fontSize: '16px' }} />
           </Popconfirm>
         ) : null,
     },
@@ -113,7 +113,7 @@ class PremiumFeeDetailsTable extends PureComponent {
       <InnerTableContainer>
         <HeaderTitleTable small={true}>
           <Icon type={'plus-square'} theme={'filled'} onClick={this.handleAdd} />
-          <TextTitle small={true}>{'Premium & Fee Details'}</TextTitle>
+          <TextTitle small={true}>{'Cover Details'}</TextTitle>
           <DivideLine />
         </HeaderTitleTable>
         <Table columns={columns} dataSource={dataSource} pagination={false} size={'small'} />
@@ -122,4 +122,4 @@ class PremiumFeeDetailsTable extends PureComponent {
   }
 }
 
-export default PremiumFeeDetailsTable;
+export default CoverDetailsTable;

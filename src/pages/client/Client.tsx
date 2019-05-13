@@ -1,12 +1,12 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
+import { get } from 'lodash';
 import { Layout, Icon } from 'antd';
+const { Content } = Layout;
 import Heading from '../../components/Heading/Heading';
 import { ButtonModalFixed } from '../../components/NameAndBirthDay/styled';
 import { HomeDesc, HomePage } from '../home/styled';
-import { get } from 'lodash';
-import DataEntryComponent from './DataEntry';
-const { Content } = Layout;
+import DataEntryComponent from '../../components/ClientDetailPage/DataEntry';
 
 class Client extends React.PureComponent<RouteComponentProps> {
   public render(): JSX.Element {
@@ -16,7 +16,7 @@ class Client extends React.PureComponent<RouteComponentProps> {
     const tabName = get(match, 'params.tabName');
 
     return tagName ? (
-      <DataEntryComponent tagName={tagName} clientId={clientId} tabName={tabName} />
+      <DataEntryComponent clientId={clientId} tabName={tabName} tagName={tagName} />
     ) : (
       <HomePage select>
         <Content>

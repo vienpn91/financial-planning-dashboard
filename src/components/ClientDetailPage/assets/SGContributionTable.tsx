@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Icon, Popconfirm, Table } from 'antd';
-import { InnerTableNoDelContainer, HeaderTitleTable, TextTitle, DivideLine } from '../styled';
+import { InnerTableNoDelContainer, HeaderTitleTable, TextTitle, DivideLine } from '../../../pages/client/styled';
 
 class SGContributionTable extends PureComponent {
   public state = {

@@ -1,10 +1,10 @@
 import React, { PureComponent, createRef } from 'react';
 import { FastField, Field, FieldProps } from 'formik';
 import { Form, Checkbox } from 'antd';
-import { Input, Password } from '../../Input';
-import EntryPicker from '../../EntryPicker/EntryPicker';
-import Select from '../../Input/CustomSelect';
-import CustomInputNumber from '../../Input/CustomInputNumber';
+import { Input, Password } from '../../../common/Input';
+import EntryPicker from '../../../common/EntryPicker/EntryPicker';
+import Select from '../../../common/Input/CustomSelect';
+import CustomInputNumber from '../../../common/Input/CustomInputNumber';
 
 interface InputProps {
   type: InputType;

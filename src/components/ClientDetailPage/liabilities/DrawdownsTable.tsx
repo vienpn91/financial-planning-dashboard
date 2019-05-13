@@ -1,9 +1,8 @@
 import React, { PureComponent } from 'react';
-import {Icon, Popconfirm, Table} from 'antd';
-import { InnerTableContainer, HeaderTitleTable, TextTitle, DivideLine } from '../styled';
-import { TweenOneGroup } from 'rc-tween-one';
+import { Icon, Popconfirm, Table } from 'antd';
+import { InnerTableContainer, DivideLine, HeaderTitleTable, TextTitle } from '../../../pages/client/styled';
 
-class ContributionWithdrawalsTable extends PureComponent {
+class DrawdownsTable extends PureComponent {
   public state = {
     dataSource: [
       {
@@ -13,30 +12,16 @@ class ContributionWithdrawalsTable extends PureComponent {
         from: 'start',
         to: 'End',
       },
-      {
-        key: '1',
-        type: 'Custom',
-        value: 10000,
-        from: 'start',
-        to: 'End',
-      },
-      {
-        key: '2',
-        type: 'Custom',
-        value: 25000,
-        from: 'start',
-        to: 'End',
-      },
     ],
-    count: 3,
+    count: 1,
   };
 
   public columns = [
     {
       title: '',
       key: 'operation',
-      width: 18,
       className: 'operation',
+      width: 18,
       render: (text: any, record: any) =>
         this.state.dataSource.length >= 1 ? (
           <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
@@ -68,42 +53,6 @@ class ContributionWithdrawalsTable extends PureComponent {
       width: 120,
     },
   ];
-
-  public enterAnim = [
-    {
-      opacity: 0,
-      x: 30,
-      duration: 0,
-      backgroundColor: '#fffeee',
-    },
-    {
-      duration: 200,
-      type: 'from',
-      delay: 250,
-      ease: 'easeOutQuad',
-    },
-    {
-      opacity: 1,
-      x: 0,
-      duration: 250,
-      ease: 'easeOutQuad',
-    },
-    { delay: 1000, backgroundColor: 'initial' },
-  ];
-  public leaveAnim = [{ duration: 250, opacity: 0 }, { duration: 200, ease: 'easeOutQuad' }];
-
-  public animTag = ($props: any) => {
-    return (
-      <TweenOneGroup
-        component="tbody"
-        enter={this.enterAnim}
-        leave={this.leaveAnim}
-        appear={false}
-        exclusive
-        {...$props}
-      />
-    );
-  }
 
   public handleDelete = (key: string) => {
     const dataSource = [...this.state.dataSource];
@@ -138,18 +87,23 @@ class ContributionWithdrawalsTable extends PureComponent {
         }),
       };
     });
-    const components = { body: { wrapper: this.animTag, } };
+
     return (
       <InnerTableContainer>
         <HeaderTitleTable small={true}>
           <Icon type={'plus-square'} theme={'filled'} onClick={this.handleAdd} />
-          <TextTitle small={true}>{'Contribution/Withdrawals'}</TextTitle>
+          <TextTitle small={true}>{'Drawdowns'}</TextTitle>
           <DivideLine />
         </HeaderTitleTable>
-        <Table columns={columns} dataSource={dataSource} pagination={false} components={components} size={'small'} />
+        <Table
+          columns={columns}
+          dataSource={dataSource}
+          pagination={false}
+          size={'small'}
+        />
       </InnerTableContainer>
     );
   }
 }
 
-export default ContributionWithdrawalsTable;
+export default DrawdownsTable;

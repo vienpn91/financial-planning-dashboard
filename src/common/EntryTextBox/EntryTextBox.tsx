@@ -2,17 +2,16 @@ import React, { PureComponent } from 'react';
 import { InputNumber, Input } from 'antd';
 import { EntryInputNumberWrapper, EntryInputWrapper, EntryInputDefault } from './styled';
 
-
-interface EntryPickerProps {
-  type: PickerType;
+interface EntryTextBoxProps {
+  type: TextType;
   defaultNumber?: number;
   defaultText?: string;
   textStyle: string;
 }
 
-declare type PickerType = 'rates' | 'percent' | 'default' | 'inline';
+declare type TextType = 'rates' | 'percent' | 'default' | 'inline';
 
-class EntryTextBox extends PureComponent<EntryPickerProps, {}> {
+class EntryTextBox extends PureComponent<EntryTextBoxProps, {}> {
   protected static defaultProps = {
     placeholder: '',
   };
@@ -21,44 +20,40 @@ class EntryTextBox extends PureComponent<EntryPickerProps, {}> {
     const { type, defaultNumber, textStyle, defaultText } = this.props;
     switch (type) {
       case 'rates':
-        return(
-          <EntryInputNumberWrapper className={textStyle}>
-             <InputNumber
-                defaultValue={defaultNumber}
-                formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-              />
-          </EntryInputNumberWrapper>
-        );
-      case 'percent':
-        return(
+        return (
           <EntryInputNumberWrapper className={textStyle}>
             <InputNumber
               defaultValue={defaultNumber}
-              formatter={value => `${value}%`}
+              formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
             />
           </EntryInputNumberWrapper>
         );
+      case 'percent':
+        return (
+          <EntryInputNumberWrapper className={textStyle}>
+            <InputNumber defaultValue={defaultNumber} formatter={(value) => `${value}%`} />
+          </EntryInputNumberWrapper>
+        );
       case 'inline':
-        return(
+        return (
           <EntryInputWrapper className={textStyle}>
             <Input defaultValue={defaultText} />
           </EntryInputWrapper>
         );
       case 'default':
-        return(
+        return (
           <EntryInputDefault className={textStyle}>
             <Input defaultValue={defaultText} />
           </EntryInputDefault>
         );
       default:
-        return(
+        return (
           <EntryInputWrapper className={textStyle}>
             <Input />
           </EntryInputWrapper>
         );
     }
   }
-
 }
 
 export default EntryTextBox;

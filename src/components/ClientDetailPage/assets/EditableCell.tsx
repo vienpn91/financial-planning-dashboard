@@ -1,11 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
 import { reduce, get, isFunction } from 'lodash';
-import { FormInput } from '../../../components/Elements/FormInput';
-import { InputType } from '../../../components/Elements/FormInput/FormInput';
-import { PickerType } from '../../../components/EntryPicker/EntryPicker';
+import { FormInput } from '../../Elements/FormInput';
+import { InputType } from '../../Elements/FormInput/FormInput';
+import { PickerType } from '../../../common/EntryPicker/EntryPicker';
 
-import { EditableCellWrap, ValueEditCell } from './styled';
+import { EditableCellWrap, ValueEditCell } from '../styled';
 interface EditableProps {
   title: string;
   type: InputType;

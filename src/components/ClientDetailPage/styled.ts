@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const EditableCellWrap = styled.section.attrs({
   className: 'editable-cell-value-wrap',
-  })`
+})`
   cursor: pointer;
   min-height: 35px;
   display: flex;
@@ -10,69 +10,69 @@ export const EditableCellWrap = styled.section.attrs({
   width: 100%;
   height: 35px;
   .ant-calendar-picker {
-    &:hover{
-      .ant-calendar-picker-input{
-        &:not(.ant-input-disabled){
+    &:hover {
+      .ant-calendar-picker-input {
+        &:not(.ant-input-disabled) {
           border-color: #d9d9d9;
           box-shadow: none;
         }
       }
     }
-    &:focus{
-      .ant-calendar-picker-input{
-        &:not(.ant-input-disabled){
+    &:focus {
+      .ant-calendar-picker-input {
+        &:not(.ant-input-disabled) {
           border-color: #515c83;
         }
       }
     }
   }
-  .ant-select-selection-selected-value{
+  .ant-select-selection-selected-value {
     color: #5f698d;
   }
-  .ant-input-number-handler-wrap{
-    opacity: 0!important
+  .ant-input-number-handler-wrap {
+    opacity: 0 !important;
   }
-  div{
+  div {
     /* Select Type */
-    &.ant-select-focused{
-      .ant-select-selection{
+    &.ant-select-focused {
+      .ant-select-selection {
         box-shadow: none;
         border: 1px solid #515c83;
       }
     }
-    &.readOnly{
-      .ant-select-selection{
+    &.readOnly {
+      .ant-select-selection {
         border-color: transparent;
         background-color: transparent;
       }
-      .ant-select-arrow{
+      .ant-select-arrow {
         color: transparent;
       }
-      &:hover{
-        .ant-select-selection{
+      &:hover {
+        .ant-select-selection {
           border-color: #d9d9d9;
         }
-        .ant-select-arrow{
+        .ant-select-arrow {
           color: #d9d9d9;
         }
       }
     }
     /* Input Number */
-    &.ant-input-number{
+    &.ant-input-number {
       border-color: transparent;
       background-color: transparent;
-      &.ant-input-number-focused{
+      &.ant-input-number-focused {
         box-shadow: none;
         border-right: none;
       }
-      &.readOnly{
+      &.readOnly {
         border-color: transparent;
         background-color: transparent;
       }
     }
   }
   /* Input general */
-  input{
+  input {
     border-color: #d9d9d9;
     color: #5f698d;
     margin-left: -10px;
@@ -90,30 +90,29 @@ export const EditableCellWrap = styled.section.attrs({
     padding: 0 10px;
     transition: all 300ms ease;
     height: 35px;
-    &.ant-input-number-input{
+    &.ant-input-number-input {
       background-color: transparent;
       border: 1px solid transparent;
-      &:hover{
+      &:hover {
         border-color: #d9d9d9;
       }
     }
-    &.readOnly{
+    &.readOnly {
       background-color: transparent;
       border: 1px solid transparent;
-      &:hover{
+      &:hover {
         border-color: #d9d9d9;
       }
     }
-    &.ant-input[disabled]{
+    &.ant-input[disabled] {
       color: #5f698d;
       border: none;
       background-color: transparent;
     }
-    &:focus{
+    &:focus {
       border: 1px solid #515c83;
     }
   }
-  
 `;
 
 export const ValueEditCell = styled.span`

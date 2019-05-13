@@ -1,12 +1,13 @@
 import React, { PureComponent } from 'react';
 import { Button, Icon, Popconfirm } from 'antd';
-import { ActionTableGeneral, HeaderTitleTable, TableEntryContainer, TextTitle } from '../styled';
-import { isFunction } from 'lodash';
+import ExpandedAssetsRow from './ExpandedAssetsRow';
+import { TableEntryContainer, HeaderTitleTable, TextTitle, ActionTableGeneral } from '../../../pages/client/styled';
 import GeneralTable from '../GeneralTable';
 import { FormikProps } from 'formik';
+import { isFunction } from 'lodash';
 import { addKeyToArray } from '../DataEntry';
 
-interface IncomeTableProps {
+interface AssetsTableProps {
   data: object[];
   loading?: boolean;
 
@@ -18,12 +19,12 @@ interface IncomeTableProps {
   deleteRow: (key: number) => void;
 }
 
-interface IncomeTableState {
+interface AssetsTableState {
   dataSource: object[];
   count: number;
 }
 
-class IncomeTable extends PureComponent<IncomeTableProps, IncomeTableState> {
+class AssetsTable extends PureComponent<AssetsTableProps, AssetsTableState> {
   public state = {
     dataSource: addKeyToArray(this.props.data),
     count: this.props.data.length,
@@ -33,69 +34,60 @@ class IncomeTable extends PureComponent<IncomeTableProps, IncomeTableState> {
     {
       title: 'Description',
       dataIndex: 'description',
-      type: 'text',
-      key: '0',
-      width: 'calc(13% - 20px)',
+      width: '13%',
     },
     {
       title: 'Type',
       dataIndex: 'type',
       key: '1',
-      width: 'calc(12% - 20px)',
+      width: '12%',
       type: 'select',
-      options: [{ value: 'employment', label: 'Employment' }, { value: 'taxable', label: 'Taxable' }],
+      options: [
+        { value: 'lifestyle', label: 'Lifestyle' },
+        { value: 'directInvestment', label: 'Direct Investment' },
+        { value: 'accountBased', label: 'Account Based' },
+        { value: 'super', label: 'Super' },
+      ],
     },
     {
       title: 'Owner',
       dataIndex: 'owner',
       key: '2',
-      width: '13%',
       type: 'select',
-      options: [{ value: 'client', label: 'Client' }, { value: 'partner', label: 'Partner' }],
+      options: [{ value: 'client', label: 'Client' }],
+      width: 'calc(13% - 20px)',
     },
     {
       title: 'Value',
       dataIndex: 'value',
       key: '3',
-      width: '13%',
-      type: 'text',
+      type: 'number',
+      width: 'calc(13% - 20px)',
     },
     {
-      title: 'Indexation',
-      dataIndex: 'indexation',
+      title: 'Investment',
+      dataIndex: 'investment',
       key: '4',
       width: '13%',
       type: 'select',
       options: [
-        { value: 'salaryInflation', label: 'Salary Inflation' },
-        { value: 'inflationCPI', label: 'Inflation (CPI)' },
+        { value: 'primaryResidence', label: 'Primary Residence' },
+        { value: 'australianEquity', label: 'Australian Equity' },
+        { value: 'preservation', label: 'Preservation' },
+        { value: 'moderate', label: 'Moderate' },
       ],
     },
     {
       title: 'From',
       dataIndex: 'from',
       key: '5',
-      type: 'date',
       width: '13%',
-      pickerType: 'custom',
-      options: [
-        { value: '23/7/1999', label: 'Start' },
-        { value: '24/6/2004', label: `Client's Retirement` },
-        { value: '31/12/2005', label: `Partner's Retirement` },
-      ],
     },
     {
       title: 'To',
       dataIndex: 'to',
       key: '6',
       width: '13%',
-      type: 'date',
-      pickerType: 'custom',
-      options: [
-        { value: '1/5/2005', label: 'End' },
-        { value: '25/6/2009', label: `Client's Retirement` },
-        { value: '18/7/2012', label: `Partner's Retirement` },
-      ],
     },
     {
       title: 'Action',
@@ -105,9 +97,9 @@ class IncomeTable extends PureComponent<IncomeTableProps, IncomeTableState> {
     },
   ];
 
-  private tableName = 'income';
+  private tableName = 'assets';
 
-  public componentDidUpdate(prevProps: Readonly<IncomeTableProps>, prevState: Readonly<{}>, snapshot?: any): void {
+  public componentDidUpdate(prevProps: Readonly<AssetsTableProps>, prevState: Readonly<{}>, snapshot?: any): void {
     if (this.props.loading !== prevProps.loading) {
       this.setState({
         dataSource: addKeyToArray(this.props.data),
@@ -134,13 +126,17 @@ class IncomeTable extends PureComponent<IncomeTableProps, IncomeTableState> {
     const { count, dataSource } = this.state;
     const newData = {
       key: count,
-      description: 'Salary',
-      type: 'employment',
-      owner: 'client',
-      value: 1000,
-      indexation: 'salaryInflation',
-      from: '31/12/2020',
-      to: '31/12/2020',
+      description: `Home ${count}`,
+      type: 'lifestyle',
+      owner: 'Client',
+      value: 25000,
+      investment: 'primaryResidence',
+      from: 'existing',
+      to: 'retain',
+      expandable: {
+        costBase: 50000,
+        growthRate: 12,
+      },
     };
 
     // update formik
@@ -182,7 +178,7 @@ class IncomeTable extends PureComponent<IncomeTableProps, IncomeTableState> {
   public render() {
     const { dataSource } = this.state;
     const { loading } = this.props;
-    const columns = this.columns.map((col) => {
+    const columns = this.columns.map((col: any) => {
       const editable = col.editable === false ? false : 'true';
       if (col.key === 'operation') {
         return {
@@ -216,13 +212,14 @@ class IncomeTable extends PureComponent<IncomeTableProps, IncomeTableState> {
       <TableEntryContainer>
         <HeaderTitleTable>
           <Icon type={'plus-square'} theme={'filled'} onClick={this.handleAdd} />
-          <TextTitle>{'Income'}</TextTitle>
+          <TextTitle>{'Assets'}</TextTitle>
         </HeaderTitleTable>
         <GeneralTable
           loading={loading || false}
           columns={columns}
           dataSource={dataSource}
           pagination={false}
+          expandedRowRender={ExpandedAssetsRow}
           className={`${this.tableName}-table`}
         />
         <ActionTableGeneral>
@@ -240,4 +237,4 @@ class IncomeTable extends PureComponent<IncomeTableProps, IncomeTableState> {
   }
 }
 
-export default IncomeTable;
+export default AssetsTable;

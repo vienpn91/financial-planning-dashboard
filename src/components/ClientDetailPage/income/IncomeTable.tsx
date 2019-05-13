@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react';
 import { Button, Icon, Popconfirm } from 'antd';
-import { FormikProps } from 'formik';
+import { ActionTableGeneral, HeaderTitleTable, TableEntryContainer, TextTitle } from '../../../pages/client/styled';
 import { isFunction } from 'lodash';
-import { ActionTableGeneral, HeaderTitleTable, TableEntryContainer, TextTitle } from '../styled';
 import GeneralTable from '../GeneralTable';
+import { FormikProps } from 'formik';
 import { addKeyToArray } from '../DataEntry';
 
-interface ExpenditureTableProps {
+interface IncomeTableProps {
   data: object[];
   loading?: boolean;
 
@@ -18,12 +18,12 @@ interface ExpenditureTableProps {
   deleteRow: (key: number) => void;
 }
 
-interface ExpenditureTableState {
+interface IncomeTableState {
   dataSource: object[];
   count: number;
 }
 
-class ExpenditureTable extends PureComponent<ExpenditureTableProps, ExpenditureTableState> {
+class IncomeTable extends PureComponent<IncomeTableProps, IncomeTableState> {
   public state = {
     dataSource: addKeyToArray(this.props.data),
     count: this.props.data.length,
@@ -33,6 +33,8 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps, ExpenditureT
     {
       title: 'Description',
       dataIndex: 'description',
+      type: 'text',
+      key: '0',
       width: 'calc(13% - 20px)',
     },
     {
@@ -41,7 +43,7 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps, ExpenditureT
       key: '1',
       width: 'calc(12% - 20px)',
       type: 'select',
-      options: [{ value: 'postTax', label: 'Post-tax' }],
+      options: [{ value: 'employment', label: 'Employment' }, { value: 'taxable', label: 'Taxable' }],
     },
     {
       title: 'Owner',
@@ -56,6 +58,7 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps, ExpenditureT
       dataIndex: 'value',
       key: '3',
       width: '13%',
+      type: 'text',
     },
     {
       title: 'Indexation',
@@ -102,9 +105,9 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps, ExpenditureT
     },
   ];
 
-  private tableName = 'expenditure';
+  private tableName = 'income';
 
-  public componentDidUpdate(prevProps: Readonly<ExpenditureTableProps>, prevState: Readonly<{}>, snapshot?: any): void {
+  public componentDidUpdate(prevProps: Readonly<IncomeTableProps>, prevState: Readonly<{}>, snapshot?: any): void {
     if (this.props.loading !== prevProps.loading) {
       this.setState({
         dataSource: addKeyToArray(this.props.data),
@@ -131,11 +134,11 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps, ExpenditureT
     const { count, dataSource } = this.state;
     const newData = {
       key: count,
-      description: 'Living Expenses',
-      type: 'postTax',
+      description: 'Salary',
+      type: 'employment',
       owner: 'client',
       value: 1000,
-      indexation: 'inflationCPI',
+      indexation: 'salaryInflation',
       from: '31/12/2020',
       to: '31/12/2020',
     };
@@ -213,7 +216,7 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps, ExpenditureT
       <TableEntryContainer>
         <HeaderTitleTable>
           <Icon type={'plus-square'} theme={'filled'} onClick={this.handleAdd} />
-          <TextTitle>{'Expenditure'}</TextTitle>
+          <TextTitle>{'Income'}</TextTitle>
         </HeaderTitleTable>
         <GeneralTable
           loading={loading || false}
@@ -237,4 +240,4 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps, ExpenditureT
   }
 }
 
-export default ExpenditureTable;
+export default IncomeTable;

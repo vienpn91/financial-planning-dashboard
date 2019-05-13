@@ -1,13 +1,13 @@
 import React, { PureComponent } from 'react';
-import { Button, Icon } from 'antd';
-import ExpandedBasicInformationRow from './ExpandedBasicInformationRow';
-import {ActionTableGeneral, HeaderTitleTable, TableEntryContainer, TextTitle} from '../styled';
+import { Button, Icon, Popconfirm } from 'antd';
+import { isFunction } from 'lodash';
+import { TableEntryContainer, HeaderTitleTable, TextTitle, ActionTableGeneral } from '../../../pages/client/styled';
+import ExpandedInsuranceRow from './ExpandedInsuranceRow';
 import GeneralTable from '../GeneralTable';
 import { FormikProps } from 'formik';
 import { addKeyToArray } from '../DataEntry';
-import { isFunction } from 'lodash';
 
-interface BasicInformationProps {
+interface InsuranceTableProps {
   data: object[];
   loading?: boolean;
 
@@ -19,12 +19,12 @@ interface BasicInformationProps {
   deleteRow: (key: number) => void;
 }
 
-interface BasicInformationState {
+interface InsuranceTableState {
   dataSource: object[];
   count: number;
 }
 
-class BasicInformationTable extends PureComponent<BasicInformationProps, BasicInformationState> {
+class InsuranceTable extends PureComponent<InsuranceTableProps, InsuranceTableState> {
   public state = {
     dataSource: addKeyToArray(this.props.data),
     count: this.props.data.length,
@@ -32,54 +32,30 @@ class BasicInformationTable extends PureComponent<BasicInformationProps, BasicIn
 
   public columns = [
     {
-      title: 'Description',
-      dataIndex: 'description',
+      title: 'Provider',
+      dataIndex: 'provider',
+      type: 'text',
+      key: '0',
+      width: 160,
+    },
+    {
+      title: 'Owner',
+      dataIndex: 'owner',
+      key: '2',
+      type: 'select',
+      options: [{ value: 'client', label: 'Client' }, { value: 'partner', label: 'Partner' }],
+    },
+    {
+      title: 'Action',
+      key: 'operation',
+      width: 100,
       editable: false,
-      width: 'calc(15% - 20px)',
-    },
-    {
-      title: 'First Name',
-      dataIndex: 'firstName',
-      type: 'text',
-      width: '12%',
-    },
-    {
-      title: 'Last Name',
-      dataIndex: 'lastName',
-      type: 'text',
-      width: '13%',
-    },
-    {
-      title: 'DOB',
-      dataIndex: 'dob',
-      type: 'date',
-      width: '15%',
-    },
-    {
-      title: 'Emp Status',
-      dataIndex: 'empStatus',
-      type: 'select',
-      width: '15%',
-      options: [{ value: 'selfEmployed', label: 'Self-employed' }, { value: 'unemployed', label: 'Unemployed' }],
-    },
-    {
-      title: 'Retirement Year',
-      dataIndex: 'retirementYear',
-      type: 'date',
-      width: '15%',
-    },
-    {
-      title: 'Marital State',
-      dataIndex: 'maritalState',
-      type: 'select',
-      width: 'calc(15% - 20px)',
-      options: [{ value: 'married', label: 'Married' }, { value: 'unMarried', label: 'Unmarried' }],
     },
   ];
 
-  private tableName = 'basicInformation';
+  private tableName = 'insurance';
 
-  public componentDidUpdate(prevProps: Readonly<BasicInformationProps>, prevState: Readonly<{}>, snapshot?: any): void {
+  public componentDidUpdate(prevProps: Readonly<InsuranceTableProps>, prevState: Readonly<{}>, snapshot?: any): void {
     if (this.props.loading !== prevProps.loading) {
       this.setState({
         dataSource: addKeyToArray(this.props.data),
@@ -104,37 +80,42 @@ class BasicInformationTable extends PureComponent<BasicInformationProps, BasicIn
   public handleAdd = () => {
     const { addRow } = this.props;
     const { count, dataSource } = this.state;
-
-    // only 1 partner
-    if (dataSource.length === 1) {
-      const newData = {
-        key: count,
-        description: 'Partner',
-        firstName: 'Susane',
-        lastName: 'Diaz',
-        dob: 1555924936,
-        empStatus: 'unemployed',
-        retirementYear: '1555924936',
-        maritalState: 'married',
-        expandable: {
-          riskProfile: 'highGrowth',
-          hasPrivateHealthInsurance: false,
-          jointRiskProfile: 'defensive',
+    const newData = {
+      key: count,
+      provider: 'ABC',
+      owner: 'client',
+      premiumFeeDetails: [
+        {
+          feeType: 'premium',
+          amount: 2000,
+          frequency: 'yearly',
+          specialNote: 'Sample note.',
         },
-      };
+      ],
+      coverDetails: [
+        {
+          coverType: 'life',
+          policyOwner: 'superFund',
+          benefitAmount: 200000,
+          premiumType: 'stepped',
+          expandable: {
+            coverType: 'within',
+          },
+        },
+      ],
+    };
 
-      // update formik
-      if (isFunction(addRow)) {
-        addRow(newData);
-      }
-
-      // update table
-      dataSource.push(newData);
-      this.setState({
-        dataSource,
-        count: count + 1,
-      });
+    // update formik
+    if (isFunction(addRow)) {
+      addRow(newData);
     }
+
+    // update table
+    dataSource.unshift(newData);
+    this.setState({
+      dataSource,
+      count: count + 1,
+    });
   }
 
   public handleSave = (arg: { tableName: string; rowIndex: number; dataIndex: string; value: any; record: any }) => {
@@ -147,16 +128,6 @@ class BasicInformationTable extends PureComponent<BasicInformationProps, BasicIn
       [dataIndex]: value,
     });
     this.setState({ dataSource: newData });
-
-    // side effect
-    if (rowIndex === 0 && dataIndex === 'maritalState') {
-      if (value === 'unMarried') {
-        this.handleDelete(1);
-      }
-      if (value === 'married') {
-        this.handleAdd();
-      }
-    }
   }
 
   public handleResetForm = () => {
@@ -175,6 +146,19 @@ class BasicInformationTable extends PureComponent<BasicInformationProps, BasicIn
     const { loading } = this.props;
     const columns = this.columns.map((col) => {
       const editable = col.editable === false ? false : 'true';
+      if (col.key === 'operation') {
+        return {
+          ...col,
+          title: 'Action',
+          key: 'operation',
+          width: '10%',
+          render: (text: any, record: any) => (
+            <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
+              <a href="javascript:">Delete</a>
+            </Popconfirm>
+          ),
+        };
+      }
 
       return {
         ...col,
@@ -193,15 +177,15 @@ class BasicInformationTable extends PureComponent<BasicInformationProps, BasicIn
     return (
       <TableEntryContainer>
         <HeaderTitleTable>
-          <Icon type={'user'} />
-          <TextTitle>{'Basic Information'}</TextTitle>
+          <Icon type={'plus-square'} theme={'filled'} onClick={this.handleAdd} />
+          <TextTitle>{'Insurance'}</TextTitle>
         </HeaderTitleTable>
         <GeneralTable
           loading={loading || false}
           columns={columns}
           dataSource={dataSource}
           pagination={false}
-          expandedRowRender={ExpandedBasicInformationRow}
+          expandedRowRender={ExpandedInsuranceRow}
           className={`${this.tableName}-table`}
         />
         <ActionTableGeneral>
@@ -219,4 +203,4 @@ class BasicInformationTable extends PureComponent<BasicInformationProps, BasicIn
   }
 }
 
-export default BasicInformationTable;
+export default InsuranceTable;
