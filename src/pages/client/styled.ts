@@ -10,7 +10,7 @@ interface TextTitleProps {
 
 export const TableEntryContainer = styled.section.attrs({
   className: 'table-entry-container',
-  })`
+})`
   padding: 20px;
   /* table layout here */
   .table-general{
@@ -58,16 +58,16 @@ export const TableEntryContainer = styled.section.attrs({
     font-weight: 600;
   }
 `;
-export const ActionTableGeneral = styled.section`
-  display: flex;
-  margin-top: 20px;
+export const ActionTableGeneral = styled.section<{ visible?: boolean }>`
+  display: ${(props) => (props.visible ? 'flex' : 'none !important')};
+  margin: 20px 0;
   flex: 0 0 100%;
   justify-content: flex-end;
-  .ant-btn-default{
+  .ant-btn-default {
     background-color: #212121;
     color: #fff;
   }
-  .ant-btn{
+  .ant-btn {
     font-weight: 600;
     margin-right: 15px;
     width: 150px;
@@ -81,8 +81,8 @@ export const HeaderTitleTable = styled.div.attrs({
   margin-bottom: 10px;
   display: flex;
   align-items: center;
-  i{
-    font-size: ${(props) => props.small ? '16px' : '24px'};
+  i {
+    font-size: ${(props) => (props.small ? '16px' : '24px')};
     color: #072074;
     margin-right: 10px;
   }
@@ -90,7 +90,7 @@ export const HeaderTitleTable = styled.div.attrs({
 
 export const TextTitle = styled.span<TextTitleProps>`
   color: #072074;
-  font-size: ${(props) => props.small ? '14px' : '21px'};
+  font-size: ${(props) => (props.small ? '14px' : '21px')};
 `;
 
 export const DivideLine = styled.span`
@@ -138,7 +138,7 @@ export const InnerTableNoDelContainer = styled.section`
 export const InnerTableContainer = styled.section`
   color: #072074;
   font-size: 21px;
-  .ant-table-wrapper{
+  .ant-table-wrapper {
     margin-left: -38px;
   }
   .ant-table-small {

@@ -19,6 +19,8 @@ import {
   Table,
   DataEntry,
 } from '../../reducers/client';
+import { Button, Icon } from 'antd';
+import { ActionTableGeneral } from '../../pages/client/styled';
 
 interface DataEntryProps {
   clientId: string;
@@ -61,6 +63,14 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
     if (fetchDataEntry) {
       fetchDataEntry(params);
     }
+  }
+
+  public handleDiscardForm = () => {
+    console.log('handle discard form');
+  }
+
+  public handleSubmitForm = () => {
+    console.log('handle submit form');
   }
 
   public render() {
@@ -272,6 +282,16 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
             );
           }}
         />
+        <ActionTableGeneral visible={true}>
+          <Button htmlType={'button'} type={'default'} onClick={this.handleDiscardForm}>
+            <Icon type="close" />
+            <span>Discard</span>
+          </Button>
+          <Button htmlType={'submit'} type={'primary'} onClick={this.handleSubmitForm}>
+            <Icon type="check" />
+            <span>Submit</span>
+          </Button>
+        </ActionTableGeneral>
       </>
     );
   }
