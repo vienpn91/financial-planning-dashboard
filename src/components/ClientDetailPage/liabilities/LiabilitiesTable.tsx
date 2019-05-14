@@ -11,12 +11,12 @@ interface LiabilitiesTableProps {
   data: object[];
   loading?: boolean;
 
-  formProps?: FormikProps<any>;
-  tableName?: string;
   setFieldValue?: (field: string, value: any) => void;
   resetForm: (nextValues?: any) => void;
+  submitForm: () => void;
   addRow: (row: any) => void;
   deleteRow: (key: number) => void;
+  ref?: React.RefObject<any>;
 }
 
 interface LiabilitiesTableState {
@@ -102,6 +102,15 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps, LiabilitiesT
   ];
 
   private tableName = 'liabilities';
+
+  public resetForm = () => {
+    this.handleResetForm();
+  }
+
+  public submitForm = () => {
+    const { submitForm } = this.props;
+    submitForm();
+  }
 
   public componentDidUpdate(prevProps: Readonly<LiabilitiesTableProps>, prevState: Readonly<{}>, snapshot?: any): void {
     if (this.props.loading !== prevProps.loading) {

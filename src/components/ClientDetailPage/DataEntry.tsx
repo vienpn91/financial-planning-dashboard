@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { createRef, PureComponent } from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
 import BasicInformationTable from './basicInformation/BasicInformationTable';
 import IncomeTable from './income/IncomeTable';
@@ -32,6 +32,10 @@ interface DataEntryProps {
   fetchDataEntry?: (payload: FetchDataEntryPayload) => FetchDataEntryAction;
 }
 
+interface DataEntryState {
+  formData: Table;
+}
+
 export const addKeyToArray = (array: object[], defaultValue?: any) => {
   if (isArray(array)) {
     return map(array, (d, index: number) => ({ key: index, ...d }));
@@ -41,6 +45,23 @@ export const addKeyToArray = (array: object[], defaultValue?: any) => {
 };
 
 class DataEntryComponent extends PureComponent<DataEntryProps> {
+  public readonly state: DataEntryState = {
+    formData: {},
+  };
+
+  private readonly liabilitiesForm = createRef<any>();
+
+  public updateFormData = (values: object[]) => {
+    const { formData } = this.state;
+
+    this.setState({
+      formData: {
+        ...formData,
+        ...values,
+      },
+    });
+  }
+
   public componentDidMount() {
     const { clientId, tagName, tabName, fetchDataEntry } = this.props;
 
@@ -66,10 +87,16 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
   }
 
   public handleDiscardForm = () => {
+    if (this.liabilitiesForm) {
+      this.liabilitiesForm.current.resetForm();
+    }
     console.log('handle discard form');
   }
 
   public handleSubmitForm = () => {
+    if (this.liabilitiesForm) {
+      this.liabilitiesForm.current.submitForm();
+    }
     console.log('handle submit form');
   }
 
@@ -217,7 +244,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
         <Formik
           onSubmit={(values: any, actions: FormikActions<any>) => {
             // set state
-            console.log(values);
+            this.updateFormData(values);
           }}
           initialValues={{ liabilities: tables ? addKeyToArray(tables.liabilities || []) : [] }}
           enableReinitialize={true}
@@ -237,12 +264,14 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
             return (
               <Form>
                 <LiabilitiesTable
+                  submitForm={props.submitForm}
                   resetForm={props.resetForm}
                   setFieldValue={props.setFieldValue}
                   data={(tables && tables.liabilities) || []}
                   loading={loading}
                   addRow={addRow}
                   deleteRow={deleteRow}
+                  ref={this.liabilitiesForm}
                 />
               </Form>
             );
