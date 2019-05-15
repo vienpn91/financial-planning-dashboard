@@ -15,6 +15,7 @@ interface AssetsTableProps {
   tableName?: string;
   setFieldValue?: (field: string, value: any) => void;
   resetForm: (nextValues?: any) => void;
+  submitForm: () => void;
   addRow: (row: any) => void;
   deleteRow: (key: number) => void;
 }
@@ -98,6 +99,15 @@ class AssetsTable extends PureComponent<AssetsTableProps, AssetsTableState> {
   ];
 
   private tableName = 'assets';
+
+  public resetForm = () => {
+    this.handleResetForm();
+  }
+
+  public submitForm = () => {
+    const { submitForm } = this.props;
+    submitForm();
+  }
 
   public componentDidUpdate(prevProps: Readonly<AssetsTableProps>, prevState: Readonly<{}>, snapshot?: any): void {
     if (this.props.loading !== prevProps.loading) {

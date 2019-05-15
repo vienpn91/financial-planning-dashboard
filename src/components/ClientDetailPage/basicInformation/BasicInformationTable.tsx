@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Button, Icon } from 'antd';
 import ExpandedBasicInformationRow from './ExpandedBasicInformationRow';
-import {ActionTableGeneral, HeaderTitleTable, TableEntryContainer, TextTitle} from '../../../pages/client/styled';
+import { ActionTableGeneral, HeaderTitleTable, TableEntryContainer, TextTitle } from '../../../pages/client/styled';
 import GeneralTable from '../GeneralTable';
 import { FormikProps } from 'formik';
 import { addKeyToArray } from '../DataEntry';
@@ -15,6 +15,7 @@ interface BasicInformationProps {
   tableName?: string;
   setFieldValue?: (field: string, value: any) => void;
   resetForm: (nextValues?: any) => void;
+  submitForm: () => void;
   addRow: (row: any) => void;
   deleteRow: (key: number) => void;
 }
@@ -78,6 +79,15 @@ class BasicInformationTable extends PureComponent<BasicInformationProps, BasicIn
   ];
 
   private tableName = 'basicInformation';
+
+  public resetForm = () => {
+    this.handleResetForm();
+  }
+
+  public submitForm = () => {
+    const { submitForm } = this.props;
+    submitForm();
+  }
 
   public componentDidUpdate(prevProps: Readonly<BasicInformationProps>, prevState: Readonly<{}>, snapshot?: any): void {
     if (this.props.loading !== prevProps.loading) {

@@ -49,6 +49,10 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
     formData: {},
   };
 
+  private readonly basicInformationForm = createRef<any>();
+  private readonly incomeForm = createRef<any>();
+  private readonly expenditureForm = createRef<any>();
+  private readonly assetsForm = createRef<any>();
   private readonly liabilitiesForm = createRef<any>();
   private readonly insuranceForm = createRef<any>();
 
@@ -88,6 +92,18 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
   }
 
   public handleDiscardForm = () => {
+    if (this.basicInformationForm) {
+      this.basicInformationForm.current.resetForm();
+    }
+    if (this.incomeForm) {
+      this.incomeForm.current.resetForm();
+    }
+    if (this.expenditureForm) {
+      this.expenditureForm.current.resetForm();
+    }
+    if (this.assetsForm) {
+      this.assetsForm.current.resetForm();
+    }
     if (this.liabilitiesForm) {
       this.liabilitiesForm.current.resetForm();
     }
@@ -98,6 +114,18 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
   }
 
   public handleSubmitForm = () => {
+    if (this.basicInformationForm) {
+      this.basicInformationForm.current.submitForm();
+    }
+    if (this.incomeForm) {
+      this.incomeForm.current.submitForm();
+    }
+    if (this.expenditureForm) {
+      this.expenditureForm.current.submitForm();
+    }
+    if (this.assetsForm) {
+      this.assetsForm.current.submitForm();
+    }
     if (this.liabilitiesForm) {
       this.liabilitiesForm.current.submitForm();
     }
@@ -115,7 +143,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
         <Formik
           onSubmit={(values: any, actions: FormikActions<any>) => {
             // set state
-            console.log(values);
+            this.updateFormData(values);
           }}
           initialValues={{ basicInformation: tables ? addKeyToArray(tables.basicInformation || []) : [] }}
           enableReinitialize={true}
@@ -135,12 +163,14 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
             return (
               <Form>
                 <BasicInformationTable
+                  submitForm={props.submitForm}
                   resetForm={props.resetForm}
                   setFieldValue={props.setFieldValue}
                   data={(tables && tables.basicInformation) || []}
                   loading={loading}
                   addRow={addRow}
                   deleteRow={deleteRow}
+                  ref={this.basicInformationForm}
                 />
               </Form>
             );
@@ -149,7 +179,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
         <Formik
           onSubmit={(values: any, actions: FormikActions<any>) => {
             // set state
-            console.log(values);
+            this.updateFormData(values);
           }}
           initialValues={{ income: tables ? addKeyToArray(tables.income || []) : [] }}
           enableReinitialize={true}
@@ -169,12 +199,14 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
             return (
               <Form>
                 <IncomeTable
+                  submitForm={props.submitForm}
                   resetForm={props.resetForm}
                   setFieldValue={props.setFieldValue}
                   data={(tables && tables.income) || []}
                   loading={loading}
                   addRow={addRow}
                   deleteRow={deleteRow}
+                  ref={this.incomeForm}
                 />
               </Form>
             );
@@ -183,7 +215,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
         <Formik
           onSubmit={(values: any, actions: FormikActions<any>) => {
             // set state
-            console.log(values);
+            this.updateFormData(values);
           }}
           initialValues={{ expenditure: tables ? addKeyToArray(tables.expenditure || []) : [] }}
           enableReinitialize={true}
@@ -203,12 +235,14 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
             return (
               <Form>
                 <ExpenditureTable
+                  submitForm={props.submitForm}
                   resetForm={props.resetForm}
                   setFieldValue={props.setFieldValue}
                   data={(tables && tables.expenditure) || []}
                   loading={loading}
                   addRow={addRow}
                   deleteRow={deleteRow}
+                  ref={this.expenditureForm}
                 />
               </Form>
             );
@@ -217,7 +251,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
         <Formik
           onSubmit={(values: any, actions: FormikActions<any>) => {
             // set state
-            console.log(values);
+            this.updateFormData(values);
           }}
           initialValues={{ assets: tables ? addKeyToArray(tables.assets || []) : [] }}
           enableReinitialize={true}
@@ -237,12 +271,14 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
             return (
               <Form>
                 <AssetsTable
+                  submitForm={props.submitForm}
                   resetForm={props.resetForm}
                   setFieldValue={props.setFieldValue}
                   data={(tables && tables.assets) || []}
                   loading={loading}
                   addRow={addRow}
                   deleteRow={deleteRow}
+                  ref={this.assetsForm}
                 />
               </Form>
             );
