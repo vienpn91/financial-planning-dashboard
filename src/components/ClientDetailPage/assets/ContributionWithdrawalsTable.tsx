@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import {Icon, Popconfirm, Table} from 'antd';
+import { Icon, Popconfirm, Table } from 'antd';
 import { InnerTableContainer, HeaderTitleTable, TextTitle, DivideLine } from '../../../pages/client/styled';
 import { TweenOneGroup } from 'rc-tween-one';
 
@@ -8,27 +8,20 @@ class ContributionWithdrawalsTable extends PureComponent {
     dataSource: [
       {
         key: '0',
-        type: 'Custom',
-        value: 25000,
+        type: 'Contribution',
+        value: 100000,
         from: 'start',
         to: 'End',
       },
       {
         key: '1',
-        type: 'Custom',
-        value: 10000,
-        from: 'start',
-        to: 'End',
-      },
-      {
-        key: '2',
-        type: 'Custom',
-        value: 25000,
+        type: 'Withdrawals',
+        value: 50000,
         from: 'start',
         to: 'End',
       },
     ],
-    count: 3,
+    count: 2,
   };
 
   public columns = [
@@ -113,11 +106,17 @@ class ContributionWithdrawalsTable extends PureComponent {
   public handleAdd = () => {
     const { count, dataSource } = this.state;
     const newData = {
-      key: count,
-      type: 'Custom',
-      value: 0,
-      from: 'Start',
-      to: 'End',
+      key: Date.now(),
+      type: 'contribution',
+      value: 100000.0,
+      from: {
+        type: 'start',
+        yearValue: null,
+      },
+      to: {
+        type: 'end',
+        yearValue: null,
+      },
     };
     this.setState({
       dataSource: [...dataSource, newData],
@@ -138,7 +137,7 @@ class ContributionWithdrawalsTable extends PureComponent {
         }),
       };
     });
-    const components = { body: { wrapper: this.animTag, } };
+    const components = { body: { wrapper: this.animTag } };
     return (
       <InnerTableContainer>
         <HeaderTitleTable small={true}>

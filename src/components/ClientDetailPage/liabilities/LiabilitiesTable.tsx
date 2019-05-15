@@ -4,7 +4,6 @@ import { isFunction } from 'lodash';
 import { TableEntryContainer, HeaderTitleTable, TextTitle, ActionTableGeneral } from '../../../pages/client/styled';
 import ExpandedLiabilitiesRow from './ExpandedLiabilitiesRow';
 import GeneralTable from '../GeneralTable';
-import { addKeyToArray } from '../DataEntry';
 
 interface LiabilitiesTableProps {
   data: object[];
@@ -18,17 +17,7 @@ interface LiabilitiesTableProps {
   ref?: React.RefObject<any>;
 }
 
-interface LiabilitiesTableState {
-  dataSource: object[];
-  count: number;
-}
-
-class LiabilitiesTable extends PureComponent<LiabilitiesTableProps, LiabilitiesTableState> {
-  public state = {
-    dataSource: addKeyToArray(this.props.data),
-    count: this.props.data.length,
-  };
-
+class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
   public columns = [
     {
       title: 'Description',
@@ -111,15 +100,6 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps, LiabilitiesT
     submitForm();
   }
 
-  public componentDidUpdate(prevProps: Readonly<LiabilitiesTableProps>, prevState: Readonly<{}>, snapshot?: any): void {
-    if (this.props.loading !== prevProps.loading) {
-      this.setState({
-        dataSource: addKeyToArray(this.props.data),
-        count: this.props.data.length,
-      });
-    }
-  }
-
   public handleDelete = (key: number) => {
     const { deleteRow } = this.props;
 
@@ -127,38 +107,46 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps, LiabilitiesT
     if (isFunction(deleteRow)) {
       deleteRow(key);
     }
-
-    // update table
-    const dataSource = [...this.state.dataSource];
-    this.setState({ dataSource: dataSource.filter((item) => item.key !== key) });
   }
 
   public handleAdd = () => {
     const { addRow } = this.props;
-    const { count, dataSource } = this.state;
     const newData = {
-      key: count,
-      description: 'Loan',
-      type: 'deductible',
+      key: Date.now(),
+      description: 'Home Loan',
+      type: 'nonDeductible',
       owner: 'client',
       value: 100000,
       interest: 4.5,
-      from: 'existing',
-      to: 'retain',
+      from: {
+        type: 'existing',
+        yearValue: null,
+      },
+      to: {
+        type: 'retain',
+        yearValue: null,
+      },
       expandable: {
-        deductibily: 2,
-        repaymentAmount: 1150,
-        type: 'principalAndInterest',
-        durationLength: 10,
-        durationType: 'years',
-        creditLimit: 5000,
-        associatedAsset: 'Shares',
+        deductibility: 0,
+        repaymentAmount: 6139.0,
+        repaymentType: 'principalInterest',
+        durationLength: 30,
+        durationType: 'months',
+        creditLimit: 0,
+        associatedAssetRefId: 1,
       },
       drawdowns: [
         {
-          value: 18000,
-          from: 'start',
-          to: 'end',
+          // id: 1,
+          value: 18000.0,
+          from: {
+            type: 'start',
+            yearValue: null,
+          },
+          to: {
+            type: 'end',
+            yearValue: null,
+          },
         },
       ],
     };
@@ -167,41 +155,21 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps, LiabilitiesT
     if (isFunction(addRow)) {
       addRow(newData);
     }
-
-    // update table
-    dataSource.unshift(newData);
-    this.setState({
-      dataSource,
-      count: count + 1,
-    });
   }
 
   public handleSave = (arg: { tableName: string; rowIndex: number; dataIndex: string; value: any; record: any }) => {
     const { tableName, rowIndex, dataIndex, value, record } = arg;
-    const newData = [...this.state.dataSource];
-    const index = newData.findIndex((data) => record.key === data.key);
-    const item = newData[index];
-    newData.splice(index, 1, {
-      ...item,
-      [dataIndex]: value,
-    });
-    this.setState({ dataSource: newData });
   }
 
   public handleResetForm = () => {
-    const { resetForm, data } = this.props;
+    const { resetForm, } = this.props;
     if (isFunction(resetForm)) {
       resetForm();
     }
-    this.setState({
-      dataSource: addKeyToArray(data),
-      count: data.length,
-    });
   }
 
   public render() {
-    const { dataSource } = this.state;
-    const { loading } = this.props;
+    const { loading, data } = this.props;
     const columns = this.columns.map((col) => {
       const editable = col.editable === false ? false : 'true';
       if (col.key === 'operation') {
@@ -241,7 +209,7 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps, LiabilitiesT
         <GeneralTable
           loading={loading || false}
           columns={columns}
-          dataSource={dataSource}
+          dataSource={data}
           pagination={false}
           expandedRowRender={ExpandedLiabilitiesRow}
           className={`${this.tableName}-table`}

@@ -166,7 +166,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
                   submitForm={props.submitForm}
                   resetForm={props.resetForm}
                   setFieldValue={props.setFieldValue}
-                  data={(tables && tables.basicInformation) || []}
+                  data={(props && props.values && props.values.basicInformation) || []}
                   loading={loading}
                   addRow={addRow}
                   deleteRow={deleteRow}
@@ -202,7 +202,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
                   submitForm={props.submitForm}
                   resetForm={props.resetForm}
                   setFieldValue={props.setFieldValue}
-                  data={(tables && tables.income) || []}
+                  data={(props && props.values && props.values.income) || []}
                   loading={loading}
                   addRow={addRow}
                   deleteRow={deleteRow}
@@ -238,7 +238,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
                   submitForm={props.submitForm}
                   resetForm={props.resetForm}
                   setFieldValue={props.setFieldValue}
-                  data={(tables && tables.expenditure) || []}
+                  data={(props && props.values && props.values.expenditure) || []}
                   loading={loading}
                   addRow={addRow}
                   deleteRow={deleteRow}
@@ -274,7 +274,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
                   submitForm={props.submitForm}
                   resetForm={props.resetForm}
                   setFieldValue={props.setFieldValue}
-                  data={(tables && tables.assets) || []}
+                  data={(props && props.values && props.values.assets) || []}
                   loading={loading}
                   addRow={addRow}
                   deleteRow={deleteRow}
@@ -310,7 +310,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
                   submitForm={props.submitForm}
                   resetForm={props.resetForm}
                   setFieldValue={props.setFieldValue}
-                  data={(tables && tables.liabilities) || []}
+                  data={(props && props.values && props.values.liabilities) || []}
                   loading={loading}
                   addRow={addRow}
                   deleteRow={deleteRow}
@@ -346,7 +346,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
                   submitForm={props.submitForm}
                   resetForm={props.resetForm}
                   setFieldValue={props.setFieldValue}
-                  data={(tables && tables.insurance) || []}
+                  data={(props && props.values && props.values.insurance) || []}
                   loading={loading}
                   addRow={addRow}
                   deleteRow={deleteRow}
