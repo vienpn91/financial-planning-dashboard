@@ -4,7 +4,6 @@ import { isFunction } from 'lodash';
 import { TableEntryContainer, HeaderTitleTable, TextTitle, ActionTableGeneral } from '../../../pages/client/styled';
 import ExpandedLiabilitiesRow from './ExpandedLiabilitiesRow';
 import GeneralTable from '../GeneralTable';
-import { FormikProps } from 'formik';
 import { addKeyToArray } from '../DataEntry';
 
 interface LiabilitiesTableProps {

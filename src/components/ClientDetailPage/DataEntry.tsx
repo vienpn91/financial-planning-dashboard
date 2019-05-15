@@ -50,6 +50,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
   };
 
   private readonly liabilitiesForm = createRef<any>();
+  private readonly insuranceForm = createRef<any>();
 
   public updateFormData = (values: object[]) => {
     const { formData } = this.state;
@@ -90,6 +91,9 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
     if (this.liabilitiesForm) {
       this.liabilitiesForm.current.resetForm();
     }
+    if (this.insuranceForm) {
+      this.insuranceForm.current.resetForm();
+    }
     console.log('handle discard form');
   }
 
@@ -97,7 +101,10 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
     if (this.liabilitiesForm) {
       this.liabilitiesForm.current.submitForm();
     }
-    console.log('handle submit form');
+    if (this.insuranceForm) {
+      this.insuranceForm.current.submitForm();
+    }
+    console.log('handle submit form', this.state.formData);
   }
 
   public render() {
@@ -280,7 +287,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
         <Formik
           onSubmit={(values: any, actions: FormikActions<any>) => {
             // set state
-            console.log(values);
+            this.updateFormData(values);
           }}
           initialValues={{ insurance: tables ? addKeyToArray(tables.insurance || []) : [] }}
           enableReinitialize={true}
@@ -300,12 +307,14 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
             return (
               <Form>
                 <InsuranceTable
+                  submitForm={props.submitForm}
                   resetForm={props.resetForm}
                   setFieldValue={props.setFieldValue}
                   data={(tables && tables.insurance) || []}
                   loading={loading}
                   addRow={addRow}
                   deleteRow={deleteRow}
+                  ref={this.insuranceForm}
                 />
               </Form>
             );

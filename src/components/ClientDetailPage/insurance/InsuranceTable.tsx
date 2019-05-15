@@ -15,6 +15,7 @@ interface InsuranceTableProps {
   tableName?: string;
   setFieldValue?: (field: string, value: any) => void;
   resetForm: (nextValues?: any) => void;
+  submitForm: () => void;
   addRow: (row: any) => void;
   deleteRow: (key: number) => void;
 }
@@ -54,6 +55,15 @@ class InsuranceTable extends PureComponent<InsuranceTableProps, InsuranceTableSt
   ];
 
   private tableName = 'insurance';
+
+  public resetForm = () => {
+    this.handleResetForm();
+  }
+
+  public submitForm = () => {
+    const { submitForm } = this.props;
+    submitForm();
+  }
 
   public componentDidUpdate(prevProps: Readonly<InsuranceTableProps>, prevState: Readonly<{}>, snapshot?: any): void {
     if (this.props.loading !== prevProps.loading) {
