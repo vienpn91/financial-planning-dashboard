@@ -12,6 +12,23 @@ export const TableEntryContainer = styled.section.attrs({
   className: 'table-entry-container',
 })`
   padding: 20px;
+  .expenditure-table,
+  .income-table{
+    .ant-table-thead{
+      tr{
+        th:first-child{
+          padding-left: 20px
+        }
+      }
+    }
+    .ant-table-tbody{
+      tr{
+        td:first-child{
+          padding-left: 20px
+        }
+      }
+    }
+  }
   /* table layout here */
   .table-general{
     table{
@@ -137,6 +154,7 @@ export const InnerTableNoDelContainer = styled.section`
 `;
 export const InnerTableContainer = styled.section`
   color: #072074;
+  margin-top: 10px;
   font-size: 21px;
   .ant-table-wrapper {
     margin-left: -38px;
