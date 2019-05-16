@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import { Button, Form } from 'antd';
 
 export const ModalNameBirthDay = styled.section`
+  position: fixed;
+  bottom: 27px;
+  left: 47px;
 `;
 
 export const ButtonModalFixed = styled(Button).attrs({
@@ -10,9 +13,7 @@ export const ButtonModalFixed = styled(Button).attrs({
   width: 52px!important;
   height: 52px!important;;
   font-size: 19px;
-  position: fixed;
-  bottom: 47px;
-  right: 47px;
+
 `;
 export const TitleForm = styled.span`
     font-size: 22px;
