@@ -135,20 +135,39 @@ export const ExpandedSelectGroup = styled.div.attrs({
   font-weight: 700;
   margin: 0 3px;
   flex-direction: column;
+  .ant-calendar-picker-input {
+    margin-left: 0px;
+    padding-left: 0px;
+    &:focus,
+    &:hover{
+      padding-left: 10px;
+    }
+  }
   .ant-select-arrow {
     right: 6px;
   }
-  .ant-select {
+  .ant-select{
     margin-left: 0px !important;
   }
   .ant-select-selection__rendered {
-    margin: 0 5px !important;
+    margin: 0px !important;
   }
   .ant-select-selection-selected-value {
     padding-right: 0px !important;
   }
+  .ant-select-focused{
+    .ant-select-selection{
+      padding-right: 15px !important;
+    }
+    .ant-select-selection__rendered {
+      margin: 0 5px !important;
+    }
+  }
   &:hover {
-    .ant-select-selection-selected-value {
+    .ant-select-selection__rendered {
+      margin: 0 5px !important;
+    }
+    .ant-select-selection{
       padding-right: 15px !important;
     }
   }

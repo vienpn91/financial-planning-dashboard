@@ -37,9 +37,9 @@ export const DateButtonCustom = styled.div`
     text-align: left;
     &:hover{
       color: #192A6F;
-    background-color: transparent;
-    border: none!important;
-    text-decoration: underline!important;
+      background-color: transparent;
+      border: none!important;
+      text-decoration: underline!important;
     }
   }
 `;
