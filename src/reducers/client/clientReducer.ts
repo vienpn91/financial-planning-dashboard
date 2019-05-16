@@ -1,6 +1,15 @@
 import { Reducer } from 'redux';
 
-import { ClientState, defaultClientState, ClientStateRecord, ClientActionTypes } from './clientTypes';
+import {
+  ClientState,
+  defaultClientState,
+  ClientStateRecord,
+  ClientActionTypes,
+  DataEntry,
+  Tag,
+  getDefaultTagList,
+  Client,
+} from './clientTypes';
 import { StandardAction } from '../reducerTypes';
 import { map } from 'lodash';
 
@@ -27,27 +36,39 @@ export default class ClientReducer {
         return state.set('loading', true).set('error', '');
 
       case ClientActionTypes.FETCH_DATA_ENTRY_SUCCESS:
-        const { clientId, taskName, tabName } = action.payload;
-        const clients = state.clients.map((client) => {
-          if (client.clientID !== clientId) {
+        const { clientId, tabName, tagName } = action.payload;
+
+        const clientIndex = state.clients.findIndex((client: Client) => client.clientId === clientId);
+
+        // add new record for client
+        if (clientIndex === -1) {
+          state.clients.push({ clientId, clientName: '', tagList: getDefaultTagList() });
+        }
+
+        // update existing client record
+        const clients = state.clients.map((client: Client) => {
+          if (client.clientId !== clientId) {
             return client;
           }
 
           return {
             ...client,
-            taskList: map(client.taskList, (task) => {
-              if (task.name !== taskName) {
-                return task;
+            tagList: map(client.tagList, (tag: Tag) => {
+              if (tag.name !== tagName) {
+                return tag;
               }
 
               return {
-                ...task,
-                dataEntries: map(task.dataEntries, (dataEntry) => {
+                ...tag,
+                dataEntries: map(tag.dataEntries, (dataEntry: DataEntry) => {
                   if (dataEntry.tabName !== tabName) {
                     return dataEntry;
                   }
 
-                  return (dataEntry.tables = action.payload.dataEntry);
+                  return {
+                    tabName,
+                    tables: action.payload.dataEntry,
+                  };
                 }),
               };
             }),

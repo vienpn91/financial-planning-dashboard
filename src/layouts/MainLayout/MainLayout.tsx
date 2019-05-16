@@ -8,24 +8,18 @@ import Sidebar from '../Sidebar';
 const { Content } = Layout;
 import { MainLayoutContent, LayoutMain } from './styled';
 import { initializeGA } from '../../utils/GA';
-import { RootState, StandardAction } from '../../reducers/reducerTypes';
-import { FetchDataEntryPayload, FetchDataEntryAction, ClientActions } from '../../reducers/client';
-import { Dispatch, bindActionCreators } from 'redux';
+import { RootState } from '../../reducers/reducerTypes';
 
 interface MainLayoutProp {
   userId: string;
   children: React.ReactNode;
-  fetchDataEntry: (payload: FetchDataEntryPayload) => FetchDataEntryAction;
 }
 
 class MainLayout extends React.PureComponent<MainLayoutProp> {
   public componentDidMount() {
-    const { userId, fetchDataEntry } = this.props;
+    const { userId } = this.props;
 
     initializeGA(userId);
-
-    // for testing
-    fetchDataEntry({ clientId: '123456', taskName: 'New', tabName: 'Current' });
   }
 
   public render(): React.ReactNode {
@@ -46,12 +40,4 @@ const mapStateToProps = (state: RootState) => ({
   userId: state.auth.get('userId'),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<StandardAction<any>>) =>
-  bindActionCreators(
-    {
-      fetchDataEntry: ClientActions.fetchDataEntry,
-    },
-    dispatch,
-  );
-
-export default connect(mapStateToProps, mapDispatchToProps)(MainLayout);
+export default connect(mapStateToProps)(MainLayout);

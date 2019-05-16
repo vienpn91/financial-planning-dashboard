@@ -3,11 +3,6 @@ import styled, { css } from 'styled-components';
 
 export const EntryPickerTable = styled.section`
   display: inline-block;
-  margin-right: 10px;
-  margin: 5px 0px 5px 10px;
-  .ant-input{
-    width: 125px;
-  }
   &.has-none{
     .anticon-calendar{
       display: none;
@@ -32,4 +27,19 @@ export const EntryPickerTable = styled.section`
 `;
 export const DateButtonCustom = styled.div`
   padding: 8px 0px;
+  display: flex;
+  flex-direction: column;
+  button{
+    background: none;
+    border: none;
+    color: #1890ff;
+    box-shadow: none;
+    text-align: left;
+    &:hover{
+      color: #192A6F;
+    background-color: transparent;
+    border: none!important;
+    text-decoration: underline!important;
+    }
+  }
 `;

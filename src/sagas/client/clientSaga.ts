@@ -8,14 +8,14 @@ import { APIResponse, getAPIErrorMessage } from '../../utils/apiUtils';
 export default class ClientSaga {
   public static *fetchDataEntry({ payload }: { payload: FetchDataEntryPayload }) {
     try {
-      const { clientId, taskName, tabName } = payload;
+      const { clientId, tabName, tagName } = payload;
       const response: AxiosResponse<APIResponse> = yield call(ClientService.fetchDataEntry);
       if (response.status === 200 && response.data.success) {
         yield put({
           type: ClientActionTypes.FETCH_DATA_ENTRY_SUCCESS,
           payload: {
             clientId,
-            taskName,
+            tagName,
             tabName,
             dataEntry: response.data.data,
           },

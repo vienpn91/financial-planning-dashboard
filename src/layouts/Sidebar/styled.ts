@@ -52,6 +52,7 @@ export const FullName = styled.span.attrs({
 })`
   margin-top: 10px;
   font-size: 18px;
+  font-weight: 500;
   color: #515C83;
   margin-left: 15px;
 `;
@@ -136,6 +137,7 @@ export const SubList = styled(Menu.Item).attrs({
     color: #082074;
     border-left: 1px solid #082074;
     background: transparent !important;
+    font-weight: 500;
     i{
       color: #082074;
     }

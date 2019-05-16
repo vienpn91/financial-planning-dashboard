@@ -12,14 +12,14 @@ export interface RequestConfig extends AxiosRequestConfig {
 }
 
 export interface APIResponse {
-  data: string;
+  data: object;
   error: string;
   message: string;
   success: boolean;
 }
 
 export function getAPIErrorMessage(error?: any, defaultMessage: string = 'Internal server error') {
-  return get(error, 'data.error', defaultMessage);
+  return get(error, 'dataSource.error', defaultMessage);
 }
 
 class ApiUtils {
