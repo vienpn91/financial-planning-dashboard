@@ -1,8 +1,23 @@
 import React, { PureComponent } from 'react';
 import { Icon, Popconfirm, Table } from 'antd';
 import { InnerTableContainer, DivideLine, HeaderTitleTable, TextTitle } from '../../../pages/client/styled';
+import GeneralTable from '../GeneralTable';
+import { AnimTag } from '../assets/ContributionWithdrawalsTable';
 
-class CoverDetailsTable extends PureComponent {
+export interface CoverDetail {
+  coverType: string;
+  policyOwner: string;
+  benefitAmount: number;
+  premiumType: string;
+  notes: string;
+  expandable: {};
+}
+
+interface CoverDetailsProps {
+  data: CoverDetail[];
+}
+
+class CoverDetailsTable extends PureComponent<CoverDetailsProps> {
   public state = {
     dataSource: [
       {
@@ -82,17 +97,24 @@ class CoverDetailsTable extends PureComponent {
 
   public handleAdd = () => {
     const { count, dataSource } = this.state;
+    // const newData = {
+    //   key: Date.now(),
+    //   coverType: 'life',
+    //   policyOwner: 'superFund',
+    //   benefitAmount: 200000.0,
+    //   premiumType: 'stepped',
+    //   notes: 'Sample Note.',
+    //   expandable: {
+    //     isLinked: false,
+    //     linkedProduct: null,
+    //   },
+    // };
     const newData = {
       key: Date.now(),
-      coverType: 'life',
-      policyOwner: 'superFund',
-      benefitAmount: 200000.0,
-      premiumType: 'stepped',
-      notes: 'Sample Note.',
-      expandable: {
-        isLinked: false,
-        linkedProduct: null,
-      },
+      type: 'Custom',
+      value: 1000,
+      from: 'start',
+      to: 'end',
     };
     this.setState({
       dataSource: [...dataSource, newData],
@@ -121,7 +143,13 @@ class CoverDetailsTable extends PureComponent {
           <TextTitle small={true}>{'Cover Details'}</TextTitle>
           <DivideLine />
         </HeaderTitleTable>
-        <Table columns={columns} dataSource={dataSource} pagination={false} size={'small'} />
+        <Table
+          columns={columns}
+          dataSource={dataSource}
+          components={{ body: { wrapper: AnimTag } }}
+          pagination={false}
+          size={'small'}
+        />
       </InnerTableContainer>
     );
   }

@@ -34,6 +34,7 @@ const leaveAnim = [
 ];
 
 function AnimTag($props: any) {
+  // console.log('AnimTag', $props);
   return <TweenOneGroup component="tbody" enter={enterAnim} leave={leaveAnim} appear={false} exclusive {...$props} />;
 }
 const components = {
@@ -72,12 +73,6 @@ class GeneralTable extends PureComponent<GeneralTableProps & TableProps<any>> {
     className: 'table-enter-leave',
   };
 
-  public pageChange = () => {
-    this.setState({
-      isPageTween: true,
-    });
-  }
-
   public render() {
     const { columns, dataSource, ...props } = this.props;
 
@@ -90,7 +85,6 @@ class GeneralTable extends PureComponent<GeneralTableProps & TableProps<any>> {
         components={components}
         columns={columns}
         dataSource={dataSource}
-        onChange={this.pageChange}
         className={`table-general ` + this.props.className}
       />
     );

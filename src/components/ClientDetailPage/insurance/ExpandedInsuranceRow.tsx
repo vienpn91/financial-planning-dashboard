@@ -1,42 +1,20 @@
 import React from 'react';
-import { get } from 'lodash';
-import PremiumFeeDetailsTable from './PremiumFeeDetailsTable';
-import CoverDetailsTable from "./CoverDetailsTable";
+import PremiumFeeDetailsTable, { PremiumFeeDetail } from './PremiumFeeDetailsTable';
+import CoverDetailsTable, { CoverDetail } from './CoverDetailsTable';
 
 export interface LiabilityProps {
-  description: string;
-  expandable: {
-    riskProfile: string;
-    lookingForCoupleAdvice?: boolean;
-  };
+  coverDetails: CoverDetail[];
+  premiumFeeDetails: PremiumFeeDetail[];
 }
 
-const profileText = {
-  defensive: 'defensive',
-  highGrowth: 'high growth',
-};
-
 const ExpandedInsuranceRow: React.FC<LiabilityProps> = (props) => {
-  const { expandable } = props;
-  const { riskProfile, lookingForCoupleAdvice } = expandable;
+  const { coverDetails, premiumFeeDetails } = props;
+
   return (
-    <div>
-      <p>
-        This super has a taxable component of <b>{get(profileText, riskProfile)}</b> and a tax-free component of{' '}
-        <b>{get(profileText, riskProfile)}</b>
-      </p>
-      <p>
-        This income generated is <b>15%</b> and comes with an insurance cost of <b>$4,500</b>
-      </p>
-      <p>
-        This rate terms are <b>15%</b> growth <b>10%</b> franked and <b>25%</b> contribution to income
-      </p>
-      <p>
-        Client is seeking advice for <b>{lookingForCoupleAdvice ? 'couple' : 'couple'}</b>
-      </p>
-      <PremiumFeeDetailsTable />
-      <CoverDetailsTable />
-    </div>
+    <>
+      <CoverDetailsTable data={coverDetails} />
+      <PremiumFeeDetailsTable data={premiumFeeDetails} />
+    </>
   );
 };
 

@@ -1,8 +1,20 @@
 import React, { PureComponent } from 'react';
 import { Icon, Popconfirm, Table } from 'antd';
 import { DivideLine, HeaderTitleTable, InnerTableContainer, TextTitle } from '../../../pages/client/styled';
+import { AnimTag } from '../assets/ContributionWithdrawalsTable';
 
-class PremiumFeeDetailsTable extends PureComponent {
+export interface PremiumFeeDetail {
+  feeType: string;
+  amount: number;
+  frequency: string;
+  specialNote: string;
+}
+
+interface PremiumFeeDetailsProp {
+  data: PremiumFeeDetail[];
+}
+
+class PremiumFeeDetailsTable extends PureComponent<PremiumFeeDetailsProp> {
   public state = {
     dataSource: [
       {
@@ -41,8 +53,8 @@ class PremiumFeeDetailsTable extends PureComponent {
     {
       title: '',
       key: 'operation',
-      width: 1,
       className: 'operation',
+      width: 18,
       render: (text: any, record: any) =>
         this.state.dataSource.length >= 1 ? (
           <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
@@ -82,12 +94,19 @@ class PremiumFeeDetailsTable extends PureComponent {
 
   public handleAdd = () => {
     const { count, dataSource } = this.state;
+    // const newData = {
+    //   key: Date.now(),
+    //   feeType: 'premium',
+    //   amount: 80000.0,
+    //   frequency: 'yearly',
+    //   specialNote: 'Sample note',
+    // };
     const newData = {
       key: Date.now(),
-      feeType: 'premium',
-      amount: 80000.0,
-      frequency: 'yearly',
-      specialNote: 'Sample note',
+      type: 'Custom',
+      value: 1000,
+      from: 'start',
+      to: 'end',
     };
     this.setState({
       dataSource: [...dataSource, newData],
@@ -116,7 +135,13 @@ class PremiumFeeDetailsTable extends PureComponent {
           <TextTitle small={true}>{'Premium & Fee Details'}</TextTitle>
           <DivideLine />
         </HeaderTitleTable>
-        <Table columns={columns} dataSource={dataSource} pagination={false} size={'small'} />
+        <Table
+          columns={columns}
+          dataSource={dataSource}
+          components={{ body: { wrapper: AnimTag } }}
+          pagination={false}
+          size={'small'}
+        />
       </InnerTableContainer>
     );
   }
