@@ -44,6 +44,10 @@ code {
   transition: height 200ms ease;
 }
 
+.ant-table .ant-table-thead > tr, .ant-table .ant-table-tbody > tr {
+  transition: none;
+}
+
 .editable-cell {
   position: relative;
 }
