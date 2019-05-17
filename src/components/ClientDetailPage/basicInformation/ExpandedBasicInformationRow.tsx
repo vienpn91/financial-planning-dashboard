@@ -149,7 +149,7 @@ const ExpandedBasicInformationRow = (
           </ExpandedAssetsInlineGroups>
 
           <ExpandedAssetsInlineGroups>
-            <ExpandedAssetsText>The partner</ExpandedAssetsText>
+            <ExpandedAssetsText>The client</ExpandedAssetsText>
             <ExpandedSelectGroup>
               <EditableCell
                 record={record}
