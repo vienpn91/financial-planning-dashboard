@@ -51,3 +51,9 @@ code {
 .editable-cell {
   position: relative;
 }
+
+body .ant-select-dropdown.ant-select-dropdown--single.ant-select-dropdown-placement-bottomLeft{
+  max-width: 200px;
+  min-width: 145px;
+  width: auto !important;
+}
