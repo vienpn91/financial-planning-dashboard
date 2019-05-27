@@ -1,22 +1,27 @@
 import React, { PureComponent } from 'react';
 import { Button, Icon, Popconfirm } from 'antd';
-import ExpandedAssetsRow from './ExpandedAssetsRow';
+import ExpandedAssetsRow, { AssetProps } from './ExpandedAssetsRowWrapper';
 import { TableEntryContainer, HeaderTitleTable, TextTitle, ActionTableGeneral } from '../../../pages/client/styled';
 import GeneralTable from '../GeneralTable';
 import { FormikProps } from 'formik';
-import { isFunction } from 'lodash';
+import { isFunction, get } from 'lodash';
+import { from2Options, ownerOptions, to2Options, assetTypes, investmentTypeOptions } from '../../../enums/options';
+import { loadOptionsBaseOnCol } from '../../../utils/columnUtils';
 
 interface AssetsTableProps {
   data: object[];
+  maritalState: string;
+  dynamicCustomValue: object;
   loading?: boolean;
 
   formProps?: FormikProps<any>;
   tableName?: string;
-  setFieldValue?: (field: string, value: any) => void;
+  setFieldValue: (field: string, value: any) => void;
   resetForm: (nextValues?: any) => void;
   submitForm: () => void;
   addRow: (row: any) => void;
   deleteRow: (key: number) => void;
+  updateAssets: (assets?: object[]) => void;
 }
 
 class AssetsTable extends PureComponent<AssetsTableProps> {
@@ -32,21 +37,14 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
       key: '1',
       width: '12%',
       type: 'select',
-      options: [
-        { value: 'lifestyle', label: 'Lifestyle' },
-        { value: 'directInvestment', label: 'Direct Investment' },
-        { value: 'accountBased', label: 'Account Based' },
-        { value: 'pension', label: 'Pension' },
-        { value: 'super', label: 'Super' },
-        { value: 'property', label: 'Property' },
-      ],
+      options: assetTypes,
     },
     {
       title: 'Owner',
       dataIndex: 'owner',
       key: '2',
       type: 'select',
-      options: [{ value: 'client', label: 'Client' }],
+      options: ownerOptions,
       width: 'calc(13% - 20px)',
     },
     {
@@ -62,24 +60,25 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
       key: '4',
       width: '13%',
       type: 'select',
-      options: [
-        { value: 'primaryResidence', label: 'Primary Residence' },
-        { value: 'australianEquity', label: 'Australian Equity' },
-        { value: 'preservation', label: 'Preservation' },
-        { value: 'moderate', label: 'Moderate' },
-      ],
+      options: investmentTypeOptions,
     },
     {
       title: 'From',
       dataIndex: 'from',
       key: '5',
+      type: 'date',
       width: '13%',
+      pickerType: 'custom',
+      options: from2Options,
     },
     {
       title: 'To',
       dataIndex: 'to',
       key: '6',
       width: '13%',
+      type: 'date',
+      pickerType: 'custom',
+      options: to2Options,
     },
     {
       title: 'Action',
@@ -90,6 +89,15 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
   ];
 
   private tableName = 'assets';
+
+  public componentDidUpdate(prevProps: Readonly<AssetsTableProps>, prevState: Readonly<{}>, snapshot?: any): void {
+    const { maritalState, setFieldValue, data } = this.props;
+    if (prevProps.maritalState !== maritalState && maritalState === 'single') {
+      // update All Owner to Client
+      const newData = data.map((d) => ({ ...d, owner: 'client' }));
+      setFieldValue(this.tableName, newData);
+    }
+  }
 
   public resetForm = () => {
     this.handleResetForm();
@@ -113,6 +121,7 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
     const { addRow } = this.props;
     const newData = {
       key: Date.now(),
+      refId: Date.now(),
       description: 'Home',
       type: 'lifestyle',
       owner: 'client',
@@ -133,7 +142,6 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
       },
     };
 
-    console.log('new row', newData);
     // update formik
     if (isFunction(addRow)) {
       addRow(newData);
@@ -141,7 +149,11 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
   }
 
   public handleSave = (arg: { tableName: string; rowIndex: number; dataIndex: string; value: any; record: any }) => {
-    console.log('handle save', arg);
+    const { dataIndex } = arg;
+    if (dataIndex === 'type' || dataIndex === 'description') {
+      const { updateAssets, data } = this.props;
+      updateAssets(data);
+    }
   }
 
   public handleResetForm = () => {
@@ -151,8 +163,29 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
     }
   }
 
+  public addRowInnerTable = (index: number, tableName: string, row: any) => {
+    const { setFieldValue, data } = this.props;
+    const tableData = get(data[index], tableName);
+    tableData.unshift(row);
+
+    const newData: any = data;
+    newData[index][tableName] = tableData;
+
+    setFieldValue(this.tableName, newData);
+  }
+
+  public removeRowInnerTable = (index: number, tableName: string, key: number) => {
+    const { setFieldValue, data } = this.props;
+    const tableData = get(data[index], tableName).filter((i: any) => i.key !== key);
+
+    const newData: any = data;
+    newData[index][tableName] = tableData;
+
+    setFieldValue(this.tableName, newData);
+  }
+
   public render() {
-    const { loading, data } = this.props;
+    const { loading, data, maritalState, dynamicCustomValue } = this.props;
     const columns = this.columns.map((col: any) => {
       const editable = col.editable === false ? false : 'true';
       if (col.key === 'operation') {
@@ -171,15 +204,20 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
 
       return {
         ...col,
-        onCell: (record: any, rowIndex: number) => ({
-          ...col,
-          rowIndex,
-          tableName: this.tableName,
-          type: col.type || 'text',
-          record,
-          editable,
-          handleSave: this.handleSave,
-        }),
+        onCell: (record: any, rowIndex: number) => {
+          const options = loadOptionsBaseOnCol(col, record, { maritalState });
+
+          return {
+            ...col,
+            options,
+            rowIndex,
+            tableName: this.tableName,
+            type: col.type || 'text',
+            record: { ...record, maritalState },
+            editable,
+            handleSave: this.handleSave,
+          };
+        },
       };
     });
 
@@ -194,7 +232,18 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
           columns={columns}
           dataSource={data}
           pagination={false}
-          expandedRowRender={ExpandedAssetsRow}
+          expandedRowRender={(record: AssetProps, index: number, indent: number, expanded: boolean) => (
+            <ExpandedAssetsRow
+              record={record}
+              index={index}
+              indent={indent}
+              expanded={expanded}
+              maritalState={maritalState}
+              addRow={this.addRowInnerTable}
+              deleteRow={this.removeRowInnerTable}
+              dynamicCustomValue={dynamicCustomValue}
+            />
+          )}
           className={`${this.tableName}-table`}
         />
         <ActionTableGeneral>

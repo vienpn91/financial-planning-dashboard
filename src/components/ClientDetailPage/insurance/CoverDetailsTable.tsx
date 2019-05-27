@@ -1,137 +1,120 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Icon, Popconfirm, Table } from 'antd';
 import { InnerTableContainer, DivideLine, HeaderTitleTable, TextTitle } from '../../../pages/client/styled';
-import GeneralTable from '../GeneralTable';
-import { AnimTag } from '../assets/ContributionWithdrawalsTable';
+import { components } from '../assets/ContributionWithdrawalsTable';
+import { coverTypeOptions, policyOwnerOptions, premiumTypeOptions } from '../../../enums/options';
+import ExpandedCoverDetailRow from './ExpandedCoverDetailRow';
 
 export interface CoverDetail {
+  key: number;
+  refId: number;
   coverType: string;
   policyOwner: string;
   benefitAmount: number;
   premiumType: string;
   notes: string;
-  expandable: {};
+  expandable: any;
 }
 
 interface CoverDetailsProps {
   data: CoverDetail[];
+  index: number;
+  tableName: string;
+  addRow: (index: number, tableName: string, row: any) => void;
+  deleteRow: (index: number, tableName: string, key: number) => void;
+  dynamicCustomValue: object;
 }
 
-class CoverDetailsTable extends PureComponent<CoverDetailsProps> {
-  public state = {
-    dataSource: [
-      {
-        key: '0',
-        type: 'Custom',
-        value: 25000,
-        from: 'start',
-        to: 'End',
-      },
-      {
-        key: '1',
-        type: 'Custom',
-        value: 10000,
-        from: 'start',
-        to: 'End',
-      },
-      {
-        key: '2',
-        type: 'Custom',
-        value: 25000,
-        from: 'start',
-        to: 'End',
-      },
-      {
-        key: '3',
-        type: 'Custom',
-        value: 15000,
-        from: 'start',
-        to: 'End',
-      },
-    ],
-    count: 4,
-  };
-
+class CoverDetailsTable extends Component<CoverDetailsProps> {
   public columns = [
     {
       title: '',
       key: 'operation',
       className: 'operation',
       width: 18,
-      render: (text: any, record: any) =>
-        this.state.dataSource.length >= 1 ? (
-          <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
-            <Icon type="close-square" theme="twoTone" style={{ fontSize: '16px' }} />
-          </Popconfirm>
-        ) : null,
+      render: (text: any, record: any) => (
+        <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
+          <Icon type="close-square" theme="twoTone" style={{ fontSize: '16px' }} />
+        </Popconfirm>
+      ),
     },
     {
-      title: 'Type',
-      dataIndex: 'type',
+      title: 'Cover Type',
+      dataIndex: 'coverType',
       width: 140,
+      type: 'select',
+      options: coverTypeOptions,
     },
     {
-      title: 'Value',
-      dataIndex: 'value',
+      title: 'Policy Owner',
+      dataIndex: 'policyOwner',
       key: '1',
       width: 120,
+      type: 'select',
+      options: policyOwnerOptions,
     },
     {
-      title: 'From',
-      dataIndex: 'from',
+      title: 'Benefit Amount',
+      dataIndex: 'benefitAmount',
       key: '2',
       width: 120,
+      type: 'number',
     },
     {
-      title: 'To',
-      dataIndex: 'to',
+      title: 'Premium Type',
+      dataIndex: 'premiumType',
       key: '3',
+      width: 120,
+      type: 'select',
+      options: premiumTypeOptions,
+    },
+    {
+      title: 'Special Note',
+      dataIndex: 'notes',
+      key: '4',
       width: 120,
     },
   ];
 
-  public handleDelete = (key: string) => {
-    const dataSource = [...this.state.dataSource];
-    this.setState({ dataSource: dataSource.filter((item) => item.key !== key) });
+  public handleDelete = (key: number) => {
+    const { index, tableName, deleteRow } = this.props;
+    deleteRow(index, tableName, key);
   }
 
   public handleAdd = () => {
-    const { count, dataSource } = this.state;
-    // const newData = {
-    //   key: Date.now(),
-    //   coverType: 'life',
-    //   policyOwner: 'superFund',
-    //   benefitAmount: 200000.0,
-    //   premiumType: 'stepped',
-    //   notes: 'Sample Note.',
-    //   expandable: {
-    //     isLinked: false,
-    //     linkedProduct: null,
-    //   },
-    // };
+    const { index, tableName, addRow } = this.props;
     const newData = {
       key: Date.now(),
-      type: 'Custom',
-      value: 1000,
-      from: 'start',
-      to: 'end',
+      refId: Date.now(),
+      coverType: 'life',
+      policyOwner: 'superFund',
+      benefitAmount: 200000.0,
+      premiumType: 'stepped',
+      notes: 'Sample Note.',
+      expandable: {
+        isLinked: false,
+        linkedProduct: null,
+      },
     };
-    this.setState({
-      dataSource: [...dataSource, newData],
-      count: count + 1,
-    });
+    addRow(index, tableName, newData);
   }
 
   public render() {
-    const { dataSource } = this.state;
+    const { data, index, tableName, dynamicCustomValue } = this.props;
     const columns = this.columns.map((col) => {
+      const editable = col.key === 'operation' ? false : 'true';
+
       return {
         ...col,
         fixed: false,
-        onCell: (record: any) => ({
+        onCell: (record: any, rowIndex: number) => ({
+          ...col,
+          rowIndex,
+          tableName: `insurance[${index}].${tableName}`,
+          type: col.type || 'text',
           record,
-          editable: 'true',
-          title: col.title,
+          editable,
+          smallInput: true,
         }),
       };
     });
@@ -145,8 +128,21 @@ class CoverDetailsTable extends PureComponent<CoverDetailsProps> {
         </HeaderTitleTable>
         <Table
           columns={columns}
-          dataSource={dataSource}
-          components={{ body: { wrapper: AnimTag } }}
+          className={'cover-details-table'}
+          dataSource={data}
+          components={components}
+          defaultExpandAllRows={true}
+          expandedRowRender={(record: CoverDetail, expandedIndex: number, indent: number, expanded: boolean) => (
+            <ExpandedCoverDetailRow
+              record={record}
+              index={expandedIndex}
+              indent={indent}
+              expanded={expanded}
+              insuranceIndex={index}
+              coverDetails={data}
+              dynamicCustomValue={dynamicCustomValue}
+            />
+          )}
           pagination={false}
           size={'small'}
         />

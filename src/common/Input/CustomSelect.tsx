@@ -1,22 +1,25 @@
 import React from 'react';
 import { InputWrapper, InputLabel } from './styled';
 import { FormikHandlers } from 'formik';
-import { get, isFunction, isBoolean } from 'lodash';
-import { Select } from 'antd';
+import { get, isFunction, isBoolean, isNumber } from 'lodash';
+import { Select, Modal } from 'antd';
+const confirm = Modal.confirm;
 
 interface InputProps {
   name: string;
   value: any;
-  // onChange: FormikHandlers['handleChange'];
+  defaultValue?: any;
+  options: Array<{ value: any; label: string }>;
   onBlur: FormikHandlers['handleBlur'];
   placeholder?: string;
   prefix?: React.ReactNode;
   autoFocus?: boolean;
+  disabled?: boolean;
   ref?: React.RefObject<any>;
   handleChange?: (e: any, name?: string, value?: any) => void;
   handleBlur?: (e: React.FocusEvent | string) => void;
-  options?: Array<{ value: any; label: string }>;
   setFieldValue?: (field: string, value: any) => void;
+  confirmTitle?: { title: string; fieldValue: any };
 }
 
 class CustomSelect extends React.PureComponent<InputProps> {
@@ -28,11 +31,38 @@ class CustomSelect extends React.PureComponent<InputProps> {
     }
   }
 
+  public componentDidMount(): void {
+    const { value, defaultValue } = this.props;
+    if ((value === null || value === undefined) && defaultValue) {
+      this.handleChange(defaultValue);
+    }
+  }
+
   public handleChange = (newValue: any) => {
     const { setFieldValue, name } = this.props;
 
     if (setFieldValue) {
       setFieldValue(name, newValue);
+
+      setTimeout(() => {
+        // handle save editable cell
+        this.handleBlur(newValue.toString());
+      }, 0);
+    }
+  }
+
+  public handleSelect = (value: any) => {
+    const { confirmTitle } = this.props;
+    if (confirmTitle && value === confirmTitle.fieldValue) {
+      confirm({
+        title: confirmTitle.title,
+        onOk: () => {
+          this.handleChange(value);
+        },
+        onCancel: () => {},
+      });
+    } else {
+      this.handleChange(value);
     }
   }
 
@@ -40,22 +70,24 @@ class CustomSelect extends React.PureComponent<InputProps> {
     const { onBlur, handleBlur } = this.props;
     let value = e;
 
-    if (isBoolean(e)) {
+    if (isNumber(e) || isBoolean(e)) {
       value = e.toString();
     }
 
-    onBlur(value);
-    if (handleBlur && isFunction(handleBlur)) {
-      handleBlur(value);
+    if (value) {
+      onBlur(value);
+      if (handleBlur && isFunction(handleBlur)) {
+        handleBlur(value);
+      }
     }
   }
 
   public render(): JSX.Element {
-    const { placeholder, options, ...props } = this.props;
+    const { placeholder, onBlur, options, ...props } = this.props;
 
     return (
       <InputWrapper>
-        <Select {...props} onChange={this.handleChange} ref={this.myRef} onBlur={this.handleBlur}>
+        <Select {...props} onSelect={this.handleSelect} onBlur={this.handleBlur} ref={this.myRef}>
           {options &&
             options.length > 0 &&
             options.map((option) => (

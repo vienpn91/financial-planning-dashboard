@@ -1,7 +1,8 @@
 import React from 'react';
 import { InputWrapper, InputLabel } from './styled';
 import { InputNumber } from 'antd';
-import { get } from 'lodash';
+import { get, isFunction } from 'lodash';
+import { FormikHandlers } from 'formik';
 
 interface CustomInputNumberProps {
   name: string;
@@ -9,7 +10,11 @@ interface CustomInputNumberProps {
   setFieldValue?: (field: string, value: any) => void;
   placeholder?: string;
   autoFocus?: boolean;
+  calculateWidth?: boolean;
+  smallInput?: boolean;
   ref?: React.RefObject<any>;
+  onBlur: FormikHandlers['handleBlur'];
+  handleBlur?: (e: React.FocusEvent) => void;
 }
 
 class CustomInputNumber extends React.PureComponent<CustomInputNumberProps> {
@@ -27,34 +32,51 @@ class CustomInputNumber extends React.PureComponent<CustomInputNumberProps> {
     if (setFieldValue) {
       setFieldValue(name, value);
     }
-
-    // if (handleChange && isFunction(handleChange)) {
-    //   handleChange(e, name, e.currentTarget.value);
-    // }
   }
 
-  // public handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
-  //   const { onKeyUp, value } = this.props;
-  //   if (onKeyUp && isFunction(onKeyUp)) {
-  //     onKeyUp(e, value);
-  //   }
-  // }
+  public handleBlur = (e: React.FocusEvent) => {
+    const { onBlur, handleBlur } = this.props;
 
-  // public handleBlur = (e: React.FocusEvent) => {
-  //   const { onBlur, handleBlur } = this.props;
-  //
-  //   onBlur(e);
-  //   if (handleBlur && isFunction(handleBlur)) {
-  //     handleBlur(e);
-  //   }
-  // }
+    onBlur(e);
+    if (handleBlur && isFunction(handleBlur)) {
+      handleBlur(e);
+    }
+  }
+
+  public getOptionalProps = () => {
+    const { value, calculateWidth, smallInput } = this.props;
+    const optionalProps: { [key: string]: any } = {};
+    let valueLength = 1;
+    if (calculateWidth) {
+      valueLength = value && value.toString().length ? value.toString().length + 1 : 1;
+      const numberSize = valueLength > 3 ? 14 : 15;
+      const width = valueLength * numberSize;
+      optionalProps.style = { width: `${width > 36 ? width : 36}px` };
+    }
+    if (smallInput) {
+      optionalProps.size = 'small';
+    }
+
+    return optionalProps;
+  }
 
   public render(): JSX.Element {
-    const { placeholder, setFieldValue, ...props } = this.props;
+    const { placeholder, setFieldValue, calculateWidth, ...props } = this.props;
+    const optionalProps: { [key: string]: any } = this.getOptionalProps();
 
     return (
       <InputWrapper>
-        <InputNumber {...props} ref={this.myRef} onChange={this.handleChange} />
+        <InputNumber
+          {...props}
+          onChange={this.handleChange}
+          onBlur={this.handleBlur}
+          ref={this.myRef}
+          formatter={(valueNumber) => `${valueNumber}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+          // @ts-ignore
+          parser={(displayValue) => displayValue.replace(/\$\s?|(,*)/g, '')}
+          // precision={2}
+          {...optionalProps}
+        />
         {placeholder && <InputLabel>{placeholder}</InputLabel>}
       </InputWrapper>
     );

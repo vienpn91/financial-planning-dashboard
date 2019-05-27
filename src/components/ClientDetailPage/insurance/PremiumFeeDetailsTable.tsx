@@ -1,7 +1,8 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Icon, Popconfirm, Table } from 'antd';
 import { DivideLine, HeaderTitleTable, InnerTableContainer, TextTitle } from '../../../pages/client/styled';
-import { AnimTag } from '../assets/ContributionWithdrawalsTable';
+import { components } from '../assets/ContributionWithdrawalsTable';
+import { feeTypeOptions, frequencyOptions } from '../../../enums/options';
 
 export interface PremiumFeeDetail {
   feeType: string;
@@ -12,118 +13,88 @@ export interface PremiumFeeDetail {
 
 interface PremiumFeeDetailsProp {
   data: PremiumFeeDetail[];
+  index: number;
+  tableName: string;
+  addRow: (index: number, tableName: string, row: any) => void;
+  deleteRow: (index: number, tableName: string, key: number) => void;
 }
 
-class PremiumFeeDetailsTable extends PureComponent<PremiumFeeDetailsProp> {
-  public state = {
-    dataSource: [
-      {
-        key: '0',
-        type: 'Custom',
-        value: 25000,
-        from: 'start',
-        to: 'End',
-      },
-      {
-        key: '1',
-        type: 'Custom',
-        value: 10000,
-        from: 'start',
-        to: 'End',
-      },
-      {
-        key: '2',
-        type: 'Custom',
-        value: 25000,
-        from: 'start',
-        to: 'End',
-      },
-      {
-        key: '3',
-        type: 'Custom',
-        value: 15000,
-        from: 'start',
-        to: 'End',
-      },
-    ],
-    count: 4,
-  };
-
+class PremiumFeeDetailsTable extends Component<PremiumFeeDetailsProp> {
   public columns = [
     {
       title: '',
       key: 'operation',
       className: 'operation',
-      width: 18,
-      render: (text: any, record: any) =>
-        this.state.dataSource.length >= 1 ? (
-          <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
-            <Icon type="close-square" theme="twoTone" style={{ fontSize: '16px' }} />
-          </Popconfirm>
-        ) : null,
+      width: 12,
+      render: (text: any, record: any) => (
+        <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
+          <Icon type="close-square" theme="twoTone" style={{ fontSize: '16px' }} />
+        </Popconfirm>
+      ),
     },
     {
-      title: 'Type',
-      dataIndex: 'type',
+      title: 'Fee Type',
+      dataIndex: 'feeType',
       width: 140,
+      type: 'select',
+      options: feeTypeOptions,
     },
     {
-      title: 'Value',
-      dataIndex: 'value',
+      title: 'Amount',
+      dataIndex: 'amount',
       key: '1',
       width: 120,
+      type: 'number',
     },
     {
-      title: 'From',
-      dataIndex: 'from',
+      title: 'Frequency',
+      dataIndex: 'frequency',
       key: '2',
       width: 120,
+      type: 'select',
+      options: frequencyOptions,
     },
     {
-      title: 'To',
-      dataIndex: 'to',
+      title: 'Special Note',
+      dataIndex: 'specialNote',
       key: '3',
       width: 120,
     },
   ];
 
-  public handleDelete = (key: string) => {
-    const dataSource = [...this.state.dataSource];
-    this.setState({ dataSource: dataSource.filter((item) => item.key !== key) });
+  public handleDelete = (key: number) => {
+    const { index, tableName, deleteRow } = this.props;
+    deleteRow(index, tableName, key);
   }
 
   public handleAdd = () => {
-    const { count, dataSource } = this.state;
-    // const newData = {
-    //   key: Date.now(),
-    //   feeType: 'premium',
-    //   amount: 80000.0,
-    //   frequency: 'yearly',
-    //   specialNote: 'Sample note',
-    // };
+    const { index, tableName, addRow } = this.props;
     const newData = {
       key: Date.now(),
-      type: 'Custom',
-      value: 1000,
-      from: 'start',
-      to: 'end',
+      feeType: 'premium',
+      amount: 80000.0,
+      frequency: 'yearly',
+      specialNote: 'Sample note',
     };
-    this.setState({
-      dataSource: [...dataSource, newData],
-      count: count + 1,
-    });
+    addRow(index, tableName, newData);
   }
 
   public render() {
-    const { dataSource } = this.state;
+    const { data, index, tableName } = this.props;
     const columns = this.columns.map((col) => {
+      const editable = col.key === 'operation' ? false : 'true';
+
       return {
         ...col,
         fixed: false,
-        onCell: (record: any) => ({
+        onCell: (record: any, rowIndex: number) => ({
+          ...col,
+          rowIndex,
+          tableName: `insurance[${index}].${tableName}`,
+          type: col.type || 'text',
           record,
-          editable: 'true',
-          title: col.title,
+          editable,
+          smallInput: true,
         }),
       };
     });
@@ -136,9 +107,10 @@ class PremiumFeeDetailsTable extends PureComponent<PremiumFeeDetailsProp> {
           <DivideLine />
         </HeaderTitleTable>
         <Table
+          className={'premium-details-table'}
           columns={columns}
-          dataSource={dataSource}
-          components={{ body: { wrapper: AnimTag } }}
+          dataSource={data}
+          components={components}
           pagination={false}
           size={'small'}
         />

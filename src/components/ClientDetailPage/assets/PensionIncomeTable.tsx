@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Icon, Popconfirm, Table } from 'antd';
-import { InnerTableContainer, DivideLine, HeaderTitleTable, TextTitle } from '../../../pages/client/styled';
+import { InnerTableContainer, HeaderTitleTable, TextTitle, DivideLine } from '../../../pages/client/styled';
 import { removePartnerOption } from '../../../utils/columnUtils';
-import { components } from '../assets/ContributionWithdrawalsTable';
-import { from1Options, to1Options } from '../../../enums/options';
+import { from1Options, pensionIncomeTypeOptions, to1Options } from '../../../enums/options';
+import { components } from './ContributionWithdrawalsTable';
 
-interface DrawdownsTableProps {
+interface ContributionWithdrawalsTableProps {
   maritalState: string;
   data: object[];
   index: number;
@@ -15,29 +15,31 @@ interface DrawdownsTableProps {
   deleteRow: (index: number, tableName: string, key: number) => void;
 }
 
-class DrawdownsTable extends Component<DrawdownsTableProps> {
+class PensionIncomeTable extends Component<ContributionWithdrawalsTableProps, {}> {
   public columns = [
     {
-      title: '',
       key: 'operation',
-      className: 'operation',
+      editable: false,
       width: 12,
-      render: (text: any, record: any) => (
-        <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
-          <Icon type="close-square" theme="twoTone" style={{ fontSize: '16px' }} />
-        </Popconfirm>
-      ),
+    },
+    {
+      title: 'Type',
+      dataIndex: 'type',
+      width: 140,
+      type: 'select',
+      options: pensionIncomeTypeOptions,
     },
     {
       title: 'Value',
       dataIndex: 'value',
-      width: 140,
+      key: '1',
+      width: 120,
       type: 'number',
     },
     {
       title: 'From',
       dataIndex: 'from',
-      key: '1',
+      key: '2',
       width: 120,
       type: 'date',
       pickerType: 'custom',
@@ -47,15 +49,14 @@ class DrawdownsTable extends Component<DrawdownsTableProps> {
     {
       title: 'To',
       dataIndex: 'to',
-      key: '2',
+      key: '3',
       width: 120,
       type: 'date',
       pickerType: 'custom',
-      options: to1Options,
       className: 'table-expand-datepicker',
+      options: to1Options,
     },
   ];
-
   public handleDelete = (key: number) => {
     const { index, tableName, deleteRow } = this.props;
     deleteRow(index, tableName, key);
@@ -65,7 +66,8 @@ class DrawdownsTable extends Component<DrawdownsTableProps> {
     const { index, tableName, addRow } = this.props;
     const newData = {
       key: Date.now(),
-      value: 18000.0,
+      type: 'minimum',
+      value: 100000.0,
       from: {
         type: 'start',
         yearValue: null,
@@ -78,25 +80,42 @@ class DrawdownsTable extends Component<DrawdownsTableProps> {
     addRow(index, tableName, newData);
   }
 
-  public render() {
-    const { data, maritalState, index, tableName } = this.props;
-    const columns = this.columns.map((col) => {
+  public render(): React.ReactNode {
+    const { titleTable, data, maritalState, index, tableName } = this.props;
+    const columns = this.columns.map((col: any) => {
+      if (col.key === 'operation') {
+        return {
+          ...col,
+          title: '',
+          className: 'operation',
+          render: (text: any, record: any) => (
+            <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
+              <Icon type="close-square" theme="twoTone" style={{ fontSize: '16px' }} />
+            </Popconfirm>
+          ),
+        };
+      }
       const options = removePartnerOption(col, maritalState);
-      const editable = col.key === 'operation' ? false : 'true';
+      let editable = col.key === 'operation' ? false : 'true';
 
       return {
         ...col,
         fixed: false,
-        onCell: (record: any, rowIndex: number) => ({
-          ...col,
-          options,
-          rowIndex,
-          tableName: `liabilities[${index}].${tableName}`,
-          type: col.type || 'text',
-          record,
-          editable,
-          smallInput: true,
-        }),
+        onCell: (record: any, rowIndex: number) => {
+          if (col.dataIndex === 'value') {
+            editable = record.type === 'custom';
+          }
+          return {
+            ...col,
+            options,
+            rowIndex,
+            tableName: `assets[${index}].${tableName}`,
+            type: col.type || 'text',
+            record,
+            editable,
+            smallInput: true,
+          };
+        },
       };
     });
 
@@ -104,7 +123,7 @@ class DrawdownsTable extends Component<DrawdownsTableProps> {
       <InnerTableContainer>
         <HeaderTitleTable small={true}>
           <Icon type={'plus-square'} theme={'filled'} onClick={this.handleAdd} />
-          <TextTitle small={true}>{'Drawdowns'}</TextTitle>
+          <TextTitle small={true}>{titleTable}</TextTitle>
           <DivideLine />
         </HeaderTitleTable>
         <Table
@@ -120,4 +139,4 @@ class DrawdownsTable extends Component<DrawdownsTableProps> {
   }
 }
 
-export default DrawdownsTable;
+export default PensionIncomeTable;

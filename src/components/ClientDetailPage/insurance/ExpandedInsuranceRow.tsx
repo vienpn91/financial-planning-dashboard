@@ -2,18 +2,40 @@ import React from 'react';
 import PremiumFeeDetailsTable, { PremiumFeeDetail } from './PremiumFeeDetailsTable';
 import CoverDetailsTable, { CoverDetail } from './CoverDetailsTable';
 
-export interface LiabilityProps {
+export interface InsuranceProps {
   coverDetails: CoverDetail[];
   premiumFeeDetails: PremiumFeeDetail[];
 }
 
-const ExpandedInsuranceRow: React.FC<LiabilityProps> = (props) => {
-  const { coverDetails, premiumFeeDetails } = props;
+const ExpandedInsuranceRow = (props: {
+  record: InsuranceProps;
+  index: number;
+  indent: number;
+  expanded: boolean;
+  addRow: (index: number, tableName: string, row: any) => void;
+  deleteRow: (index: number, tableName: string, key: number) => void;
+  dynamicCustomValue: object;
+}) => {
+  const { record, index, addRow, deleteRow, dynamicCustomValue } = props;
+  const { coverDetails, premiumFeeDetails } = record;
 
   return (
     <>
-      <CoverDetailsTable data={coverDetails} />
-      <PremiumFeeDetailsTable data={premiumFeeDetails} />
+      <CoverDetailsTable
+        data={coverDetails}
+        index={index}
+        tableName={'coverDetails'}
+        addRow={addRow}
+        deleteRow={deleteRow}
+        dynamicCustomValue={dynamicCustomValue}
+      />
+      <PremiumFeeDetailsTable
+        data={premiumFeeDetails}
+        index={index}
+        tableName={'premiumFeeDetails'}
+        addRow={addRow}
+        deleteRow={deleteRow}
+      />
     </>
   );
 };

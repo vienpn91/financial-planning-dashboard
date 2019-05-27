@@ -27,6 +27,7 @@ interface InputProps {
   // CustomInputNumber Number
   min?: number;
   max?: number;
+  calculateWidth?: boolean;
   // Select
   options?: Array<{ value: any; label: string }>;
   showSearch?: boolean;
@@ -85,13 +86,14 @@ class FormInput extends PureComponent<InputProps, {}> {
       field: { onChange, ...field },
       form: { touched, errors, setFieldValue },
       type,
+      options = [],
       ...restProps
     } = props;
     const errorMsg = touched[field.name] && errors[field.name];
 
     return (
       <Form.Item validateStatus={errorMsg ? 'error' : ''} help={errorMsg || ''}>
-        <Select ref={this.myInput} {...field} {...restProps} setFieldValue={setFieldValue} />
+        <Select ref={this.myInput} {...field} {...restProps} setFieldValue={setFieldValue} options={options} />
       </Form.Item>
     );
   }

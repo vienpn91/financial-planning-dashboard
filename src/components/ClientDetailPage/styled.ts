@@ -31,6 +31,7 @@ export const EditableCellWrap = styled.section.attrs({
   }
   .ant-input-number-handler-wrap {
     opacity: 0 !important;
+    display: none;
   }
   div {
     /* Select Type */
@@ -41,6 +42,7 @@ export const EditableCellWrap = styled.section.attrs({
       }
     }
     &.readOnly {
+      line-height: 20px;
       .ant-select-selection {
         border-color: transparent;
         background-color: transparent;
@@ -56,11 +58,29 @@ export const EditableCellWrap = styled.section.attrs({
           color: #d9d9d9;
         }
       }
+      &.disabled{
+       .ant-select-arrow {
+          color: transparent;
+        }
+      }
+      &.ant-select-disabled{
+        cursor: pointer;
+        &:hover{
+          .ant-select-selection {
+            border-color: #d9d9d9;
+            cursor: pointer;
+          }
+          .ant-select-arrow {
+            color: transparent;
+          }
+        }
+      }
     }
     /* Input Number */
     &.ant-input-number {
       border-color: transparent;
       background-color: transparent;
+      width: 100%;
       &.ant-input-number-focused {
         box-shadow: none;
         border-right: none;
@@ -111,6 +131,17 @@ export const EditableCellWrap = styled.section.attrs({
     }
     &:focus {
       border: 1px solid #515c83;
+    }
+  }
+  .smallInput {
+    &.ant-input-number {
+      width: 100%;
+    }
+    input.ant-input-number-input {
+      border: 1px solid #d9d9d9;
+    }
+    .ant-select-selection {
+      background: transparent;
     }
   }
 `;

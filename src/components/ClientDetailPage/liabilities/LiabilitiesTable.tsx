@@ -1,15 +1,19 @@
 import React, { PureComponent } from 'react';
 import { Button, Icon, Popconfirm } from 'antd';
-import { isFunction } from 'lodash';
+import { get, isFunction } from 'lodash';
 import { TableEntryContainer, HeaderTitleTable, TextTitle, ActionTableGeneral } from '../../../pages/client/styled';
-import ExpandedLiabilitiesRow from './ExpandedLiabilitiesRow';
+import ExpandedLiabilitiesRow, { LiabilityProps } from './ExpandedLiabilitiesRow';
 import GeneralTable from '../GeneralTable';
+import { to2Options, liabilitiesTypes, ownerOptions, from2Options } from '../../../enums/options';
+import { removePartnerOption } from '../../../utils/columnUtils';
 
 interface LiabilitiesTableProps {
   data: object[];
+  maritalState: string;
+  assets: Array<{ refId: number; description: string; type: string }>;
   loading?: boolean;
 
-  setFieldValue?: (field: string, value: any) => void;
+  setFieldValue: (field: string, value: any) => void;
   resetForm: (nextValues?: any) => void;
   submitForm: () => void;
   addRow: (row: any) => void;
@@ -32,7 +36,7 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
       key: '1',
       width: 'calc(12% - 20px)',
       type: 'select',
-      options: [{ value: 'nonDeductible', label: 'Non-Deductible' }, { value: 'deductible', label: 'Deductible' }],
+      options: liabilitiesTypes,
     },
     {
       title: 'Owner',
@@ -40,20 +44,21 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
       key: '2',
       width: '13%',
       type: 'select',
-      options: [{ value: 'client', label: 'Client' }, { value: 'partner', label: 'Partner' }],
+      options: ownerOptions,
     },
     {
       title: 'Value',
       dataIndex: 'value',
       key: '3',
       width: '13%',
-      type: 'text',
+      type: 'number',
     },
     {
       title: 'Interest',
       dataIndex: 'interest',
       key: '4',
       width: '13%',
+      type: 'number',
     },
     {
       title: 'From',
@@ -62,11 +67,8 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
       type: 'date',
       width: '13%',
       pickerType: 'custom',
-      options: [
-        { value: '23/7/1999', label: 'Start' },
-        { value: '24/6/2004', label: `Client's Retirement` },
-        { value: '31/12/2005', label: `Partner's Retirement` },
-      ],
+      options: from2Options,
+      className: 'table-expand-datepicker',
     },
     {
       title: 'To',
@@ -75,11 +77,8 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
       width: '13%',
       type: 'date',
       pickerType: 'custom',
-      options: [
-        { value: '1/5/2005', label: 'End' },
-        { value: '25/6/2009', label: `Client's Retirement` },
-        { value: '18/7/2012', label: `Partner's Retirement` },
-      ],
+      className: 'table-expand-datepicker',
+      options: to2Options,
     },
     {
       title: 'Action',
@@ -90,6 +89,15 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
   ];
 
   private tableName = 'liabilities';
+
+  public componentDidUpdate(prevProps: Readonly<LiabilitiesTableProps>, prevState: Readonly<{}>, snapshot?: any): void {
+    const { maritalState, setFieldValue, data } = this.props;
+    if (prevProps.maritalState !== maritalState && maritalState === 'single') {
+      // update All Owner to Client
+      const newData = data.map((d) => ({ ...d, owner: 'client' }));
+      setFieldValue(this.tableName, newData);
+    }
+  }
 
   public resetForm = () => {
     this.handleResetForm();
@@ -135,20 +143,7 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
         creditLimit: 0,
         associatedAssetRefId: 1,
       },
-      drawdowns: [
-        {
-          // id: 1,
-          value: 18000.0,
-          from: {
-            type: 'start',
-            yearValue: null,
-          },
-          to: {
-            type: 'end',
-            yearValue: null,
-          },
-        },
-      ],
+      drawdowns: [],
     };
 
     // update formik
@@ -162,15 +157,37 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
   }
 
   public handleResetForm = () => {
-    const { resetForm, } = this.props;
+    const { resetForm } = this.props;
     if (isFunction(resetForm)) {
       resetForm();
     }
   }
 
+  public addRowInnerTable = (index: number, tableName: string, row: any) => {
+    const { setFieldValue, data } = this.props;
+    const tableData = get(data[index], tableName);
+    tableData.unshift(row);
+
+    const newData: any = data;
+    newData[index][tableName] = tableData;
+
+    setFieldValue(this.tableName, newData);
+  }
+
+  public removeRowInnerTable = (index: number, tableName: string, key: number) => {
+    const { setFieldValue, data } = this.props;
+    const tableData = get(data[index], tableName).filter((i: any) => i.key !== key);
+
+    const newData: any = data;
+    newData[index][tableName] = tableData;
+
+    setFieldValue(this.tableName, newData);
+  }
+
   public render() {
-    const { loading, data } = this.props;
+    const { loading, data, maritalState, assets } = this.props;
     const columns = this.columns.map((col) => {
+      const options = removePartnerOption(col, maritalState);
       const editable = col.editable === false ? false : 'true';
       if (col.key === 'operation') {
         return {
@@ -190,6 +207,7 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
         ...col,
         onCell: (record: any, rowIndex: number) => ({
           ...col,
+          options,
           rowIndex,
           tableName: this.tableName,
           type: col.type || 'text',
@@ -211,7 +229,18 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
           columns={columns}
           dataSource={data}
           pagination={false}
-          expandedRowRender={ExpandedLiabilitiesRow}
+          expandedRowRender={(record: LiabilityProps, index: number, indent: number, expanded: boolean) => (
+            <ExpandedLiabilitiesRow
+              record={record}
+              index={index}
+              indent={indent}
+              expanded={expanded}
+              maritalState={maritalState}
+              assets={assets}
+              addRow={this.addRowInnerTable}
+              deleteRow={this.removeRowInnerTable}
+            />
+          )}
           className={`${this.tableName}-table`}
         />
         <ActionTableGeneral>

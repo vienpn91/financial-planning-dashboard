@@ -34,12 +34,11 @@ const leaveAnim = [
 ];
 
 function AnimTag($props: any) {
-  // console.log('AnimTag', $props);
   return <TweenOneGroup component="tbody" enter={enterAnim} leave={leaveAnim} appear={false} exclusive {...$props} />;
 }
 const components = {
   body: {
-    wrapper: AnimTag,
+    // wrapper: AnimTag,
     cell: EditableCell,
   },
 };

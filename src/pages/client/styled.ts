@@ -34,6 +34,14 @@ export const TableEntryContainer = styled.section.attrs({
     table{
       table-layout: fixed;
     }
+    .ant-table{
+     &.ant-table-small{
+      font-size: 13px;
+      .ant-select{
+        font-size: 13px;
+       }
+      }
+     }
     .ant-row.ant-form-item{
       margin: 0px;
       width: 100%;
@@ -106,8 +114,9 @@ export const HeaderTitleTable = styled.div.attrs({
 `;
 
 export const TextTitle = styled.span<TextTitleProps>`
-  color: #072074;
-  font-size: ${(props) => (props.small ? '14px' : '21px')};
+  color: #4e5b86;
+  font-size: ${(props) => (props.small ? '15px' : '21px')};
+  font-weight: 600;
 `;
 
 export const DivideLine = styled.span`
@@ -121,6 +130,10 @@ export const InnerTableNoDelContainer = styled.section`
   color: #072074;
   font-size: 21px;
   margin-bottom: 20px;
+  .SGContribution-table{
+    // max-width: 640px;
+    // width: 100%
+  }
   .ant-table-small {
     border: none;
     & > .ant-table-content > .ant-table-body {
@@ -145,7 +158,7 @@ export const InnerTableNoDelContainer = styled.section`
     }
     & > .ant-table-content > .ant-table-body > table > .ant-table-tbody > tr > td {
       border-bottom: none;
-      padding: 2px 0;
+      padding: 2px 4px;
       width: 20px;
       &.operation {
       }
@@ -156,11 +169,68 @@ export const InnerTableContainer = styled.section`
   color: #072074;
   margin-top: 10px;
   font-size: 21px;
+  .contribution-withdrawals-table{
+    // max-width: 700px;
+    // width: 100%
+  }
+
   .ant-table-wrapper {
-    margin-left: -38px;
+    &.cover-details-table{
+      table {
+        colgroup{
+          .ant-table-expand-icon-col{
+            display: none;
+          }
+        }
+        .ant-table-thead > tr > th{
+          &:first-child{
+            display: none;
+          }
+        }
+        .ant-table-tbody > tr > td{
+          &:first-child{
+            display: none;
+          }
+        }
+      }
+      .ant-table-row-expand-icon-cell{
+        opacity: 0;
+        visibility: hidden;
+      }
+      tr.ant-table-expanded-row,
+      tr.ant-table-expanded-row:hover{
+        background: transparent;
+      }
+    }
   }
   .ant-table-small {
     border: none;
+    table {
+      margin-left: -24px;
+      .table-expand-datepicker{
+        .dropdown-value{
+          border: 1px solid #d9d9d9;
+          &:hover{
+            border: 1px solid #515c83;
+          }
+        }
+        .has-none .anticon-calendar{
+          // display: block;
+        }
+      }
+      .operation{
+        position: relative;
+        .anticon-close-square{
+          position: absolute;
+          left: -9px;
+          top: 12px;
+        }
+      }
+       /* margin-left: -32px; */
+       @media(max-width: 1369px){
+        /* margin-left: -21px; */
+       }
+     }
     & > .ant-table-content > .ant-table-body {
       margin: 0;
     }
@@ -168,7 +238,7 @@ export const InnerTableContainer = styled.section`
       background-color: #eaedef;
       color: #505c84;
       font-weight: normal;
-      font-size: 12px;
+      font-size: 13px;
     }
     & > .ant-table-content > .ant-table-body > table > .ant-table-thead > tr > th {
       border-bottom: none;
@@ -183,7 +253,7 @@ export const InnerTableContainer = styled.section`
     }
     & > .ant-table-content > .ant-table-body > table > .ant-table-tbody > tr > td {
       border-bottom: none;
-      padding: 2px 0;
+      padding: 2px 4px;
       width: 20px;
       &.operation {
       }

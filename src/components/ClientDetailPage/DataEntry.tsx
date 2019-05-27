@@ -9,7 +9,7 @@ import InsuranceTable from './insurance/InsuranceTable';
 import { Form, Formik, FormikActions, FormikProps } from 'formik';
 import { connect } from 'react-redux';
 import { RootState, StandardAction } from '../../reducers/reducerTypes';
-import { find, map, isArray } from 'lodash';
+import { find, map, isArray, pick, get } from 'lodash';
 import {
   Client,
   Tag,
@@ -18,6 +18,8 @@ import {
   ClientActions,
   Table,
   DataEntry,
+  UpdateMaritalStateAction,
+  UpdateAssetsAction,
 } from '../../reducers/client';
 import { Button, Icon } from 'antd';
 import { ActionTableGeneral } from '../../pages/client/styled';
@@ -26,10 +28,14 @@ interface DataEntryProps {
   clientId: string;
   tagName: string;
   tabName: string;
+  maritalState: string;
+  assets?: Array<{ refId: number; description: string; type: string }>;
 
   tables?: Table;
   loading?: boolean;
   fetchDataEntry?: (payload: FetchDataEntryPayload) => FetchDataEntryAction;
+  updateMaritalState?: (maritalState: string) => UpdateMaritalStateAction;
+  updateAssets?: (assets: Array<{ refId: number; description: string; type: string }>) => UpdateAssetsAction;
 }
 
 interface DataEntryState {
@@ -38,13 +44,26 @@ interface DataEntryState {
 
 export const addKeyToArray = (array: object[], defaultValue?: any) => {
   if (isArray(array)) {
-    return map(array, (d, index: number) => ({ key: index, ...d }));
+    return map(array, (d, index: number) => {
+      const data: any = {};
+      Object.entries(d).map(([key, value]) => {
+        if (isArray(value)) {
+          data[key] = addKeyToArray(value);
+        } else {
+          data[key] = value;
+        }
+      });
+      return { key: index, ...data };
+    });
   }
 
   return defaultValue;
 };
 
 class DataEntryComponent extends PureComponent<DataEntryProps> {
+  public static defaultProps = {
+    maritalState: '',
+  };
   public readonly state: DataEntryState = {
     formData: {},
   };
@@ -76,10 +95,27 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
   }
 
   public componentDidUpdate(prevProps: Readonly<DataEntryProps>, prevState: Readonly<{}>, snapshot?: any): void {
-    const { clientId, tagName, tabName } = this.props;
+    const { clientId, tagName, tabName, loading, updateMaritalState, updateAssets, tables } = this.props;
 
     if (prevProps.clientId !== clientId || prevProps.tagName !== tagName || prevProps.tabName !== tabName) {
       this.fetchDataEntry({ clientId, tagName, tabName });
+    }
+
+    if (loading !== prevProps.loading && updateMaritalState && updateAssets) {
+      const maritalState = get(tables, 'basicInformation[0].maritalState');
+
+      updateMaritalState(maritalState);
+      this.updateAssets();
+    }
+  }
+
+  public updateAssets = (assetsFormValue?: object[]) => {
+    const { tables, updateAssets } = this.props;
+    const assetsSource = assetsFormValue || get(tables, 'assets');
+    const assets = map(assetsSource, (asset: any) => pick(asset, ['refId', 'description', 'type']));
+
+    if (updateAssets) {
+      updateAssets(assets);
     }
   }
 
@@ -91,9 +127,18 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
     }
   }
 
+  public componentWillUnmount(): void {
+    const { updateMaritalState, updateAssets } = this.props;
+    // update marital state in redux store
+    if (updateMaritalState && updateAssets) {
+      updateMaritalState('');
+      updateAssets([]);
+    }
+  }
+
   public handleDiscardForm = () => {
-    if (this.basicInformationForm) {
-      this.basicInformationForm.current.resetForm();
+    if (this.basicInformationForm && this.basicInformationForm.current) {
+      this.basicInformationForm.current.props.resetForm();
     }
     if (this.incomeForm) {
       this.incomeForm.current.resetForm();
@@ -114,8 +159,8 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
   }
 
   public handleSubmitForm = () => {
-    if (this.basicInformationForm) {
-      this.basicInformationForm.current.submitForm();
+    if (this.basicInformationForm && this.basicInformationForm.current) {
+      this.basicInformationForm.current.props.submitForm();
     }
     if (this.incomeForm) {
       this.incomeForm.current.submitForm();
@@ -132,11 +177,16 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
     if (this.insuranceForm) {
       this.insuranceForm.current.submitForm();
     }
-    console.log('handle submit form', this.state.formData);
+
+    // Make sure all forms already submitted.
+    setTimeout(() => {
+      console.log('handle submit form', this.state.formData);
+    }, 0);
   }
 
   public render() {
-    const { tables, loading } = this.props;
+    const { tables, loading, maritalState, assets } = this.props;
+    const dynamicCustomValue = pick(tables, ['inflationCPI', 'salaryInflation', 'sgcRate', 'benefitDefaultAge']);
 
     return (
       <>
@@ -207,6 +257,8 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
                   addRow={addRow}
                   deleteRow={deleteRow}
                   ref={this.incomeForm}
+                  maritalState={maritalState}
+                  dynamicCustomValue={dynamicCustomValue}
                 />
               </Form>
             );
@@ -227,7 +279,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
               props.setFieldValue('expenditure', expenditure);
             };
             const deleteRow = (key: number) => {
-              const expenditure = props.values.expenditure.filter((asset: any) => asset.key !== key);
+              const expenditure = props.values.expenditure.filter((exp: any) => exp.key !== key);
 
               props.setFieldValue('expenditure', expenditure);
             };
@@ -243,6 +295,8 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
                   addRow={addRow}
                   deleteRow={deleteRow}
                   ref={this.expenditureForm}
+                  maritalState={maritalState}
+                  dynamicCustomValue={dynamicCustomValue}
                 />
               </Form>
             );
@@ -257,15 +311,17 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
           enableReinitialize={true}
           render={(props: FormikProps<any>) => {
             const addRow = (row: any) => {
-              const assets = [...props.values.assets];
-              assets.unshift(row);
+              const assetsFormValue = [...props.values.assets];
+              assetsFormValue.unshift(row);
 
-              props.setFieldValue('assets', assets);
+              props.setFieldValue('assets', assetsFormValue);
+              this.updateAssets(assetsFormValue);
             };
             const deleteRow = (key: number) => {
-              const assets = props.values.assets.filter((asset: any) => asset.key !== key);
+              const assetsFormValue = props.values.assets.filter((asset: any) => asset.key !== key);
 
-              props.setFieldValue('assets', assets);
+              props.setFieldValue('assets', assetsFormValue);
+              this.updateAssets(assetsFormValue);
             };
 
             return (
@@ -279,6 +335,9 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
                   addRow={addRow}
                   deleteRow={deleteRow}
                   ref={this.assetsForm}
+                  maritalState={maritalState}
+                  dynamicCustomValue={dynamicCustomValue}
+                  updateAssets={this.updateAssets}
                 />
               </Form>
             );
@@ -315,6 +374,8 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
                   addRow={addRow}
                   deleteRow={deleteRow}
                   ref={this.liabilitiesForm}
+                  maritalState={maritalState}
+                  assets={assets || []}
                 />
               </Form>
             );
@@ -351,6 +412,8 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
                   addRow={addRow}
                   deleteRow={deleteRow}
                   ref={this.insuranceForm}
+                  maritalState={maritalState}
+                  dynamicCustomValue={dynamicCustomValue}
                 />
               </Form>
             );
@@ -374,6 +437,8 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
 const mapStateToProps = (state: RootState, ownProps: DataEntryProps) => {
   let tables;
   const clients = state.client.get('clients');
+  const assets = state.client.get('assets');
+  const maritalState = state.client.get('maritalState');
   const loading = state.client.get('loading');
   const clientId = ownProps.clientId;
   const tagName = ownProps.tagName;
@@ -393,6 +458,8 @@ const mapStateToProps = (state: RootState, ownProps: DataEntryProps) => {
   return {
     tables,
     loading,
+    maritalState,
+    assets,
   };
 };
 
@@ -400,6 +467,8 @@ const mapDispatchToProps = (dispatch: Dispatch<StandardAction<any>>) =>
   bindActionCreators(
     {
       fetchDataEntry: ClientActions.fetchDataEntry,
+      updateMaritalState: ClientActions.updateMaritalState,
+      updateAssets: ClientActions.updateAssets,
     },
     dispatch,
   );

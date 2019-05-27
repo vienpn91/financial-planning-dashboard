@@ -1,8 +1,20 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Icon, Popconfirm, Table } from 'antd';
 import { InnerTableContainer, HeaderTitleTable, TextTitle, DivideLine } from '../../../pages/client/styled';
 import { TweenOneGroup } from 'rc-tween-one';
+import { removePartnerOption } from '../../../utils/columnUtils';
+import EditableCell from './EditableCell';
 
+interface ContributionWithdrawalsTableProps {
+  columns: object[];
+  maritalState: string;
+  data: object[];
+  index: number;
+  titleTable?: string;
+  tableName: string;
+  addRow: (index: number, tableName: string, row: any) => void;
+  deleteRow: (index: number, tableName: string, key: number) => void;
+}
 const enterAnim = [
   {
     opacity: 0,
@@ -30,74 +42,21 @@ export const AnimTag = ($props: any) => {
   return <TweenOneGroup component="tbody" enter={enterAnim} leave={leaveAnim} appear={false} exclusive {...$props} />;
 };
 
-const components = { body: { wrapper: AnimTag } };
+export const components = {
+  body: {
+    // wrapper: AnimTag,
+    cell: EditableCell,
+  },
+};
 
-class ContributionWithdrawalsTable extends PureComponent {
-  public state = {
-    dataSource: [
-      {
-        key: '0',
-        type: 'Contribution',
-        value: 100000,
-        from: 'start',
-        to: 'End',
-      },
-      {
-        key: '1',
-        type: 'Withdrawals',
-        value: 50000,
-        from: 'start',
-        to: 'End',
-      },
-    ],
-    count: 2,
-  };
-
-  public columns = [
-    {
-      title: '',
-      key: 'operation',
-      width: 18,
-      className: 'operation',
-      render: (text: any, record: any) =>
-        this.state.dataSource.length >= 1 ? (
-          <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
-            <Icon type="close-square" theme="twoTone" style={{ fontSize: '16px' }} />
-          </Popconfirm>
-        ) : null,
-    },
-    {
-      title: 'Type',
-      dataIndex: 'type',
-      width: 140,
-    },
-    {
-      title: 'Value',
-      dataIndex: 'value',
-      key: '1',
-      width: 120,
-    },
-    {
-      title: 'From',
-      dataIndex: 'from',
-      key: '2',
-      width: 120,
-    },
-    {
-      title: 'To',
-      dataIndex: 'to',
-      key: '3',
-      width: 120,
-    },
-  ];
-
-  public handleDelete = (key: string) => {
-    const dataSource = [...this.state.dataSource];
-    this.setState({ dataSource: dataSource.filter((item) => item.key !== key) });
+class ContributionWithdrawalsTable extends Component<ContributionWithdrawalsTableProps, {}> {
+  public handleDelete = (key: number) => {
+    const { index, tableName, deleteRow } = this.props;
+    deleteRow(index, tableName, key);
   }
 
   public handleAdd = () => {
-    const { count, dataSource } = this.state;
+    const { index, tableName, addRow } = this.props;
     const newData = {
       key: Date.now(),
       type: 'contribution',
@@ -111,33 +70,58 @@ class ContributionWithdrawalsTable extends PureComponent {
         yearValue: null,
       },
     };
-    this.setState({
-      dataSource: [...dataSource, newData],
-      count: count + 1,
-    });
+    addRow(index, tableName, newData);
   }
 
-  public render() {
-    const { dataSource } = this.state;
-    const columns = this.columns.map((col) => {
+  public render(): React.ReactNode {
+    const { titleTable, data, maritalState, index, tableName, columns: columnsProps } = this.props;
+    const columns = columnsProps.map((col: any) => {
+      if (col.key === 'operation') {
+        return {
+          ...col,
+          title: '',
+          className: 'operation',
+          render: (text: any, record: any) => (
+            <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
+              <Icon type="close-square" theme="twoTone" style={{ fontSize: '16px' }} />
+            </Popconfirm>
+          ),
+        };
+      }
+      const options = removePartnerOption(col, maritalState);
+      const editable = col.key === 'operation' ? false : 'true';
+
       return {
         ...col,
         fixed: false,
-        onCell: (record: any) => ({
+        onCell: (record: any, rowIndex: number) => ({
+          ...col,
+          options,
+          rowIndex,
+          tableName: `assets[${index}].${tableName}`,
+          type: col.type || 'text',
           record,
-          editable: 'true',
-          title: col.title,
+          editable,
+          smallInput: true,
         }),
       };
     });
+
     return (
       <InnerTableContainer>
         <HeaderTitleTable small={true}>
           <Icon type={'plus-square'} theme={'filled'} onClick={this.handleAdd} />
-          <TextTitle small={true}>{'Contribution/Withdrawals'}</TextTitle>
+          <TextTitle small={true}>{titleTable}</TextTitle>
           <DivideLine />
         </HeaderTitleTable>
-        <Table columns={columns} dataSource={dataSource} pagination={false} components={components} size={'small'} />
+        <Table
+          className="contribution-withdrawals-table"
+          columns={columns}
+          dataSource={data}
+          pagination={false}
+          components={components}
+          size={'small'}
+        />
       </InnerTableContainer>
     );
   }

@@ -1,40 +1,149 @@
 import React from 'react';
-import { get } from 'lodash';
+import { get, map } from 'lodash';
 import DrawdownsTable from './DrawdownsTable';
+import {
+  TypeDollarPrefix,
+  TypePercentPrefix,
+  ExpandedSelectGroup,
+  PrefixSingleGroup,
+  ExpandedAssetsInlineGroups,
+  ExpandedAssetsGroups,
+  ExpandedAssetsText,
+} from '../assets/styled';
+import EditableCell from '../assets/EditableCell';
+import { ASSET_TYPES, LIABILITIES_TYPES, repaymentTypeOptions, waitingPeriodTypeOptions } from '../../../enums/options';
 
 export interface LiabilityProps {
   description: string;
-  expandable: {
-    riskProfile: string;
-    lookingForCoupleAdvice?: boolean;
-  };
+  type: string;
+  expandable: object;
+  drawdowns?: Array<{ value: number; from: object; to: object }>;
 }
 
-const profileText = {
-  defensive: 'defensive',
-  highGrowth: 'high growth',
-};
+const ExpandedLiabilitiesRow = (props: {
+  record: LiabilityProps;
+  index: number;
+  indent: number;
+  expanded: boolean;
+  maritalState: string;
+  assets: Array<{ refId: number; description: string; type: string }>;
+  addRow: (index: number, tableName: string, row: any) => void;
+  deleteRow: (index: number, tableName: string, key: number) => void;
+}) => {
+  const { record, index, maritalState, assets, addRow, deleteRow } = props;
+  const { type } = record;
+  const directInvestmentsOptions = map(
+    assets.filter((asset) => ASSET_TYPES[asset.type] === ASSET_TYPES.directInvestment),
+    (asset) => ({ value: asset.refId, label: asset.description }),
+  );
 
-const ExpandedLiabilitiesRow: React.FC<LiabilityProps> = (props) => {
-  const { expandable } = props;
-  const { riskProfile, lookingForCoupleAdvice } = expandable;
   return (
-    <div>
-      <p>
-        This super has a taxable component of <b>{get(profileText, riskProfile)}</b> and a tax-free component of{' '}
-        <b>{get(profileText, riskProfile)}</b>
-      </p>
-      <p>
-        This income generated is <b>15%</b> and comes with an insurance cost of <b>$4,500</b>
-      </p>
-      <p>
-        This rate terms are <b>15%</b> growth <b>10%</b> franked and <b>25%</b> contribution to income
-      </p>
-      <p>
-        Client is seeking advice for <b>{lookingForCoupleAdvice ? 'couple' : 'couple'}</b>
-      </p>
-      <DrawdownsTable />
-    </div>
+    <ExpandedAssetsGroups>
+      <ExpandedAssetsInlineGroups>
+        <ExpandedAssetsText>The deductibility of this ({get(LIABILITIES_TYPES, type)} Loan) is</ExpandedAssetsText>
+        <PrefixSingleGroup percent={true}>
+          <EditableCell
+            record={record}
+            dataIndex={'expandable.deductibility'}
+            type={'text'}
+            tableName={'liabilities'}
+            rowIndex={index}
+            editable={true}
+            expandedField={true}
+          />
+          <TypePercentPrefix>%</TypePercentPrefix>
+        </PrefixSingleGroup>
+      </ExpandedAssetsInlineGroups>
+      <ExpandedAssetsInlineGroups>
+        <ExpandedAssetsText>The repayment amount of this (Deductible Loan) is</ExpandedAssetsText>
+        <PrefixSingleGroup dollar>
+          <TypeDollarPrefix>$</TypeDollarPrefix>
+          <EditableCell
+            record={record}
+            dataIndex={'expandable.repaymentAmount'}
+            type={'text'}
+            tableName={'liabilities'}
+            rowIndex={index}
+            editable={true}
+            expandedField={true}
+          />
+        </PrefixSingleGroup>
+        <ExpandedAssetsText>with repayment type of </ExpandedAssetsText>
+        <ExpandedSelectGroup>
+          <EditableCell
+            record={record}
+            dataIndex={'expandable.repaymentType'}
+            type={'select'}
+            tableName={'liabilities'}
+            options={repaymentTypeOptions}
+            rowIndex={index}
+            editable={true}
+            expandedField={true}
+          />
+        </ExpandedSelectGroup>
+        <ExpandedAssetsText>for a term of </ExpandedAssetsText>
+        <PrefixSingleGroup>
+          <EditableCell
+            record={record}
+            dataIndex={'expandable.durationLength'}
+            type={'text'}
+            tableName={'liabilities'}
+            rowIndex={index}
+            editable={true}
+            expandedField={true}
+          />
+        </PrefixSingleGroup>
+        <ExpandedSelectGroup>
+          <EditableCell
+            record={record}
+            dataIndex={'expandable.durationType'}
+            type={'select'}
+            tableName={'liabilities'}
+            rowIndex={index}
+            editable={true}
+            expandedField={true}
+            options={waitingPeriodTypeOptions}
+          />
+        </ExpandedSelectGroup>
+      </ExpandedAssetsInlineGroups>
+      <ExpandedAssetsInlineGroups>
+        <ExpandedAssetsText>This loan has a credit limit of </ExpandedAssetsText>
+        <PrefixSingleGroup dollar>
+          <TypeDollarPrefix>$</TypeDollarPrefix>
+          <EditableCell
+            record={record}
+            dataIndex={'expandable.creditLimit'}
+            type={'text'}
+            tableName={'liabilities'}
+            rowIndex={index}
+            editable={true}
+            expandedField={true}
+          />
+        </PrefixSingleGroup>
+        <ExpandedAssetsText> with an associate asset of</ExpandedAssetsText>
+        <ExpandedSelectGroup>
+          <EditableCell
+            record={record}
+            dataIndex={'expandable.associatedAssetRefId'}
+            type={'select'}
+            tableName={'liabilities'}
+            options={directInvestmentsOptions}
+            rowIndex={index}
+            editable={true}
+            expandedField={true}
+          />
+        </ExpandedSelectGroup>
+      </ExpandedAssetsInlineGroups>
+
+      <DrawdownsTable
+        data={record.drawdowns || []}
+        index={index}
+        tableName={'drawdowns'}
+        maritalState={maritalState}
+        addRow={addRow}
+        deleteRow={deleteRow}
+      />
+    </ExpandedAssetsGroups>
   );
 };
 

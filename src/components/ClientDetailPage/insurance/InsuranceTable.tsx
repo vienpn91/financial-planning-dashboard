@@ -1,22 +1,26 @@
 import React, { PureComponent } from 'react';
 import { Button, Icon, Popconfirm } from 'antd';
-import { isFunction } from 'lodash';
+import { isFunction, get } from 'lodash';
 import { TableEntryContainer, HeaderTitleTable, TextTitle, ActionTableGeneral } from '../../../pages/client/styled';
-import ExpandedInsuranceRow from './ExpandedInsuranceRow';
+import ExpandedInsuranceRow, { InsuranceProps } from './ExpandedInsuranceRow';
 import GeneralTable from '../GeneralTable';
 import { FormikProps } from 'formik';
+import { ownerWithJointOptions } from '../../../enums/options';
+import { removePartnerOption } from '../../../utils/columnUtils';
 
 interface InsuranceTableProps {
   data: object[];
+  maritalState: string;
   loading?: boolean;
 
   formProps?: FormikProps<any>;
   tableName?: string;
-  setFieldValue?: (field: string, value: any) => void;
+  setFieldValue: (field: string, value: any) => void;
   resetForm: (nextValues?: any) => void;
   submitForm: () => void;
   addRow: (row: any) => void;
   deleteRow: (key: number) => void;
+  dynamicCustomValue: object;
 }
 
 class InsuranceTable extends PureComponent<InsuranceTableProps> {
@@ -33,7 +37,7 @@ class InsuranceTable extends PureComponent<InsuranceTableProps> {
       dataIndex: 'owner',
       key: '2',
       type: 'select',
-      options: [{ value: 'client', label: 'Client' }, { value: 'partner', label: 'Partner' }],
+      options: ownerWithJointOptions,
     },
     {
       title: 'Action',
@@ -44,6 +48,15 @@ class InsuranceTable extends PureComponent<InsuranceTableProps> {
   ];
 
   private tableName = 'insurance';
+
+  public componentDidUpdate(prevProps: Readonly<InsuranceTableProps>, prevState: Readonly<{}>, snapshot?: any): void {
+    const { maritalState, setFieldValue, data } = this.props;
+    if (prevProps.maritalState !== maritalState && maritalState === 'single') {
+      // update All Owner to Client
+      const newData = data.map((d) => ({ ...d, owner: 'client' }));
+      setFieldValue(this.tableName, newData);
+    }
+  }
 
   public resetForm = () => {
     this.handleResetForm();
@@ -71,6 +84,7 @@ class InsuranceTable extends PureComponent<InsuranceTableProps> {
       owner: 'client',
       premiumFeeDetails: [
         {
+          key: 0,
           feeType: 'premium',
           amount: 80000.0,
           frequency: 'yearly',
@@ -79,7 +93,8 @@ class InsuranceTable extends PureComponent<InsuranceTableProps> {
       ],
       coverDetails: [
         {
-          // refId: 0,
+          refId: 0,
+          key: 0,
           coverType: 'life',
           policyOwner: 'superFund',
           benefitAmount: 200000.0,
@@ -110,9 +125,31 @@ class InsuranceTable extends PureComponent<InsuranceTableProps> {
     }
   }
 
+  public addRowInnerTable = (index: number, tableName: string, row: any) => {
+    const { setFieldValue, data } = this.props;
+    const tableData = get(data[index], tableName);
+    tableData.unshift(row);
+
+    const newData: any = data;
+    newData[index][tableName] = tableData;
+
+    setFieldValue(this.tableName, newData);
+  }
+
+  public removeRowInnerTable = (index: number, tableName: string, key: number) => {
+    const { setFieldValue, data } = this.props;
+    const tableData = get(data[index], tableName).filter((i: any) => i.key !== key);
+
+    const newData: any = data;
+    newData[index][tableName] = tableData;
+
+    setFieldValue(this.tableName, newData);
+  }
+
   public render() {
-    const { loading, data } = this.props;
+    const { loading, data, maritalState, dynamicCustomValue } = this.props;
     const columns = this.columns.map((col) => {
+      const options = removePartnerOption(col, maritalState);
       const editable = col.editable === false ? false : 'true';
       if (col.key === 'operation') {
         return {
@@ -133,6 +170,7 @@ class InsuranceTable extends PureComponent<InsuranceTableProps> {
         onCell: (record: any, rowIndex: number) => ({
           ...col,
           rowIndex,
+          options,
           tableName: this.tableName,
           type: col.type || 'text',
           record,
@@ -153,7 +191,17 @@ class InsuranceTable extends PureComponent<InsuranceTableProps> {
           columns={columns}
           dataSource={data}
           pagination={false}
-          expandedRowRender={ExpandedInsuranceRow}
+          expandedRowRender={(record: InsuranceProps, index: number, indent: number, expanded: boolean) => (
+            <ExpandedInsuranceRow
+              record={record}
+              index={index}
+              indent={indent}
+              expanded={expanded}
+              addRow={this.addRowInnerTable}
+              deleteRow={this.removeRowInnerTable}
+              dynamicCustomValue={dynamicCustomValue}
+            />
+          )}
           className={`${this.tableName}-table`}
         />
         <ActionTableGeneral>

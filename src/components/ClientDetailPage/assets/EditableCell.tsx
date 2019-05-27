@@ -13,6 +13,7 @@ interface EditableProps {
   handleSave?: (arg: object) => void;
   title?: string;
   editable?: boolean;
+  disableRowIndex?: boolean;
   tableName?: string;
   rowIndex?: number;
   pickerType?: PickerType;
@@ -20,6 +21,12 @@ interface EditableProps {
   suffix?: string | React.ReactNode;
   expandedField?: boolean;
   options?: Array<{ value: any; label: any }>;
+  confirmTitle?: { title: string; fieldValue: any };
+  render?: () => void;
+  smallInput?: boolean;
+  disabledYear?: boolean;
+  calculateWidth?: boolean;
+  defaultValue?: any;
 }
 
 export default class EditableCell extends React.PureComponent<EditableProps> {
@@ -58,30 +65,43 @@ export default class EditableCell extends React.PureComponent<EditableProps> {
     if (fieldName && isFunction(handleSave)) {
       handleSave({ tableName, rowIndex, dataIndex, value, record });
     }
-    this.toggleEdit();
+    this.setState({ editing: false });
   }
 
   public getAppendedProps = (props: EditableProps, editing: boolean = false) => {
-    const { type, options, pickerType, prefix, suffix } = props;
+    const {
+      type,
+      options,
+      pickerType,
+      confirmTitle,
+      smallInput,
+      disabledYear,
+      expandedField,
+      calculateWidth,
+      defaultValue,
+    } = props;
     const appendProps = [];
 
     switch (type) {
       case 'select': {
-        appendProps.push({ defaultOpen: editing, options });
+        appendProps.push({ defaultOpen: editing, options, confirmTitle, defaultValue });
         break;
       }
       case 'date': {
-        appendProps.push({ defaultOpen: editing, pickerType, options });
+        appendProps.push({ defaultOpen: editing, pickerType, options, disabledYear });
       }
     }
 
-    return reduce(appendProps, (accumulator, prop) => ({ ...accumulator, ...prop }), {});
+    return reduce(appendProps, (accumulator, prop) => ({ ...accumulator, ...prop }), {
+      calculateWidth: calculateWidth || expandedField,
+      smallInput,
+    });
   }
 
   public render() {
     const { editing } = this.state;
     const {
-      editable,
+      editable: editableProp,
       dataIndex,
       title,
       record,
@@ -94,9 +114,27 @@ export default class EditableCell extends React.PureComponent<EditableProps> {
       expandedField,
       prefix,
       suffix,
+      confirmTitle,
+      disableRowIndex,
+      render,
+      smallInput,
+      disabledYear,
+      calculateWidth,
+      defaultValue,
       ...restProps
     } = this.props;
     const appendedProps = this.getAppendedProps(this.props, editing);
+    let editable = editableProp;
+    if (type === 'select' && options && options.length === 1 && dataIndex !== 'expandable.linkedProduct') {
+      editable = false;
+    }
+
+    let fieldName = '';
+    if (disableRowIndex) {
+      fieldName = `${tableName}.${dataIndex}`;
+    } else {
+      fieldName = `${tableName}[${rowIndex}].${dataIndex}`;
+    }
 
     if (expandedField) {
       return editable ? (
@@ -104,7 +142,7 @@ export default class EditableCell extends React.PureComponent<EditableProps> {
           <EditableCellWrap>
             <FormInput
               type={type}
-              name={`${tableName}[${rowIndex}].${dataIndex}`}
+              name={fieldName}
               ref={this.input}
               onPressEnter={this.save}
               handleBlur={this.save}
@@ -114,12 +152,7 @@ export default class EditableCell extends React.PureComponent<EditableProps> {
         ) : (
           <EditableCellWrap onClick={this.toggleEdit}>
             <ValueEditCell>
-              <FormInput
-                className={classNames({ readOnly: true })}
-                type={type}
-                name={`${tableName}[${rowIndex}].${dataIndex}`}
-                {...appendedProps}
-              />
+              <FormInput className={classNames({ readOnly: true })} type={type} name={fieldName} {...appendedProps} />
             </ValueEditCell>
           </EditableCellWrap>
         )
@@ -129,7 +162,7 @@ export default class EditableCell extends React.PureComponent<EditableProps> {
             className={classNames({ readOnly: true, disabled: true })}
             disabled={true}
             type={type}
-            name={`${tableName}[${rowIndex}].${dataIndex}`}
+            name={fieldName}
             {...appendedProps}
           />
         </EditableCellWrap>
@@ -145,7 +178,7 @@ export default class EditableCell extends React.PureComponent<EditableProps> {
             <EditableCellWrap>
               <FormInput
                 type={type}
-                name={`${tableName}[${rowIndex}].${dataIndex}`}
+                name={fieldName}
                 ref={this.input}
                 onPressEnter={this.save}
                 handleBlur={this.save}
@@ -156,9 +189,9 @@ export default class EditableCell extends React.PureComponent<EditableProps> {
             <EditableCellWrap onClick={this.toggleEdit}>
               <ValueEditCell>
                 <FormInput
-                  className={classNames({ readOnly: true })}
+                  className={classNames({ readOnly: !smallInput, smallInput })}
                   type={type}
-                  name={`${tableName}[${rowIndex}].${dataIndex}`}
+                  name={fieldName}
                   {...appendedProps}
                 />
               </ValueEditCell>
@@ -170,7 +203,7 @@ export default class EditableCell extends React.PureComponent<EditableProps> {
               className={classNames({ readOnly: true, disabled: true })}
               disabled={true}
               type={type}
-              name={`${tableName}[${rowIndex}].${dataIndex}`}
+              name={fieldName}
               {...appendedProps}
             />
           </EditableCellWrap>

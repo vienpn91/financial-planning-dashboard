@@ -4,14 +4,25 @@ import { ActionTableGeneral, HeaderTitleTable, TableEntryContainer, TextTitle } 
 import { isFunction } from 'lodash';
 import GeneralTable from '../GeneralTable';
 import { FormikProps } from 'formik';
+import {
+  maritalStateOptions,
+  ownerOptions,
+  incomeTypeOptions,
+  from1Options,
+  to1Options,
+  indexationOptions,
+} from '../../../enums/options';
+import { loadOptionsBaseOnCol } from '../../../utils/columnUtils';
 
 interface IncomeTableProps {
   data: object[];
+  maritalState: string;
+  dynamicCustomValue: object;
   loading?: boolean;
 
   formProps?: FormikProps<any>;
   tableName?: string;
-  setFieldValue?: (field: string, value: any) => void;
+  setFieldValue: (field: string, value: any) => void;
   resetForm: (nextValues?: any) => void;
   submitForm: () => void;
   addRow: (row: any) => void;
@@ -33,7 +44,7 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
       key: '1',
       width: 'calc(12% - 20px)',
       type: 'select',
-      options: [{ value: 'employment', label: 'Employment' }, { value: 'taxable', label: 'Taxable' }],
+      options: incomeTypeOptions,
     },
     {
       title: 'Owner',
@@ -41,14 +52,14 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
       key: '2',
       width: '13%',
       type: 'select',
-      options: [{ value: 'client', label: 'Client' }, { value: 'partner', label: 'Partner' }],
+      options: ownerOptions,
     },
     {
       title: 'Value',
       dataIndex: 'value',
       key: '3',
       width: '13%',
-      type: 'text',
+      type: 'number',
     },
     {
       title: 'Indexation',
@@ -56,10 +67,7 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
       key: '4',
       width: '13%',
       type: 'select',
-      options: [
-        { value: 'salaryInflation', label: 'Salary Inflation' },
-        { value: 'inflationCPI', label: 'Inflation (CPI)' },
-      ],
+      options: indexationOptions,
     },
     {
       title: 'From',
@@ -68,11 +76,7 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
       type: 'date',
       width: '13%',
       pickerType: 'custom',
-      options: [
-        { value: '23/7/1999', label: 'Start' },
-        { value: '24/6/2004', label: `Client's Retirement` },
-        { value: '31/12/2005', label: `Partner's Retirement` },
-      ],
+      options: from1Options,
     },
     {
       title: 'To',
@@ -81,11 +85,7 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
       width: '13%',
       type: 'date',
       pickerType: 'custom',
-      options: [
-        { value: '1/5/2005', label: 'End' },
-        { value: '25/6/2009', label: `Client's Retirement` },
-        { value: '18/7/2012', label: `Partner's Retirement` },
-      ],
+      options: to1Options,
     },
     {
       title: 'Action',
@@ -96,6 +96,15 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
   ];
 
   private tableName = 'income';
+
+  public componentDidUpdate(prevProps: Readonly<IncomeTableProps>, prevState: Readonly<{}>, snapshot?: any): void {
+    const { maritalState, setFieldValue, data } = this.props;
+    if (prevProps.maritalState !== maritalState && maritalState === maritalStateOptions[1].value) {
+      // update All Owner to Client
+      const newData = data.map((d) => ({ ...d, owner: 'client' }));
+      setFieldValue(this.tableName, newData);
+    }
+  }
 
   public resetForm = () => {
     this.handleResetForm();
@@ -152,8 +161,8 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
   }
 
   public render() {
-    const { loading, data } = this.props;
-    const columns = this.columns.map((col) => {
+    const { loading, data, maritalState, dynamicCustomValue } = this.props;
+    const columns = this.columns.map((col: any) => {
       const editable = col.editable === false ? false : 'true';
       if (col.key === 'operation') {
         return {
@@ -171,15 +180,20 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
 
       return {
         ...col,
-        onCell: (record: any, rowIndex: number) => ({
-          ...col,
-          rowIndex,
-          tableName: this.tableName,
-          type: col.type || 'text',
-          record,
-          editable,
-          handleSave: this.handleSave,
-        }),
+        onCell: (record: any, rowIndex: number) => {
+          const options = loadOptionsBaseOnCol(col, record, { maritalState, dynamicCustomValue });
+
+          return {
+            ...col,
+            options,
+            rowIndex,
+            tableName: this.tableName,
+            type: col.type || 'text',
+            record,
+            editable,
+            handleSave: this.handleSave,
+          };
+        },
       };
     });
 

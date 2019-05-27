@@ -2,9 +2,10 @@ import React, { PureComponent } from 'react';
 import classNames from 'classnames';
 import { DatePicker, Button } from 'antd';
 import { get, isFunction } from 'lodash';
-import moment, { Moment } from 'moment';
+import moment, {Moment, unitOfTime} from 'moment';
 import { EntryPickerTable, DateButtonCustom } from './styled';
 import { FormikHandlers } from 'formik';
+import { DatePickerMode } from 'antd/lib/date-picker/interface';
 
 const { MonthPicker, WeekPicker } = DatePicker;
 
@@ -15,7 +16,7 @@ interface Option {
 
 interface EntryPickerProps {
   name: string;
-  value?: string | number;
+  value?: any;
   options?: Option[];
   onBlur?: FormikHandlers['handleBlur'];
   handleChange?: (name?: string, value?: any) => void;
@@ -25,16 +26,24 @@ interface EntryPickerProps {
   pickerType?: PickerType;
   placeholder?: string;
   border?: string;
-  textType?: string;
-  fontStyle?: string;
   format?: string;
   defaultOpen?: boolean;
   allowClear?: boolean;
+  disabledYear?: boolean;
 }
 
-export declare type PickerType = 'month' | 'week' | 'date' | 'custom';
+export declare type PickerType = 'month' | 'week' | 'year' | 'date' | 'custom';
 
-class EntryPicker extends PureComponent<EntryPickerProps, {}> {
+interface EntryPickerState {
+  open: boolean;
+}
+
+function disabledRule(current: Moment, granularity: unitOfTime.StartOf = 'year') {
+  // Can not select (day, month, year) before today
+  return moment().isAfter(current, granularity);
+}
+
+class EntryPicker extends PureComponent<EntryPickerProps, EntryPickerState> {
   protected static defaultProps = {
     placeholder: '',
     format: 'DD/MM/YYYY',
@@ -56,6 +65,13 @@ class EntryPicker extends PureComponent<EntryPickerProps, {}> {
     this.setState({ open });
   }
 
+  public openDatePicker = () => {
+    const { open } = this.state;
+    if (!open) {
+      this.handleOpenChange(true);
+    }
+  }
+
   public handleChange = (date: Moment, dateString: string | number) => {
     const { setFieldValue, name, handleBlur } = this.props;
 
@@ -68,12 +84,56 @@ class EntryPicker extends PureComponent<EntryPickerProps, {}> {
     }
   }
 
+  public handleYearChange = (value: Moment | undefined, mode: DatePickerMode) => {
+    const { setFieldValue, name, handleBlur } = this.props;
+
+    if (value) {
+      if (setFieldValue) {
+        setFieldValue(name, { yearValue: value.year(), type: null });
+      }
+
+      if (isFunction(handleBlur)) {
+        handleBlur({ yearValue: value.year(), type: null });
+      }
+    }
+    // close panel
+    this.handleOpenChange(false);
+  }
+
+  public handleSelectDropdown = (value: string | number) => {
+    const { setFieldValue, name, handleBlur } = this.props;
+
+    if (setFieldValue) {
+      setFieldValue(name, { type: value, yearValue: null });
+    }
+
+    if (isFunction(handleBlur)) {
+      handleBlur({ type: value, yearValue: null });
+    }
+  }
+
+  public onPanelChange = (value: Moment | undefined, mode: DatePickerMode) => {
+    const { setFieldValue, name, handleBlur, disabledYear } = this.props;
+
+    if (value) {
+      if (disabledYear && disabledRule(value)) {
+        return;
+      }
+      if (setFieldValue) {
+        setFieldValue(name, value.year());
+      }
+
+      if (isFunction(handleBlur)) {
+        handleBlur(value.year());
+      }
+    }
+  }
+
   public render(): React.ReactNode {
     const { open } = this.state;
-    const { pickerType, border, fontStyle, value, textType, defaultOpen, format, options, ...props } = this.props;
-    const className = classNames(
-      'picker-' + pickerType + ' has-' + border + ' font-' + fontStyle + ' text-' + textType,
-    );
+    const { pickerType, border, value, defaultOpen, format, options, disabledYear, ...props } = this.props;
+    const className = classNames('picker-' + pickerType + ' has-' + border);
+
     const momentValue = moment(value, format);
 
     switch (pickerType) {
@@ -122,16 +182,49 @@ class EntryPicker extends PureComponent<EntryPickerProps, {}> {
           </EntryPickerTable>
         );
       }
-      case 'custom': {
+      case 'year': {
+        const yearFormat = 'YYYY';
+        const yearMoment = value ? moment(value, yearFormat) : moment();
+
         return (
           <EntryPickerTable className={className}>
             <DatePicker
               ref={this.myRef}
-              defaultValue={momentValue}
+              defaultValue={yearMoment}
               {...props}
+              mode={'year'}
+              onPanelChange={this.onPanelChange}
               onOpenChange={this.handleOpenChange}
               open={open}
-              format={format}
+              format={yearFormat}
+            />
+          </EntryPickerTable>
+        );
+      }
+      case 'custom': {
+        const { type = null, yearValue = null } = value || {};
+        const yearFormat = 'YYYY';
+        const yearMoment = yearValue ? moment(yearValue, yearFormat) : moment();
+        const datepickerProps = {
+          defaultValue: yearMoment,
+        };
+        if (yearValue === null) {
+          delete datepickerProps.defaultValue;
+        }
+
+        return (
+          <EntryPickerTable className={className}>
+            <DatePicker
+              ref={this.myRef}
+              {...props}
+              {...datepickerProps}
+              className={classNames({ 'input-hidden': true })}
+              dropdownClassName={classNames({ 'no-year-selected': yearValue === null })}
+              onOpenChange={this.handleOpenChange}
+              format={yearFormat}
+              open={open}
+              mode={'year'}
+              onPanelChange={this.handleYearChange}
               renderExtraFooter={() => (
                 <DateButtonCustom>
                   {options &&
@@ -139,8 +232,9 @@ class EntryPicker extends PureComponent<EntryPickerProps, {}> {
                       <Button
                         type="primary"
                         htmlType={'button'}
-                        onClick={() => this.handleChange(moment(), option.value)}
+                        onClick={() => this.handleSelectDropdown(option.value)}
                         key={index}
+                        className={classNames({ 'dropdown-selected': type === option.value })}
                       >
                         {option.label}
                       </Button>
@@ -149,6 +243,10 @@ class EntryPicker extends PureComponent<EntryPickerProps, {}> {
               )}
               showToday={false}
             />
+            <div className="dropdown-value readOnly" onClick={!open ? this.openDatePicker : undefined}>
+              { yearValue && <span>{yearValue}</span> }
+              { type && <span>{get((options || []).find((option: Option) => option.value === type), 'label')}</span> }
+            </div>
           </EntryPickerTable>
         );
       }

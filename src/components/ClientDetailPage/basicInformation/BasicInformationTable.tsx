@@ -5,6 +5,11 @@ import { ActionTableGeneral, HeaderTitleTable, TableEntryContainer, TextTitle } 
 import GeneralTable from '../GeneralTable';
 import { FormikProps } from 'formik';
 import { isFunction } from 'lodash';
+import { connect } from 'react-redux';
+import { StandardAction } from '../../../reducers/reducerTypes';
+import { bindActionCreators, Dispatch } from 'redux';
+import { ClientActions, UpdateMaritalStateAction } from '../../../reducers/client';
+import { empStatusOptions, genderOptions, maritalStateOptions } from '../../../enums/options';
 
 interface BasicInformationProps {
   data: object[];
@@ -17,6 +22,8 @@ interface BasicInformationProps {
   submitForm: () => void;
   addRow: (row: any) => void;
   deleteRow: (key: number) => void;
+
+  updateMaritalState?: (maritalState: string) => UpdateMaritalStateAction;
 }
 
 class BasicInformationTable extends PureComponent<BasicInformationProps> {
@@ -50,26 +57,25 @@ class BasicInformationTable extends PureComponent<BasicInformationProps> {
       dataIndex: 'empStatus',
       type: 'select',
       width: '15%',
-      options: [
-        { value: 'employed', label: 'Employed' },
-        { value: 'selfEmployed', label: 'Self Employed' },
-        { value: 'retired', label: 'Retired' },
-        { value: 'unemployed', label: 'Unemployed' },
-      ],
+      options: empStatusOptions,
     },
     {
       title: 'Gender',
       dataIndex: 'gender',
       type: 'select',
       width: '15%',
-      options: [{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }],
+      options: genderOptions,
     },
     {
       title: 'Marital State',
       dataIndex: 'maritalState',
       type: 'select',
       width: 'calc(15% - 20px)',
-      options: [{ value: 'married', label: 'Married' }, { value: 'single', label: 'Single' }],
+      options: maritalStateOptions,
+      confirmTitle: {
+        title: 'Do you want to change All Owners to Client?',
+        fieldValue: maritalStateOptions[1].value,
+      },
     },
   ];
 
@@ -130,6 +136,12 @@ class BasicInformationTable extends PureComponent<BasicInformationProps> {
      * side effect
      */
     if (rowIndex === 0 && dataIndex === 'maritalState') {
+      const { updateMaritalState } = this.props;
+      // update marital state in redux store
+      if (updateMaritalState) {
+        updateMaritalState(value);
+      }
+
       if (value === 'single') {
         this.handleDelete(1);
       }
@@ -192,4 +204,15 @@ class BasicInformationTable extends PureComponent<BasicInformationProps> {
   }
 }
 
-export default BasicInformationTable;
+const mapDispatchToProps = (dispatch: Dispatch<StandardAction<any>>) =>
+  bindActionCreators(
+    {
+      updateMaritalState: ClientActions.updateMaritalState,
+    },
+    dispatch,
+  );
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(BasicInformationTable);
