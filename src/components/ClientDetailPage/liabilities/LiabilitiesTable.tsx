@@ -59,6 +59,7 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
       key: '4',
       width: '13%',
       type: 'number',
+      precision: 1,
     },
     {
       title: 'From',
@@ -165,8 +166,8 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
 
   public addRowInnerTable = (index: number, tableName: string, row: any) => {
     const { setFieldValue, data } = this.props;
-    const tableData = get(data[index], tableName);
-    tableData.unshift(row);
+    const tableData = get(data[index], tableName, []);
+    tableData.push(row);
 
     const newData: any = data;
     newData[index][tableName] = tableData;

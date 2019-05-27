@@ -35,7 +35,7 @@ export const OWNER_WITH_JOINT = {
 };
 export const ownerWithJointOptions = mapOptionObjectToArray(OWNER_WITH_JOINT);
 
-export const EMP_STATUS = {
+export const EMP_STATUS: { [key: string]: string } = {
   employed: 'Employed',
   selfEmployed: 'Self Employed',
   retired: 'Retired',
@@ -123,7 +123,7 @@ export const ASSET_TYPES: { [key: string]: string } = {
 };
 export const assetTypes = mapOptionObjectToArray(ASSET_TYPES);
 
-export const INVESTMENT_TYPES = {
+export const INVESTMENT_TYPES: { [key: string]: string } = {
   primaryResidence: 'Primary Residence',
   australianEquity: 'Australian Equity',
   preservation: 'Preservation',

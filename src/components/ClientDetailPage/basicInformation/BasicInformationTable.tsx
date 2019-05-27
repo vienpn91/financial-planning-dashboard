@@ -8,7 +8,7 @@ import { isFunction } from 'lodash';
 import { connect } from 'react-redux';
 import { StandardAction } from '../../../reducers/reducerTypes';
 import { bindActionCreators, Dispatch } from 'redux';
-import { ClientActions, UpdateMaritalStateAction } from '../../../reducers/client';
+import { ClientActions, UpdateEmpStatus, UpdateMaritalStateAction } from '../../../reducers/client';
 import { empStatusOptions, genderOptions, maritalStateOptions } from '../../../enums/options';
 
 interface BasicInformationProps {
@@ -24,6 +24,7 @@ interface BasicInformationProps {
   deleteRow: (key: number) => void;
 
   updateMaritalState?: (maritalState: string) => UpdateMaritalStateAction;
+  updateEmpStatus?: (empStatus: string) => UpdateEmpStatus;
 }
 
 class BasicInformationTable extends PureComponent<BasicInformationProps> {
@@ -135,18 +136,26 @@ class BasicInformationTable extends PureComponent<BasicInformationProps> {
     /**
      * side effect
      */
-    if (rowIndex === 0 && dataIndex === 'maritalState') {
-      const { updateMaritalState } = this.props;
-      // update marital state in redux store
-      if (updateMaritalState) {
-        updateMaritalState(value);
-      }
+    if (rowIndex === 0) {
+      if (dataIndex === 'maritalState') {
+        const { updateMaritalState } = this.props;
+        // update marital state in redux store
+        if (updateMaritalState) {
+          updateMaritalState(value);
+        }
 
-      if (value === 'single') {
-        this.handleDelete(1);
+        if (value === 'single') {
+          this.handleDelete(1);
+        }
+        if (value === 'married') {
+          this.handleAdd();
+        }
       }
-      if (value === 'married') {
-        this.handleAdd();
+      if (dataIndex === 'empStatus') {
+        const { updateEmpStatus } = this.props;
+        if (updateEmpStatus) {
+          updateEmpStatus(value);
+        }
       }
     }
   }
@@ -163,15 +172,19 @@ class BasicInformationTable extends PureComponent<BasicInformationProps> {
     const columns = this.columns.map((col) => {
       return {
         ...col,
-        onCell: (record: any, rowIndex: number) => ({
-          ...col,
-          rowIndex,
-          tableName: this.tableName,
-          type: col.type || 'text',
-          record,
-          editable: 'true',
-          handleSave: this.handleSave,
-        }),
+        onCell: (record: any, rowIndex: number) => {
+          const editable = rowIndex === 1 && col.dataIndex === 'maritalState' ? false : 'true';
+
+          return {
+            ...col,
+            rowIndex,
+            tableName: this.tableName,
+            type: col.type || 'text',
+            record,
+            editable,
+            handleSave: this.handleSave,
+          };
+        },
       };
     });
 
@@ -208,6 +221,7 @@ const mapDispatchToProps = (dispatch: Dispatch<StandardAction<any>>) =>
   bindActionCreators(
     {
       updateMaritalState: ClientActions.updateMaritalState,
+      updateEmpStatus: ClientActions.updateEmpStatus,
     },
     dispatch,
   );
