@@ -9,9 +9,11 @@ export const EditableCellWrap = styled.section.attrs({
   align-items: center;
   width: 100%;
   height: 35px;
-  .ant-calendar-picker {
-    .ant-calendar-picker-input {
-      font-weight: 700;
+  .picker-year{
+    .ant-calendar-picker {
+      .ant-calendar-picker-input {
+        font-weight: 700;
+      }
     }
     &:hover {
       .ant-calendar-picker-input {
