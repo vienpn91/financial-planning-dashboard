@@ -94,7 +94,7 @@ export const PrefixSingleGroup = styled.section<PrefixProps>`
     left: 5px;
   }
   input {
-    margin: 0px;
+    margin: -2px 0px 0px 0px;
     font-weight: 700;
     ${(props) => {
       let value = '0 5px';
@@ -120,6 +120,9 @@ export const ExpandedInsuranceGroups = styled.div.attrs({
   flex-wrap: wrap;
   display: flex;
   padding-left: 24px;
+  .ant-select-selection-selected-value{
+    margin-top: -1px;
+  }
 `;
 
 export const ExpandedAssetsInlineGroups = styled.div.attrs({
