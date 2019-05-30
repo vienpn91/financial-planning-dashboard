@@ -67,7 +67,6 @@ class Input extends React.PureComponent<InputProps> {
     let valueLength = 1;
     if (calculateWidth) {
       valueLength = value && value.toString().length ? value.toString().length + 1 : 1;
-      console.log(valueLength);
       const numberSize = valueLength > 3 ? 14 : 15;
       const width = valueLength * numberSize;
       optionalProps.style = { width: `${width > 36 ? width : 36}px` };
