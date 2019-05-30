@@ -2,10 +2,10 @@ function mapOptionObjectToArray(object: { [key: string]: any }) {
   return Object.entries(object).map(([key, value]) => ({ value: key, label: value }));
 }
 
-function createRateOptions(step: number = 0.5, max: number = 10): object {
+function createRateOptions(step: number = 0.5, max: number = 10): { [key: string]: any } {
   const options: { [key: string]: any } = {};
-  for (let i = 0; i <= max; i = i + step) {
-    options[`${i.toString()}`] = `${i}%`;
+  for (let i = 0; i <= max; i += step) {
+    options[i.toString()] = `${i}%`;
   }
   return options;
 }
@@ -53,12 +53,12 @@ export const RISK_PROFILE = {
 };
 export const riskProfileOptions = mapOptionObjectToArray(RISK_PROFILE);
 
-export const hasPrivateHealthInsuranceOptions = [
-  { value: true, label: 'has' },
-  { value: false, label: 'does not have' },
-];
+export const hasPrivateHealthInsuranceOptions = [{ value: true, label: 'have' }, { value: false, label: 'do not' }];
 
-export const lookingForCoupleAdviceOptions = [{ value: true, label: 'couple' }, { value: false, label: 'individual' }];
+export const lookingForCoupleAdviceOptions = [
+  { value: true, label: 'a couple' },
+  { value: false, label: 'an individual' },
+];
 
 export const isOrNotOptions = [{ value: true, label: 'is' }, { value: false, label: 'is not' }];
 

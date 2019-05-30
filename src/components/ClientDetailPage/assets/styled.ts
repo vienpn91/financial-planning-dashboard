@@ -96,14 +96,15 @@ export const PrefixSingleGroup = styled.section<PrefixProps>`
   input {
     margin: -2px 0px 0px 0px;
     font-weight: 700;
+    padding: 0;
     ${(props) => {
       let value = '0 5px';
       if (props.dollar || props.percent) {
-        value = props.dollar ? '0px 0px 0px 14px' : '0px 14px 0px 0px';
+        value = props.dollar ? '0px 0px 0px 14px' : '0px 14px 0px 5px';
       }
       return 'padding: ' + value;
     }};
-    min-width: 40px;
+    min-width: 12px;
     text-align: left;
   }
 `;

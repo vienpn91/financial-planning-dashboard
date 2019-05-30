@@ -34,6 +34,7 @@ class BasicInformationTable extends PureComponent<BasicInformationProps> {
       dataIndex: 'description',
       width: 'calc(15% - 20px)',
       type: 'text',
+      editable: false,
     },
     {
       title: 'First Name',
@@ -74,7 +75,10 @@ class BasicInformationTable extends PureComponent<BasicInformationProps> {
       width: 'calc(15% - 20px)',
       options: maritalStateOptions,
       confirmTitle: {
-        title: 'Do you want to change All Owners to Client?',
+        title: 'Remove partner?',
+        content: 'This action will change all ownerships to the Client.',
+        okText: 'Yes',
+        cancelText: 'No',
         fieldValue: maritalStateOptions[1].value,
       },
     },
@@ -173,7 +177,8 @@ class BasicInformationTable extends PureComponent<BasicInformationProps> {
       return {
         ...col,
         onCell: (record: any, rowIndex: number) => {
-          const editable = rowIndex === 1 && col.dataIndex === 'maritalState' ? false : 'true';
+          const editable =
+            col.editable === false ? false : rowIndex === 1 && col.dataIndex === 'maritalState' ? false : 'true';
 
           return {
             ...col,

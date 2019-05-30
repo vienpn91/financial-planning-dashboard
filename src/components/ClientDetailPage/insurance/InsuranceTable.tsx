@@ -128,7 +128,7 @@ class InsuranceTable extends PureComponent<InsuranceTableProps> {
   public addRowInnerTable = (index: number, tableName: string, row: any) => {
     const { setFieldValue, data } = this.props;
     const tableData = get(data[index], tableName, []);
-    tableData.push(row);
+    tableData.unshift(row);
 
     const newData: any = data;
     newData[index][tableName] = tableData;
@@ -158,7 +158,7 @@ class InsuranceTable extends PureComponent<InsuranceTableProps> {
           key: 'operation',
           width: '10%',
           render: (text: any, record: any) => (
-            <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
+            <Popconfirm title="Really delete?" onConfirm={() => this.handleDelete(record.key)}>
               <a href="javascript:">Delete</a>
             </Popconfirm>
           ),
