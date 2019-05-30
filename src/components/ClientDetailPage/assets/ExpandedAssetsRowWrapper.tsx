@@ -294,7 +294,7 @@ const ExpandedAssetsRow = (props: {
               />
               <TypePercentPrefix>%</TypePercentPrefix>
             </PrefixSingleGroup>
-            <ExpandedAssetsText>and adviser fees of</ExpandedAssetsText>
+            <ExpandedAssetsText> and adviser fees of</ExpandedAssetsText>
             <PrefixGroup dollar={expandable.adviserFeeType === 'dollar'}>
               <PrefixChooseGroup>
                 <EditableCell
@@ -486,7 +486,7 @@ const ExpandedAssetsRow = (props: {
               />
               <TypePercentPrefix>%</TypePercentPrefix>
             </PrefixSingleGroup>
-            <ExpandedAssetsText>and adviser fees of</ExpandedAssetsText>
+            <ExpandedAssetsText> and adviser fees of</ExpandedAssetsText>
 
             {/* TODO: Prefix OR suffix and Free Text component */}
             <PrefixGroup dollar={expandable.adviserFeeType === 'dollar'}>

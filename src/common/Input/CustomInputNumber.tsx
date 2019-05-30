@@ -76,19 +76,19 @@ class CustomInputNumber extends React.PureComponent<CustomInputNumberProps> {
       let numberSize = 14;
       let minimum = 24;
       if (emptyIcon) {
-        numberSize = valueLength < 3 ? 17 : 16;
-        minimum = 24;
+        numberSize = valueLength < 3 ? 14 : 13;
+        minimum = 20;
       } else {
         if (precision) {
           valueLength += precision;
-          numberSize = valueLength < 5 ? 16 : 13;
+          numberSize = valueLength < 5 ? 15 : 13;
           extraWidth += 13 + (valueLength > 7 || valueLength === 4 ? -7 : 0);
           extraWidth += valueLength === 5 ? 4 : 0;
           minimum = 50;
         } else {
           numberSize = valueLength < 5 ? 18 : 16;
           extraWidth = valueLength < 3 ? 8 : 0;
-          minimum = 34;
+          minimum = 28;
         }
       }
       const width = valueLength * numberSize + extraWidth;

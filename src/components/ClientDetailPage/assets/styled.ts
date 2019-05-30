@@ -19,12 +19,14 @@ export const PrefixGroup = styled.section<PrefixProps>`
   .type-dollar-prefix {
     display: ${(props) => (props.dollar ? 'inline' : 'none')};
     position: absolute;
-    left: 5px;
+    left: 4px;
+    top: 6px;
   }
   .type-percent-prefix {
     display: ${(props) => (props.dollar ? 'none' : 'inline')};
     position: absolute;
-    right: 5px;
+    right: 4px;
+    top: 6px;
   }
   input {
     border: none;
@@ -69,11 +71,14 @@ export const PrefixViewGroup = styled.div.attrs({
   position: relative;
   display: flex;
   align-items: center;
+  input {
+    margin: -6px 0px 0px 0px;
+  }
 `;
 export const PrefixChooseGroup = styled.div.attrs({
   className: 'prefix-choose-group',
 })`
-  margin: 0 5px !important;
+  margin: 0px 0px !important;
   .ant-select {
     margin-left: 0px !important;
   }
@@ -82,23 +87,25 @@ export const PrefixSingleGroup = styled.section<PrefixProps>`
   position: relative;
   display: flex;
   align-items: center;
-  margin: 0 3px;
+  margin: 0px 0px;
   .type-percent-prefix {
     position: absolute;
     font-weight: 700;
-    right: 2px;
+    right: 4px;
+    top: 6px;
   }
   .type-dollar-prefix {
     position: absolute;
     font-weight: 700;
     left: 4px;
+    top: 6px;
   }
   input {
-    margin: -2px 0px 0px 0px;
+    margin: -6px 0px 0px 0px;
     font-weight: 700;
     padding: 0;
     ${(props) => {
-      let value = '0 5px';
+      let value = '0 2px';
       if (props.dollar || props.percent) {
         value = props.dollar ? '0px 0px 0px 14px' : '0px 14px 0px 5px';
       }
@@ -121,7 +128,7 @@ export const ExpandedInsuranceGroups = styled.div.attrs({
   flex-wrap: wrap;
   display: flex;
   padding-left: 24px;
-  .ant-select-selection-selected-value{
+  .ant-select-selection-selected-value {
     margin-top: -1px;
   }
 `;
@@ -152,20 +159,20 @@ export const ExpandedSelectGroup = styled.div.attrs({
   min-width: 14px;
   display: flex;
   font-weight: 700;
-  margin: 0 3px;
+  margin: 0 2px;
   flex-direction: column;
   .ant-calendar-picker-input {
     margin-left: 0px;
     padding-left: 0px;
     &:focus,
-    &:hover{
+    &:hover {
       padding-left: 10px;
     }
   }
   .ant-select-arrow {
     right: 6px;
   }
-  .ant-select{
+  .ant-select {
     margin-left: 0px !important;
   }
   .ant-select-selection__rendered {
@@ -174,8 +181,8 @@ export const ExpandedSelectGroup = styled.div.attrs({
   .ant-select-selection-selected-value {
     padding-right: 0px !important;
   }
-  .ant-select-focused{
-    .ant-select-selection{
+  .ant-select-focused {
+    .ant-select-selection {
       padding-right: 15px !important;
     }
     .ant-select-selection__rendered {
@@ -186,7 +193,7 @@ export const ExpandedSelectGroup = styled.div.attrs({
     .ant-select-selection__rendered {
       margin: 0 5px !important;
     }
-    .ant-select-selection{
+    .ant-select-selection {
       padding-right: 15px !important;
     }
   }
