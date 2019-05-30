@@ -9,7 +9,12 @@ export const EditableCellWrap = styled.section.attrs({
   align-items: center;
   width: 100%;
   height: 35px;
-  .ant-calendar-picker {
+  .picker-year{
+    .ant-calendar-picker {
+      .ant-calendar-picker-input {
+        font-weight: 700;
+      }
+    }
     &:hover {
       .ant-calendar-picker-input {
         &:not(.ant-input-disabled) {
@@ -28,6 +33,8 @@ export const EditableCellWrap = styled.section.attrs({
   }
   .ant-select-selection-selected-value {
     color: #5f698d;
+    /* Using margin because when hover border 1px and no hover border tranparent hidden */
+    margin-top: -2px
   }
   .ant-input-number-handler-wrap {
     opacity: 0 !important;

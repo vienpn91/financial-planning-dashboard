@@ -203,6 +203,9 @@ export const InnerTableContainer = styled.section`
       }
     }
   }
+  .ant-input-number.ant-input-number-sm.smallInput{
+    border: none;
+  }
   .ant-table-small {
     border: none;
     table {

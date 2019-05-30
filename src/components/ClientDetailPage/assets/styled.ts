@@ -86,20 +86,20 @@ export const PrefixSingleGroup = styled.section<PrefixProps>`
   .type-percent-prefix {
     position: absolute;
     font-weight: 700;
-    right: 5px;
+    right: 2px;
   }
   .type-dollar-prefix {
     position: absolute;
     font-weight: 700;
-    left: 5px;
+    left: 4px;
   }
   input {
-    margin: 0px;
+    margin: -2px 0px 0px 0px;
     font-weight: 700;
     ${(props) => {
       let value = '0 5px';
       if (props.dollar || props.percent) {
-        value = props.dollar ? '0px 5px 0px 15px' : '0px 15px 0px 5px';
+        value = props.dollar ? '0px 0px 0px 14px' : '0px 14px 0px 0px';
       }
       return 'padding: ' + value;
     }};
@@ -120,6 +120,9 @@ export const ExpandedInsuranceGroups = styled.div.attrs({
   flex-wrap: wrap;
   display: flex;
   padding-left: 24px;
+  .ant-select-selection-selected-value{
+    margin-top: -1px;
+  }
 `;
 
 export const ExpandedAssetsInlineGroups = styled.div.attrs({
@@ -145,7 +148,7 @@ export const ExpandedSelectGroup = styled.div.attrs({
   className: 'expanded-select-group',
 })`
   width: auto;
-  // min-width: 30px;
+  min-width: 14px;
   display: flex;
   font-weight: 700;
   margin: 0 3px;
