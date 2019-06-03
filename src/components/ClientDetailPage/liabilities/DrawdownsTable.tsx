@@ -33,6 +33,7 @@ class DrawdownsTable extends Component<DrawdownsTableProps> {
       dataIndex: 'value',
       width: 140,
       type: 'number',
+      sign: 'dollar',
     },
     {
       title: 'From',

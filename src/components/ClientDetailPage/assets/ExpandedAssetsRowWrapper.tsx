@@ -81,6 +81,7 @@ const defaultContributionWithdrawalColumns = [
     key: '1',
     width: 120,
     type: 'number',
+    sign: 'dollar',
   },
   {
     title: 'From',
@@ -312,7 +313,7 @@ const ExpandedAssetsRow = (props: {
                 percent={expandable.adviserFeeType !== 'dollar'}
                 dollar={expandable.adviserFeeType === 'dollar'}
               >
-                {expandable.adviserFeeType === 'dollar' && <TypeDollarPrefix>$</TypeDollarPrefix>}
+                <TypeDollarPrefix>$</TypeDollarPrefix>
                 <EditableCell
                   record={record}
                   dataIndex={'expandable.adviserFeeValue'}
@@ -321,8 +322,9 @@ const ExpandedAssetsRow = (props: {
                   rowIndex={index}
                   editable={true}
                   expandedField={true}
+                  precision={expandable.adviserFeeType === 'dollar' ? 0 : 1}
                 />
-                {expandable.adviserFeeType !== 'dollar' && <TypePercentPrefix>%</TypePercentPrefix>}
+                <TypePercentPrefix>%</TypePercentPrefix>
               </PrefixSingleGroup>
             </PrefixGroup>
           </ExpandedAssetsInlineGroups>
@@ -512,6 +514,7 @@ const ExpandedAssetsRow = (props: {
                   rowIndex={index}
                   editable={true}
                   expandedField={true}
+                  precision={expandable.adviserFeeType === 'dollar' ? 0 : 1}
                 />
                 <TypePercentPrefix>%</TypePercentPrefix>
               </PrefixViewGroup>
@@ -720,6 +723,7 @@ const ExpandedAssetsRow = (props: {
                   rowIndex={index}
                   editable={true}
                   expandedField={true}
+                  precision={expandable.adviserFeeType === 'dollar' ? 0 : 1}
                 />
                 <TypePercentPrefix>%</TypePercentPrefix>
               </PrefixViewGroup>
@@ -797,7 +801,6 @@ const ExpandedAssetsRow = (props: {
                 rowIndex={index}
                 editable={true}
                 expandedField={true}
-                precision={0}
               />
             </PrefixSingleGroup>
             <ExpandedAssetsText>per month</ExpandedAssetsText>

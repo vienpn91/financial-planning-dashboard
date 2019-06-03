@@ -9,6 +9,7 @@ interface CustomInputNumberProps {
   value: any;
   setFieldValue?: (field: string, value: any) => void;
   placeholder?: string;
+  sign?: string;
   autoFocus?: boolean;
   precision?: number;
   customMin?: number;
@@ -66,12 +67,11 @@ class CustomInputNumber extends React.PureComponent<CustomInputNumberProps> {
   }
 
   public getOptionalProps = () => {
-    const { value, calculateWidth, precision: precisionProp, emptyIcon } = this.props;
+    const { value, calculateWidth, precision, emptyIcon, sign } = this.props;
     const optionalProps: { [key: string]: any } = {};
     if (calculateWidth) {
       const intValue = Number.isNaN(Number.parseInt(value, 10)) ? 0 : Number.parseInt(value, 10);
       let valueLength = intValue.toString().length;
-      const precision = isNumber(precisionProp) && precisionProp >= 0 ? precisionProp : 2;
       let extraWidth = 0;
       let numberSize = 14;
       let minimum = 24;
@@ -86,9 +86,9 @@ class CustomInputNumber extends React.PureComponent<CustomInputNumberProps> {
           extraWidth += valueLength === 5 ? 4 : 0;
           minimum = 50;
         } else {
-          numberSize = valueLength < 5 ? 18 : 16;
-          extraWidth = valueLength < 3 ? 8 : 0;
-          minimum = 28;
+          numberSize = valueLength < 5 ? 18 : 14;
+          extraWidth = valueLength < 3 ? 8 : 1;
+          minimum = 30;
         }
       }
       const width = valueLength * numberSize + extraWidth;
@@ -98,13 +98,31 @@ class CustomInputNumber extends React.PureComponent<CustomInputNumberProps> {
       };
     }
 
+    switch (sign) {
+      case 'dollar': {
+        optionalProps.formatter = (valueNumber: number) => `$${valueNumber}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        optionalProps.parser = (displayValue: string) => displayValue.replace(/\$\s?|(,*)/g, '');
+        break;
+      }
+      case 'percent': {
+        optionalProps.formatter = (valueNumber: number) => `${valueNumber}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '%';
+        optionalProps.parser = (displayValue: string) => displayValue.replace(/%\s?|(,*)/g, '');
+        break;
+      }
+      default: {
+        optionalProps.formatter = (valueNumber: number) => `${valueNumber}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        optionalProps.parser = (displayValue: string) => displayValue.replace(/\$\s?|(,*)/g, '');
+        break;
+      }
+    }
+
     return optionalProps;
   }
 
   public render(): JSX.Element {
     const { placeholder, setFieldValue, calculateWidth, precision: precisionProp, customMin, ...props } = this.props;
+    const precision = isNumber(precisionProp) && precisionProp >= 0 ? precisionProp : 0;
     const optionalProps: { [key: string]: any } = this.getOptionalProps();
-    const precision = isNumber(precisionProp) && precisionProp >= 0 ? precisionProp : 2;
 
     return (
       <InputWrapper>
@@ -113,9 +131,6 @@ class CustomInputNumber extends React.PureComponent<CustomInputNumberProps> {
           onChange={this.handleChange}
           onBlur={this.handleBlur}
           ref={this.myRef}
-          formatter={(valueNumber) => `${valueNumber}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-          // @ts-ignore
-          parser={(displayValue) => displayValue.replace(/\$\s?|(,*)/g, '')}
           precision={precision}
           {...optionalProps}
         />

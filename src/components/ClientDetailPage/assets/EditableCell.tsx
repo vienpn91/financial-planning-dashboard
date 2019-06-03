@@ -19,8 +19,7 @@ interface EditableProps {
   tableName?: string;
   rowIndex?: number;
   pickerType?: PickerType;
-  prefix?: string | React.ReactNode;
-  suffix?: string | React.ReactNode;
+  sign?: string;
   expandedField?: boolean;
   options?: Array<{ value: any; label: any }>;
   confirmTitle?: { title: string; fieldValue: any };
@@ -91,6 +90,7 @@ export default class EditableCell extends React.PureComponent<EditableProps> {
       emptyIcon,
       min,
       customMin,
+      sign,
     } = props;
     const appendProps = [];
 
@@ -111,6 +111,7 @@ export default class EditableCell extends React.PureComponent<EditableProps> {
           emptyIcon,
           calculateWidth: calculateWidth || expandedField,
           smallInput,
+          sign,
         });
         break;
       }
@@ -133,8 +134,7 @@ export default class EditableCell extends React.PureComponent<EditableProps> {
       options,
       pickerType,
       expandedField,
-      prefix,
-      suffix,
+      sign,
       confirmTitle,
       disableRowIndex,
       render,

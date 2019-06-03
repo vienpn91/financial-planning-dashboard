@@ -29,6 +29,7 @@ interface InputProps {
   max?: number;
   precision?: number;
   calculateWidth?: boolean;
+  sign?: string;
   // Select
   options?: Array<{ value: any; label: string }>;
   showSearch?: boolean;

@@ -226,7 +226,6 @@ const ExpandedCoverDetailRow = (props: {
                 type={'number'}
                 editable={true}
                 expandedField={true}
-                precision={0}
                 emptyIcon={true}
               />
             </PrefixSingleGroup>
@@ -266,7 +265,6 @@ const ExpandedCoverDetailRow = (props: {
                   type={'number'}
                   editable={true}
                   expandedField={true}
-                  precision={0}
                   emptyIcon={true}
                 />
               </PrefixSingleGroup>

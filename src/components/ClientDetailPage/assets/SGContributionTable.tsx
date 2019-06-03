@@ -19,6 +19,7 @@ class SGContributionTable extends PureComponent<SGContributionTableProps, {}> {
       dataIndex: 'superSalary',
       width: 140,
       type: 'number',
+      sign: 'dollar',
     },
     {
       title: 'Increase to limit?',

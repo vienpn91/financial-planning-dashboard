@@ -161,7 +161,6 @@ const ExpandedLiabilitiesRow = (props: {
             rowIndex={index}
             editable={true}
             expandedField={true}
-            precision={0}
             min={1}
             emptyIcon={true}
           />

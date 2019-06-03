@@ -46,7 +46,7 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
       key: '2',
       type: 'select',
       options: ownerOptions,
-      width: 'calc(9% - 20px)',
+      width: 'calc(8% - 20px)',
     },
     {
       title: 'Value',
@@ -54,12 +54,13 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
       key: '3',
       type: 'number',
       width: 'calc(16% - 20px)',
+      sign: 'dollar',
     },
     {
       title: 'Investment',
       dataIndex: 'investment',
       key: '4',
-      width: '15%',
+      width: '16%',
       type: 'select',
       options: investmentTypeOptions,
     },

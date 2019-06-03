@@ -35,6 +35,7 @@ class PensionIncomeTable extends Component<ContributionWithdrawalsTableProps, {}
       key: '1',
       width: 120,
       type: 'number',
+      sign: 'dollar',
     },
     {
       title: 'From',

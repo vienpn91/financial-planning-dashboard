@@ -45,6 +45,7 @@ class PremiumFeeDetailsTable extends Component<PremiumFeeDetailsProp> {
       key: '1',
       width: 120,
       type: 'number',
+      sign: 'dollar',
     },
     {
       title: 'Frequency',

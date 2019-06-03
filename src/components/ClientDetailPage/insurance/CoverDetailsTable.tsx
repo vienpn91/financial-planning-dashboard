@@ -62,6 +62,7 @@ class CoverDetailsTable extends Component<CoverDetailsProps> {
       key: '2',
       width: 120,
       type: 'number',
+      sign: 'dollar',
     },
     {
       title: 'Premium Type',
