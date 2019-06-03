@@ -28,13 +28,13 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
       dataIndex: 'description',
       type: 'text',
       key: '0',
-      width: 'calc(13% - 20px)',
+      width: 'calc(19% - 20px)',
     },
     {
       title: 'Type',
       dataIndex: 'type',
       key: '1',
-      width: 'calc(12% - 20px)',
+      width: 'calc(17% - 20px)',
       type: 'select',
       options: liabilitiesTypes,
     },
@@ -42,7 +42,7 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
       title: 'Owner',
       dataIndex: 'owner',
       key: '2',
-      width: '13%',
+      width: '11%',
       type: 'select',
       options: ownerOptions,
     },
@@ -66,7 +66,7 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
       dataIndex: 'from',
       key: '5',
       type: 'date',
-      width: '13%',
+      width: '10%',
       pickerType: 'custom',
       options: from2Options,
       className: 'table-expand-datepicker',
@@ -75,7 +75,7 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
       title: 'To',
       dataIndex: 'to',
       key: '6',
-      width: '13%',
+      width: '10%',
       type: 'date',
       pickerType: 'custom',
       className: 'table-expand-datepicker',
@@ -85,7 +85,7 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
       title: 'Action',
       key: 'operation',
       editable: false,
-      width: '10%',
+      width: '7%',
     },
   ];
 
@@ -195,7 +195,7 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
           ...col,
           title: 'Action',
           key: 'operation',
-          width: '10%',
+          width: '7%',
           render: (text: any, record: any) => (
             <Popconfirm title="Really delete?" onConfirm={() => this.handleDelete(record.key)}>
               <a href="javascript:">Delete</a>

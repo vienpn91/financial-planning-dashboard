@@ -30,13 +30,13 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
     {
       title: 'Description',
       dataIndex: 'description',
-      width: '13%',
+      width: '16%',
     },
     {
       title: 'Type',
       dataIndex: 'type',
       key: '1',
-      width: '12%',
+      width: '17%',
       type: 'select',
       options: assetTypes,
     },
@@ -46,20 +46,20 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
       key: '2',
       type: 'select',
       options: ownerOptions,
-      width: 'calc(13% - 20px)',
+      width: 'calc(9% - 20px)',
     },
     {
       title: 'Value',
       dataIndex: 'value',
       key: '3',
       type: 'number',
-      width: 'calc(13% - 20px)',
+      width: 'calc(16% - 20px)',
     },
     {
       title: 'Investment',
       dataIndex: 'investment',
       key: '4',
-      width: '13%',
+      width: '15%',
       type: 'select',
       options: investmentTypeOptions,
     },
@@ -68,7 +68,7 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
       dataIndex: 'from',
       key: '5',
       type: 'date',
-      width: '13%',
+      width: '10%',
       pickerType: 'custom',
       options: from2Options,
     },
@@ -76,7 +76,7 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
       title: 'To',
       dataIndex: 'to',
       key: '6',
-      width: '13%',
+      width: '10%',
       type: 'date',
       pickerType: 'custom',
       options: to2Options,
@@ -85,7 +85,7 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
       title: 'Action',
       key: 'operation',
       editable: false,
-      width: '10%',
+      width: '7%',
     },
   ];
 
@@ -194,7 +194,7 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
           ...col,
           title: 'Action',
           key: 'operation',
-          width: '10%',
+          width: '7%',
           render: (text: any, record: any) => (
             <Popconfirm title="Really delete?" onConfirm={() => this.handleDelete(record.key)}>
               <a href="javascript:">Delete</a>

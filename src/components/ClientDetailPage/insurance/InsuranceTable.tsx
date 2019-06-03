@@ -42,7 +42,7 @@ class InsuranceTable extends PureComponent<InsuranceTableProps> {
     {
       title: 'Action',
       key: 'operation',
-      width: 100,
+      width: '7%',
       editable: false,
     },
   ];
@@ -156,7 +156,7 @@ class InsuranceTable extends PureComponent<InsuranceTableProps> {
           ...col,
           title: 'Action',
           key: 'operation',
-          width: '10%',
+          width: '7%',
           render: (text: any, record: any) => (
             <Popconfirm title="Really delete?" onConfirm={() => this.handleDelete(record.key)}>
               <a href="javascript:">Delete</a>
