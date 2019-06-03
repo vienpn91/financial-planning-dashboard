@@ -33,7 +33,7 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
     {
       title: 'Description',
       dataIndex: 'description',
-      width: 'calc(13% - 20px)',
+      width: 'calc(23% - 20px)',
     },
     {
       title: 'Type',
@@ -47,7 +47,7 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
       title: 'Owner',
       dataIndex: 'owner',
       key: '2',
-      width: '13%',
+      width: '11%',
       type: 'select',
       options: ownerWithJointOptions,
     },
@@ -62,7 +62,7 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
       title: 'Indexation',
       dataIndex: 'indexation',
       key: '4',
-      width: '13%',
+      width: '14%',
       type: 'select',
       options: indexationOptions,
     },
@@ -71,7 +71,7 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
       dataIndex: 'from',
       key: '5',
       type: 'date',
-      width: '13%',
+      width: '10%',
       pickerType: 'custom',
       options: from1Options,
     },
@@ -79,7 +79,7 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
       title: 'To',
       dataIndex: 'to',
       key: '6',
-      width: '13%',
+      width: '10%',
       type: 'date',
       pickerType: 'custom',
       options: to1Options,
@@ -88,7 +88,7 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
       title: 'Action',
       key: 'operation',
       editable: false,
-      width: '10%',
+      width: '7%',
     },
   ];
 
@@ -166,7 +166,7 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
           ...col,
           title: 'Action',
           key: 'operation',
-          width: '10%',
+          width: '7%',
           render: (text: any, record: any) => (
             <Popconfirm title="Really delete?" onConfirm={() => this.handleDelete(record.key)}>
               <a href="javascript:">Delete</a>
