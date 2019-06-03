@@ -34,7 +34,8 @@ export const EditableCellWrap = styled.section.attrs({
   .ant-select-selection-selected-value {
     color: #5f698d;
     /* Using margin because when hover border 1px and no hover border tranparent hidden */
-    margin-top: -2px
+    margin-top: -2px;
+    padding-right: 8px;
   }
   .ant-input-number-handler-wrap {
     opacity: 0 !important;

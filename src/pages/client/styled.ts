@@ -74,12 +74,12 @@ export const TableEntryContainer = styled.section.attrs({
     min-width: 40px;
   }
   .ant-table-tbody > tr > td{
-    padding: 10px;
+    padding: 10px 5px;
   }
   .ant-table-thead > tr > th{
     background-color: #eaedef;
     color: #505c84;
-    padding: 16px 10px;
+    padding: 16px 5px;
     font-weight: 600;
   }
 `;
