@@ -18,7 +18,7 @@ import {
   ClientActions,
   Table,
   DataEntry,
-  UpdateMaritalStateAction,
+  UpdateMaritalStatusAction,
   UpdateAssetsAction,
   UpdateEmpStatus,
 } from '../../reducers/client';
@@ -29,14 +29,14 @@ interface DataEntryProps {
   clientId: string;
   tagName: string;
   tabName: string;
-  maritalState: string;
+  maritalStatus: string;
   empStatus: string;
   assets?: Array<{ refId: number; description: string; type: string }>;
 
   tables?: Table;
   loading?: boolean;
   fetchDataEntry?: (payload: FetchDataEntryPayload) => FetchDataEntryAction;
-  updateMaritalState?: (maritalState: string) => UpdateMaritalStateAction;
+  updateMaritalStatus?: (maritalStatus: string) => UpdateMaritalStatusAction;
   updateEmpStatus?: (empStatus: string) => UpdateEmpStatus;
   updateAssets?: (assets: Array<{ refId: number; description: string; type: string }>) => UpdateAssetsAction;
 }
@@ -65,7 +65,7 @@ export const addKeyToArray = (array: object[], defaultValue?: any) => {
 
 class DataEntryComponent extends PureComponent<DataEntryProps> {
   public static defaultProps = {
-    maritalState: '',
+    maritalStatus: '',
   };
   public readonly state: DataEntryState = {
     formData: {},
@@ -98,17 +98,17 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
   }
 
   public componentDidUpdate(prevProps: Readonly<DataEntryProps>, prevState: Readonly<{}>, snapshot?: any): void {
-    const { clientId, tagName, tabName, loading, updateMaritalState, updateEmpStatus, tables } = this.props;
+    const { clientId, tagName, tabName, loading, updateMaritalStatus, updateEmpStatus, tables } = this.props;
 
     if (prevProps.clientId !== clientId || prevProps.tagName !== tagName || prevProps.tabName !== tabName) {
       this.fetchDataEntry({ clientId, tagName, tabName });
     }
 
-    if (loading !== prevProps.loading && updateMaritalState && updateEmpStatus) {
-      const maritalState = get(tables, 'basicInformation[0].maritalState');
+    if (loading !== prevProps.loading && updateMaritalStatus && updateEmpStatus) {
+      const maritalStatus = get(tables, 'basicInformation[0].maritalStatus');
       const empStatus = get(tables, 'basicInformation[0].empStatus');
 
-      updateMaritalState(maritalState);
+      updateMaritalStatus(maritalStatus);
       updateEmpStatus(empStatus);
       this.updateAssets();
     }
@@ -133,11 +133,11 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
   }
 
   public componentWillUnmount(): void {
-    const { updateMaritalState, updateEmpStatus, updateAssets } = this.props;
+    const { updateMaritalStatus, updateEmpStatus, updateAssets } = this.props;
 
     // update marital state, emp status, assets in redux store
-    if (updateMaritalState && updateEmpStatus && updateAssets) {
-      updateMaritalState('');
+    if (updateMaritalStatus && updateEmpStatus && updateAssets) {
+      updateMaritalStatus('');
       updateEmpStatus('');
       updateAssets([]);
     }
@@ -192,7 +192,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
   }
 
   public render() {
-    const { tables, loading, maritalState, assets, empStatus } = this.props;
+    const { tables, loading, maritalStatus, assets, empStatus } = this.props;
     const dynamicCustomValue = pick(tables, ['inflationCPI', 'salaryInflation', 'sgcRate', 'benefitDefaultAge']);
 
     return (
@@ -264,7 +264,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
                   addRow={addRow}
                   deleteRow={deleteRow}
                   ref={this.incomeForm}
-                  maritalState={maritalState}
+                  maritalStatus={maritalStatus}
                   dynamicCustomValue={dynamicCustomValue}
                 />
               </Form>
@@ -302,7 +302,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
                   addRow={addRow}
                   deleteRow={deleteRow}
                   ref={this.expenditureForm}
-                  maritalState={maritalState}
+                  maritalStatus={maritalStatus}
                   dynamicCustomValue={dynamicCustomValue}
                 />
               </Form>
@@ -342,7 +342,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
                   addRow={addRow}
                   deleteRow={deleteRow}
                   ref={this.assetsForm}
-                  maritalState={maritalState}
+                  maritalStatus={maritalStatus}
                   dynamicCustomValue={dynamicCustomValue}
                   updateAssets={this.updateAssets}
                   empStatus={empStatus}
@@ -382,7 +382,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
                   addRow={addRow}
                   deleteRow={deleteRow}
                   ref={this.liabilitiesForm}
-                  maritalState={maritalState}
+                  maritalStatus={maritalStatus}
                   assets={assets || []}
                 />
               </Form>
@@ -420,7 +420,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
                   addRow={addRow}
                   deleteRow={deleteRow}
                   ref={this.insuranceForm}
-                  maritalState={maritalState}
+                  maritalStatus={maritalStatus}
                   dynamicCustomValue={dynamicCustomValue}
                 />
               </Form>
@@ -446,7 +446,7 @@ const mapStateToProps = (state: RootState, ownProps: DataEntryProps) => {
   let tables;
   const clients = state.client.get('clients');
   const assets = state.client.get('assets');
-  const maritalState = state.client.get('maritalState');
+  const maritalStatus = state.client.get('maritalStatus');
   const empStatus = state.client.get('empStatus');
   const loading = state.client.get('loading');
   const clientId = ownProps.clientId;
@@ -467,7 +467,7 @@ const mapStateToProps = (state: RootState, ownProps: DataEntryProps) => {
   return {
     tables,
     loading,
-    maritalState,
+    maritalStatus,
     assets,
     empStatus,
   };
@@ -477,7 +477,7 @@ const mapDispatchToProps = (dispatch: Dispatch<StandardAction<any>>) =>
   bindActionCreators(
     {
       fetchDataEntry: ClientActions.fetchDataEntry,
-      updateMaritalState: ClientActions.updateMaritalState,
+      updateMaritalStatus: ClientActions.updateMaritalStatus,
       updateEmpStatus: ClientActions.updateEmpStatus,
       updateAssets: ClientActions.updateAssets,
     },

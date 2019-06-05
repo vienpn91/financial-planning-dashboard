@@ -10,7 +10,7 @@ import { loadOptionsBaseOnCol } from '../../../utils/columnUtils';
 
 interface AssetsTableProps {
   data: object[];
-  maritalState: string;
+  maritalStatus: string;
   dynamicCustomValue: object;
   empStatus: string;
   loading?: boolean;
@@ -93,8 +93,8 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
   private tableName = 'assets';
 
   public componentDidUpdate(prevProps: Readonly<AssetsTableProps>, prevState: Readonly<{}>, snapshot?: any): void {
-    const { maritalState, setFieldValue, data } = this.props;
-    if (prevProps.maritalState !== maritalState && maritalState === 'single') {
+    const { maritalStatus, setFieldValue, data } = this.props;
+    if (prevProps.maritalStatus !== maritalStatus && maritalStatus === 'single') {
       // update All Owner to Client
       const newData = data.map((d) => ({ ...d, owner: 'client' }));
       setFieldValue(this.tableName, newData);
@@ -187,7 +187,7 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
   }
 
   public render() {
-    const { loading, data, maritalState, dynamicCustomValue, empStatus } = this.props;
+    const { loading, data, maritalStatus, dynamicCustomValue, empStatus } = this.props;
     const columns = this.columns.map((col: any) => {
       const editable = col.editable === false ? false : 'true';
       if (col.key === 'operation') {
@@ -207,7 +207,7 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
       return {
         ...col,
         onCell: (record: any, rowIndex: number) => {
-          const options = loadOptionsBaseOnCol(col, record, { maritalState });
+          const options = loadOptionsBaseOnCol(col, record, { maritalStatus });
 
           return {
             ...col,
@@ -215,7 +215,7 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
             rowIndex,
             tableName: this.tableName,
             type: col.type || 'text',
-            record: { ...record, maritalState },
+            record: { ...record, maritalStatus },
             editable,
             handleSave: this.handleSave,
           };
@@ -240,7 +240,7 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
               index={index}
               indent={indent}
               expanded={expanded}
-              maritalState={maritalState}
+              maritalStatus={maritalStatus}
               addRow={this.addRowInnerTable}
               deleteRow={this.removeRowInnerTable}
               dynamicCustomValue={dynamicCustomValue}

@@ -8,8 +8,8 @@ import { isFunction } from 'lodash';
 import { connect } from 'react-redux';
 import { StandardAction } from '../../../reducers/reducerTypes';
 import { bindActionCreators, Dispatch } from 'redux';
-import { ClientActions, UpdateEmpStatus, UpdateMaritalStateAction } from '../../../reducers/client';
-import { empStatusOptions, genderOptions, maritalStateOptions } from '../../../enums/options';
+import { ClientActions, UpdateEmpStatus, UpdateMaritalStatusAction } from '../../../reducers/client';
+import { empStatusOptions, genderOptions, maritalStatusOptions } from '../../../enums/options';
 
 interface BasicInformationProps {
   data: object[];
@@ -23,7 +23,7 @@ interface BasicInformationProps {
   addRow: (row: any) => void;
   deleteRow: (key: number) => void;
 
-  updateMaritalState?: (maritalState: string) => UpdateMaritalStateAction;
+  updateMaritalStatus?: (maritalStatus: string) => UpdateMaritalStatusAction;
   updateEmpStatus?: (empStatus: string) => UpdateEmpStatus;
 }
 
@@ -70,16 +70,16 @@ class BasicInformationTable extends PureComponent<BasicInformationProps> {
     },
     {
       title: 'Marital State',
-      dataIndex: 'maritalState',
+      dataIndex: 'maritalStatus',
       type: 'select',
       width: 'calc(11% - 20px)',
-      options: maritalStateOptions,
+      options: maritalStatusOptions,
       confirmTitle: {
         title: 'Remove partner?',
         content: 'This action will change all ownerships to the Client.',
         okText: 'Yes',
         cancelText: 'No',
-        fieldValue: maritalStateOptions[1].value,
+        fieldValue: maritalStatusOptions[1].value,
       },
     },
   ];
@@ -117,7 +117,7 @@ class BasicInformationTable extends PureComponent<BasicInformationProps> {
         dob: '27/05/1978',
         empStatus: 'unemployed',
         gender: 'female',
-        maritalState: 'married',
+        maritalStatus: 'married',
         expandable: {
           riskProfile: 'highGrowth',
           hasPrivateHealthInsurance: true,
@@ -141,11 +141,11 @@ class BasicInformationTable extends PureComponent<BasicInformationProps> {
      * side effect
      */
     if (rowIndex === 0) {
-      if (dataIndex === 'maritalState') {
-        const { updateMaritalState } = this.props;
+      if (dataIndex === 'maritalStatus') {
+        const { updateMaritalStatus } = this.props;
         // update marital state in redux store
-        if (updateMaritalState) {
-          updateMaritalState(value);
+        if (updateMaritalStatus) {
+          updateMaritalStatus(value);
         }
 
         if (value === 'single') {
@@ -178,7 +178,7 @@ class BasicInformationTable extends PureComponent<BasicInformationProps> {
         ...col,
         onCell: (record: any, rowIndex: number) => {
           const editable =
-            col.editable === false ? false : rowIndex === 1 && col.dataIndex === 'maritalState' ? false : 'true';
+            col.editable === false ? false : rowIndex === 1 && col.dataIndex === 'maritalStatus' ? false : 'true';
 
           return {
             ...col,
@@ -225,7 +225,7 @@ class BasicInformationTable extends PureComponent<BasicInformationProps> {
 const mapDispatchToProps = (dispatch: Dispatch<StandardAction<any>>) =>
   bindActionCreators(
     {
-      updateMaritalState: ClientActions.updateMaritalState,
+      updateMaritalStatus: ClientActions.updateMaritalStatus,
       updateEmpStatus: ClientActions.updateEmpStatus,
     },
     dispatch,

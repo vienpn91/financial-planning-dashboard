@@ -5,7 +5,7 @@ import { isFunction } from 'lodash';
 import GeneralTable from '../GeneralTable';
 import { FormikProps } from 'formik';
 import {
-  maritalStateOptions,
+  maritalStatusOptions,
   ownerOptions,
   incomeTypeOptions,
   from1Options,
@@ -16,7 +16,7 @@ import { loadOptionsBaseOnCol } from '../../../utils/columnUtils';
 
 interface IncomeTableProps {
   data: object[];
-  maritalState: string;
+  maritalStatus: string;
   dynamicCustomValue: object;
   loading?: boolean;
 
@@ -99,8 +99,8 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
   private tableName = 'income';
 
   public componentDidUpdate(prevProps: Readonly<IncomeTableProps>, prevState: Readonly<{}>, snapshot?: any): void {
-    const { maritalState, setFieldValue, data } = this.props;
-    if (prevProps.maritalState !== maritalState && maritalState === maritalStateOptions[1].value) {
+    const { maritalStatus, setFieldValue, data } = this.props;
+    if (prevProps.maritalStatus !== maritalStatus && maritalStatus === maritalStatusOptions[1].value) {
       // update All Owner to Client
       const newData = data.map((d) => ({ ...d, owner: 'client' }));
       setFieldValue(this.tableName, newData);
@@ -162,7 +162,7 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
   }
 
   public render() {
-    const { loading, data, maritalState, dynamicCustomValue } = this.props;
+    const { loading, data, maritalStatus, dynamicCustomValue } = this.props;
     const columns = this.columns.map((col: any) => {
       const editable = col.editable === false ? false : 'true';
       if (col.key === 'operation') {
@@ -182,7 +182,7 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
       return {
         ...col,
         onCell: (record: any, rowIndex: number) => {
-          const options = loadOptionsBaseOnCol(col, record, { maritalState, dynamicCustomValue });
+          const options = loadOptionsBaseOnCol(col, record, { maritalStatus, dynamicCustomValue });
 
           return {
             ...col,

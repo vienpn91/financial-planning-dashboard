@@ -57,12 +57,12 @@ const ExpandedLiabilitiesRow = (props: {
   index: number;
   indent: number;
   expanded: boolean;
-  maritalState: string;
+  maritalStatus: string;
   assets: Array<{ refId: number; description: string; type: string }>;
   addRow: (index: number, tableName: string, row: any) => void;
   deleteRow: (index: number, tableName: string, key: number) => void;
 }) => {
-  const { record, index, maritalState, assets, addRow, deleteRow } = props;
+  const { record, index, maritalStatus, assets, addRow, deleteRow } = props;
   const {
     type,
     value,
@@ -211,7 +211,7 @@ const ExpandedLiabilitiesRow = (props: {
         data={record.drawdowns || []}
         index={index}
         tableName={'drawdowns'}
-        maritalState={maritalState}
+        maritalStatus={maritalStatus}
         addRow={addRow}
         deleteRow={deleteRow}
       />

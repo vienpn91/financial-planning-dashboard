@@ -3,7 +3,7 @@ import {
   COVER_TYPE,
   FROM_1,
   investmentTypeOptions,
-  maritalStateOptions,
+  maritalStatusOptions,
   OWNER,
   POLICY_OWNER,
 } from '../enums/options';
@@ -31,7 +31,7 @@ export function addJointOption(
 // Marital State is Single
 export function removePartnerOption(
   col: { dataIndex?: string; options?: any },
-  maritalState: string,
+  maritalStatus: string,
   options?: Array<{ value: any; label: any }>,
 ) {
   let result = options ? [...options] : col && col.options ? [...col.options] : [];
@@ -117,18 +117,18 @@ export function removeSuperFund(options: Array<{ value: any; label: any }>) {
 export function loadOptionsBaseOnCol(
   col: { dataIndex: string; options?: Array<{ value: any; label: any }> },
   record: { type: string; coverType?: string },
-  customValue: { maritalState?: string; dynamicCustomValue?: object },
+  customValue: { maritalStatus?: string; dynamicCustomValue?: object },
 ) {
-  const { maritalState, dynamicCustomValue } = customValue;
+  const { maritalStatus, dynamicCustomValue } = customValue;
   if (col.options) {
     let options = [...col.options];
 
     if (col.dataIndex === 'owner' && record.type && options) {
       options = addJointOption(col, record, options);
     }
-    if (maritalState === maritalStateOptions[1].value) {
+    if (maritalStatus === maritalStatusOptions[1].value) {
       // Marital State is Single
-      options = removePartnerOption(col, maritalState, options);
+      options = removePartnerOption(col, maritalStatus, options);
     }
     if (dynamicCustomValue) {
       if (col.dataIndex === 'indexation') {

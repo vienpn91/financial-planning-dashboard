@@ -9,7 +9,7 @@ import { removePartnerOption } from '../../../utils/columnUtils';
 
 interface LiabilitiesTableProps {
   data: object[];
-  maritalState: string;
+  maritalStatus: string;
   assets: Array<{ refId: number; description: string; type: string }>;
   loading?: boolean;
 
@@ -94,8 +94,8 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
   private tableName = 'liabilities';
 
   public componentDidUpdate(prevProps: Readonly<LiabilitiesTableProps>, prevState: Readonly<{}>, snapshot?: any): void {
-    const { maritalState, setFieldValue, data } = this.props;
-    if (prevProps.maritalState !== maritalState && maritalState === 'single') {
+    const { maritalStatus, setFieldValue, data } = this.props;
+    if (prevProps.maritalStatus !== maritalStatus && maritalStatus === 'single') {
       // update All Owner to Client
       const newData = data.map((d) => ({ ...d, owner: 'client' }));
       setFieldValue(this.tableName, newData);
@@ -188,9 +188,9 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
   }
 
   public render() {
-    const { loading, data, maritalState, assets } = this.props;
+    const { loading, data, maritalStatus, assets } = this.props;
     const columns = this.columns.map((col) => {
-      const options = removePartnerOption(col, maritalState);
+      const options = removePartnerOption(col, maritalStatus);
       const editable = col.editable === false ? false : 'true';
       if (col.key === 'operation') {
         return {
@@ -238,7 +238,7 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
               index={index}
               indent={indent}
               expanded={expanded}
-              maritalState={maritalState}
+              maritalStatus={maritalStatus}
               assets={assets}
               addRow={this.addRowInnerTable}
               deleteRow={this.removeRowInnerTable}

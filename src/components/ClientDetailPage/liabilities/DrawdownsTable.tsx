@@ -6,7 +6,7 @@ import { components } from '../assets/ContributionWithdrawalsTable';
 import { from1Options, to1Options } from '../../../enums/options';
 
 interface DrawdownsTableProps {
-  maritalState: string;
+  maritalStatus: string;
   data: object[];
   index: number;
   titleTable?: string;
@@ -80,9 +80,9 @@ class DrawdownsTable extends Component<DrawdownsTableProps> {
   }
 
   public render() {
-    const { data, maritalState, index, tableName } = this.props;
+    const { data, maritalStatus, index, tableName } = this.props;
     const columns = this.columns.map((col) => {
-      const options = removePartnerOption(col, maritalState);
+      const options = removePartnerOption(col, maritalStatus);
       const editable = col.key === 'operation' ? false : 'true';
 
       return {

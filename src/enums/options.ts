@@ -14,7 +14,7 @@ export const MARITAL_STATE: { [key: string]: string } = {
   married: 'Married',
   single: 'Single',
 };
-export const maritalStateOptions = mapOptionObjectToArray(MARITAL_STATE);
+export const maritalStatusOptions = mapOptionObjectToArray(MARITAL_STATE);
 
 export const GENDER = {
   male: 'Male',

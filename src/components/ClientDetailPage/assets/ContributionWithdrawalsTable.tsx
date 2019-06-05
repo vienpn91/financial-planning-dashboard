@@ -7,7 +7,7 @@ import EditableCell from './EditableCell';
 
 interface ContributionWithdrawalsTableProps {
   columns: object[];
-  maritalState: string;
+  maritalStatus: string;
   data: object[];
   index: number;
   titleTable?: string;
@@ -74,7 +74,7 @@ class ContributionWithdrawalsTable extends Component<ContributionWithdrawalsTabl
   }
 
   public render(): React.ReactNode {
-    const { titleTable, data, maritalState, index, tableName, columns: columnsProps } = this.props;
+    const { titleTable, data, maritalStatus, index, tableName, columns: columnsProps } = this.props;
     const columns = columnsProps.map((col: any) => {
       if (col.key === 'operation') {
         return {
@@ -88,7 +88,7 @@ class ContributionWithdrawalsTable extends Component<ContributionWithdrawalsTabl
           ),
         };
       }
-      const options = removePartnerOption(col, maritalState);
+      const options = removePartnerOption(col, maritalStatus);
       const editable = col.key === 'operation' ? false : 'true';
 
       return {

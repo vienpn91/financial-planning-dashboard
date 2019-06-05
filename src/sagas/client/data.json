@@ -12,7 +12,7 @@
       "lastName": "Rayan",
       "dob": "19/01/1970",
       "empStatus": "selfEmployed",
-      "maritalState": "married",
+      "maritalStatus": "married",
       "gender":"male",
       "expandable": {
         "riskProfile": "defensive",
@@ -29,7 +29,7 @@
       "dob": "27/05/1978",
       "empStatus": "unemployed",
       "gender":"female",
-      "maritalState": "married",
+      "maritalStatus": "married",
       "expandable": {
         "riskProfile": "highGrowth",
         "hasPrivateHealthInsurance": true,
@@ -607,7 +607,7 @@
         {
           "refId": 1,
           "coverType": "tpd",
-          "policyOwner": "Client",
+          "policyOwner": "client",
           "benefitAmount": 80000.0,
           "premiumType": "level",
           "notes": "Sample Note.",
@@ -621,7 +621,7 @@
         {
           "refId": 2,
           "coverType": "trauma",
-          "policyOwner": "Client",
+          "policyOwner": "client",
           "benefitAmount": 50000.0,
           "premiumType": "hybrid",
           "notes": "Sample Note.",
@@ -633,7 +633,7 @@
         {
           "refId": 3,
           "coverType": "incomeProtection",
-          "policyOwner": "Client",
+          "policyOwner": "client",
           "benefitAmount": 80000.0,
           "premiumType": "level",
           "notes": "Sample Note.",
@@ -651,7 +651,7 @@
         {
           "refId": 4,
           "coverType": "incomeProtection",
-          "policyOwner": "Client",
+          "policyOwner": "client",
           "benefitAmount": 50000.0,
           "premiumType": "hybrid",
           "notes": "Sample Note.",

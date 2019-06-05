@@ -25,7 +25,7 @@ interface CoverDetailsProps {
   addRow: (index: number, tableName: string, row: any) => void;
   deleteRow: (index: number, tableName: string, key: number) => void;
   dynamicCustomValue: object;
-  maritalState: string;
+  maritalStatus: string;
 }
 
 class CoverDetailsTable extends Component<CoverDetailsProps> {
@@ -104,7 +104,7 @@ class CoverDetailsTable extends Component<CoverDetailsProps> {
   }
 
   public render() {
-    const { data, index, tableName, dynamicCustomValue, maritalState } = this.props;
+    const { data, index, tableName, dynamicCustomValue, maritalStatus } = this.props;
     const columns = this.columns.map((col: any) => {
       const editable = col.key === 'operation' ? false : 'true';
 
@@ -112,7 +112,7 @@ class CoverDetailsTable extends Component<CoverDetailsProps> {
         ...col,
         fixed: false,
         onCell: (record: any, rowIndex: number) => {
-          const options = loadOptionsBaseOnCol(col, record, { maritalState });
+          const options = loadOptionsBaseOnCol(col, record, { maritalStatus });
 
           return {
             ...col,

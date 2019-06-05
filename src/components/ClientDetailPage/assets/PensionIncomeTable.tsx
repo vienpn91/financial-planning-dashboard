@@ -6,7 +6,7 @@ import { from1Options, pensionIncomeTypeOptions, to1Options } from '../../../enu
 import { components } from './ContributionWithdrawalsTable';
 
 interface ContributionWithdrawalsTableProps {
-  maritalState: string;
+  maritalStatus: string;
   data: object[];
   index: number;
   titleTable?: string;
@@ -82,7 +82,7 @@ class PensionIncomeTable extends Component<ContributionWithdrawalsTableProps, {}
   }
 
   public render(): React.ReactNode {
-    const { titleTable, data, maritalState, index, tableName } = this.props;
+    const { titleTable, data, maritalStatus, index, tableName } = this.props;
     const columns = this.columns.map((col: any) => {
       if (col.key === 'operation') {
         return {
@@ -96,7 +96,7 @@ class PensionIncomeTable extends Component<ContributionWithdrawalsTableProps, {}
           ),
         };
       }
-      const options = removePartnerOption(col, maritalState);
+      const options = removePartnerOption(col, maritalStatus);
       let editable = col.key === 'operation' ? false : 'true';
 
       return {

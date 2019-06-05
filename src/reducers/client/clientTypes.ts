@@ -32,7 +32,7 @@ export interface ClientState {
   clients: Client[];
   loading?: boolean;
   error?: string;
-  maritalState: string;
+  maritalStatus: string;
   empStatus: string;
   assets: Array<{ refId: number; description: string; type: string }>;
 
@@ -62,7 +62,7 @@ export const defaultClientState: ClientState = {
     },
   ],
   assets: [],
-  maritalState: '',
+  maritalStatus: '',
   empStatus: '',
   loading: false,
   error: '',
@@ -95,7 +95,7 @@ export interface FetchDataEntryPayload {
 }
 
 export type FetchDataEntryAction = PayloadAction<ClientActionTypes.FETCH_DATA_ENTRY_REQUEST, FetchDataEntryPayload>;
-export type UpdateMaritalStateAction = PayloadAction<ClientActionTypes.UPDATE_MARITAL_STATE, string>;
+export type UpdateMaritalStatusAction = PayloadAction<ClientActionTypes.UPDATE_MARITAL_STATE, string>;
 export type UpdateEmpStatus = PayloadAction<ClientActionTypes.UPDATE_EMP_STATUS, string>;
 export type UpdateAssetsAction = PayloadAction<
   ClientActionTypes.UPDATE_ASSETS,

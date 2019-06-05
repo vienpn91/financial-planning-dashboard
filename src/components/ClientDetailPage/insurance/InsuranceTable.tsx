@@ -10,7 +10,7 @@ import { removePartnerOption } from '../../../utils/columnUtils';
 
 interface InsuranceTableProps {
   data: object[];
-  maritalState: string;
+  maritalStatus: string;
   loading?: boolean;
 
   formProps?: FormikProps<any>;
@@ -50,8 +50,8 @@ class InsuranceTable extends PureComponent<InsuranceTableProps> {
   private tableName = 'insurance';
 
   public componentDidUpdate(prevProps: Readonly<InsuranceTableProps>, prevState: Readonly<{}>, snapshot?: any): void {
-    const { maritalState, setFieldValue, data } = this.props;
-    if (prevProps.maritalState !== maritalState && maritalState === 'single') {
+    const { maritalStatus, setFieldValue, data } = this.props;
+    if (prevProps.maritalStatus !== maritalStatus && maritalStatus === 'single') {
       // update All Owner to Client
       const newData = data.map((d) => ({ ...d, owner: 'client' }));
       setFieldValue(this.tableName, newData);
@@ -147,9 +147,9 @@ class InsuranceTable extends PureComponent<InsuranceTableProps> {
   }
 
   public render() {
-    const { loading, data, maritalState, dynamicCustomValue } = this.props;
+    const { loading, data, maritalStatus, dynamicCustomValue } = this.props;
     const columns = this.columns.map((col) => {
-      const options = removePartnerOption(col, maritalState);
+      const options = removePartnerOption(col, maritalStatus);
       const editable = col.editable === false ? false : 'true';
       if (col.key === 'operation') {
         return {
@@ -200,7 +200,7 @@ class InsuranceTable extends PureComponent<InsuranceTableProps> {
               addRow={this.addRowInnerTable}
               deleteRow={this.removeRowInnerTable}
               dynamicCustomValue={dynamicCustomValue}
-              maritalState={maritalState}
+              maritalStatus={maritalStatus}
             />
           )}
           className={`${this.tableName}-table`}

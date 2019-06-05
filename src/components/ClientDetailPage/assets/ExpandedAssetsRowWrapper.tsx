@@ -110,16 +110,16 @@ const ExpandedAssetsRow = (props: {
   index: number;
   indent: number;
   expanded: boolean;
-  maritalState: string;
+  maritalStatus: string;
   addRow: (index: number, tableName: string, row: any) => void;
   deleteRow: (index: number, tableName: string, key: number) => void;
   dynamicCustomValue: object;
   empStatus: string;
 }) => {
-  const { record, maritalState, index, addRow, deleteRow, dynamicCustomValue, empStatus } = props;
+  const { record, maritalStatus, index, addRow, deleteRow, dynamicCustomValue, empStatus } = props;
   const { expandable, type } = record;
   const contributionWithdrawalColumns = [...defaultContributionWithdrawalColumns];
-  if (MARITAL_STATE[maritalState] === MARITAL_STATE.single) {
+  if (MARITAL_STATE[maritalStatus] === MARITAL_STATE.single) {
     const typeColumn = contributionWithdrawalColumns.find((column) => column.dataIndex === 'type');
     if (typeColumn) {
       typeColumn.options = contributionWithdrawalsTypeOptions.filter(
@@ -350,7 +350,7 @@ const ExpandedAssetsRow = (props: {
             index={index}
             titleTable={'Contribution/Withdrawals'}
             tableName={'contributionWithdrawals'}
-            maritalState={maritalState}
+            maritalStatus={maritalStatus}
             addRow={addRow}
             deleteRow={deleteRow}
             columns={contributionWithdrawalColumns}
@@ -551,7 +551,7 @@ const ExpandedAssetsRow = (props: {
             index={index}
             titleTable={'Contribution/Withdrawals'}
             tableName={'contributionWithdrawals'}
-            maritalState={maritalState}
+            maritalStatus={maritalStatus}
             addRow={addRow}
             deleteRow={deleteRow}
             columns={superColumns}
@@ -735,7 +735,7 @@ const ExpandedAssetsRow = (props: {
             index={index}
             titleTable={'Pension income'}
             tableName={'pensionIncome'}
-            maritalState={maritalState}
+            maritalStatus={maritalStatus}
             addRow={addRow}
             deleteRow={deleteRow}
           />

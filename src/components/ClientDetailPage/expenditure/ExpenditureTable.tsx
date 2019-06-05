@@ -15,7 +15,7 @@ import { loadOptionsBaseOnCol } from '../../../utils/columnUtils';
 
 interface ExpenditureTableProps {
   data: object[];
-  maritalState: string;
+  maritalStatus: string;
   dynamicCustomValue: object;
   loading?: boolean;
 
@@ -96,8 +96,8 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
   private tableName = 'expenditure';
 
   public componentDidUpdate(prevProps: Readonly<ExpenditureTableProps>, prevState: Readonly<{}>, snapshot?: any): void {
-    const { maritalState, setFieldValue, data } = this.props;
-    if (prevProps.maritalState !== maritalState && maritalState === 'single') {
+    const { maritalStatus, setFieldValue, data } = this.props;
+    if (prevProps.maritalStatus !== maritalStatus && maritalStatus === 'single') {
       // update All Owner to Client
       const newData = data.map((d) => ({ ...d, owner: 'client' }));
       setFieldValue(this.tableName, newData);
@@ -159,7 +159,7 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
   }
 
   public render() {
-    const { loading, data, maritalState, dynamicCustomValue } = this.props;
+    const { loading, data, maritalStatus, dynamicCustomValue } = this.props;
     const columns = this.columns.map((col: any) => {
       const editable = col.editable === false ? false : 'true';
       if (col.key === 'operation') {
@@ -179,7 +179,7 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
       return {
         ...col,
         onCell: (record: any, rowIndex: number) => {
-          const options = loadOptionsBaseOnCol(col, record, { maritalState, dynamicCustomValue });
+          const options = loadOptionsBaseOnCol(col, record, { maritalStatus, dynamicCustomValue });
           return {
             ...col,
             options,
