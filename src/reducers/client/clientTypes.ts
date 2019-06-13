@@ -23,7 +23,7 @@ export interface Tag {
 }
 
 export interface Client {
-  clientId: string;
+  clientId: number;
   clientName: string;
   tagList?: Tag[];
 }
@@ -31,12 +31,13 @@ export interface Client {
 export interface ClientState {
   clients: Client[];
   loading?: boolean;
+  submitting?: boolean;
   error?: string;
   maritalStatus: string;
   empStatus: string;
   assets: Array<{ refId: number; description: string; type: string }>;
 
-  [propsName: string]: any;
+  [key: string]: any;
 }
 
 export const getDefaultTagList = () => {
@@ -56,7 +57,7 @@ export const getDefaultTagList = () => {
 export const defaultClientState: ClientState = {
   clients: [
     {
-      clientId: '123456',
+      clientId: 5,
       clientName: 'John Samual',
       tagList: getDefaultTagList(),
     },
@@ -65,6 +66,7 @@ export const defaultClientState: ClientState = {
   maritalStatus: '',
   empStatus: '',
   loading: false,
+  submitting: false,
   error: '',
 };
 
@@ -83,18 +85,37 @@ export enum ClientActionTypes {
   FETCH_DATA_ENTRY_REQUEST = 'client/FETCH_DATA_ENTRY_REQUEST',
   FETCH_DATA_ENTRY_SUCCESS = 'client/FETCH_DATA_ENTRY_SUCCESS',
   FETCH_DATA_ENTRY_FAILURE = 'client/FETCH_DATA_ENTRY_FAILURE',
+  UPDATE_DATA_ENTRY_REQUEST = 'client/UPDATE_DATA_ENTRY_REQUEST',
+  UPDATE_DATA_ENTRY_SUCCESS = 'client/UPDATE_DATA_ENTRY_SUCCESS',
+  UPDATE_DATA_ENTRY_FAILURE = 'client/UPDATE_DATA_ENTRY_FAILURE',
   UPDATE_MARITAL_STATE = 'client/UPDATE_MARITAL_STATE',
   UPDATE_EMP_STATUS = 'client/UPDATE_EMP_STATUS',
   UPDATE_ASSETS = 'client/UPDATE_ASSETS',
 }
 
 export interface FetchDataEntryPayload {
-  clientId: string;
+  clientId: number;
+  tagName: string;
+  tabName: string;
+}
+
+export interface UpdateDataEntryPayload {
+  clientId: number;
+  soaId: number;
+  inflationCPI: number;
+  salaryInflation: number;
+  sgcRate: number;
+  benefitDefaultAge: number;
+
   tagName: string;
   tabName: string;
 }
 
 export type FetchDataEntryAction = PayloadAction<ClientActionTypes.FETCH_DATA_ENTRY_REQUEST, FetchDataEntryPayload>;
+export type UpdateDataEntryAction = PayloadAction<
+  ClientActionTypes.UPDATE_DATA_ENTRY_REQUEST,
+  UpdateDataEntryPayload & Table
+>;
 export type UpdateMaritalStatusAction = PayloadAction<ClientActionTypes.UPDATE_MARITAL_STATE, string>;
 export type UpdateEmpStatus = PayloadAction<ClientActionTypes.UPDATE_EMP_STATUS, string>;
 export type UpdateAssetsAction = PayloadAction<

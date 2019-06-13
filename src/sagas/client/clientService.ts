@@ -8,13 +8,16 @@ export default class AuthService {
     return ApiUtils.HTTP.get(url);
   }
 
-  public static async fetchDataEntry(): Promise<any> {
-    const url: string = '/dataEntry';
+  public static async fetchDataEntry(clientId: number, tabNameValue: number): Promise<any> {
+    const params = [clientId, tabNameValue].join('/');
+    const url: string = `/currentPosition/${params}`;
 
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({ status: 200, data: { data, error: null, message: null, success: true } });
-      }, 500);
-    });
+    return ApiUtils.HTTP.get(url);
+  }
+
+  public static async updateDataEntry(formData: object): Promise<any> {
+    const url: string = '/currentPosition/';
+
+    return ApiUtils.HTTP.post(url, formData);
   }
 }

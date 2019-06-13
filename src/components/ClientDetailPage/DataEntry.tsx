@@ -9,7 +9,7 @@ import InsuranceTable from './insurance/InsuranceTable';
 import { Form, Formik, FormikActions, FormikProps } from 'formik';
 import { connect } from 'react-redux';
 import { RootState, StandardAction } from '../../reducers/reducerTypes';
-import { find, map, isArray, pick, get } from 'lodash';
+import { find, map, isArray, isFunction, pick, get } from 'lodash';
 import {
   Client,
   Tag,
@@ -21,12 +21,14 @@ import {
   UpdateMaritalStatusAction,
   UpdateAssetsAction,
   UpdateEmpStatus,
+  UpdateDataEntryPayload,
+  UpdateDataEntryAction,
 } from '../../reducers/client';
 import { Button, Icon } from 'antd';
 import { ActionTableGeneral } from '../../pages/client/styled';
 
 interface DataEntryProps {
-  clientId: string;
+  clientId: number;
   tagName: string;
   tabName: string;
   maritalStatus: string;
@@ -35,7 +37,9 @@ interface DataEntryProps {
 
   tables?: Table;
   loading?: boolean;
+  submitting?: boolean;
   fetchDataEntry?: (payload: FetchDataEntryPayload) => FetchDataEntryAction;
+  updateDataEntry?: (payload: UpdateDataEntryPayload) => UpdateDataEntryAction;
   updateMaritalStatus?: (maritalStatus: string) => UpdateMaritalStatusAction;
   updateEmpStatus?: (empStatus: string) => UpdateEmpStatus;
   updateAssets?: (assets: Array<{ refId: number; description: string; type: string }>) => UpdateAssetsAction;
@@ -124,7 +128,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
     }
   }
 
-  public fetchDataEntry = (params: { clientId: string; tagName: string; tabName: string }) => {
+  public fetchDataEntry = (params: { clientId: number; tagName: string; tabName: string }) => {
     const { fetchDataEntry } = this.props;
 
     if (fetchDataEntry) {
@@ -162,7 +166,6 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
     if (this.insuranceForm) {
       this.insuranceForm.current.resetForm();
     }
-    console.log('handle discard form');
   }
 
   public handleSubmitForm = () => {
@@ -186,13 +189,16 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
     }
 
     // Make sure all forms already submitted.
+    const { updateDataEntry, tables, tagName, tabName } = this.props;
     setTimeout(() => {
-      console.log('handle submit form', this.state.formData);
+      if (isFunction(updateDataEntry)) {
+        updateDataEntry({ ...tables, ...this.state.formData, tagName, tabName });
+      }
     }, 0);
   }
 
   public render() {
-    const { tables, loading, maritalStatus, assets, empStatus } = this.props;
+    const { tables, loading, maritalStatus, assets, empStatus, submitting } = this.props;
     const dynamicCustomValue = pick(tables, ['inflationCPI', 'salaryInflation', 'sgcRate', 'benefitDefaultAge']);
 
     return (
@@ -432,8 +438,8 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
             <Icon type="close" />
             <span>Discard</span>
           </Button>
-          <Button htmlType={'submit'} type={'primary'} onClick={this.handleSubmitForm}>
-            <Icon type="check" />
+          <Button htmlType={'submit'} type={'primary'} onClick={this.handleSubmitForm} loading={submitting}>
+            { !submitting && <Icon type="check" /> }
             <span>Submit</span>
           </Button>
         </ActionTableGeneral>
@@ -449,6 +455,7 @@ const mapStateToProps = (state: RootState, ownProps: DataEntryProps) => {
   const maritalStatus = state.client.get('maritalStatus');
   const empStatus = state.client.get('empStatus');
   const loading = state.client.get('loading');
+  const submitting = state.client.get('submitting');
   const clientId = ownProps.clientId;
   const tagName = ownProps.tagName;
   const tabName = ownProps.tabName;
@@ -467,6 +474,7 @@ const mapStateToProps = (state: RootState, ownProps: DataEntryProps) => {
   return {
     tables,
     loading,
+    submitting,
     maritalStatus,
     assets,
     empStatus,
@@ -477,6 +485,7 @@ const mapDispatchToProps = (dispatch: Dispatch<StandardAction<any>>) =>
   bindActionCreators(
     {
       fetchDataEntry: ClientActions.fetchDataEntry,
+      updateDataEntry: ClientActions.updateDataEntry,
       updateMaritalStatus: ClientActions.updateMaritalStatus,
       updateEmpStatus: ClientActions.updateEmpStatus,
       updateAssets: ClientActions.updateAssets,

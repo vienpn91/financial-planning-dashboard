@@ -102,7 +102,7 @@ function loadInvestmentOptions(record: { type: string }) {
         { value: 'moderate', label: 'Moderate' },
         { value: 'balanced', label: 'Balanced' },
         { value: 'growth', label: 'Growth' },
-        { value: 'highGrowth', label: 'Growth' },
+        { value: 'highGrowth', label: 'High Growth' },
       ];
     }
   }

@@ -7,7 +7,7 @@ export default class AuthService {
     const config: RequestConfig = {
       apiVersion: ApiUtils.API_VERSION_1, // default v1
     };
-    return ApiUtils.HTTP.post(url, data, config);
+    return ApiUtils.HTTPS.post(url, data, config);
   }
   public static async verifyPassword(password: string): Promise<any> {
     const url: string = '/auth/password';
@@ -15,7 +15,7 @@ export default class AuthService {
     const config: RequestConfig = {
       apiVersion: ApiUtils.API_VERSION_1, // default v1
     };
-    return ApiUtils.HTTP.post(url, data, config);
+    return ApiUtils.HTTPS.post(url, data, config);
   }
   public static async verifyOTP(otp: string): Promise<any> {
     const url: string = '/auth/token';
@@ -23,7 +23,7 @@ export default class AuthService {
     const config: RequestConfig = {
       apiVersion: ApiUtils.API_VERSION_1, // default v1
     };
-    return ApiUtils.HTTP.post(url, data, config);
+    return ApiUtils.HTTPS.post(url, data, config);
   }
   public static async refreshToken(refreshToken: string): Promise<any> {
     const url: string = '/auth/refresh';
@@ -32,6 +32,6 @@ export default class AuthService {
     };
     config.headers.Authorization = `Bearer ${refreshToken}`;
 
-    return ApiUtils.HTTP.get(url, config);
+    return ApiUtils.HTTPS.get(url, config);
   }
 }

@@ -76,7 +76,7 @@ class EntryPicker extends PureComponent<EntryPickerProps, EntryPickerState> {
     const { setFieldValue, name, handleBlur } = this.props;
 
     if (setFieldValue) {
-      setFieldValue(name, dateString);
+      setFieldValue(name, date.toISOString());
     }
 
     if (isFunction(handleBlur)) {
@@ -134,7 +134,7 @@ class EntryPicker extends PureComponent<EntryPickerProps, EntryPickerState> {
     const { pickerType, border, value, defaultOpen, format, options, disabledYear, ...props } = this.props;
     const className = classNames('picker-' + pickerType + ' has-' + border);
 
-    const momentValue = moment(value, format);
+    const momentValue = moment(value);
 
     switch (pickerType) {
       case 'month': {

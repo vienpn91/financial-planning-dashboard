@@ -70,7 +70,7 @@ export interface OTPPayload {
 
 export interface TokenPayload {
   token: string;
-  userId?: string;
+  userId?: number;
   refreshToken?: string;
   expired?: number;
   fullName?: string;

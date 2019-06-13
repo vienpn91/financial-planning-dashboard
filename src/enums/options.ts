@@ -53,7 +53,10 @@ export const RISK_PROFILE = {
 };
 export const riskProfileOptions = mapOptionObjectToArray(RISK_PROFILE);
 
-export const hasPrivateHealthInsuranceOptions = [{ value: true, label: 'have' }, { value: false, label: 'do not' }];
+export const hasPrivateHealthInsuranceOptions = [
+  { value: true, label: 'have' },
+  { value: false, label: 'do not have' },
+];
 
 export const lookingForCoupleAdviceOptions = [
   { value: true, label: 'a couple' },

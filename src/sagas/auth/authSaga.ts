@@ -55,7 +55,7 @@ export default class AuthSaga {
       const response: AxiosResponse<
         APIResponse & {
           data: {
-            user_id: string;
+            user_id: number;
             access_token: string;
             access_token_expires: number;
             refresh_token: string;
@@ -130,7 +130,7 @@ export default class AuthSaga {
     } else {
       yield put({
         type: AuthActionTypes.REFRESH_TOKEN_FAILURE,
-        // error: getAPIErrorMessage(),
+        error: 'Refresh token not found',
       });
     }
   }

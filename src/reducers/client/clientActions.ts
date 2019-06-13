@@ -5,12 +5,16 @@ import {
   UpdateMaritalStatusAction,
   UpdateAssetsAction,
   UpdateEmpStatus,
+  UpdateDataEntryPayload,
+  UpdateDataEntryAction,
 } from './clientTypes';
 import { createPayloadAction } from '../reducerHelpers';
 
 export default class ClientActions {
   public static fetchDataEntry = (payload: FetchDataEntryPayload): FetchDataEntryAction =>
     createPayloadAction(ClientActionTypes.FETCH_DATA_ENTRY_REQUEST, payload)
+  public static updateDataEntry = (payload: UpdateDataEntryPayload): UpdateDataEntryAction =>
+    createPayloadAction(ClientActionTypes.UPDATE_DATA_ENTRY_REQUEST, payload)
   public static updateMaritalStatus = (maritalStatus: string): UpdateMaritalStatusAction =>
     createPayloadAction(ClientActionTypes.UPDATE_MARITAL_STATE, maritalStatus)
   public static updateEmpStatus = (empStatus: string): UpdateEmpStatus =>

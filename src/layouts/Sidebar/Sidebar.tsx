@@ -1,5 +1,6 @@
 import React from 'react';
 import { Skeleton, Icon, Avatar } from 'antd';
+import { map } from 'lodash';
 
 import {
   SiderCollapsible,
@@ -16,6 +17,8 @@ import {
 } from './styled';
 import { default as ModalNameAndBirthDay } from '../../components/NameAndBirthDay/NameAndBirthDay';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { POSITIONS, Position } from '../../enums/client';
+import { Client, Tag } from '../../reducers/client';
 
 /* ClientItem
  *    ClientInfo
@@ -29,6 +32,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
  */
 
 interface SidebarProps {
+  clients: Client[];
   tagName?: string;
 }
 class Sidebar extends React.PureComponent<SidebarProps & RouteComponentProps> {
@@ -43,57 +47,44 @@ class Sidebar extends React.PureComponent<SidebarProps & RouteComponentProps> {
     });
   }
 
-  public showTable = (tagName: string, tabName: string) => {
+  public showTable = (tagName: string, tabName: string, clientId: number) => {
     const { history } = this.props;
-    const clientId = '123456';
 
     history.push(`/client/${clientId}/${tagName}/${tabName}`);
   }
 
-  public selectClient = () => {
+  public selectClient = (clientId: number) => {
     const { history } = this.props;
-    const clientId = '123456';
 
     history.push(`/client/${clientId}`);
   }
 
-  public ClientItemRender = (tagName: string) => {
+  public renderClientItem = (tag: Tag, clientId: number) => {
+    const { name, date } = tag;
     const { loading } = this.state;
+
     return (
       <ClientItem
-        key={tagName}
+        key={name}
         title={
           <StatusItem>
-            <DateItem>15/03/2018</DateItem>
-            <StatusTags tagName={tagName}>{tagName}</StatusTags>
+            <DateItem>{date}</DateItem>
+            <StatusTags tagName={name}>{name}</StatusTags>
           </StatusItem>
         }
       >
-        <SubList key={tagName + '1'} onClick={() => this.showTable(tagName, 'current')}>
-          <i className="icon-current" />
-          <span>Current</span>
-        </SubList>
-        <SubList key={tagName + '2'} onClick={() => this.showTable(tagName, 'strategy')}>
-          <i className="icon-strategy" />
-          <span>Strategy</span>
-        </SubList>
-        <SubList key={tagName + '3'} onClick={() => this.showTable(tagName, 'switching')}>
-          <i className="icon-projections" />
-          <span>Switching</span>
-        </SubList>
-        <SubList key={tagName + '4'} onClick={() => this.showTable(tagName, 'documents')}>
-          <i className="icon-documents" />
-          <span>Documents</span>
-        </SubList>
-        <SubList key={tagName + '5'} onClick={() => this.showTable(tagName, 'presentation')}>
-          <i className="icon-presentation" />
-          <span>Presentation</span>
-        </SubList>
+        {map(POSITIONS, (position: Position) => (
+          <SubList key={name + position.value} onClick={() => this.showTable(name, position.slug, clientId)}>
+            <i className={position.icon} />
+            <span>{position.label}</span>
+          </SubList>
+        ))}
       </ClientItem>
     );
   }
 
   public render(): JSX.Element {
+    const { clients } = this.props;
     return (
       <SiderCollapsible width={295} trigger={null} collapsible collapsed={this.state.collapsed}>
         <Icon
@@ -102,24 +93,21 @@ class Sidebar extends React.PureComponent<SidebarProps & RouteComponentProps> {
           onClick={this.toggleCollapsed}
         />
         <ClientSide mode="inline">
-          <ClientRoot
-            key="user1"
-            title={
-              <ClientInfo onClick={this.selectClient}>
-                <Avatar size={56} style={{ color: '#fff', backgroundColor: '#383f5b' }}>
-                  JS
-                </Avatar>
-                <FullName>John Samual</FullName>
-              </ClientInfo>
-            }
-          >
-            {this.ClientItemRender('new')}
-            {this.ClientItemRender('position')}
-            {this.ClientItemRender('strategy')}
-            {this.ClientItemRender('products')}
-            {this.ClientItemRender('advice')}
-            {this.ClientItemRender('done')}
-          </ClientRoot>
+          {map(clients, (client: Client) => (
+            <ClientRoot
+              key={client.clientId}
+              title={
+                <ClientInfo onClick={() => this.selectClient(client.clientId)}>
+                  <Avatar size={56} style={{ color: '#fff', backgroundColor: '#383f5b' }}>
+                    JS
+                  </Avatar>
+                  <FullName>{client.clientName}</FullName>
+                </ClientInfo>
+              }
+            >
+              {map(client.tagList, (tag: Tag) => this.renderClientItem(tag, client.clientId))}
+            </ClientRoot>
+          ))}
         </ClientSide>
         <ModalNameAndBirthDay />
       </SiderCollapsible>

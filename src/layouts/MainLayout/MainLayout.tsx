@@ -9,9 +9,11 @@ const { Content } = Layout;
 import { MainLayoutContent, LayoutMain } from './styled';
 import { initializeGA } from '../../utils/GA';
 import { RootState } from '../../reducers/reducerTypes';
+import { Client } from '../../reducers/client';
 
 interface MainLayoutProp {
   userId: string;
+  clients: Client[];
   fullName: string;
   avatarUrl: string;
   children: React.ReactNode;
@@ -25,11 +27,11 @@ class MainLayout extends React.PureComponent<MainLayoutProp> {
   }
 
   public render(): React.ReactNode {
-    const { fullName, avatarUrl, children } = this.props;
+    const { clients, fullName, avatarUrl, children } = this.props;
 
     return (
       <LayoutMain>
-        <Sidebar />
+        <Sidebar clients={clients} />
         <MainLayoutContent>
           <Header fullName={fullName} avatarUrl={avatarUrl} />
           <Content>{children}</Content>
@@ -41,6 +43,7 @@ class MainLayout extends React.PureComponent<MainLayoutProp> {
 
 const mapStateToProps = (state: RootState) => ({
   userId: state.auth.get('userId'),
+  clients: state.client.get('clients'),
   fullName: state.auth.get('fullName'),
   avatarUrl: state.auth.get('avatarUrl'),
 });
