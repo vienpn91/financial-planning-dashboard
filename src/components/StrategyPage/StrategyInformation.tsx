@@ -5,6 +5,7 @@ import StatisticItem, { Statistic } from './StatisticItem';
 import { GraphCard, GraphTitle } from './styled';
 import { StrategyTypes } from '../../enums/strategies';
 import StandardText from './StandardText';
+import { StrategyInfoWrapper } from './styled';
 
 interface StrategyInformationProps {
   type: StrategyTypes;
@@ -52,7 +53,7 @@ class StrategyInformation extends PureComponent<StrategyInformationProps> {
     switch (type) {
       case StrategyTypes.Superannuation: {
         return (
-          <div>
+          <StrategyInfoWrapper>
             <StatisticItem {...statistic} title={'Accumulation balance'} subTitle={'At retirement'} />
             <GraphCard>
               <GraphTitle>
@@ -69,12 +70,12 @@ class StrategyInformation extends PureComponent<StrategyInformationProps> {
               />
             </GraphCard>
             <StandardText data={standardTextExample} />
-          </div>
+          </StrategyInfoWrapper>
         );
       }
       case StrategyTypes.Pensions: {
         return (
-          <div>
+          <StrategyInfoWrapper>
             <StatisticItem {...statistic} title={'Average pension income'} subTitle={'Per annum paid until'} />
             <GraphCard>
               <GraphTitle>
@@ -91,12 +92,12 @@ class StrategyInformation extends PureComponent<StrategyInformationProps> {
               />
             </GraphCard>
             <StandardText data={standardTextExample} />
-          </div>
+          </StrategyInfoWrapper>
         );
       }
       case StrategyTypes.Investments: {
         return (
-          <div>
+          <StrategyInfoWrapper>
             <StatisticItem {...statistic} title={'Cash reserve'} subTitle={'At age'} />
             <GraphCard>
               <GraphTitle>
@@ -113,12 +114,12 @@ class StrategyInformation extends PureComponent<StrategyInformationProps> {
               />
             </GraphCard>
             <StandardText data={standardTextExample} />
-          </div>
+          </StrategyInfoWrapper>
         );
       }
       case StrategyTypes.Debt: {
         return (
-          <div>
+          <StrategyInfoWrapper>
             <StatisticItem
               {...statistic}
               title={'Total interest cost'}
@@ -139,12 +140,12 @@ class StrategyInformation extends PureComponent<StrategyInformationProps> {
               />
             </GraphCard>
             <StandardText data={standardTextExample} />
-          </div>
+          </StrategyInfoWrapper>
         );
       }
       case StrategyTypes.Centrelink: {
         return (
-          <div>
+          <StrategyInfoWrapper>
             <StatisticItem {...statistic} title={'Centrelink income'} />
             <GraphCard>
               <GraphTitle>
@@ -161,7 +162,7 @@ class StrategyInformation extends PureComponent<StrategyInformationProps> {
               />
             </GraphCard>
             <StandardText data={standardTextExample} />
-          </div>
+          </StrategyInfoWrapper>
         );
       }
       default:
