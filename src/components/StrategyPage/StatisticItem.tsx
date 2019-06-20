@@ -1,4 +1,5 @@
 import React, { memo, useEffect, useState } from 'react';
+import numeral from 'numeral';
 import { Icon } from 'antd';
 import classNames from 'classnames';
 
@@ -21,24 +22,11 @@ export interface Statistic {
 interface StatisticItemProps {
   title: string;
   subTitle?: string;
+  listOfKpi: Statistic[];
 }
-const listOfKpi = [
-  {
-    accumulationBalance: 9999999,
-    isIncrease: true,
-    delta: 21600,
-    retirementYear: 2049,
-  },
-  {
-    accumulationBalance: 8888888,
-    isIncrease: false,
-    delta: 9500,
-    retirementYear: 2049,
-  },
-];
 
-const StatisticItem = (props: StatisticItemProps & Statistic) => {
-  const { title, total, isIncrease, delta, subTitle, subValue } = props;
+const StatisticItem = (props: StatisticItemProps) => {
+  const { title, subTitle, listOfKpi } = props;
   const [activeIndex, setActiveIndex] = useState(0);
   const updateActiveIndex = () => {
     const nextActiveIndex = activeIndex + 1 >= listOfKpi.length ? 0 : activeIndex + 1;
@@ -54,14 +42,14 @@ const StatisticItem = (props: StatisticItemProps & Statistic) => {
       {listOfKpi.map((kpi, index) => (
         <StatisticGroup key={index} className={classNames({ active: index === activeIndex })}>
           <StatisticLabel> {title}: </StatisticLabel>
-          <StatisticValue>$ {total}</StatisticValue>
+          <StatisticValue>$ {numeral(kpi.total).format('0,0')}</StatisticValue>
           <StatisticUpDown>
-            {isIncrease ? <Icon type="caret-up" /> : <Icon type="caret-down" />} ${delta}
+            {kpi.isIncrease ? <Icon type="caret-up" /> : <Icon type="caret-down" />} ${numeral(kpi.delta).format('0,0')}
           </StatisticUpDown>
-          {subTitle && subValue && (
+          {subTitle && kpi.subValue && (
             <>
               <StatisticLabel>{subTitle}:</StatisticLabel>
-              <StatisticSubValue>(age {subValue})</StatisticSubValue>
+              <StatisticSubValue>(age {kpi.subValue})</StatisticSubValue>
             </>
           )}
         </StatisticGroup>
