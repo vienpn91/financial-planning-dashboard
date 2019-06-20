@@ -44,7 +44,8 @@ const StatisticItem = (props: StatisticItemProps) => {
           <StatisticLabel> {title}: </StatisticLabel>
           <StatisticValue>$ {numeral(kpi.total).format('0,0')}</StatisticValue>
           <StatisticUpDown>
-            {kpi.isIncrease ? <Icon type="caret-up" /> : <Icon type="caret-down" />} ${numeral(kpi.delta).format('0,0')}
+            {kpi.isIncrease ? <Icon type="caret-up" /> : <Icon type="caret-down" />} $
+            {numeral(kpi.delta).format('0.0a')}
           </StatisticUpDown>
           {subTitle && kpi.subValue && (
             <>
