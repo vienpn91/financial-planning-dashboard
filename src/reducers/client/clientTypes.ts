@@ -10,10 +10,18 @@ export interface Table {
   liabilities?: object[];
   insurance?: object[];
 }
+export interface Strategy {
+  superannuation?: object;
+  pension?: object;
+  investments?: object;
+  debt?: object;
+  centrelink?: object;
+  estatePlanning?: object;
+}
 
 export interface DataEntry {
   tabName: string;
-  tables: Table;
+  pageData: any;
 }
 
 export interface Tag {
@@ -49,7 +57,7 @@ export const getDefaultTagList = () => {
     date: '20/03/2019',
     dataEntries: map(tabList, (tab) => ({
       tabName: tab,
-      tables: {},
+      pageData: {},
     })),
   }));
 };

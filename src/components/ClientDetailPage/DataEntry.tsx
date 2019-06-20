@@ -13,8 +13,6 @@ import { find, map, isArray, isFunction, pick, get } from 'lodash';
 import {
   Client,
   Tag,
-  FetchDataEntryPayload,
-  FetchDataEntryAction,
   ClientActions,
   Table,
   DataEntry,
@@ -35,10 +33,9 @@ interface DataEntryProps {
   empStatus: string;
   assets?: Array<{ refId: number; description: string; type: string }>;
 
-  tables?: Table;
+  pageData?: Table;
   loading?: boolean;
   submitting?: boolean;
-  fetchDataEntry?: (payload: FetchDataEntryPayload) => FetchDataEntryAction;
   updateDataEntry?: (payload: UpdateDataEntryPayload) => UpdateDataEntryAction;
   updateMaritalStatus?: (maritalStatus: string) => UpdateMaritalStatusAction;
   updateEmpStatus?: (empStatus: string) => UpdateEmpStatus;
@@ -93,24 +90,12 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
     });
   }
 
-  public componentDidMount() {
-    const { clientId, tagName, tabName, fetchDataEntry } = this.props;
-
-    if (clientId && tagName && tabName && fetchDataEntry) {
-      this.fetchDataEntry({ clientId, tagName, tabName });
-    }
-  }
-
   public componentDidUpdate(prevProps: Readonly<DataEntryProps>, prevState: Readonly<{}>, snapshot?: any): void {
-    const { clientId, tagName, tabName, loading, updateMaritalStatus, updateEmpStatus, tables } = this.props;
-
-    if (prevProps.clientId !== clientId || prevProps.tagName !== tagName || prevProps.tabName !== tabName) {
-      this.fetchDataEntry({ clientId, tagName, tabName });
-    }
+    const { loading, updateMaritalStatus, updateEmpStatus, pageData } = this.props;
 
     if (loading !== prevProps.loading && updateMaritalStatus && updateEmpStatus) {
-      const maritalStatus = get(tables, 'basicInformation[0].maritalStatus');
-      const empStatus = get(tables, 'basicInformation[0].empStatus');
+      const maritalStatus = get(pageData, 'basicInformation[0].maritalStatus');
+      const empStatus = get(pageData, 'basicInformation[0].empStatus');
 
       updateMaritalStatus(maritalStatus);
       updateEmpStatus(empStatus);
@@ -119,20 +104,12 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
   }
 
   public updateAssets = (assetsFormValue?: object[]) => {
-    const { tables, updateAssets } = this.props;
-    const assetsSource = assetsFormValue || get(tables, 'assets');
+    const { pageData, updateAssets } = this.props;
+    const assetsSource = assetsFormValue || get(pageData, 'assets');
     const assets = map(assetsSource, (asset: any) => pick(asset, ['refId', 'description', 'type']));
 
     if (updateAssets) {
       updateAssets(assets);
-    }
-  }
-
-  public fetchDataEntry = (params: { clientId: number; tagName: string; tabName: string }) => {
-    const { fetchDataEntry } = this.props;
-
-    if (fetchDataEntry) {
-      fetchDataEntry(params);
     }
   }
 
@@ -189,17 +166,17 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
     }
 
     // Make sure all forms already submitted.
-    const { updateDataEntry, tables, tagName, tabName } = this.props;
+    const { updateDataEntry, pageData, tagName, tabName } = this.props;
     setTimeout(() => {
       if (isFunction(updateDataEntry)) {
-        updateDataEntry({ ...tables, ...this.state.formData, tagName, tabName });
+        updateDataEntry({ ...pageData, ...this.state.formData, tagName, tabName });
       }
     }, 0);
   }
 
   public render() {
-    const { tables, loading, maritalStatus, assets, empStatus, submitting } = this.props;
-    const dynamicCustomValue = pick(tables, ['inflationCPI', 'salaryInflation', 'sgcRate', 'benefitDefaultAge']);
+    const { pageData, loading, maritalStatus, assets, empStatus, submitting } = this.props;
+    const dynamicCustomValue = pick(pageData, ['inflationCPI', 'salaryInflation', 'sgcRate', 'benefitDefaultAge']);
 
     return (
       <>
@@ -208,7 +185,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
             // set state
             this.updateFormData(values);
           }}
-          initialValues={{ basicInformation: tables ? addKeyToArray(tables.basicInformation || []) : [] }}
+          initialValues={{ basicInformation: pageData ? addKeyToArray(pageData.basicInformation || []) : [] }}
           enableReinitialize={true}
           render={(props: FormikProps<any>) => {
             const addRow = (row: any) => {
@@ -244,7 +221,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
             // set state
             this.updateFormData(values);
           }}
-          initialValues={{ income: tables ? addKeyToArray(tables.income || []) : [] }}
+          initialValues={{ income: pageData ? addKeyToArray(pageData.income || []) : [] }}
           enableReinitialize={true}
           render={(props: FormikProps<any>) => {
             const addRow = (row: any) => {
@@ -282,7 +259,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
             // set state
             this.updateFormData(values);
           }}
-          initialValues={{ expenditure: tables ? addKeyToArray(tables.expenditure || []) : [] }}
+          initialValues={{ expenditure: pageData ? addKeyToArray(pageData.expenditure || []) : [] }}
           enableReinitialize={true}
           render={(props: FormikProps<any>) => {
             const addRow = (row: any) => {
@@ -320,7 +297,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
             // set state
             this.updateFormData(values);
           }}
-          initialValues={{ assets: tables ? addKeyToArray(tables.assets || []) : [] }}
+          initialValues={{ assets: pageData ? addKeyToArray(pageData.assets || []) : [] }}
           enableReinitialize={true}
           render={(props: FormikProps<any>) => {
             const addRow = (row: any) => {
@@ -362,7 +339,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
             // set state
             this.updateFormData(values);
           }}
-          initialValues={{ liabilities: tables ? addKeyToArray(tables.liabilities || []) : [] }}
+          initialValues={{ liabilities: pageData ? addKeyToArray(pageData.liabilities || []) : [] }}
           enableReinitialize={true}
           render={(props: FormikProps<any>) => {
             const addRow = (row: any) => {
@@ -400,7 +377,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
             // set state
             this.updateFormData(values);
           }}
-          initialValues={{ insurance: tables ? addKeyToArray(tables.insurance || []) : [] }}
+          initialValues={{ insurance: pageData ? addKeyToArray(pageData.insurance || []) : [] }}
           enableReinitialize={true}
           render={(props: FormikProps<any>) => {
             const addRow = (row: any) => {
@@ -439,7 +416,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
             <span>Discard</span>
           </Button>
           <Button htmlType={'submit'} type={'primary'} onClick={this.handleSubmitForm} loading={submitting}>
-            { !submitting && <Icon type="check" /> }
+            {!submitting && <Icon type="check" />}
             <span>Submit</span>
           </Button>
         </ActionTableGeneral>
@@ -449,7 +426,7 @@ class DataEntryComponent extends PureComponent<DataEntryProps> {
 }
 
 const mapStateToProps = (state: RootState, ownProps: DataEntryProps) => {
-  let tables;
+  let pageData;
   const clients = state.client.get('clients');
   const assets = state.client.get('assets');
   const maritalStatus = state.client.get('maritalStatus');
@@ -466,13 +443,13 @@ const mapStateToProps = (state: RootState, ownProps: DataEntryProps) => {
     if (tag && tag.dataEntries && tag.dataEntries.length > 0) {
       const dataEntry: DataEntry | undefined = find(tag.dataEntries, (d: DataEntry) => d.tabName === tabName);
       if (dataEntry) {
-        tables = dataEntry.tables;
+        pageData = dataEntry.pageData;
       }
     }
   }
 
   return {
-    tables,
+    pageData,
     loading,
     submitting,
     maritalStatus,
@@ -484,7 +461,6 @@ const mapStateToProps = (state: RootState, ownProps: DataEntryProps) => {
 const mapDispatchToProps = (dispatch: Dispatch<StandardAction<any>>) =>
   bindActionCreators(
     {
-      fetchDataEntry: ClientActions.fetchDataEntry,
       updateDataEntry: ClientActions.updateDataEntry,
       updateMaritalStatus: ClientActions.updateMaritalStatus,
       updateEmpStatus: ClientActions.updateEmpStatus,
