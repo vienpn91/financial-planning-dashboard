@@ -17,20 +17,12 @@ const StrategyPage = (props: StrategyPageProps) => {
   const [visible, setVisible] = useState(false);
   const { pageData } = props;
   const superannuation = get(pageData, 'superannuation');
-  const standardText = [
-    {
-      text: 'Pension funds will be invested in line with {{0}} risk profile',
-      params: ['xx'],
-    },
-    {
-      text: 'Product fees of {{0}} factored in pension value',
-      params: ['xx%'],
-    },
-    {
-      text: 'Income set to meet required expenses of {{0}} per annum',
-      params: ['$xx,xx'],
-    },
-  ];
+  const pension = get(pageData, 'pension');
+  const investments = get(pageData, 'investments');
+  const debt = get(pageData, 'debt');
+  const centrelink = get(pageData, 'centrelink');
+  const insurance = get(pageData, 'insurance');
+  const estatePlanning = get(pageData, 'estatePlanning');
 
   return (
     <StrategyPageWrapper>
@@ -42,94 +34,34 @@ const StrategyPage = (props: StrategyPageProps) => {
           strategies={superannuation.strategies}
         />
       )}
-      <StrategyContainer
-        type={StrategyTypes.Pensions}
-        information={{
-          kpi: [
-            {
-              total: 20140404,
-              isIncrease: true,
-              delta: 21640,
-              subValue: 69,
-            },
-            {
-              total: 20140404,
-              isIncrease: true,
-              delta: 21640,
-              subValue: 69,
-            },
-          ],
-          graph: {},
-          standardText,
-        }}
-        strategies={[]}
-      />
-      <StrategyContainer
-        type={StrategyTypes.Investments}
-        information={{
-          kpi: [
-            {
-              total: 20140404,
-              isIncrease: true,
-              delta: 21640,
-              subValue: 69,
-            },
-            {
-              total: 20140404,
-              isIncrease: true,
-              delta: 21640,
-              subValue: 69,
-            },
-          ],
-          graph: {},
-          standardText,
-        }}
-        strategies={[]}
-      />
-      <StrategyContainer
-        type={StrategyTypes.Debt}
-        information={{
-          kpi: [
-            {
-              total: 20140404,
-              isIncrease: true,
-              delta: 21640,
-              subValue: 69,
-            },
-            {
-              total: 20140404,
-              isIncrease: true,
-              delta: 21640,
-              subValue: 69,
-            },
-          ],
-          graph: {},
-          standardText,
-        }}
-        strategies={[]}
-      />
-      <StrategyContainer
-        type={StrategyTypes.Centrelink}
-        information={{
-          kpi: [
-            {
-              total: 20140404,
-              isIncrease: true,
-              delta: 21640,
-              subValue: 69,
-            },
-            {
-              total: 20140404,
-              isIncrease: true,
-              delta: 21640,
-              subValue: 69,
-            },
-          ],
-          graph: {},
-          standardText,
-        }}
-        strategies={[]}
-      />
+      {pension && (
+        <StrategyContainer type={StrategyTypes.Pensions} information={pension} strategies={pension.strategies} />
+      )}
+      {investments && (
+        <StrategyContainer
+          type={StrategyTypes.Investments}
+          information={investments}
+          strategies={investments.strategies}
+        />
+      )}
+      {debt && <StrategyContainer type={StrategyTypes.Debt} information={debt} strategies={debt.strategies} />}
+      {centrelink && (
+        <StrategyContainer
+          type={StrategyTypes.Centrelink}
+          information={centrelink}
+          strategies={centrelink.strategies}
+        />
+      )}
+      {insurance && (
+        <StrategyContainer type={StrategyTypes.Insurance} information={insurance} strategies={insurance.strategies} />
+      )}
+      {estatePlanning && (
+        <StrategyContainer
+          type={StrategyTypes.EstatePlanning}
+          information={estatePlanning}
+          strategies={estatePlanning.strategies}
+        />
+      )}
       <Drawer title="Your insurance needs" width={720} onClose={() => setVisible(false)} visible={visible}>
         <p>Some contents...</p>
         <p>Some contents...</p>
