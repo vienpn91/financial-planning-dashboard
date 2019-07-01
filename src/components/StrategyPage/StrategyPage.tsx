@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { get } from 'lodash';
-import { Drawer } from 'antd';
 import StrategyHeader from './StrategyHeader';
 import StrategyContainer from './StrategyContainer';
 import { StrategyTypes } from '../../enums/strategies';
 import { StrategyPageWrapper } from './styled';
 import { StrategyEntry } from '../../reducers/client';
+import DrawerContainer from './Drawer/DrawerContainer';
 
 interface StrategyPageProps {
   clientId: number;
@@ -14,7 +14,6 @@ interface StrategyPageProps {
 }
 
 const StrategyPage = (props: StrategyPageProps) => {
-  const [visible, setVisible] = useState(false);
   const { pageData } = props;
   const superannuation = get(pageData, 'superannuation');
   const pension = get(pageData, 'pension');
@@ -62,11 +61,7 @@ const StrategyPage = (props: StrategyPageProps) => {
           strategies={estatePlanning.strategies}
         />
       )}
-      <Drawer title="Your insurance needs" width={720} onClose={() => setVisible(false)} visible={visible}>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </Drawer>
+      <DrawerContainer />
     </StrategyPageWrapper>
   );
 };

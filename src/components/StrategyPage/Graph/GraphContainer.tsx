@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { isFunction } from 'lodash';
 import { Icon } from 'antd';
 import { Bar, HorizontalBar, Line } from 'react-chartjs-2';
 import { GraphCard, GraphTitle, GraphWrapper, GraphGroup } from '../styled';
@@ -21,6 +22,7 @@ interface GraphProps {
   options?: object;
   className?: string;
   flipping?: boolean;
+  onGraphClick?: (e: React.SyntheticEvent) => void;
 }
 const data1 = {
   labels: ['19', '20', '21', '22', '23', '24', '25'],
@@ -93,7 +95,7 @@ const areaData2 = {
   })),
 };
 const GraphContainer = (props: GraphProps) => {
-  const { type, name, data, className, flipping = true } = props;
+  const { type, name, data, className, flipping = true, onGraphClick } = props;
   const [activeIndex, setActiveIndex] = useState(0);
   const listOfData = flipping ? [data, data] : [data];
   const updateActiveIndex = () => {
@@ -178,6 +180,7 @@ const GraphContainer = (props: GraphProps) => {
         return null;
     }
   };
+  const hasOnClick = isFunction(onGraphClick);
 
   return (
     <GraphWrapper className={className}>
@@ -185,7 +188,9 @@ const GraphContainer = (props: GraphProps) => {
         <Icon type="info-circle" theme="filled" />
         {name}
       </GraphTitle>
-      <GraphGroup>{listOfData.map(renderGraph)}</GraphGroup>
+      <GraphGroup onClick={onGraphClick} className={classNames({ hasOnClick })}>
+        {listOfData.map(renderGraph)}
+      </GraphGroup>
     </GraphWrapper>
   );
 };
