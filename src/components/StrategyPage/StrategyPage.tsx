@@ -4,8 +4,10 @@ import StrategyHeader from './StrategyHeader';
 import StrategyContainer from './StrategyContainer';
 import { StrategyTypes } from '../../enums/strategies';
 import { StrategyPageWrapper } from './styled';
-import { StrategyEntry } from '../../reducers/client';
+import { StrategyEntry, ClientActions } from '../../reducers/client';
 import DrawerContainer from './Drawer/DrawerContainer';
+import { StandardAction, RootState } from '../../reducers/reducerTypes';
+import { CloseDrawerAction } from '../../reducers/drawer';
 
 interface StrategyPageProps {
   clientId: number;

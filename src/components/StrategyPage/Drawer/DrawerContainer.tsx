@@ -6,16 +6,27 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import MainDrawerContent from './MainDrawerContent';
 
-import { DrawerTitle, DrawerSubContent, DrawerNote,
-  ActionDrawerGeneral, DrawerFooter,
- } from './styled';
-import { CloseDrawerAction, DrawerActions } from '../../../reducers/drawer';
+import { DrawerTitle, DrawerSubContent, DrawerNote, ActionDrawerGeneral, DrawerFooter } from './styled';
+import { ActiveTabAction, CloseDrawerAction, DrawerActions, ChangePageAction } from '../../../reducers/drawer';
+
+export interface DrawerData {
+  title: string;
+  subTitle?: string;
+  footnote?: string;
+  columns: string[];
+  tableData: object[][];
+}
 
 interface DrawerContainerProps {
   drawerOpen: boolean;
-  drawerTitle: string;
+  loading: boolean;
+  drawerData: DrawerData;
+  tabActive: string;
+  page: number;
 
-  closeDrawer?: (title: string) => CloseDrawerAction;
+  closeDrawer?: (tabActive: string) => CloseDrawerAction;
+  activeTab: (tabActive: string) => ActiveTabAction;
+  changePage: (page: number) => ChangePageAction;
 }
 
 class DrawerContainer extends PureComponent<DrawerContainerProps> {
@@ -26,25 +37,30 @@ class DrawerContainer extends PureComponent<DrawerContainerProps> {
     }
   }
 
-  public render() {
-    const { drawerOpen, drawerTitle } = this.props;
+  public onPageChange: (page: number, pageSize?: number) => void = (page) => {
+    const { changePage } = this.props;
+    changePage(page);
+  }
+
+  public renderDrawer = () => {
+    const { drawerData, loading, activeTab, tabActive, page } = this.props;
+    const { title, subTitle, footnote } = drawerData;
+    const total = drawerData.tableData && drawerData.tableData.length ? drawerData.tableData.length * 10 : 10;
+
     return (
-      <Drawer width={1100} onClose={this.onCloseDrawer} visible={drawerOpen}>
+      <>
         <DrawerTitle>
-          {drawerTitle} <Spin size="small" />
+          {title} {loading && <Spin size="small" />}
         </DrawerTitle>
 
-        <DrawerSubContent>
-          Our insurance recommendations are based on our analysis of your circumstances and financial situation. The
-          following table illustrates your required level of cover.
-        </DrawerSubContent>
-        <MainDrawerContent />
+        <DrawerSubContent>{subTitle}</DrawerSubContent>
+
+        {/* Drawer Table */}
+        <MainDrawerContent activeTab={activeTab} tabActive={tabActive} drawerData={drawerData} page={page} />
+
         <DrawerFooter>
-          <DrawerNote>
-            Note: Recommended sums insured have been rounded to take advantage of pricing point discounts with
-            insurance companies. In addition, Life cover must be equal to or greater than TPD recommended cover.
-          </DrawerNote>
-          <Pagination defaultCurrent={1} total={50} />
+          <DrawerNote>{footnote}</DrawerNote>
+          <Pagination current={page} total={total} onChange={this.onPageChange} />
         </DrawerFooter>
         <ActionDrawerGeneral>
           <Button htmlType={'button'} type={'default'}>
@@ -56,20 +72,41 @@ class DrawerContainer extends PureComponent<DrawerContainerProps> {
             <span>Save</span>
           </Button>
         </ActionDrawerGeneral>
+      </>
+    );
+  }
+
+  public render() {
+    const { drawerOpen, drawerData, loading } = this.props;
+
+    return (
+      <Drawer width={1100} onClose={this.onCloseDrawer} visible={drawerOpen} destroyOnClose={true}>
+        {loading ? <Spin size="small" /> : drawerData ? this.renderDrawer() : null}
       </Drawer>
     );
   }
 }
 
-const mapStateToProps = (state: RootState) => ({
-  drawerOpen: state.drawer.get('drawerOpen'),
-  drawerTitle: state.drawer.get('drawerTitle'),
-});
+const mapStateToProps = (state: RootState) => {
+  const tabActive = state.drawer.get('tabActive');
+  const page = state.drawer.get('page');
+  const drawerData: DrawerData = state.drawer.get(tabActive);
+
+  return {
+    drawerOpen: state.drawer.get('drawerOpen'),
+    loading: state.drawer.get('loading'),
+    tabActive: state.drawer.get('tabActive'),
+    page,
+    drawerData,
+  };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch<StandardAction<any>>) =>
   bindActionCreators(
     {
       closeDrawer: DrawerActions.closeDrawer,
+      activeTab: DrawerActions.activeTab,
+      changePage: DrawerActions.changePage,
     },
     dispatch,
   );

@@ -9,7 +9,7 @@ export const DrawerTitle = styled.h4`
   font-weight: 600;
   color: #4e5b86;
   margin-bottom: 10px;
-  .ant-spin-spinning{
+  .ant-spin-spinning {
     margin-left: 10px;
   }
 `;
@@ -25,37 +25,34 @@ export const DrawerNote = styled.p`
   font-size: 11px;
   color: #4e5b86;
 `;
-export const MainDrawerSection = styled.section`
-`;
+export const MainDrawerSection = styled.section``;
 
 export const TabsCustomized = styled(Tabs).attrs({
   className: 'tabs-customized',
 })`
   .ant-tabs-nav {
-    .ant-tabs-tab{
+    .ant-tabs-tab {
       font-size: 13px;
       margin-right: 24px;
       padding: 8px 16px;
     }
-    .ant-tabs-ink-bar{
+    .ant-tabs-ink-bar {
       height: 1px;
     }
-    .ant-tabs-nav-scroll{
+    .ant-tabs-nav-scroll {
       border-color: #efefef;
     }
   }
 `;
 export const TabsPaneCustomized = styled(TabPane).attrs({
   className: 'tabs-pane-customized',
-})`
-
-`;
+})``;
 
 export const DrawerTableHeader = styled.div`
   padding: 10px 5px;
   background: #ebeef1;
   text-align: right;
-  .cell{
+  .cell {
     font-weight: 600;
   }
 `;
@@ -74,7 +71,7 @@ export const DrawerTableWrapper = styled.div`
   .list {
     margin-left: 25px;
     clear: both;
-  }  
+  }
   .item {
   }
   .values {
@@ -99,7 +96,6 @@ export const DrawerTableWrapper = styled.div`
   }
 `;
 export const DrawerTableRows = styled.div`
-  margin-bottom: 10px;
   border-bottom: 1px solid #ededed;
   .edit-cell {
     width: 69px;
@@ -108,6 +104,15 @@ export const DrawerTableRows = styled.div`
     border-color: transparent;
     &:hover {
       border-color: #dcdcdc;
+    }
+    &.text {
+      font-weight: 600;
+      text-align: center;
+      &:focus {
+        border: 1px solid #dcdcdc !important;
+        box-shadow: none;
+        outline: 0;
+      }
     }
   }
   .ant-input-number {
@@ -145,7 +150,7 @@ export const DrawerTableRows = styled.div`
       color: #4e5d86 !important;
       display: flex;
       align-items: center;
-      min-height: 45px;
+      min-height: 50px;
       border-bottom: 1px solid #ededed;
       font-weight: 600;
       i {
@@ -154,19 +159,17 @@ export const DrawerTableRows = styled.div`
     }
     .ant-collapse-content > .ant-collapse-content-box {
       padding: 0px;
-    }
-    &-content {
+      padding-top: 0px !important;
     }
   }
 `;
 
 export const DrawerTableParent = styled.div`
-    display: flex;
-    align-items: center;
-    min-height: 45px;
-    padding-bottom: 5px;
-    border-bottom: 1px solid #ededed;
-    font-weight: 600;
+  display: flex;
+  align-items: center;
+  min-height: 50px;
+  border-bottom: 1px solid #ededed;
+  font-weight: 600;
   i {
     float: left;
     margin-right: 10px;
@@ -186,17 +189,16 @@ export const DrawerRowSubTitle = styled.span.attrs({
 })`
   flex: 1;
   color: #4e5d86;
-  /* padding-left: 50px; */
 `;
 
 export const DrawerTableList = styled.div.attrs({
   className: 'drawer-table-list',
 })`
-  .drawer-title-sub-row{
-    padding-left: 50px;
+  .drawer-title-sub-row {
+    padding-left: 40px;
   }
-  .drawer-table-list{
-    .drawer-title-sub-row{
+  .drawer-table-list {
+    .drawer-title-sub-row {
       padding-left: 70px;
     }
   }
@@ -207,21 +209,20 @@ export const DrawerTableListItems = styled.div`
   min-height: 35px;
   align-items: center;
   border-bottom: 1px solid #ededed;
-  &:last-child{
+  &:last-child {
     border: none;
   }
-  &:first-child{
-   border-bottom: 1px solid #ededed;
+  &:first-child {
+    border-bottom: 1px solid #ededed;
   }
-  &.bold-text{
-    .drawer-table-sub-list{
+  &.bold-text {
+    .drawer-table-sub-list {
       font-weight: 600;
     }
-    .drawer-title-sub-row{
+    .drawer-title-sub-row {
       font-weight: 600;
     }
   }
-   
 `;
 
 export const DrawerTableSubList = styled.div.attrs({
@@ -231,13 +232,13 @@ export const DrawerTableSubList = styled.div.attrs({
   align-items: center;
   min-height: 35px;
   border-bottom: 1px solid #ededed;
-  &:last-child{
+  &:last-child {
     border: none;
   }
-  &:first-child{
-   border-bottom: 1px solid #ededed;
+  &:first-child {
+    border-bottom: 1px solid #ededed;
   }
-  .drawer-title-sub-row{
+  .drawer-title-sub-row {
     padding-left: 75px;
   }
 `;
@@ -264,7 +265,7 @@ export const ActionDrawerGeneral = styled.section<{ visible?: boolean }>`
 export const DrawerFooter = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: 25px;
   p {
     flex: 0 0 500px;
   }

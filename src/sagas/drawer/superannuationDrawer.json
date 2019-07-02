@@ -20,7 +20,6 @@
         {
           "key": "openingValue",
           "title": "Opening Value",
-          "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "children": [
             {
               "key": "taxable",
@@ -79,7 +78,6 @@
         {
           "key": "earnings",
           "title": "Earnings",
-          "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "children": [
             {
               "key": "growth",
@@ -101,7 +99,6 @@
         {
           "key": "ongoingCosts",
           "title": "Ongoing Costs",
-          "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "children": [
             {
               "key": "investmentCosts",
@@ -224,30 +221,19 @@
         {
           "key": "closingValuePV",
           "title": "Closing Value (PV)",
-          "children": [
-            {
-              "key": "taxableComponent",
-              "title": "Taxable Component",
-              "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            },
-            {
-              "key": "taxFreeComponent",
-              "title": "Tax Free Component",
-              "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            }
-          ]
+          "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          "editable": true
         }
       ],
       [
         {
           "key": "openingValue",
           "title": "Opening Value",
-          "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "children": [
             {
               "key": "taxable",
               "title": "Taxable Component",
-              "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+              "values": [2, 0, 2, 0, 2, 0, 2, 0, 2, 0]
             },
             {
               "key": "taxFree",
@@ -301,7 +287,6 @@
         {
           "key": "earnings",
           "title": "Earnings",
-          "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "children": [
             {
               "key": "growth",
@@ -323,7 +308,6 @@
         {
           "key": "ongoingCosts",
           "title": "Ongoing Costs",
-          "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "children": [
             {
               "key": "investmentCosts",
@@ -446,18 +430,8 @@
         {
           "key": "closingValuePV",
           "title": "Closing Value (PV)",
-          "children": [
-            {
-              "key": "taxableComponent",
-              "title": "Taxable Component",
-              "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            },
-            {
-              "key": "taxFreeComponent",
-              "title": "Tax Free Component",
-              "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            }
-          ]
+          "values": [0, 1, 0, 2, 0, 2, 0, 1, 0, 1],
+          "editable": true
         }
       ]
     ]
@@ -483,12 +457,11 @@
         {
           "key": "openingValue",
           "title": "Opening Value",
-          "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "children": [
             {
               "key": "taxable",
               "title": "Taxable Component",
-              "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+              "values": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
             },
             {
               "key": "taxFree",
@@ -542,7 +515,6 @@
         {
           "key": "earnings",
           "title": "Earnings",
-          "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "children": [
             {
               "key": "growth",
@@ -564,7 +536,6 @@
         {
           "key": "ongoingCosts",
           "title": "Ongoing Costs",
-          "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "children": [
             {
               "key": "investmentCosts",
@@ -687,30 +658,19 @@
         {
           "key": "closingValuePV",
           "title": "Closing Value (PV)",
-          "children": [
-            {
-              "key": "taxableComponent",
-              "title": "Taxable Component",
-              "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            },
-            {
-              "key": "taxFreeComponent",
-              "title": "Tax Free Component",
-              "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            }
-          ]
+          "values": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+          "editable": true
         }
       ],
       [
         {
           "key": "openingValue",
           "title": "Opening Value",
-          "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "children": [
             {
               "key": "taxable",
               "title": "Taxable Component",
-              "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+              "values": [3, 1, 3, 1, 1, 3, 1, 1, 3, 1]
             },
             {
               "key": "taxFree",
@@ -764,7 +724,6 @@
         {
           "key": "earnings",
           "title": "Earnings",
-          "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "children": [
             {
               "key": "growth",
@@ -786,7 +745,6 @@
         {
           "key": "ongoingCosts",
           "title": "Ongoing Costs",
-          "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           "children": [
             {
               "key": "investmentCosts",
@@ -909,18 +867,8 @@
         {
           "key": "closingValuePV",
           "title": "Closing Value (PV)",
-          "children": [
-            {
-              "key": "taxableComponent",
-              "title": "Taxable Component",
-              "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            },
-            {
-              "key": "taxFreeComponent",
-              "title": "Tax Free Component",
-              "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            }
-          ]
+          "values": [3, 1, 3, 1, 3, 1, 4, 1, 2, 1],
+          "editable": true
         }
       ]
     ]
