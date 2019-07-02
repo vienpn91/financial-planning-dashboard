@@ -269,3 +269,8 @@ export const DrawerFooter = styled.div`
     flex: 0 0 500px;
   }
 `;
+
+export const ActionDrawerBlock = styled.div`
+  display: flex;
+  align-items: center;
+`;
