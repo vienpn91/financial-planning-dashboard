@@ -1,8 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
-    'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -14,37 +13,44 @@ code {
 .client-item-modify .ant-menu-vertical.ant-menu-sub {
   min-width: 260px;
 }
+
 .modal-customize .ant-modal-content {
   border-radius: 10px;
-  padding: 0px 45px;
+  padding: 0 45px;
 }
+
 .modal-customize .ant-modal-title {
   font-size: 32px;
   color: #515c83;
   text-align: center;
 }
+
 .modal-customize .ant-modal-close {
   display: none;
 }
+
 .modal-customize .ant-modal-header {
   padding-top: 55px;
   border-bottom: none;
 }
+
 .modal-customize .ant-modal-footer {
   border-top: none;
   padding: 25px 20px 40px;
 }
+
 .modal-customize .ant-modal-footer .ant-btn {
   border: none;
   margin-left: 20px;
 }
 
-.table-enter-leave .ant-table-thead > tr,
-.table-enter-leave .ant-table-tbody > tr {
+.table-enter-leave .ant-table-tbody > tr,
+.table-enter-leave .ant-table-thead > tr {
   transition: height 200ms ease;
 }
 
-.ant-table .ant-table-thead > tr, .ant-table .ant-table-tbody > tr {
+.ant-table .ant-table-tbody > tr,
+.ant-table .ant-table-thead > tr {
   transition: none;
 }
 
@@ -52,7 +58,7 @@ code {
   position: relative;
 }
 
-body .ant-select-dropdown.ant-select-dropdown--single.ant-select-dropdown-placement-bottomLeft{
+body .ant-select-dropdown.ant-select-dropdown--single.ant-select-dropdown-placement-bottomLeft {
   min-width: 145px;
   width: auto !important;
 }
@@ -66,4 +72,56 @@ body .ant-select-dropdown.ant-select-dropdown--single.ant-select-dropdown-placem
   color: #40a9ff;
   background: #e6faff;
   cursor: pointer;
+}
+
+.cascader-customize {
+  background: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.cascader-customize .ant-cascader-menu {
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border-right: none!important;
+  margin-right: 2px !important;
+  height: auto!important;
+}
+.cascader-customize .ant-cascader-menu:nth-child(2){
+  width: 290px;
+}
+.cascader-customize .ant-cascader-menu:first-child {
+  border-radius: 0 !important;
+}
+
+.cascader-customize .ant-cascader-menu:last-child {
+  border-radius: 0 !important;
+}
+
+.cascader-customize .ant-cascader-menu-item {
+  padding: 9px 35px 9px 15px !important;
+  color: #737d9c!important;  
+}
+
+.cascader-customize .ant-cascader-menu-item span:first-child {
+  display: inline-block;
+  width: 110%;
+}
+
+.cascader-customize .ant-cascader-menu-item:hover {
+  background: #e9eefe!important;
+  font-weight: 600;
+}
+
+.cascader-customize .ant-cascader-menu-item-active:not(.ant-cascader-menu-item-disabled),
+.cascader-customize .ant-cascader-menu-item-active:not(.ant-cascader-menu-item-disabled):hover {
+  font-weight: 600;
+  background: #edeef2;
+}
+
+.cascader-customize .ant-cascader-menu-item-expand .ant-cascader-menu-item-expand-icon,
+.cascader-customize.ant-cascader-menu-item-expand .ant-cascader-menu-item-loading-icon {
+  right: 9px!important;
+  color: #072074!important;
+  font-size: 14px!important;
 }

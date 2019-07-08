@@ -110,6 +110,12 @@ export const HeaderTitleTable = styled.div.attrs({
     font-size: ${(props) => (props.small ? '16px' : '24px')};
     color: #072074;
     margin-right: 10px;
+    &:focus{
+      outline: none;
+    }
+     &:hover{
+      opacity: 0.7;
+    }
   }
 `;
 
