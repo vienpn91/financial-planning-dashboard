@@ -4,10 +4,11 @@ import StrategyHeader from './StrategyHeader';
 import StrategyContainer from './StrategyContainer';
 import { StrategyTypes } from '../../enums/strategies';
 import { StrategyPageWrapper } from './styled';
-import { StrategyEntry, ClientActions } from '../../reducers/client';
+import { StrategyEntry } from '../../reducers/client';
 import DrawerContainer from './Drawer/DrawerContainer';
-import { StandardAction, RootState } from '../../reducers/reducerTypes';
-import { CloseDrawerAction } from '../../reducers/drawer';
+import { Form, Formik, FormikActions, FormikProps } from 'formik';
+import { Button, Icon } from 'antd';
+import { ActionTableGeneral } from '../../pages/client/styled';
 
 interface StrategyPageProps {
   clientId: number;
@@ -24,45 +25,87 @@ const StrategyPage = (props: StrategyPageProps) => {
   const centrelink = get(pageData, 'centrelink');
   const insurance = get(pageData, 'insurance');
   const estatePlanning = get(pageData, 'estatePlanning');
+  const client = pageData.client;
+  const partner = pageData.partner;
+  const defaultFullValue = pageData.defaultFullValue;
 
   return (
     <StrategyPageWrapper>
-      <StrategyHeader />
-      {superannuation && (
-        <StrategyContainer
-          type={StrategyTypes.Superannuation}
-          information={superannuation}
-          strategies={superannuation.strategies}
-        />
-      )}
-      {pension && (
-        <StrategyContainer type={StrategyTypes.Pensions} information={pension} strategies={pension.strategies} />
-      )}
-      {investments && (
-        <StrategyContainer
-          type={StrategyTypes.Investments}
-          information={investments}
-          strategies={investments.strategies}
-        />
-      )}
-      {debt && <StrategyContainer type={StrategyTypes.Debt} information={debt} strategies={debt.strategies} />}
-      {centrelink && (
-        <StrategyContainer
-          type={StrategyTypes.Centrelink}
-          information={centrelink}
-          strategies={centrelink.strategies}
-        />
-      )}
-      {insurance && (
-        <StrategyContainer type={StrategyTypes.Insurance} information={insurance} strategies={insurance.strategies} />
-      )}
-      {estatePlanning && (
-        <StrategyContainer
-          type={StrategyTypes.EstatePlanning}
-          information={estatePlanning}
-          strategies={estatePlanning.strategies}
-        />
-      )}
+      <Formik
+        onSubmit={(values: StrategyEntry, actions: FormikActions<StrategyEntry>) => {
+          console.log('submitted', values);
+          actions.setSubmitting(false);
+        }}
+        initialValues={{ superannuation, pension, investments, debt, centrelink, insurance, estatePlanning }}
+        enableReinitialize={true}
+        render={(formikProps: FormikProps<StrategyEntry>) => (
+          <Form>
+            <StrategyHeader />
+            {formikProps.values.superannuation && client && partner && defaultFullValue && (
+              <StrategyContainer
+                type={StrategyTypes.Superannuation}
+                client={client}
+                partner={partner}
+                defaultFullValue={defaultFullValue}
+              />
+            )}
+            {formikProps.values.pension && client && partner && defaultFullValue && (
+              <StrategyContainer
+                type={StrategyTypes.Pensions}
+                client={client}
+                partner={partner}
+                defaultFullValue={defaultFullValue}
+              />
+            )}
+            {formikProps.values.investments && client && partner && defaultFullValue && (
+              <StrategyContainer
+                type={StrategyTypes.Investments}
+                client={client}
+                partner={partner}
+                defaultFullValue={defaultFullValue}
+              />
+            )}
+            {formikProps.values.debt && client && partner && defaultFullValue && (
+              <StrategyContainer
+                type={StrategyTypes.Debt}
+                client={client}
+                partner={partner}
+                defaultFullValue={defaultFullValue}
+              />
+            )}
+            {formikProps.values.centrelink && client && partner && defaultFullValue && (
+              <StrategyContainer
+                type={StrategyTypes.Centrelink}
+                client={client}
+                partner={partner}
+                defaultFullValue={defaultFullValue}
+              />
+            )}
+            {formikProps.values.insurance && client && partner && defaultFullValue && (
+              <StrategyContainer
+                type={StrategyTypes.Insurance}
+                client={client}
+                partner={partner}
+                defaultFullValue={defaultFullValue}
+              />
+            )}
+            {formikProps.values.estatePlanning && client && partner && defaultFullValue && (
+              <StrategyContainer
+                type={StrategyTypes.EstatePlanning}
+                client={client}
+                partner={partner}
+                defaultFullValue={defaultFullValue}
+              />
+            )}
+            <ActionTableGeneral visible>
+              <Button htmlType={'submit'} type={'primary'} disabled={formikProps.isSubmitting || !formikProps.dirty}>
+                <Icon type="check" />
+                <span>Submit</span>
+              </Button>
+            </ActionTableGeneral>
+          </Form>
+        )}
+      />
       <DrawerContainer />
     </StrategyPageWrapper>
   );

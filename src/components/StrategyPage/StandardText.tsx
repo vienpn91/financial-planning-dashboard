@@ -19,7 +19,7 @@ const Text = styled.span`
   color: #5f698d;
   font-size: 13px;
 `;
-const Param = styled.span`
+export const Param = styled.span`
   color: #5f698d;
   font-size: 13px;
   font-weight: 700;
@@ -29,10 +29,10 @@ interface StandardTextProp {
   data: IStandardText[];
 }
 
-const formatString = (
+export const formatString = (
   text: string,
+  values: Array<number | string>,
   formattingFunc?: (value: number | string, i: number) => React.ReactNode,
-  ...values: Array<number | string>
 ) => {
   const templateSplit = new RegExp(/{{(\d)}}/g);
   const isNumber = new RegExp(/^\d+$/);
@@ -40,7 +40,7 @@ const formatString = (
   return splitText.map((sentence, index) => {
     if (isNumber.test(sentence)) {
       const value = values[Number(sentence)];
-      return isFunction(formattingFunc) ? formattingFunc(value, index) : value;
+      return isFunction(formattingFunc) ? formattingFunc(value, sentence) : value;
     }
     return sentence;
   });
@@ -54,13 +54,9 @@ const StandardText = (props: StandardTextProp) => {
         <Statement key={index}>
           {statement.params && statement.params.length > 0 ? (
             <Text>
-              {formatString(
-                statement.text,
-                (value, i) => (
-                  <Param key={i}>{value}</Param>
-                ),
-                ...statement.params,
-              )}
+              {formatString(statement.text, statement.params, (value, i) => (
+                <Param key={i}>{value}</Param>
+              ))}
             </Text>
           ) : (
             <Text>{statement.text}</Text>

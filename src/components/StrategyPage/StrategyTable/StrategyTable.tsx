@@ -1,389 +1,113 @@
 import React, { PureComponent } from 'react';
-import { Checkbox, Icon, Popconfirm, Cascader } from 'antd';
+import { get, map } from 'lodash';
+import {Dropdown, Empty, Icon, Menu} from 'antd';
 import { TextTitle } from '../../../pages/client/styled';
 import { StrategyTypes } from '../../../enums/strategies';
-import {
-  StrategyTableContent,
-  StrategyTableItems,
-  CheckboxCustomize,
-  StrategyTableText,
-  StrategyTableIcon,
-  StrategyTableIconDel,
-  CheckboxCustomizeX,
-  HeaderTitleMargin,
-  HeaderTitleMark,
-  HeaderTitleStrategy,
-} from './styled';
-import { CascaderOptionType } from 'antd/lib/cascader';
+import { HeaderTitleMargin, HeaderTitleMark, HeaderTitleStrategy, StrategyTableContent} from './styled';
+import StrategyItem, { StrategyItemI } from './StrategyItem';
+import { Choice, strategyChoices } from '../../../enums/strategyChoices';
+import { DynamicData, StrategyEntry } from '../../../reducers/client';
+import { connect, FormikContext } from 'formik';
+
+const { SubMenu, Item } = Menu;
+
+interface FormikPartProps {
+  formik: FormikContext<StrategyEntry>;
+}
 
 interface StrategyTableProps {
   type: StrategyTypes;
-  strategies: object[];
+  addItem: (data: StrategyItemI) => void;
+  removeItem: (index: number) => void;
+  client: DynamicData;
+  partner: DynamicData;
+  defaultFullValue: any;
 }
 
-const options = [
-  {
-    value: 'client',
-    label: 'Client',
-    children: [
-      {
-        value: 'salarySacrifice',
-        label: 'Salary Sacrifice',
-        children: [
-          {
-            value: 'maximise',
-            label: 'Maximise',
-          },
-          {
-            value: 'fixedRegular',
-            label: 'Fixed - regular',
-          },
-          {
-            value: 'customOneOff',
-            label: 'Custom - one off',
-          },
-        ],
-      },
-      {
-        value: 'nonConcessional contribution',
-        label: 'Non-concessional contribution',
-        children: [
-          {
-            value: 'maximise',
-            label: 'Maximise',
-          },
-          {
-            value: 'fixedRegular',
-            label: 'Fixed - regular',
-          },
-          {
-            value: 'customOneOff',
-            label: 'Custom - one off',
-          },
-        ],
-      },
-      {
-        value: 'personalDeductible',
-        label: 'Personal deductible contributions',
-        children: [
-          {
-            value: 'maximise',
-            label: 'Maximise',
-          },
-          {
-            value: 'fixedRegular',
-            label: 'Fixed - regular',
-          },
-          {
-            value: 'customOneOff',
-            label: 'Custom - one off',
-          },
-        ],
-      },
-      {
-        value: 'spouse',
-        label: 'Spouse contribution',
-        children: [
-          {
-            value: 'oneOff',
-            label: 'One off',
-          },
-          {
-            value: 'regular',
-            label: 'Regular',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: 'partner',
-    label: 'Partner',
-    children: [
-      {
-        value: 'salarySacrifice',
-        label: 'Salary Sacrifice',
-        children: [
-          {
-            value: 'maximise',
-            label: 'Maximise',
-          },
-          {
-            value: 'fixedRegular',
-            label: 'Fixed - regular',
-          },
-          {
-            value: 'customOneOff',
-            label: 'Custom - one off',
-          },
-        ],
-      },
-      {
-        value: 'nonConcessional contribution',
-        label: 'Non-concessional contribution',
-        children: [
-          {
-            value: 'maximise',
-            label: 'Maximise',
-          },
-          {
-            value: 'fixedRegular',
-            label: 'Fixed - regular',
-          },
-          {
-            value: 'customOneOff',
-            label: 'Custom - one off',
-          },
-        ],
-      },
-      {
-        value: 'personalDeductible',
-        label: 'Personal deductible contributions',
-        children: [
-          {
-            value: 'maximise',
-            label: 'Maximise',
-          },
-          {
-            value: 'fixedRegular',
-            label: 'Fixed - regular',
-          },
-          {
-            value: 'customOneOff',
-            label: 'Custom - one off',
-          },
-        ],
-      },
-      {
-        value: 'spouse',
-        label: 'Spouse contribution',
-        children: [
-          {
-            value: 'oneOff',
-            label: 'One off',
-          },
-          {
-            value: 'regular',
-            label: 'Regular',
-          },
-        ],
-      },
-    ],
-  },
-];
+class StrategyTable extends PureComponent<FormikPartProps & StrategyTableProps> {
+  public addItem = (value: string[]): void => {
+    const { addItem } = this.props;
 
-class StrategyTable extends PureComponent<StrategyTableProps> {
-  public onChange = (value: string[], selectedOptions?: CascaderOptionType[]): void => {
-    console.log(value);
+    addItem({ check: true, sentence: value.join('.') });
+  }
+
+  public getOptions = () => {
+    const { type } = this.props;
+    return strategyChoices[type] || [];
+  }
+
+  public renderItem = (option: Choice, index: number | string, parentKeys: string[] = []) => {
+    if (option.children && option.children.length > 0) {
+      return (
+        <SubMenu title={option.label} key={index}>
+          {map(option.children, (otp: Choice, idx: number) =>
+            this.renderItem(otp, `${index}.${idx}`, [...parentKeys, option.value]),
+          )}
+        </SubMenu>
+      );
+    }
+    const onClickItem = () => {
+      const values = [...parentKeys, option.value];
+      this.addItem(values);
+    };
+
+    return (
+      <Item onClick={onClickItem} key={index}>
+        {option.label}
+      </Item>
+    );
+  }
+
+  public renderMenu = () => {
+    const options = this.getOptions();
+    const menu = map(options, (option: Choice, index: number) => this.renderItem(option, index, []));
+
+    return <Menu>{menu}</Menu>;
   }
 
   public render() {
-    const { type } = this.props;
-
-    if (type === StrategyTypes.EstatePlanning) {
-      return (
-        <>
-          <HeaderTitleStrategy>
-            <Cascader
-              popupClassName="cascader-customize"
-              options={options}
-              onChange={this.onChange}
-              value={[]}
-              expandTrigger="hover"
-            >
-              <Icon type={'plus-square'} theme={'filled'} />
-            </Cascader>
-            <TextTitle small={true}>Strategy</TextTitle>
-            <HeaderTitleMark>Mark</HeaderTitleMark>
-            <HeaderTitleMargin>Margin</HeaderTitleMargin>
-          </HeaderTitleStrategy>
-          <StrategyTableContent>
-            <StrategyTableItems>
-              <CheckboxCustomize>
-                <Checkbox />
-              </CheckboxCustomize>
-              <StrategyTableText>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius, quia?
-              </StrategyTableText>
-              <CheckboxCustomizeX>
-                <Checkbox />
-              </CheckboxCustomizeX>
-              <CheckboxCustomizeX>
-                <Checkbox />
-              </CheckboxCustomizeX>
-              <StrategyTableIcon>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                  <polyline points="15 3 21 3 21 9" />
-                  <line x1="10" y1="14" x2="21" y2="3" />
-                </svg>
-              </StrategyTableIcon>
-              <StrategyTableIconDel>
-                <Popconfirm title="Really delete?" okText="Yes" cancelText="No" placement="topRight">
-                  <Icon type="close-square" />
-                </Popconfirm>
-              </StrategyTableIconDel>
-            </StrategyTableItems>
-            <StrategyTableItems>
-              <CheckboxCustomize>
-                <Checkbox />
-              </CheckboxCustomize>
-              <StrategyTableText>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius, quia?
-              </StrategyTableText>
-              <CheckboxCustomizeX>
-                <Checkbox />
-              </CheckboxCustomizeX>
-              <CheckboxCustomizeX>
-                <Checkbox />
-              </CheckboxCustomizeX>
-              <StrategyTableIcon>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                  <polyline points="15 3 21 3 21 9" />
-                  <line x1="10" y1="14" x2="21" y2="3" />
-                </svg>
-              </StrategyTableIcon>
-              <StrategyTableIconDel>
-                <Popconfirm title="Really delete?" okText="Yes" cancelText="No" placement="topRight">
-                  <Icon type="close-square" />
-                </Popconfirm>
-              </StrategyTableIconDel>
-            </StrategyTableItems>
-          </StrategyTableContent>
-        </>
-      );
-    }
+    const { type, removeItem, client, partner, defaultFullValue, formik } = this.props;
+    const shouldShowMarkAndMargin = type === StrategyTypes.EstatePlanning;
+    const strategies = get(this.props, ['formik', 'values', type, 'strategies'], []);
 
     return (
       <>
         <HeaderTitleStrategy>
-          <Cascader
-            popupClassName="cascader-customize"
-            options={options}
-            onChange={this.onChange}
-            value={[]}
-            expandTrigger="hover"
-          >
+          <Dropdown overlay={this.renderMenu()} trigger={['click']}>
             <Icon type={'plus-square'} theme={'filled'} />
-          </Cascader>
+          </Dropdown>
           <TextTitle small={true}>Strategy</TextTitle>
+          {shouldShowMarkAndMargin && (
+            <>
+              <HeaderTitleMark>Mark</HeaderTitleMark>
+              <HeaderTitleMargin>Margin</HeaderTitleMargin>
+            </>
+          )}
         </HeaderTitleStrategy>
         <StrategyTableContent>
-          <StrategyTableItems>
-            <CheckboxCustomize>
-              <Checkbox />
-            </CheckboxCustomize>
-            <StrategyTableText>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius, quia?
-            </StrategyTableText>
-            <StrategyTableIcon>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                <polyline points="15 3 21 3 21 9" />
-                <line x1="10" y1="14" x2="21" y2="3" />
-              </svg>
-            </StrategyTableIcon>
-            <StrategyTableIconDel>
-              <Popconfirm title="Really delete?" okText="Yes" cancelText="No" placement="topRight">
-                <Icon type="close-square" />
-              </Popconfirm>
-            </StrategyTableIconDel>
-          </StrategyTableItems>
-          <StrategyTableItems>
-            <CheckboxCustomize>
-              <Checkbox />
-            </CheckboxCustomize>
-            <StrategyTableText>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius, quia?
-            </StrategyTableText>
-            <StrategyTableIcon>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                <polyline points="15 3 21 3 21 9" />
-                <line x1="10" y1="14" x2="21" y2="3" />
-              </svg>
-            </StrategyTableIcon>
-            <StrategyTableIconDel>
-              <Popconfirm title="Really delete?" okText="Yes" cancelText="No" placement="topRight">
-                <Icon type="close-square" />
-              </Popconfirm>
-            </StrategyTableIconDel>
-          </StrategyTableItems>
-          <StrategyTableItems>
-            <CheckboxCustomize>
-              <Checkbox />
-            </CheckboxCustomize>
-            <StrategyTableText>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius, quia?
-            </StrategyTableText>
-            <StrategyTableIcon>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                <polyline points="15 3 21 3 21 9" />
-                <line x1="10" y1="14" x2="21" y2="3" />
-              </svg>
-            </StrategyTableIcon>
-            <StrategyTableIconDel>
-              <Popconfirm title="Really delete?" okText="Yes" cancelText="No" placement="topRight">
-                <Icon type="close-square" />
-              </Popconfirm>
-            </StrategyTableIconDel>
-          </StrategyTableItems>
+          {strategies && strategies.length > 0 ? (
+            map(strategies, (strategy: StrategyItemI, index: number) => (
+              <StrategyItem
+                key={index}
+                strategyType={type}
+                strategyIndex={index}
+                strategy={strategy}
+                margin={shouldShowMarkAndMargin}
+                mark={shouldShowMarkAndMargin}
+                removeItem={removeItem}
+                client={client}
+                partner={partner}
+                defaultFullValue={defaultFullValue}
+                setFieldValue={formik.setFieldValue}
+              />
+            ))
+          ) : (
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          )}
         </StrategyTableContent>
       </>
     );
   }
 }
 
-export default StrategyTable;
+export default connect<StrategyTableProps, StrategyEntry>(StrategyTable);

@@ -1,4 +1,95 @@
 {
+  "defaultFullValue": 2210,
+  "client": {
+    "name": "John Samual",
+    "superannuation": [
+      {
+        "value": 1,
+        "label": "Superannuation Product 1"
+      },
+      {
+        "value": 2,
+        "label": "Superannuation Product 2"
+      },
+      {
+        "value": 3,
+        "label": "Superannuation Product 3"
+      }
+    ],
+    "investments": [
+      {
+        "value": 1,
+        "label": "Investment Product 1"
+      },
+      {
+        "value": 2,
+        "label": "Investment Product 2"
+      },
+      {
+        "value": 3,
+        "label": "Investment Product 3"
+      }
+    ],
+    "loans": [
+      {
+        "value": 1,
+        "label": "Loan 1"
+      },
+      {
+        "value": 2,
+        "label": "Loan 2"
+      },
+      {
+        "value": 3,
+        "label": "Loan 3"
+      }
+    ]
+  },
+  "partner": {
+    "name": "Susan Boyle",
+    "superannuation": [
+      {
+        "value": 4,
+        "label": "Superannuation Product 4"
+      },
+      {
+        "value": 5,
+        "label": "Superannuation Product 5"
+      },
+      {
+        "value": 6,
+        "label": "Superannuation Product 6"
+      }
+    ],
+    "investments": [
+      {
+        "value": 4,
+        "label": "Investment Product 4"
+      },
+      {
+        "value": 5,
+        "label": "Investment Product 5"
+      },
+      {
+        "value": 6,
+        "label": "Investment Product 6"
+      }
+    ],
+    "loans": [
+      {
+        "value": 4,
+        "label": "Loan 4"
+      },
+      {
+        "value": 5,
+        "label": "Loan 5"
+      },
+      {
+        "value": 6,
+        "label": "Loan 6"
+      }
+    ]
+  },
   "name1": [],
   "name2": [],
   "name3": [],
@@ -32,7 +123,38 @@
         "text": "Funds transferred into pension phase at retirement"
       }
     ],
-    "strategies": []
+    "strategies": [
+      {
+        "check": true,
+        "sentence": "client.salarySacrifice.maximise",
+        "values": ["2019-07-09T12:00:00", "2020-07-10T12:00:00"]
+      },
+      {
+        "check": true,
+        "sentence": "partner.salarySacrifice.fixedRegular",
+        "values": [3500, "annum", "2019-07-09T12:00:00", "2020-07-10T12:00:00"]
+      },
+      {
+        "check": true,
+        "sentence": "client.nonConcessional.customRegular",
+        "values": [199.99, "month", "2019-07-09T12:00:00", "2020-07-10T12:00:00"]
+      },
+      {
+        "check": false,
+        "sentence": "partner.salarySacrifice.customOneOff",
+        "values": [2500, 2020]
+      },
+      {
+        "check": true,
+        "sentence": "client.spouse.oneOff",
+        "values": [2500, 2020]
+      },
+      {
+        "check": true,
+        "sentence": "client.recontribution.oneOff",
+        "values": ["full_value", 1369.99, 2023]
+      }
+    ]
   },
   "pension": {
     "kpi": [
@@ -64,7 +186,23 @@
         "params": ["$xx,xx"]
       }
     ],
-    "strategies": []
+    "strategies": [
+      {
+        "check": false,
+        "sentence": "client.commenceAccount.minimum",
+        "values": ["2020-07-10T12:00:00", 1369.99, 2]
+      },
+      {
+        "check": true,
+        "sentence": "client.commenceAccount.fullyCustomized",
+        "values": ["2020-07-10T12:00:00", 1369.5, [299.99, 499.99, 699.99], 1500.0]
+      },
+      {
+        "check": true,
+        "sentence": "partner.commenceAccount.minimum",
+        "values": ["2020-07-10T12:00:00", 1369.99, 5]
+      }
+    ]
   },
   "investments": {
     "kpi": [
@@ -100,7 +238,23 @@
         "params": ["re-invested"]
       }
     ],
-    "strategies": []
+    "strategies": [
+      {
+        "check": true,
+        "sentence": "client.newInvestment.reinvest",
+        "values": [1369.99, 5, "2020-07-10T12:00:00"]
+      },
+      {
+        "check": false,
+        "sentence": "partner.existingInvestment.lumpSum",
+        "values": [1500.0, "2020-07-10T12:00:00", 6, 3]
+      },
+      {
+        "check": true,
+        "sentence": "client.withdrawFunds.regular",
+        "values": [1369.99, "annum", "2020-07-10T12:00:00", "2020-07-10T12:00:00", 3, 2]
+      }
+    ]
   },
   "debt": {
     "kpi": [
@@ -132,7 +286,23 @@
         "params": ["xx"]
       }
     ],
-    "strategies": []
+    "strategies": [
+      {
+        "check": true,
+        "sentence": "client.payDownLoan.oneOff",
+        "values": [1369.99, 5, "eliminate", 2, "2020-07-10T12:00:00"]
+      },
+      {
+        "check": false,
+        "sentence": "partner.reduceLoan.ongoing",
+        "values": [3, 150, "month"]
+      },
+      {
+        "check": true,
+        "sentence": "partner.payDownLoan.regular",
+        "values": [1, 460, "month"]
+      }
+    ]
   },
   "centrelink": {
     "kpi": [
@@ -154,7 +324,33 @@
         "params": ["homeowner"]
       }
     ],
-    "strategies": []
+    "strategies": [
+      {
+        "check": true,
+        "sentence": "client.centrelinkPayment.agePension",
+        "values": ["2020-07-10T12:00:00"]
+      },
+      {
+        "check": false,
+        "sentence": "client.centrelinkPayment.disabilitySupportPension",
+        "values": ["2020-07-10T12:00:00"]
+      },
+      {
+        "check": true,
+        "sentence": "partner.funeralBond.new",
+        "values": [150, 2]
+      },
+      {
+        "check": true,
+        "sentence": "partner.giftingStrategy.oneOff",
+        "values": [350, 1, "2020-07-10T12:00:00"]
+      },
+      {
+        "check": false,
+        "sentence": "client.giftingStrategy.ongoing",
+        "values": [250, "month", 2, 4.5]
+      }
+    ]
   },
   "insurance": {
     "kpi": [

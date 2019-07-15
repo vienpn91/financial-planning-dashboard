@@ -2,6 +2,26 @@ import styled, { keyframes } from 'styled-components';
 import { Tabs } from 'antd';
 const { TabPane } = Tabs;
 
+export const slideInLeft = keyframes`
+  from {
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+`;
+export const slideInRight = keyframes`
+  from {
+    transform: translate3d(100%, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+`;
+
 export const DrawerTitle = styled.h4`
   display: inline-block;
   width: 100%;
@@ -30,6 +50,23 @@ export const MainDrawerSection = styled.section``;
 export const TabsCustomized = styled(Tabs).attrs({
   className: 'tabs-customized',
 })`
+ .ant-tabs-content{
+   .ant-tabs-tabpane-active{
+    .slide-left {
+      animation-duration: 1s;
+      animation-fill-mode: both;
+      animation-name: ${slideInLeft};
+      animation-duration: 500ms;
+    }
+    .slide-right {
+      animation-duration: 1s;
+      animation-fill-mode: both;
+      animation-name: ${slideInRight};
+      animation-duration: 500ms;
+      animation-fill-mode: both;
+    }
+   }
+  }
   .ant-tabs-nav {
     .ant-tabs-tab {
       font-size: 13px;
@@ -46,7 +83,8 @@ export const TabsCustomized = styled(Tabs).attrs({
 `;
 export const TabsPaneCustomized = styled(TabPane).attrs({
   className: 'tabs-pane-customized',
-})``;
+})`
+`;
 
 export const DrawerTableHeader = styled.div`
   padding: 10px 5px;
@@ -58,6 +96,12 @@ export const DrawerTableHeader = styled.div`
 `;
 export const DrawerTableContent = styled.section`
   color: #4e5d86;
+  height: calc(100vh - 350px);
+  overflow: overlay;
+  @media(max-height: 450px){
+    height: auto
+  }
+
 `;
 export const DrawerTableWrapper = styled.div`
   .parent {
@@ -95,8 +139,8 @@ export const DrawerTableWrapper = styled.div`
     }
   }
 `;
-export const DrawerTableRows = styled.div`
-  border-bottom: 1px solid #ededed;
+export const DrawerTableRows = styled.div<{ noBorder?: boolean }>`
+  border-bottom: ${(props) => (props.noBorder ? 'none' : '1px solid #ededed')};
   .edit-cell {
     width: 69px;
     margin-right: 1px;
@@ -162,6 +206,69 @@ export const DrawerTableRows = styled.div`
       padding-top: 0px !important;
     }
   }
+  &.strategy-item {
+    display: inline-block;
+    input {
+      font-weight: 600;
+      color: #4e5d86;
+      padding: 0px;
+    }
+    .ant-calendar-picker {
+      .ant-calendar-picker-input {
+        border-color: transparent;
+        width: 78px;
+        padding: 4px;
+        text-align: center;
+        &:hover {
+          border-color: #dcdcdc;
+        }
+        &:focus {
+          ouline: none;
+          box-shadow: none;
+        }
+      }
+      .anticon-calendar {
+        display: none;
+      }
+    }
+    .ant-select {
+      color: #4e5d86;
+      font-weight: 600;
+      width: auto;
+      &-selection {
+        border-color: transparent;
+        height: 32px;
+        margin: 0px;
+        .ant-select-arrow {
+          display: none;
+          // right: 4px;
+        }
+        &:hover {
+          border-color: #dcdcdc;
+          // padding-right: 16px;
+          // .ant-select-arrow {
+          //   display: inline-block;
+          // }
+        }
+        &:focus {
+          outline: none;
+          box-shadow: none;
+        }
+        &-selected-value {
+          padding-right: 0px;
+        }
+        &__rendered {
+          line-height: 30px;
+          margin: 0px;
+          padding: 0 2px;
+        }
+      }
+    }
+  }
+`;
+
+export const DDFreeText = styled.div`
+  display: flex;
 `;
 
 export const DrawerTableParent = styled.div`
@@ -225,27 +332,9 @@ export const DrawerTableListItems = styled.div`
   }
 `;
 
-export const DrawerTableSubList = styled.div.attrs({
-  className: 'drawer-table-sub-list',
-})`
-  display: flex;
-  align-items: center;
-  min-height: 35px;
-  border-bottom: 1px solid #ededed;
-  &:last-child {
-    border: none;
-  }
-  &:first-child {
-    border-bottom: 1px solid #ededed;
-  }
-  .drawer-title-sub-row {
-    padding-left: 75px;
-  }
-`;
-
 export const ActionDrawerGeneral = styled.section<{ visible?: boolean }>`
   display: flex;
-  margin: 20px 0;
+  margin: 20px 0 0px 0px;
   flex: 0 0 100%;
   justify-content: flex-end;
   .ant-btn-default {
@@ -271,7 +360,10 @@ export const DrawerFooter = styled.div`
   }
 `;
 
-export const ActionDrawerBlock = styled.div`
-  display: flex;
-  align-items: center;
+export const FullyCustomized = styled.div`
+  ul {
+    padding: 0px;
+    list-style: none;
+    margin: 0;
+  }
 `;
