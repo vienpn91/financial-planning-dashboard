@@ -105,90 +105,23 @@ const strategySentences: any = {
     },
   },
   recontribution: {
-    oneOff: {
-      statement:
-        '%name%, withdraw {{0}} from superannuation and recontribute {{1}}' + 'back into superannuation in {{2}}',
-      types: [EditCellType.dropdownFreeText, EditCellType.dropdownFreeText, EditCellType.select],
-      options: ['', '', 'year'],
-    },
+    statement:
+      '%name%, withdraw {{0}} from superannuation and recontribute {{1}}' + 'back into superannuation in {{2}}',
+    types: [EditCellType.dropdownFreeText, EditCellType.dropdownFreeText, EditCellType.select],
+    options: ['', '', 'year'],
   },
-  commenceAccount: {
-    minimum: {
-      statement: '%name%, commence an account based pension in {{0}} with {{1}} from your {{2}}.',
-      types: [EditCellType.date, EditCellType.dropdownFreeText, EditCellType.select],
-      options: ['', '', 'superannuation'],
-    },
-    specified: {
-      statement:
-        '%name%, commence an account based pension in {{0}} with {{1}} from your {{2}}. ' +
-        'Drawdown pension income of {{3}} per {{4}}.',
-      types: [
-        EditCellType.date,
-        EditCellType.dropdownFreeText,
-        EditCellType.select,
-        EditCellType.number,
-        EditCellType.select,
-      ],
-      options: ['', '', 'superannuation', '', periodTypes],
-    },
-    meetExpenses: {
-      statement: '%name%, commence an account based pension in {{0}} with {{1}} from your {{2}}.',
-      types: [EditCellType.date, EditCellType.dropdownFreeText, EditCellType.select],
-      options: ['', '', 'superannuation'],
-    },
-    // custom handle
-    fullyCustomized: {},
-  },
-  commenceTransition: {
-    minimum: {
-      statement: '%name%, commence a TTR pension in {{0}} with {{1}} from your {{2}}.',
-      types: [EditCellType.date, EditCellType.dropdownFreeText, EditCellType.select],
-      options: ['', '', 'superannuation'],
-    },
-    specified: {
-      statement:
-        '%name%, commence a TTR pension in {{0}} with {{1}} from your {{2}}.' +
-        'Drawdown pension income of {{3}} per {{4}}.',
-      types: [
-        EditCellType.date,
-        EditCellType.dropdownFreeText,
-        EditCellType.select,
-        EditCellType.number,
-        EditCellType.select,
-      ],
-      options: ['', '', 'superannuation', '', periodTypes],
-    },
-    meetExpenses: {
-      statement: '%name%, commence a TTR pension in {{0}} with {{1}} from your {{2}}.',
-      types: [EditCellType.date, EditCellType.dropdownFreeText, EditCellType.select],
-      options: ['', '', 'superannuation'],
-    },
-    maximum: {
-      statement: '%name%, commence a TTR pension in {{0}} with {{1}} from your {{2}}.',
-      types: [EditCellType.date, EditCellType.dropdownFreeText, EditCellType.select],
-      options: ['', '', 'superannuation'],
-    },
-  },
-  newInvestment: {
-    reinvest: {
-      statement:
-        '%name%, utilise {{0}} from your {{1}}, to establish a new investment portfolio in {{2}}. Reinvest income.',
-      types: [EditCellType.number, EditCellType.select, EditCellType.date],
-      options: ['', '+investments', ''],
-    },
-    income: {
-      statement: '%name%, utilise {{0}} from your {{1}}, to establish a new investment portfolio in {{2}}.',
-      types: [EditCellType.number, EditCellType.select, EditCellType.date],
-      options: ['', '+investments', ''],
-    },
-  },
+  commenceAccount: { custom: true },
+  commenceTransition: { custom: true },
+  newInvestment: { custom: true },
   existingInvestment: {
     lumpSum: {
+      custom: true,
       statement: '%name%, withdraw {{0}} in {{1}} from your {{2}} and invest the proceeds to your {{3}}',
       types: [EditCellType.number, EditCellType.date, EditCellType.select, EditCellType.select],
       options: ['', '', '+investments', '+investments'],
     },
     regular: {
+      custom: true,
       statement:
         '%name%, make a regular contribution of {{0}} per {{1}} from {{2}} to {{3}} into your {{4}} from {{5}}',
       types: [
@@ -204,11 +137,13 @@ const strategySentences: any = {
   },
   withdrawFunds: {
     lumpSum: {
-      statement: '%name%, make a lump sum withdawal of {{0}} in {{1}} from your {{2}}. Direct the proceeds into {{3}}.',
+      custom: true,
+      statement: '%name%, make a lump sum withdawal of {{0}} in {{1}} from your {{2}}. Direct the proceeds into {{3}}',
       types: [EditCellType.number, EditCellType.date, EditCellType.select, EditCellType.select],
       options: ['', '', '+investments', '+investments'],
     },
     regular: {
+      custom: true,
       statement:
         '%name%, make a regular withdawal of {{0}} per {{1}} from {{2}} to {{3}} to your {{4}}. ' +
         'Direct to proceeds into {{5}}',
@@ -225,38 +160,38 @@ const strategySentences: any = {
   },
   payDownLoan: {
     oneOff: {
-      statement: '%name%, utilise {{0}} from your {{1}}, to {{2}} your {{3}} in {{4}}.',
+      statement: '%name%, utilise {{0}} from your {{1}}, to {{2}} your {{3}} in {{4}}',
       types: [EditCellType.number, EditCellType.select, EditCellType.select, EditCellType.select, EditCellType.date],
       options: ['', '+investments', paydownOptions, '+loans'],
     },
     regular: {
-      statement: '%name%, increase your {{0}} repayments to {{1}} per {{2}}.',
+      statement: '%name%, increase your {{0}} repayments to {{1}} per {{2}}',
       types: [EditCellType.select, EditCellType.number, EditCellType.select],
       options: ['+loans', '', periodTypes],
     },
   },
   reduceLoan: {
     ongoing: {
-      statement: '%name%, reduce your {{0}} repayments to {{1}} per {{2}}.',
+      statement: '%name%, reduce your {{0}} repayments to {{1}} per {{2}}',
       types: [EditCellType.select, EditCellType.number, EditCellType.select],
       options: ['+loans', '', periodTypes],
     },
   },
   centrelinkPayment: {
     agePension: {
-      statement: '%name%, apply for age pension from Centrelink in {{0}}.',
+      statement: '%name%, apply for age pension from Centrelink in {{0}}',
       types: [EditCellType.date],
     },
     disabilitySupportPension: {
-      statement: '%name%, apply for disability support pension from Centrelink in {{0}}.',
+      statement: '%name%, apply for disability support pension from Centrelink in {{0}}',
       types: [EditCellType.date],
     },
     newstartAllowance: {
-      statement: '%name%, apply for newstart allowance from Centrelink in {{0}}.',
+      statement: '%name%, apply for newstart allowance from Centrelink in {{0}}',
       types: [EditCellType.date],
     },
     rentAssistance: {
-      statement: '%name%, apply for rent assistance from Centrelink in {{0}}.',
+      statement: '%name%, apply for rent assistance from Centrelink in {{0}}',
       types: [EditCellType.date],
     },
   },

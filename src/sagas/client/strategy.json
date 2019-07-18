@@ -19,15 +19,18 @@
     "investments": [
       {
         "value": 1,
-        "label": "Investment Product 1"
+        "label": "Investment Product 1",
+        "fullValue": 1920
       },
       {
         "value": 2,
-        "label": "Investment Product 2"
+        "label": "Investment Product 2",
+        "fullValue": 3811
       },
       {
         "value": 3,
-        "label": "Investment Product 3"
+        "label": "Investment Product 3",
+        "fullValue": 7600
       }
     ],
     "loans": [
@@ -42,6 +45,22 @@
       {
         "value": 3,
         "label": "Loan 3"
+      }
+    ],
+    "pensionIncome": [
+      {
+        "value": 1,
+        "label": "Minimum Pension income",
+        "income": 1000
+      },
+      {
+        "value": 2,
+        "label": "Specific Pension income"
+      },
+      {
+        "value": 3,
+        "label": "Maximum Pension income",
+        "income": 5000
       }
     ]
   },
@@ -64,15 +83,18 @@
     "investments": [
       {
         "value": 4,
-        "label": "Investment Product 4"
+        "label": "Investment Product 4",
+        "fullValue": 2190
       },
       {
         "value": 5,
-        "label": "Investment Product 5"
+        "label": "Investment Product 5",
+        "fullValue": 1183
       },
       {
         "value": 6,
-        "label": "Investment Product 6"
+        "label": "Investment Product 6",
+        "fullValue": 4620
       }
     ],
     "loans": [
@@ -87,6 +109,22 @@
       {
         "value": 6,
         "label": "Loan 6"
+      }
+    ],
+    "pensionIncome": [
+      {
+        "value": 1,
+        "label": "Minimum Pension income",
+        "income": 1000
+      },
+      {
+        "value": 2,
+        "label": "Specific Pension income"
+      },
+      {
+        "value": 3,
+        "label": "Maximum Pension income",
+        "income": 5000
       }
     ]
   },
@@ -151,7 +189,7 @@
       },
       {
         "check": true,
-        "sentence": "client.recontribution.oneOff",
+        "sentence": "client.recontribution",
         "values": ["full_value", 1369.99, 2023]
       }
     ]
@@ -189,18 +227,18 @@
     "strategies": [
       {
         "check": false,
-        "sentence": "client.commenceAccount.minimum",
-        "values": ["2020-07-10T12:00:00", 1369.99, 2]
+        "sentence": "client.commenceAccount",
+        "values": ["2020-07-10T12:00:00", 1, 1370, [299, 399, 799], [3], "month"]
       },
       {
         "check": true,
-        "sentence": "client.commenceAccount.fullyCustomized",
-        "values": ["2020-07-10T12:00:00", 1369.5, [299.99, 499.99, 699.99], 1500.0]
+        "sentence": "client.commenceAccount",
+        "values": ["2020-07-10T12:00:00", "customisedRollover", 1500, [250, 420, 500], [1], "annum"]
       },
       {
         "check": true,
-        "sentence": "partner.commenceAccount.minimum",
-        "values": ["2020-07-10T12:00:00", 1369.99, 5]
+        "sentence": "partner.commenceTransition",
+        "values": ["2020-07-10T12:00:00", 5, 950, [250, 150, 400], [2, 1234], "month"]
       }
     ]
   },
@@ -241,18 +279,33 @@
     "strategies": [
       {
         "check": true,
-        "sentence": "client.newInvestment.reinvest",
-        "values": [1369.99, 5, "2020-07-10T12:00:00"]
+        "sentence": "client.newInvestment",
+        "values": ["2020-07-10T12:00:00", "specific", 5123, 2, "2020-07-10T12:00:00", "reinvest"]
       },
       {
         "check": false,
-        "sentence": "partner.existingInvestment.lumpSum",
-        "values": [1500.0, "2020-07-10T12:00:00", 6, 3]
+        "sentence": "client.newInvestment",
+        "values": ["2020-07-10T12:00:00", "custom", 9123, [1234, 5678], "2020-07-10T12:00:00", "paidOut"]
       },
       {
         "check": true,
+        "sentence": "partner.existingInvestment.lumpSum",
+        "values": [4, "2020-07-10T12:00:00", 6]
+      },
+      {
+        "check": false,
+        "sentence": "client.existingInvestment.regular",
+        "values": [2, "2020-07-10T12:00:00", "2022-07-10T12:00:00", 3]
+      },
+      {
+        "check": true,
+        "sentence": "client.withdrawFunds.lumpSum",
+        "values": [2, 3811, "cashflow"]
+      },
+      {
+        "check": false,
         "sentence": "client.withdrawFunds.regular",
-        "values": [1369.99, "annum", "2020-07-10T12:00:00", "2020-07-10T12:00:00", 3, 2]
+        "values": [3, 7600, 1]
       }
     ]
   },
