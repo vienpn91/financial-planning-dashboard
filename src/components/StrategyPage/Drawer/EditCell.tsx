@@ -5,11 +5,12 @@ import { isEqual } from 'lodash';
 import { DatePicker, Input, Select } from 'antd';
 import { EntryPickerTable } from '../../../common/EntryPicker/styled';
 import { ddFreeTextOptions } from '../../../enums/strategySentences';
-import { DDFreeText, DrawerTableRows } from './styled';
+import { DDFreeText, DrawerTableRows, QuotationMark } from './styled';
 import NewInputNumber from './NewInputNumber';
 
 const { MonthPicker } = DatePicker;
 const { Option } = Select;
+const { TextArea } = Input;
 
 interface EditCellProps {
   name: string;
@@ -17,6 +18,8 @@ interface EditCellProps {
   value: any;
   onChange: (value: any) => void;
   className?: string;
+  placeholder?: string;
+  quotationMark?: boolean;
   options?: any;
   defaultFullValue?: any;
   dollar?: boolean;
@@ -34,6 +37,7 @@ export enum EditCellType {
   date,
   select,
   dropdownFreeText,
+  textarea,
 }
 
 class EditCell extends PureComponent<EditCellProps, EditaCellState> {
@@ -73,6 +77,14 @@ class EditCell extends PureComponent<EditCellProps, EditaCellState> {
     const value = e.target.value;
 
     this.setState({ value });
+    onChange(value);
+  }
+
+  public onChangeTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { onChange } = this.props;
+    const value = e.target.value;
+    this.setState({ value });
+
     onChange(value);
   }
 
@@ -138,7 +150,8 @@ class EditCell extends PureComponent<EditCellProps, EditaCellState> {
     const value = stateValue ? stateValue : 0;
     const options = ddFreeTextOptions.map((option: { value: string; label: string }) => {
       if (option.value === 'full_value') {
-        return { value: option.value, label: `$${numeral(defaultFullValue).format('0,0')} (${option.label})` };
+        const renderedLabel = `$${numeral(defaultFullValue).format('0,0')} (${option.label})`;
+        return { value: option.value, label: renderedLabel, renderedLabel };
       }
       return option;
     });
@@ -146,21 +159,21 @@ class EditCell extends PureComponent<EditCellProps, EditaCellState> {
 
     return (
       <DDFreeText>
-        <Select onChange={this.handleDropdownFreeText} value={selectValue} showArrow={false}>
-          {options &&
-            options.length > 0 &&
-            options.map(
-              (option) =>
-                option && (
-                  <Select.Option value={option.value} key={option.value}>
-                    {option.label}
-                  </Select.Option>
-                ),
-            )}
-        </Select>
         {selectValue === 'customAmount' && (
           <NewInputNumber {...this.props} value={value} onChange={this.onChange} dollar={true} calculateWidth={true} />
         )}
+        <Select onChange={this.handleDropdownFreeText} value={selectValue} showArrow={false} optionLabelProp="title">
+          {options &&
+            options.length > 0 &&
+            options.map(
+              (option: { value: any; label: string; renderedLabel?: string }) =>
+                option && (
+                  <Option value={option.value} key={option.value} title={option.renderedLabel}>
+                    {option.label}
+                  </Option>
+                ),
+            )}
+        </Select>
       </DDFreeText>
     );
   }
@@ -172,10 +185,54 @@ class EditCell extends PureComponent<EditCellProps, EditaCellState> {
   }
 
   public renderInputText = () => {
+    const { calculateWidth, placeholder, quotationMark } = this.props;
     const { value: stateValue } = this.state;
     const value = stateValue ? stateValue : '';
+    const optionalProps: { [key: string]: any } = {};
 
-    return <Input value={value} onChange={this.onChangeText} className={'edit-cell text'} />;
+    if (calculateWidth) {
+      const valueLength = value.length;
+      const numberSize = valueLength > 7 ? 8 : 10;
+      const minimum = 30;
+      const extraWidth = valueLength > 7 && valueLength < 12 ? 6 : 4;
+      const width = valueLength * numberSize + extraWidth;
+
+      optionalProps.style = {
+        // if empty and placeholder is set
+        width: valueLength === 0 && placeholder ? '140px' : `${width < minimum ? minimum : width}px`,
+      };
+    }
+
+    if (quotationMark) {
+      return (
+        <QuotationMark hideQuotationMark={value.length === 0}>
+          <Input
+            value={value}
+            onChange={this.onChangeText}
+            className={'edit-cell text'}
+            {...optionalProps}
+            placeholder={placeholder}
+          />
+        </QuotationMark>
+      );
+    }
+
+    return (
+      <Input
+        value={value}
+        onChange={this.onChangeText}
+        className={'edit-cell text'}
+        {...optionalProps}
+        placeholder={placeholder}
+      />
+    );
+  }
+
+  public renderInputTextArea = () => {
+    const value = this.state.value || '';
+    const { placeholder, options } = this.props;
+
+    return <TextArea value={value} placeholder={placeholder} onChange={this.onChangeTextArea} autosize {...options} />;
   }
 
   public render() {
@@ -198,12 +255,15 @@ class EditCell extends PureComponent<EditCellProps, EditaCellState> {
       case EditCellType.text:
         input = this.renderInputText();
         break;
+      case EditCellType.textarea:
+        input = this.renderInputTextArea();
+        break;
       default:
         break;
     }
 
     return (
-      <DrawerTableRows noBorder className={'strategy-item'}>
+      <DrawerTableRows noBorder className={'strategy-item'} maximumWidth={EditCellType.textarea === type}>
         {input}
       </DrawerTableRows>
     );

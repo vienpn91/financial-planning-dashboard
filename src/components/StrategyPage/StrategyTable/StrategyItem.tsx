@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { get, head, isString, replace, slice, trim } from 'lodash';
-import { Icon, Popconfirm } from 'antd';
-import { StrategyTableIcon, StrategyTableIconDel, StrategyTableItems, StrategyTableText } from './styled';
+import { get, head, isString, replace, slice, trim, filter } from 'lodash';
+import { Dropdown, Icon, Menu, Popconfirm } from 'antd';
+import { ClickParam } from 'antd/lib/menu';
+import { StrategyTableIcon, StrategyTableItems, StrategyTableText } from './styled';
 import { DynamicData } from '../../../reducers/client';
 import strategySentences from '../../../enums/strategySentences';
 import { formatString, Param } from '../StandardText';
@@ -14,9 +15,13 @@ import CustomizedExistingInvestment from './CustomizedExistingInvestment';
 import CustomizedWithdrawFunds from './CustomizedWithdrawFunds';
 
 export interface StrategyItemI {
+  id?: string;
   check: boolean;
   sentence: string;
   values?: any[];
+  mark?: boolean;
+  margin?: boolean;
+  customNote?: string;
 }
 
 interface Sentence {
@@ -45,10 +50,10 @@ export const getOptions = (context: string, object: { client: any; partner: any 
     return [...get(client, option, []), ...get(partner, option, [])];
   }
   if (context === 'client') {
-    return get(client, option);
+    return get(client, option, []);
   }
   if (context === 'partner') {
-    return get(partner, option);
+    return get(partner, option, []);
   }
 
   return [];
@@ -74,10 +79,58 @@ export const replaceDynamicValues = (
   });
 };
 
+const Projections = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+    <polyline points="15 3 21 3 21 9" />
+    <line x1="10" y1="14" x2="21" y2="3" />
+  </svg>
+);
+
 class StrategyItem extends Component<StrategyItemProps> {
   public removeItem = () => {
-    const { strategyIndex, removeItem } = this.props;
+    const { strategy, strategyIndex, removeItem, setFieldValue } = this.props;
+    const strategySentenceKeys = strategy.sentence.split('.');
+    const context = head(strategySentenceKeys);
+    if (context && strategy.id) {
+      const sentenceKey = slice(strategySentenceKeys, 1).join('.');
+      const remove = (key = 'superannuation') => {
+        const newValues = filter(get(this.props, [context, key], []), ({ id }) => id !== strategy.id);
+        setFieldValue(`${context}.${key}`, newValues);
+      };
+      // remove superannuation from the <list of current superannuation accounts>
+      const superannuationAccounts = ['commenceAccount', 'commenceTransition'];
+      if (superannuationAccounts.includes(sentenceKey)) {
+        remove('superannuation');
+      }
+      // remove investment from the <list of JOINT investment accounts>
+      const investmentAccounts = ['newInvestment'];
+      if (investmentAccounts.includes(sentenceKey)) {
+        remove('investments');
+      }
+    }
     removeItem(strategyIndex);
+  }
+
+  public handleMenuClick: (param: ClickParam) => void = (e) => {
+    if (e && e.key === '3') {
+      // add Custom note to the current row.
+      const { strategy, setFieldValue, strategyIndex, strategyType } = this.props;
+      if (typeof strategy.customNote === 'undefined') {
+        const customNoteName = `${strategyType}.strategies[${strategyIndex}].customNote`;
+        setFieldValue(customNoteName, '');
+      }
+    }
   }
 
   public renderCustom = (context: string, sentenceKey: string) => {
@@ -160,39 +213,49 @@ class StrategyItem extends Component<StrategyItemProps> {
     if (context && strategySentence && strategySentence.statement) {
       const stringReplacedByName = replaceDynamicValues(strategySentence.statement, { context, client, partner });
       const values = strategy.values || [];
-      return formatString(stringReplacedByName, values, (value: any, index: number) => {
+      const arrayStatements = formatString(stringReplacedByName, values, (value: any, index: number) => {
         const optionalProps: { [key: string]: any } = {};
         if (strategySentence.types) {
           const type = strategySentence.types[index];
           let options = get(strategySentence, ['options', index], []);
           const name = `${strategyType}.strategies[${strategyIndex}].values[${index}]`;
-          if (type === EditCellType.select) {
-            if (isString(options)) {
-              if (options !== 'year') {
-                if (options[0] === '+') {
-                  const option = options.slice(1);
-                  options = [...get(client, option), ...get(partner, option)];
+          switch (type) {
+            case EditCellType.select: {
+              if (isString(options)) {
+                if (options !== 'year') {
+                  if (options[0] === '+') {
+                    const option = options.slice(1);
+                    options = [...get(client, option), ...get(partner, option)];
+                  } else {
+                    if (context === 'client') {
+                      options = get(client, options);
+                    }
+                    if (context === 'partner') {
+                      options = get(partner, options);
+                    }
+                  }
                 } else {
-                  if (context === 'client') {
-                    options = get(client, options);
+                  optionalProps.yearFi = true;
+                  options = [];
+                  const nowYear = moment().year();
+                  for (let i = nowYear; i < nowYear + 10; i++) {
+                    options.push({ value: i, label: `Year ${i}`, renderedLabel: `${i}/${i + 1} Financial Year` });
                   }
-                  if (context === 'partner') {
-                    options = get(partner, options);
-                  }
-                }
-              } else {
-                optionalProps.yearFi = true;
-                options = [];
-                const nowYear = moment().year();
-                for (let i = nowYear; i < nowYear + 10; i++) {
-                  options.push({ value: i, label: `Year ${i}`, renderedLabel: `${i}/${i + 1} Financial Year` });
                 }
               }
+              break;
             }
-          }
-          if (type === EditCellType.number) {
-            optionalProps.dollar = true;
-            optionalProps.calculateWidth = true;
+            case EditCellType.number: {
+              optionalProps.dollar = true;
+              optionalProps.calculateWidth = true;
+              break;
+            }
+            case EditCellType.text: {
+              optionalProps.calculateWidth = true;
+              break;
+            }
+            default:
+              break;
           }
 
           return (
@@ -212,6 +275,8 @@ class StrategyItem extends Component<StrategyItemProps> {
         }
         return <Param key={index}>{value}</Param>;
       });
+      arrayStatements.push(<br key={arrayStatements.length} />);
+      return arrayStatements;
     }
     console.log('missing sentence key for:', sentenceKey);
     return null;
@@ -224,43 +289,65 @@ class StrategyItem extends Component<StrategyItemProps> {
     setFieldValue(fieldName, check);
   }
 
+  public onChangeCheckMark = (check: boolean) => {
+    const { setFieldValue, strategyType, strategyIndex } = this.props;
+    const fieldName = `${strategyType}.strategies[${strategyIndex}].mark`;
+
+    setFieldValue(fieldName, check);
+  }
+
+  public onChangeCheckMargin = (check: boolean) => {
+    const { setFieldValue, strategyType, strategyIndex } = this.props;
+    const fieldName = `${strategyType}.strategies[${strategyIndex}].margin`;
+
+    setFieldValue(fieldName, check);
+  }
+
   public render() {
-    const { strategy, mark, margin } = this.props;
+    const { strategy, mark, margin, strategyType, strategyIndex } = this.props;
 
     return (
       <StrategyTableItems>
         <CheckboxInput value={strategy.check} onChange={this.onChangeCheck} />
-        <StrategyTableText>{this.renderText()}</StrategyTableText>
-        {mark && <CheckboxInput value={strategy.check} onChange={(val) => console.log(val)} custom={true} />}
-        {margin && <CheckboxInput value={strategy.check} onChange={(val) => console.log(val)} custom={true} />}
+        <StrategyTableText>
+          {this.renderText()}
+          {typeof strategy.customNote !== 'undefined' && (
+            <EditCell
+              name={`${strategyType}.strategies[${strategyIndex}].customNote`}
+              value={strategy.customNote}
+              type={EditCellType.textarea}
+              onChange={(val) => console.log(val)}
+              placeholder="Enter custom note"
+            />
+          )}
+        </StrategyTableText>
+        {mark && <CheckboxInput value={strategy.mark || false} onChange={this.onChangeCheckMark} custom={true} />}
+        {margin && <CheckboxInput value={strategy.margin || false} onChange={this.onChangeCheckMargin} custom={true} />}
         <StrategyTableIcon>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+          <Dropdown
+            overlay={
+              <Menu onClick={this.handleMenuClick}>
+                <Menu.Item key="1" className="delete-action">
+                  <Popconfirm title="Really delete?" okText="Yes" cancelText="No" onConfirm={this.removeItem}>
+                    <Icon type="close" />
+                    Delete
+                  </Popconfirm>
+                </Menu.Item>
+                <Menu.Item key="2">
+                  <Icon component={Projections} />
+                  Projections
+                </Menu.Item>
+                <Menu.Item key="3">
+                  <Icon type="plus" />
+                  Custom note
+                </Menu.Item>
+              </Menu>
+            }
+            overlayClassName="more-dropdown"
           >
-            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-            <polyline points="15 3 21 3 21 9" />
-            <line x1="10" y1="14" x2="21" y2="3" />
-          </svg>
+            <Icon type="more" />
+          </Dropdown>
         </StrategyTableIcon>
-        <StrategyTableIconDel>
-          <Popconfirm
-            title="Really delete?"
-            okText="Yes"
-            cancelText="No"
-            placement="topRight"
-            onConfirm={this.removeItem}
-          >
-            <Icon type="close-square" />
-          </Popconfirm>
-        </StrategyTableIconDel>
       </StrategyTableItems>
     );
   }

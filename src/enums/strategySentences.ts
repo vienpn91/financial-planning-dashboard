@@ -4,6 +4,7 @@ export const ddFreeTextOptions = [
   {
     value: 'customAmount',
     label: 'Custom amount',
+    renderedLabel: '(Custom amount)',
   },
   {
     value: 'full_value',
@@ -218,6 +219,11 @@ const strategySentences: any = {
       types: [EditCellType.date, EditCellType.select, EditCellType.select],
       options: ['', '+investments', '+investments'],
     },
+  },
+  customStrategy: {
+    statement: '{{0}}',
+    types: [EditCellType.textarea],
+    options: [{ placeholder: 'Enter custom strategy' }],
   },
 };
 
