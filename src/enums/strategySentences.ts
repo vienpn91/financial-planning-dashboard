@@ -1,5 +1,6 @@
-import { EditCellType } from '../components/StrategyPage/Drawer/EditCell';
+import {EditCellType} from '../components/StrategyPage/Drawer/EditCell';
 
+export const specificOptions = [{ value: 'specific', label: 'Specific' }, { value: 'custom', label: 'Custom' }];
 export const ddFreeTextOptions = [
   {
     value: 'customAmount',
@@ -65,51 +66,66 @@ const strategySentences: any = {
       types: [EditCellType.date, EditCellType.date],
     },
     customRegular: {
-      statement: '%name%, make non-concessional contribution of {{0}} per {{1}} from {{2}} to {{3}}',
-      types: [EditCellType.number, EditCellType.select, EditCellType.date, EditCellType.date],
-      options: ['', periodTypes],
+      statement:
+        '%name%, make non-concessional contribution of {{0}} per {{1}} from {{2}} to {{3}}. ' +
+        'This contribution is to be funded from {{4}}',
+      types: [EditCellType.number, EditCellType.select, EditCellType.date, EditCellType.date, EditCellType.select],
+      options: ['', periodTypes, '', '', 'investments'],
     },
     customOneOff: {
-      statement: '%name%, make non-concessional contribution of {{0}} in {{1}}',
-      types: [EditCellType.number, EditCellType.select],
-      options: ['', 'year'],
+      statement:
+        '%name%, make non-concessional contribution of {{0}} in {{1}}. ' +
+        'This contribution is to be funded from {{2}}',
+      types: [EditCellType.number, EditCellType.select, EditCellType.select],
+      options: ['', 'year', 'investments'],
     },
   },
   personalDeductible: {
     maximise: {
-      statement: '%name%, maximise personal deductible contributions from {{0}} to {{1}}',
-      types: [EditCellType.date, EditCellType.date],
+      statement:
+        '%name%, maximise personal deductible contributions from {{0}} to {{1}}. ' +
+        'This contribution is to be funded from {{2}}',
+      types: [EditCellType.date, EditCellType.date, EditCellType.select],
+      options: ['', '', 'investments'],
     },
     fixedRegular: {
-      statement: '%name%, make a personal deductible contribution of {{0}} per {{1}} from {{2}} to {{3}}',
-      types: [EditCellType.number, EditCellType.select, EditCellType.date, EditCellType.date],
-      options: ['', periodTypes],
+      statement:
+        '%name%, make a personal deductible contribution of {{0}} per {{1}} from {{2}} to {{3}}. ' +
+        'This contribution is to be funded from {{4}}',
+      types: [EditCellType.number, EditCellType.select, EditCellType.date, EditCellType.date, EditCellType.select],
+      options: ['', periodTypes, '', '', 'investments'],
     },
     customOneOff: {
-      statement: '%name%, make a personal deductible contribution of {{0}} in {{1}}',
-      types: [EditCellType.number, EditCellType.select],
-      options: ['', 'year'],
+      statement:
+        '%name%, make a personal deductible contribution of {{0}} in {{1}}. ' +
+        'This contribution is to be funded from {{2}}',
+      types: [EditCellType.number, EditCellType.select, EditCellType.select],
+      options: ['', 'year', 'investments'],
     },
   },
   spouse: {
     oneOff: {
-      statement: '%name%, maximise a spouse contributions of {{0}} in {{1}} into partner\'s superannuation account',
-      types: [EditCellType.number, EditCellType.select],
-      options: ['', 'year'],
+      statement:
+        '%name%, maximise a spouse contributions of {{0}} in {{1}} into partner\'s superannuation account. ' +
+        'This contribution is to be funded from {{2}}',
+      types: [EditCellType.number, EditCellType.select, EditCellType.select],
+      options: ['', 'year', 'investments'],
     },
     regular: {
       statement:
         '%name%, make a spouse contribution of {{0}} per {{1}}' +
-        'into partner\'s superannuation account from {{2}} to {{3}}',
-      types: [EditCellType.number, EditCellType.select, EditCellType.date, EditCellType.date],
-      options: ['', periodTypes],
+        'into partner\'s superannuation account from {{2}} to {{3}}. ' +
+        'This contribution is to be funded from {{4}}',
+      types: [EditCellType.number, EditCellType.select, EditCellType.date, EditCellType.date, EditCellType.select],
+      options: ['', periodTypes, '', '', 'investments'],
     },
   },
   recontribution: {
     statement:
-      '%name%, withdraw {{0}} from superannuation and recontribute {{1}}' + 'back into superannuation in {{2}}',
-    types: [EditCellType.dropdownFreeText, EditCellType.dropdownFreeText, EditCellType.select],
-    options: ['', '', 'year'],
+      '%name%, withdraw {{0}} from superannuation and recontribute {{1}}' + 'back into superannuation in {{2}}. ' +
+      'This contribution is to be funded from {{3}}',
+    types: [EditCellType.dropdownFreeText, EditCellType.dropdownFreeText, EditCellType.select, EditCellType.select],
+    options: ['', '', 'year', 'superannuation'],
   },
   commenceAccount: { custom: true },
   commenceTransition: { custom: true },
@@ -210,14 +226,16 @@ const strategySentences: any = {
   },
   funeralBond: {
     new: {
-      statement: '%name%, utilise {{0}} from {{1}} to purchase a new funeral bond',
-      types: [EditCellType.number, EditCellType.select],
-      options: ['', '+investments'],
+      custom: true,
+      statement: '%name%, utilise {{0}} from {{1}} to purchase a new funeral bond {{2}}',
+      types: [EditCellType.number, EditCellType.select, EditCellType.text],
+      options: ['', '+investments', { placeholder: 'Enter funeral bond name', quotationMark: true }],
     },
     existing: {
+      custom: true,
       statement: '%name%, utilise {{0}} from {{1}} to top up your {{2}}',
       types: [EditCellType.date, EditCellType.select, EditCellType.select],
-      options: ['', '+investments', '+investments'],
+      options: ['', '+investments', 'funeralBond'],
     },
   },
   customStrategy: {

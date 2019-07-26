@@ -13,6 +13,8 @@ import CustomizedPension from './CustomizedPension';
 import CustomizedInvestment from './CustomizedInvestment';
 import CustomizedExistingInvestment from './CustomizedExistingInvestment';
 import CustomizedWithdrawFunds from './CustomizedWithdrawFunds';
+import { StrategyTypes } from '../../../enums/strategies';
+import CustomizedFuneralBond from './CustomizedFuneralBond';
 
 export interface StrategyItemI {
   id?: string;
@@ -196,20 +198,45 @@ class StrategyItem extends Component<StrategyItemProps> {
           />
         );
       }
+      case 'funeralBond.new': {
+        return (
+          <CustomizedFuneralBond
+            {...this.props}
+            name={getName()}
+            context={context}
+            sentenceKey={sentenceKey}
+            defaultFullValue={defaultFullValue}
+          />
+        );
+      }
+      case 'funeralBond.existing': {
+        return (
+          <CustomizedFuneralBond
+            {...this.props}
+            name={getName()}
+            context={context}
+            sentenceKey={sentenceKey}
+            defaultFullValue={defaultFullValue}
+            existingFuneralBond={true}
+          />
+        );
+      }
       default:
         return null;
     }
   }
 
   public renderText = () => {
-    const { strategy, client, partner, strategyType, strategyIndex, defaultFullValue } = this.props;
+    const { strategy, client, partner, strategyType, strategyIndex, defaultFullValue, setFieldValue } = this.props;
     const strategySentenceKeys = strategy.sentence.split('.');
     const context = head(strategySentenceKeys);
     const sentenceKey = slice(strategySentenceKeys, 1).join('.');
     const strategySentence: Sentence = get(strategySentences, sentenceKey);
+
     if (context && strategySentence.custom) {
       return this.renderCustom(context, sentenceKey);
     }
+
     if (context && strategySentence && strategySentence.statement) {
       const stringReplacedByName = replaceDynamicValues(strategySentence.statement, { context, client, partner });
       const values = strategy.values || [];
@@ -223,16 +250,15 @@ class StrategyItem extends Component<StrategyItemProps> {
             case EditCellType.select: {
               if (isString(options)) {
                 if (options !== 'year') {
+                  let option = options;
                   if (options[0] === '+') {
-                    const option = options.slice(1);
+                    option = options.slice(1);
                     options = [...get(client, option), ...get(partner, option)];
                   } else {
-                    if (context === 'client') {
-                      options = get(client, options);
-                    }
-                    if (context === 'partner') {
-                      options = get(partner, options);
-                    }
+                    options = getOptions(context, { client, partner }, options);
+                  }
+                  if (option === 'investments' && strategyType === StrategyTypes.Superannuation) {
+                    options = [...options, { value: 'cashflow', label: 'Cashflow' }];
                   }
                 } else {
                   optionalProps.yearFi = true;
@@ -260,24 +286,25 @@ class StrategyItem extends Component<StrategyItemProps> {
 
           return (
             <EditCell
-              key={index}
+              key={name}
               name={name}
               type={type}
               value={value}
               options={options}
-              onChange={(val) => {
-                console.log(val);
-              }}
+              onChange={(val) => setFieldValue(name, val)}
               defaultFullValue={defaultFullValue}
               {...optionalProps}
             />
           );
         }
+
         return <Param key={index}>{value}</Param>;
       });
+
       arrayStatements.push(<br key={arrayStatements.length} />);
       return arrayStatements;
     }
+
     console.log('missing sentence key for:', sentenceKey);
     return null;
   }
@@ -304,7 +331,8 @@ class StrategyItem extends Component<StrategyItemProps> {
   }
 
   public render() {
-    const { strategy, mark, margin, strategyType, strategyIndex } = this.props;
+    const { strategy, mark, margin, strategyType, strategyIndex, setFieldValue } = this.props;
+    const customNoteName = `${strategyType}.strategies[${strategyIndex}].customNote`;
 
     return (
       <StrategyTableItems>
@@ -313,10 +341,10 @@ class StrategyItem extends Component<StrategyItemProps> {
           {this.renderText()}
           {typeof strategy.customNote !== 'undefined' && (
             <EditCell
-              name={`${strategyType}.strategies[${strategyIndex}].customNote`}
+              name={customNoteName}
               value={strategy.customNote}
               type={EditCellType.textarea}
-              onChange={(val) => console.log(val)}
+              onChange={(val) => setFieldValue(customNoteName, val)}
               placeholder="Enter custom note"
             />
           )}

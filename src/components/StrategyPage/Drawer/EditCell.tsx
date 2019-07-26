@@ -1,7 +1,7 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import moment, { Moment } from 'moment';
 import numeral from 'numeral';
-import { isEqual } from 'lodash';
+import { isEqual, get } from 'lodash';
 import { DatePicker, Input, Select } from 'antd';
 import { EntryPickerTable } from '../../../common/EntryPicker/styled';
 import { ddFreeTextOptions } from '../../../enums/strategySentences';
@@ -12,23 +12,18 @@ const { MonthPicker } = DatePicker;
 const { Option } = Select;
 const { TextArea } = Input;
 
-interface EditCellProps {
+export interface EditCellProps {
   name: string;
   type?: EditCellType;
   value: any;
-  onChange: (value: any) => void;
+  onChange: (value: any, name: string) => void;
   className?: string;
   placeholder?: string;
-  quotationMark?: boolean;
   options?: any;
   defaultFullValue?: any;
   dollar?: boolean;
   yearFi?: boolean;
   calculateWidth?: boolean;
-}
-
-interface EditaCellState {
-  value: any;
 }
 
 export enum EditCellType {
@@ -40,78 +35,74 @@ export enum EditCellType {
   textarea,
 }
 
-class EditCell extends PureComponent<EditCellProps, EditaCellState> {
-  public state = {
-    value: this.props.value,
-    open: false,
-  };
+class EditCell extends Component<EditCellProps> {
+  public shouldComponentUpdate(nextProps: Readonly<EditCellProps>): boolean {
+    const { value, defaultFullValue, type, options } = this.props;
+    const {
+      value: nextValue,
+      defaultFullValue: nextDefaultFullValue,
+      type: nextType,
+      options: nextOptions,
+    } = nextProps;
 
-  public componentWillReceiveProps(nextProps: Readonly<EditCellProps>, nextContext: any): void {
-    if (!isEqual(this.props.value, nextProps.value)) {
-      this.setState({ value: nextProps.value });
+    if (type === EditCellType.select) {
+      return true;
     }
+
+    return !isEqual(
+      { value, defaultFullValue, type, options: JSON.stringify(options) },
+      {
+        value: nextValue,
+        defaultFullValue: nextDefaultFullValue,
+        type: nextType,
+        options: JSON.stringify(nextOptions),
+      },
+    );
   }
 
-  // public shouldComponentUpdate(
-  //   nextProps: Readonly<EditCellProps>,
-  //   nextState: Readonly<EditaCellState>,
-  //   nextContext: any,
-  // ): boolean {
-  //   // const { value } = this.props;
-  //   // const { value: nextValue } = nextProps;
-  //   const { value } = this.state;
-  //   const { value: nextValue } = nextState;
-  //
-  //   return !isEqual(value, nextValue);
-  // }
-
   public onChange = (value: number | undefined) => {
-    const { onChange } = this.props;
+    const { onChange, name } = this.props;
 
-    this.setState({ value });
-    onChange(value);
+    onChange(value, name);
   }
 
   public onChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { onChange } = this.props;
+    const { onChange, name } = this.props;
     const value = e.target.value;
 
-    this.setState({ value });
-    onChange(value);
+    onChange(value, name);
   }
 
   public onChangeTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { onChange } = this.props;
+    const { onChange, name } = this.props;
     const value = e.target.value;
-    this.setState({ value });
 
-    onChange(value);
+    onChange(value, name);
   }
 
   public handleSelect = (value: any) => {
-    this.setState({ value });
-    const { onChange } = this.props;
-    onChange(value);
+    const { onChange, name } = this.props;
+    onChange(value, name);
   }
 
-  public handleDropdownFreeText = (value: any) => {
-    if (value === 'customAmount') {
-      this.setState({ value: 0 });
-    } else {
-      this.setState({ value });
-    }
+  public handleDropdownFreeText = (val: any) => {
+    const value = val === 'customAmount' ? 0 : val;
+    const { onChange, name } = this.props;
+    onChange(value, name);
   }
 
   public handleChangeDate = (date: Moment, dateString: string | number) => {
     if (date) {
-      this.setState({ value: date.toISOString() });
+      const { onChange, name } = this.props;
+      onChange(date.toISOString(), name);
     }
   }
 
   public renderDate = () => {
-    const { value } = this.state;
+    const { value } = this.props;
+    const momentInput = value ? value : undefined;
     const format = 'MMM YYYY';
-    const momentValue = moment(value);
+    const momentValue = moment(momentInput);
 
     return (
       <EntryPickerTable>
@@ -127,16 +118,15 @@ class EditCell extends PureComponent<EditCellProps, EditaCellState> {
   }
 
   public renderSelect = () => {
-    const { options, yearFi } = this.props;
-    const { value: stateValue } = this.state;
-    const value = stateValue ? stateValue : options[0].value;
+    const { options, yearFi, value: propValue } = this.props;
+    const value = propValue ? propValue : get(options, [0, 'value']);
 
     return (
       <Select onChange={this.handleSelect} value={value} optionLabelProp={yearFi ? 'title' : ''} showArrow={false}>
         {options &&
           options.length > 0 &&
-          options.map((option: { value: any; label: string; renderedLabel?: string }) => (
-            <Option value={option.value} key={option.value} title={option.renderedLabel}>
+          options.map((option: { value: any; label: string; renderedLabel?: string; disabled?: boolean }) => (
+            <Option value={option.value} key={option.value} title={option.renderedLabel} disabled={option.disabled}>
               {option.label}
             </Option>
           ))}
@@ -145,9 +135,8 @@ class EditCell extends PureComponent<EditCellProps, EditaCellState> {
   }
 
   public renderDropdownFreeText = () => {
-    const { defaultFullValue } = this.props;
-    const { value: stateValue } = this.state;
-    const value = stateValue ? stateValue : 0;
+    const { defaultFullValue, value: propValue } = this.props;
+    const value = propValue ? propValue : 0;
     const options = ddFreeTextOptions.map((option: { value: string; label: string }) => {
       if (option.value === 'full_value') {
         const renderedLabel = `$${numeral(defaultFullValue).format('0,0')} (${option.label})`;
@@ -179,27 +168,27 @@ class EditCell extends PureComponent<EditCellProps, EditaCellState> {
   }
 
   public renderInputNumber = () => {
-    const { value: stateValue } = this.state;
-    const value = stateValue ? stateValue : 0;
+    const { value: propValue } = this.props;
+    const value = propValue ? propValue : 0;
     return <NewInputNumber {...this.props} value={value} onChange={this.onChange} />;
   }
 
   public renderInputText = () => {
-    const { calculateWidth, placeholder, quotationMark } = this.props;
-    const { value: stateValue } = this.state;
-    const value = stateValue ? stateValue : '';
+    const { calculateWidth, value: propValue, options: customOptions } = this.props;
+    const { quotationMark = false, ...options } = customOptions || {};
+    const value = propValue ? propValue : '';
     const optionalProps: { [key: string]: any } = {};
 
     if (calculateWidth) {
-      const valueLength = value.length;
+      // if empty and placeholder is set
+      const valueLength = value.length === 0 && options.placeholder ? get(options, 'placeholder.length') : value.length;
       const numberSize = valueLength > 7 ? 8 : 10;
       const minimum = 30;
-      const extraWidth = valueLength > 7 && valueLength < 12 ? 6 : 4;
+      const extraWidth = valueLength > 20 ? -15 : valueLength > 7 && valueLength < 12 ? 6 : 4;
       const width = valueLength * numberSize + extraWidth;
 
       optionalProps.style = {
-        // if empty and placeholder is set
-        width: valueLength === 0 && placeholder ? '140px' : `${width < minimum ? minimum : width}px`,
+        width: `${width < minimum ? minimum : width}px`,
       };
     }
 
@@ -211,26 +200,20 @@ class EditCell extends PureComponent<EditCellProps, EditaCellState> {
             onChange={this.onChangeText}
             className={'edit-cell text'}
             {...optionalProps}
-            placeholder={placeholder}
+            {...options}
           />
         </QuotationMark>
       );
     }
 
     return (
-      <Input
-        value={value}
-        onChange={this.onChangeText}
-        className={'edit-cell text'}
-        {...optionalProps}
-        placeholder={placeholder}
-      />
+      <Input value={value} onChange={this.onChangeText} className={'edit-cell text'} {...optionalProps} {...options} />
     );
   }
 
   public renderInputTextArea = () => {
-    const value = this.state.value || '';
-    const { placeholder, options } = this.props;
+    const { placeholder, options, value: propValue } = this.props;
+    const value = propValue || '';
 
     return <TextArea value={value} placeholder={placeholder} onChange={this.onChangeTextArea} autosize {...options} />;
   }
