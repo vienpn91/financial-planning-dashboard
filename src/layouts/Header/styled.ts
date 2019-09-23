@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Input } from 'antd';
 
 export const TopMenu = styled.div`
@@ -12,7 +12,6 @@ export const TopMenu = styled.div`
 
 export const InputSearch = styled(Input)`
   border: none;
-  margin-left: 10px;
   color: #515C83;
   &:focus{
     outline: none;
@@ -21,9 +20,50 @@ export const InputSearch = styled(Input)`
   }
 `;
 
-export const TopSearch = styled.div`
+export const TopSearch = styled.div<{ border?: boolean }>`
   display: flex;
   align-items: center;
+  ${(props) =>
+    props.border &&
+    css`
+      border: 1px solid #999;
+      margin-top: 20px;
+      max-width: 340px;
+      position: relative;
+      height: 34px;
+      .anticon {
+        position: absolute;
+        right: 10px;
+        cursor: pointer;
+        z-index: 3;
+
+        &.anticon-search {
+          left: 10px;
+          right: unset;
+          font-size: 18px;
+          cursor: default;
+        }
+      }
+    `
+  }
+  .custom-select {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    padding: 0 25px;
+    .ant-select-selection {
+      border: none;
+      box-shadow: none;
+      &__rendered {
+        line-height: 32px;
+      }
+    }
+    .ant-select-selection-selected-value {
+      .code {
+        display: none;
+      }
+    }
+  }
 `;
 
 export const MenuItem = styled.div`

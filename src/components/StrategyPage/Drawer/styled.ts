@@ -185,7 +185,7 @@ export const DrawerTableRows = styled.div<{ noBorder?: boolean; maximumWidth?: b
       text-align: center;
       font-weight: 600;
       padding: 0 5px;
-      color: #4e5d86;
+      // color: #4e5d86;
     }
   }
   .ant-collapse {
@@ -213,7 +213,7 @@ export const DrawerTableRows = styled.div<{ noBorder?: boolean; maximumWidth?: b
     display: inline-block;
     input {
       font-weight: 600;
-      color: #4e5d86;
+      // color: #4e5d86;
       padding: 0px;
     }
     .ant-calendar-picker {
@@ -352,11 +352,18 @@ export const DrawerTableListItems = styled.div`
   }
 `;
 
-export const ActionDrawerGeneral = styled.section<{ visible?: boolean }>`
+export const ActionDrawerGeneral = styled.section<{ visible?: boolean; drawer?: boolean }>`
   display: flex;
   margin: 20px 0 0px 0px;
   flex: 0 0 100%;
   justify-content: flex-end;
+  ${(props) =>
+    props.drawer &&
+    css`
+      flex-direction: column;
+      justify-content: flex-start;
+      margin: 0;
+    `}
   .ant-btn-default {
     background-color: #212121;
     color: #fff;
@@ -364,10 +371,16 @@ export const ActionDrawerGeneral = styled.section<{ visible?: boolean }>`
   .ant-btn {
     font-weight: 600;
     margin-right: 15px;
-    width: 135px;
+    min-width: 135px;
     opacity: ${(props) => (props.visible ? '1' : '0.7')};
     height: 38px;
     border-radius: 18px;
+  }
+  .ant-btn.ant-btn-default[disabled] {
+    opacity: 0.6;
+    &:hover {
+      background-color: #212121;
+    }
   }
 `;
 
@@ -415,5 +428,62 @@ export const QuotationMark = styled.span<{ hideQuotationMark?: boolean }>`
       css`
         display: none;
       `}
+  }
+`;
+
+export const LinkCurrentProductWrapper = styled.div`
+  .ant-select {
+    margin-left: 0px;
+    .ant-select {
+      &-selection {
+        &__choice {
+          font-size: 10px;
+          color: #112054;
+          margin-top: 3px;
+          background-color: rgb(226, 226, 226);
+          border: 1px solid transparent;
+          border-radius: 4px;
+          &__remove {
+            .anticon-close {
+              font-size: 10px !important;
+              background-color: #112054;
+              border-radius: 50%;
+              padding: 2px;
+              color: #fff;
+            }
+          }
+        }
+        &__rendered {
+        }
+      }
+    }
+  }
+`;
+
+export const ProposedBlock = styled.div`
+  margin-top: 20px;
+  height: 41px;
+  .proposed-title {
+    display: flex;
+    justify-content: space-between;
+    &--text {
+      font-size: 13px;
+    }
+  }
+  .ant-checkbox-wrapper {
+    font-size: 13px;
+  }
+  .ant-checkbox-wrapper:hover .ant-checkbox-inner, .ant-checkbox:hover
+  .ant-checkbox-inner, .ant-checkbox-input:focus + .ant-checkbox-inner {
+    border-color: #000;
+  }
+  .ant-checkbox-checked {
+    &::after {
+      border: 1px solid #000;
+    }
+    .ant-checkbox-inner {
+      background-color: #000;
+      border-color: #000;
+    }
   }
 `;

@@ -8,6 +8,8 @@ interface NewInputNumberProps {
   options?: any;
   dollar?: boolean;
   calculateWidth?: boolean;
+  disabled?: boolean;
+  allowEmpty?: boolean;
 }
 
 interface NewInputNumberState {
@@ -36,16 +38,21 @@ class NewInputNumber extends PureComponent<NewInputNumberProps, NewInputNumberSt
   }
 
   public render() {
-    const { options, dollar, calculateWidth } = this.props;
+    const { options, dollar, calculateWidth, disabled } = this.props;
     const { value: stateValue } = this.state;
-    const value = stateValue ? stateValue : 0;
+    let value = stateValue ? stateValue : 0;
+    if (options && options.allowEmpty) {
+      value = stateValue;
+    }
     const optionalProps: { [key: string]: any } = {};
 
     optionalProps.precision = 0;
     if (dollar) {
       optionalProps.formatter = (valueNumber: number) => `$${valueNumber}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       optionalProps.parser = (displayValue: string) => displayValue.replace(/\$\s?|(,*)/g, '');
-      // optionalProps.precision = 2;
+    } else {
+      optionalProps.formatter = (valueNumber: number) => `${valueNumber}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      optionalProps.parser = (displayValue: string) => displayValue.replace(/\$\s?|(,*)/g, '');
     }
     if (options && options.integer) {
       optionalProps.formatter = undefined;
@@ -83,7 +90,14 @@ class NewInputNumber extends PureComponent<NewInputNumberProps, NewInputNumberSt
     }
 
     return (
-      <InputNumber onChange={this.onChange} value={value} className={'edit-cell'} {...optionalProps} {...options} />
+      <InputNumber
+        onChange={this.onChange}
+        value={value}
+        className={'edit-cell'}
+        disabled={disabled}
+        {...optionalProps}
+        {...options}
+      />
     );
   }
 }

@@ -1,6 +1,7 @@
 import { Record } from 'immutable';
 import { map } from 'lodash';
 import { PayloadAction } from '../reducerTypes';
+import { Product } from '../../components/ProductOptimizer/Drawer/DrawerProduct';
 
 export interface Table {
   basicInformation?: object[];
@@ -47,6 +48,17 @@ export interface StrategyEntry {
   partner?: DynamicData;
   joint?: DynamicData;
   defaultFullValue?: any;
+}
+
+export interface ProductOptimizerPage {
+  client: {
+    current: Product[];
+    proposed: Product[];
+  };
+  partner: {
+    current: Product[];
+    proposed: Product[];
+  };
 }
 
 export interface DataEntry {
@@ -97,6 +109,11 @@ export const defaultClientState: ClientState = {
     {
       clientId: 5,
       clientName: 'John Samual',
+      tagList: getDefaultTagList(),
+    },
+    {
+      clientId: 999,
+      clientName: 'Jane Empty',
       tagList: getDefaultTagList(),
     },
   ],

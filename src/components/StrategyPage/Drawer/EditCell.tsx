@@ -7,6 +7,7 @@ import { EntryPickerTable } from '../../../common/EntryPicker/styled';
 import { ddFreeTextOptions } from '../../../enums/strategySentences';
 import { DDFreeText, DrawerTableRows, QuotationMark } from './styled';
 import NewInputNumber from './NewInputNumber';
+import LinkCurrentProduct from './LinkCurrentProduct';
 
 const { MonthPicker } = DatePicker;
 const { Option } = Select;
@@ -24,6 +25,7 @@ export interface EditCellProps {
   dollar?: boolean;
   yearFi?: boolean;
   calculateWidth?: boolean;
+  disabled?: boolean;
 }
 
 export enum EditCellType {
@@ -33,6 +35,7 @@ export enum EditCellType {
   select,
   dropdownFreeText,
   textarea,
+  linkCurrentProduct,
 }
 
 class EditCell extends Component<EditCellProps> {
@@ -122,7 +125,13 @@ class EditCell extends Component<EditCellProps> {
     const value = propValue ? propValue : get(options, [0, 'value']);
 
     return (
-      <Select onChange={this.handleSelect} value={value} optionLabelProp={yearFi ? 'title' : ''} showArrow={false}>
+      <Select
+        onChange={this.handleSelect}
+        value={value}
+        optionLabelProp={yearFi ? 'title' : ''}
+        showArrow={false}
+        dropdownClassName="custom-menu-width"
+      >
         {options &&
           options.length > 0 &&
           options.map((option: { value: any; label: string; renderedLabel?: string; disabled?: boolean }) => (
@@ -168,8 +177,11 @@ class EditCell extends Component<EditCellProps> {
   }
 
   public renderInputNumber = () => {
-    const { value: propValue } = this.props;
-    const value = propValue ? propValue : 0;
+    const { value: propValue, options } = this.props;
+    let value = propValue ? propValue : 0;
+    if (options && options.allowEmpty) {
+      value = propValue;
+    }
     return <NewInputNumber {...this.props} value={value} onChange={this.onChange} />;
   }
 
@@ -218,6 +230,10 @@ class EditCell extends Component<EditCellProps> {
     return <TextArea value={value} placeholder={placeholder} onChange={this.onChangeTextArea} autosize {...options} />;
   }
 
+  public renderLinkCurrentProduct = () => {
+    return <LinkCurrentProduct {...this.props} />;
+  }
+
   public render() {
     const { type } = this.props;
     let input = this.renderInputText();
@@ -240,6 +256,9 @@ class EditCell extends Component<EditCellProps> {
         break;
       case EditCellType.textarea:
         input = this.renderInputTextArea();
+        break;
+      case EditCellType.linkCurrentProduct:
+        input = this.renderLinkCurrentProduct();
         break;
       default:
         break;

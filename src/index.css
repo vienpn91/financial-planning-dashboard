@@ -59,9 +59,26 @@ code {
   position: relative;
 }
 
-body .ant-select-dropdown.ant-select-dropdown--single.ant-select-dropdown-placement-bottomLeft {
+body .select-inline.ant-select-dropdown.ant-select-dropdown--single.ant-select-dropdown-placement-bottomLeft {
   min-width: 145px;
   width: auto !important;
+}
+
+.custom-search-menu li.ant-select-dropdown-menu-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.custom-search-menu .ant-select-dropdown-menu-item .text {
+  /*flex: 1;*/
+}
+
+.custom-search-menu .ant-select-selection-selected-value .code {
+  display: none;
+}
+
+.custom-search-menu.ant-select-dropdown--empty li.ant-select-dropdown-menu-item {
+  justify-content: center;
 }
 
 .no-year-selected .ant-calendar-year-panel-selected-cell .ant-calendar-year-panel-year {
@@ -106,4 +123,21 @@ body .ant-select-dropdown.ant-select-dropdown--single.ant-select-dropdown-placem
 .more-dropdown .delete-action i {
   min-width: 12px;
   margin-right: 8px;
+}
+
+.new-proposed-product .ant-select-tree-checkbox-inner {
+  border-color: #000;
+}
+.new-proposed-product .ant-select-tree-checkbox:hover .ant-select-tree-checkbox-inner {
+  border-color: #000;
+}
+.new-proposed-product .ant-select-tree-checkbox-indeterminate .ant-select-tree-checkbox-inner {
+  border-color: #000;
+}
+.new-proposed-product .ant-select-tree-checkbox-indeterminate .ant-select-tree-checkbox-inner::after {
+  background-color: #000;
+}
+.new-proposed-product .ant-select-tree-checkbox-checked .ant-select-tree-checkbox-inner {
+  background-color: #000;
+  border-color: #000;
 }

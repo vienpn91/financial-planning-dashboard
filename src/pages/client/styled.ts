@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { Tag } from 'antd';
 
 interface HeaderTitleTableProps {
   small?: boolean;
@@ -10,8 +11,14 @@ interface TextTitleProps {
 
 export const TableEntryContainer = styled.section.attrs({
   className: 'table-entry-container',
-})`
+})<{ drawer?: boolean; linkedProduct?: boolean }>`
   padding: 20px;
+  ${(props) =>
+    props.drawer &&
+    css`
+      margin-top: ${props.linkedProduct ? '0px' : '40px'};
+      padding: 20px 0;
+    `}
   .expenditure-table,
   .income-table{
     .ant-table-thead{
@@ -29,19 +36,146 @@ export const TableEntryContainer = styled.section.attrs({
       }
     }
   }
+  .current-product-table{
+    .ant-table-thead{
+      tr{
+        th:first-child{
+          padding-left: 24px
+        }
+      }
+    }
+    .ant-table-tbody{
+      tr{
+        td:first-child{
+          padding-left: 24px;
+        }
+      }
+    }
+  }
+  .drawer-fund-table {
+    .ant-table-thead{
+      tr{
+        th:first-child{
+          padding-left: 36px
+        }
+      }
+    }
+    .ant-table-tbody{
+      tr{
+        td:first-child{
+          padding-left: 36px;
+        }
+        &:last-child {
+          font-weight: 600;
+          .edit-cell {
+            font-weight: 600 !important;
+            .ant-input-number-input {
+              font-weight: 600 !important;
+            }
+            &.ant-input-number-disabled {
+              background-color: #fff;
+              color: rgba(0, 0, 0, 0.65);
+            }
+          }
+        }
+      }
+    }
+    &.linked-product {
+      .ant-table-thead{
+        tr{
+          th:first-child{
+            padding-left: 18px;
+          }
+        }
+      }
+      .ant-table-tbody{
+        tr{
+          td:first-child{
+            padding-left: 6px;
+          }
+        }
+      }
+    }
+    .ant-table-tbody .ant-table-row .strategy-item {
+      width: 100%;
+      input {
+        padding: 4px 11px;
+      }
+
+      .edit-cell {
+        width: 100%;
+        font-weight: normal;
+        text-align: center;
+        .ant-input-number-input {
+          font-weight: normal;
+          text-align: center;
+          padding: 4px;
+        }
+      }
+    }
+  }
+  .proposed-product-table{
+    .ant-table-thead{
+      tr{
+        th:first-child{
+          padding-left: 36px
+        }
+      }
+    }
+  }
+  .text-align-center {
+    text-align: center;
+  }
+  .optimizer-table {
+    .ant-table-thead > tr > th {
+      text-align: left;
+    }
+    .ant-table-tbody > tr > td{
+      vertical-align: baseline;
+    }
+    .ant-table-tbody .ant-table-row .strategy-item {
+      width: 100%;
+      input {
+        padding: 4px 11px;
+      }
+
+      .edit-cell {
+        width: 100%;
+        font-weight: normal;
+        text-align: left;
+        margin-left: -11px;
+        .ant-input-number-input {
+          font-weight: normal;
+          text-align: left;
+        }
+      }
+    }
+  }
   /* table layout here */
   .table-general{
     table{
       table-layout: fixed;
     }
     .ant-table{
-     &.ant-table-small{
-      font-size: 13px;
-      .ant-select{
+      &.ant-table-small{
         font-size: 13px;
-       }
+        .ant-select{
+          font-size: 13px;
+        }
       }
-     }
+    }
+    .anticon {
+      &.projection {
+        margin-right: 10px;
+      }
+      &.remove {
+        font-size: 16px;
+      }
+      &.disabled {
+        opacity: 0.6;
+        cursor: default;
+      }
+    }
     .ant-row.ant-form-item{
       margin: 0px;
       width: 100%;
@@ -58,9 +192,9 @@ export const TableEntryContainer = styled.section.attrs({
         }
       }
     }
-    .ant-select{
-      margin-left: -10px;
-    }
+  .ant-select{
+    margin-left: -10px;
+  }
   .ant-table-expand-icon-col{
     width: 40px;
   }
@@ -110,10 +244,10 @@ export const HeaderTitleTable = styled.div.attrs({
     font-size: ${(props) => (props.small ? '16px' : '24px')};
     color: #072074;
     margin-right: 10px;
-    &:focus{
+    &:focus {
       outline: none;
     }
-     &:hover{
+    &:hover {
       opacity: 0.7;
     }
   }
@@ -137,7 +271,7 @@ export const InnerTableNoDelContainer = styled.section`
   color: #072074;
   font-size: 21px;
   margin-bottom: 20px;
-  .SGContribution-table{
+  .SGContribution-table {
     // max-width: 640px;
     // width: 100%
   }
@@ -176,71 +310,71 @@ export const InnerTableContainer = styled.section`
   color: #072074;
   margin-top: 10px;
   font-size: 21px;
-  .contribution-withdrawals-table{
+  .contribution-withdrawals-table {
     // max-width: 700px;
     // width: 100%
   }
 
   .ant-table-wrapper {
-    &.cover-details-table{
+    &.cover-details-table {
       table {
-        colgroup{
-          .ant-table-expand-icon-col{
+        colgroup {
+          .ant-table-expand-icon-col {
             display: none;
           }
         }
-        .ant-table-thead > tr > th{
-          &:first-child{
+        .ant-table-thead > tr > th {
+          &:first-child {
             display: none;
           }
         }
-        .ant-table-tbody > tr > td{
-          &:first-child{
+        .ant-table-tbody > tr > td {
+          &:first-child {
             display: none;
           }
         }
       }
-      .ant-table-row-expand-icon-cell{
+      .ant-table-row-expand-icon-cell {
         opacity: 0;
         visibility: hidden;
       }
       tr.ant-table-expanded-row,
-      tr.ant-table-expanded-row:hover{
+      tr.ant-table-expanded-row:hover {
         background: transparent;
       }
     }
   }
-  .ant-input-number.ant-input-number-sm.smallInput{
+  .ant-input-number.ant-input-number-sm.smallInput {
     border: none;
   }
   .ant-table-small {
     border: none;
     table {
       margin-left: -24px;
-      .table-expand-datepicker{
-        .dropdown-value{
+      .table-expand-datepicker {
+        .dropdown-value {
           border: 1px solid #d9d9d9;
-          &:hover{
+          &:hover {
             border: 1px solid #515c83;
           }
         }
-        .has-none .anticon-calendar{
+        .has-none .anticon-calendar {
           // display: block;
         }
       }
-      .operation{
+      .operation {
         position: relative;
-        .anticon-close-square{
+        .anticon-close-square {
           position: absolute;
           left: -9px;
           top: 12px;
         }
       }
-       /* margin-left: -32px; */
-       @media(max-width: 1369px){
+      /* margin-left: -32px; */
+      @media (max-width: 1369px) {
         /* margin-left: -21px; */
-       }
-     }
+      }
+    }
     & > .ant-table-content > .ant-table-body {
       margin: 0;
     }
@@ -267,6 +401,22 @@ export const InnerTableContainer = styled.section`
       width: 20px;
       &.operation {
       }
+    }
+  }
+`;
+
+export const TagList = styled.div``;
+
+export const TagStyled = styled(Tag)`
+  &.ant-tag {
+    font-size: 10px;
+    color: #112054;
+    margin-top: 3px;
+    .anticon-close {
+      font-size: 10px !important;
+      background-color: #112054;
+      border-radius: 50%;
+      padding: 2px;
     }
   }
 `;

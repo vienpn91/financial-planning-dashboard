@@ -1,6 +1,11 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { bindActionCreators, Dispatch } from 'redux';
+import { connect } from 'react-redux';
+import { get, isEqual, find } from 'lodash';
+import { Layout, Icon } from 'antd';
+const { Content } = Layout;
+
 import { RootState, StandardAction } from '../../reducers/reducerTypes';
 import {
   Client as IClient,
@@ -10,16 +15,13 @@ import {
   FetchDataEntryPayload,
   Tag,
 } from '../../reducers/client';
-import { connect } from 'react-redux';
-import { get, isEqual, find } from 'lodash';
-import { Layout, Icon } from 'antd';
-const { Content } = Layout;
+import { Tab } from '../../enums/client';
 import Heading from '../../components/Heading/Heading';
 import { ButtonModalFixed } from '../../components/NameAndBirthDay/styled';
 import { HomeDesc, HomePage } from '../home/styled';
 import DataEntryComponent from '../../components/ClientDetailPage/DataEntry';
 import StrategyPage from '../../components/StrategyPage/StrategyPage';
-import { Tab } from '../../enums/client';
+import ProductOptimizer from './productOptimizer';
 
 const getParams = (params: { clientId?: string; tagName?: string; tabName?: string }) => {
   return {
@@ -31,6 +33,10 @@ const getParams = (params: { clientId?: string; tagName?: string; tabName?: stri
 
 interface ClientProps {
   pageData: any;
+  client?: {
+    clientId: number;
+    clientName: string;
+  };
   fetchDataEntry?: (payload: FetchDataEntryPayload) => FetchDataEntryAction;
 }
 
@@ -72,10 +78,10 @@ class Client extends React.PureComponent<RouteComponentProps & ClientProps> {
   }
 
   public render(): JSX.Element {
-    const { match, pageData } = this.props;
+    const { match, pageData, client } = this.props;
     const { clientId, tagName, tabName } = getParams(match.params);
 
-    if (clientId && tagName && tabName) {
+    if (client && clientId && tagName && tabName) {
       switch (tabName) {
         case Tab.Current: {
           return <DataEntryComponent clientId={clientId} tabName={tabName} tagName={tagName} empStatus={''} />;
@@ -83,11 +89,14 @@ class Client extends React.PureComponent<RouteComponentProps & ClientProps> {
         case Tab.Strategy: {
           return <StrategyPage clientId={clientId} pageData={pageData} />;
         }
+        case Tab.ProductOptimizer: {
+          return <ProductOptimizer clientId={clientId} pageData={pageData} />;
+        }
         default: {
           return (
             <HomePage select>
               <Content>
-                <Heading level={2} className="subHeading" titleText="Hi John we missed you." />
+                <Heading level={2} className="subHeading" titleText={`Hi ${client.clientName} we missed you.`} />
                 <HomeDesc>Click the plus button to start your advice</HomeDesc>
                 <ButtonModalFixed size="large" shape="circle" type="primary">
                   <Icon type="plus" />
@@ -102,7 +111,7 @@ class Client extends React.PureComponent<RouteComponentProps & ClientProps> {
     return (
       <HomePage select>
         <Content>
-          <Heading level={2} className="subHeading" titleText="Hi John we missed you." />
+          <Heading level={2} className="subHeading" titleText={`Hi ${client && client.clientName} we missed you.`} />
           <HomeDesc>Click the plus button to start your advice</HomeDesc>
           <ButtonModalFixed size="large" shape="circle" type="primary">
             <Icon type="plus" />
@@ -132,6 +141,7 @@ const mapStateToProps = (state: RootState, ownProps: RouteComponentProps & Clien
   return {
     pageData,
     loading: state.client.get('loading'),
+    client,
   };
 };
 
