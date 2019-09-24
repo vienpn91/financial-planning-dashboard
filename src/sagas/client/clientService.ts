@@ -1,6 +1,8 @@
 import ApiUtils from '../../utils/apiUtils';
-import data from './strategy.json';
-import current from './data.json';
+// import current from './data.json';
+// import strategy from './strategy.json';
+import current from './demo_jsons/step_1a.json';
+import strategy from './demo_jsons/step_2a.json';
 import { PositionValue } from '../../enums/client';
 
 export default class ClientService {
@@ -14,7 +16,19 @@ export default class ClientService {
     const params = [clientId, tabNameValue].join('/');
     const url: string = `/currentPosition/${params}`;
 
-    if (tabNameValue === PositionValue.Strategy) {
+    // TODO we use the default data for Demo
+    let data: any;
+    switch (tabNameValue) {
+      case PositionValue.Current:
+        data = current;
+        break;
+      case PositionValue.Strategy:
+        data = strategy;
+        break;
+      default:
+        break;
+    }
+    if (data) {
       return new Promise((resolve) => {
         setTimeout(() => {
           resolve({
