@@ -6,6 +6,8 @@ import ExpandedLiabilitiesRow, { LiabilityProps } from './ExpandedLiabilitiesRow
 import GeneralTable from '../GeneralTable';
 import { to2Options, liabilitiesTypes, ownerOptions, from2Options } from '../../../enums/options';
 import { removePartnerOption } from '../../../utils/columnUtils';
+import { CurrentTypes } from '../../../enums/currents';
+import AddMenu from '../AddMenu';
 
 interface LiabilitiesTableProps {
   data: object[];
@@ -121,13 +123,14 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
     }
   }
 
-  public handleAdd = () => {
+  public handleAdd = (value: string[]) => {
     const { addRow } = this.props;
+    const [owner, type] = value;
     const newData = {
       key: Date.now(),
       description: 'Home Loan',
-      type: 'nonDeductible',
-      owner: 'client',
+      type,
+      owner,
       value: 100000,
       interest: 4.5,
       from: {
@@ -223,7 +226,7 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
     return (
       <TableEntryContainer>
         <HeaderTitleTable>
-          <Icon type={'plus-square'} theme={'filled'} onClick={this.handleAdd} />
+          <AddMenu onClick={this.handleAdd} type={CurrentTypes.Liabilities} maritalStatus={maritalStatus} />
           <TextTitle>{'Liabilities'}</TextTitle>
         </HeaderTitleTable>
         <GeneralTable
