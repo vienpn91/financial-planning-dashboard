@@ -1,14 +1,15 @@
 import React, { PureComponent } from 'react';
-import { get, map } from 'lodash';
+import { get, map, isFunction } from 'lodash';
 import { Dropdown, Empty, Icon, Menu } from 'antd';
-import { TextTitle } from '../../../pages/client/styled';
-import { StrategyTypes } from '../../../enums/strategies';
-import { HeaderTitleMargin, HeaderTitleMark, HeaderTitleStrategy, StrategyTableContent } from './styled';
-import StrategyItem, { StrategyItemI } from './StrategyItem';
-import { Choice, strategyChoices } from '../../../enums/strategyChoices';
-import { StrategyEntry } from '../../../reducers/client';
 import { connect, FormikContext } from 'formik';
 import uuidv1 from 'uuid/v1';
+
+import { RedrawGraphs, StrategyEntry } from '../../../reducers/client';
+import { StrategyTypes } from '../../../enums/strategies';
+import { Choice, strategyChoices } from '../../../enums/strategyChoices';
+import { TextTitle, Spinner } from '../../../pages/client/styled';
+import { HeaderTitleMargin, HeaderTitleMark, HeaderTitleStrategy, StrategyTableContent } from './styled';
+import StrategyItem, { StrategyItemI } from './StrategyItem';
 
 const { SubMenu, Item } = Menu;
 
@@ -21,13 +22,30 @@ interface StrategyTableProps {
   addItem: (data: StrategyItemI) => void;
   removeItem: (index: number) => void;
   defaultFullValue: any;
+  tableProcessing: string | null;
+
+  redrawGraphs?: (type: string, shouldUpdateGraphs?: boolean) => RedrawGraphs;
 }
 
 class StrategyTable extends PureComponent<FormikPartProps & StrategyTableProps> {
+  public redrawGraphs = (shouldUpdateGraphs: boolean = false) => {
+    const { redrawGraphs, type } = this.props;
+
+    if (isFunction(redrawGraphs)) {
+      redrawGraphs(type, shouldUpdateGraphs);
+    }
+  }
+
   public addItem = (value: string[]): void => {
     const { addItem } = this.props;
+    const [owner, type] = value;
+    let shouldUpdateGraphs = false;
 
+    if (type === 'commenceAccount') {
+      shouldUpdateGraphs = true;
+    }
     addItem({ id: uuidv1(), check: true, sentence: value.join('.') });
+    this.redrawGraphs(shouldUpdateGraphs);
   }
 
   public getOptions = () => {
@@ -65,7 +83,7 @@ class StrategyTable extends PureComponent<FormikPartProps & StrategyTableProps> 
   }
 
   public render() {
-    const { type, removeItem, defaultFullValue, formik } = this.props;
+    const { type, removeItem, defaultFullValue, formik, tableProcessing } = this.props;
     const shouldShowMarkAndMargin = type === StrategyTypes.EstatePlanning;
     const strategies = get(this.props, ['formik', 'values', type, 'strategies'], []);
     const client = get(this.props, ['formik', 'values', 'client'], {});
@@ -77,13 +95,16 @@ class StrategyTable extends PureComponent<FormikPartProps & StrategyTableProps> 
           <Dropdown overlay={this.renderMenu()} trigger={['click']}>
             <Icon type={'plus-square'} theme={'filled'} />
           </Dropdown>
-          <TextTitle small={true}>Strategy</TextTitle>
+          <TextTitle small={true} strategy>
+            Strategy
+          </TextTitle>
           {shouldShowMarkAndMargin && (
             <>
               <HeaderTitleMark>Mark</HeaderTitleMark>
               <HeaderTitleMargin>Margin</HeaderTitleMargin>
             </>
           )}
+          {tableProcessing && tableProcessing === type && <Spinner />}
         </HeaderTitleStrategy>
         <StrategyTableContent>
           {strategies && strategies.length > 0 ? (
@@ -96,6 +117,7 @@ class StrategyTable extends PureComponent<FormikPartProps & StrategyTableProps> 
                 margin={shouldShowMarkAndMargin}
                 mark={shouldShowMarkAndMargin}
                 removeItem={removeItem}
+                redrawGraphs={this.redrawGraphs}
                 client={client}
                 partner={partner}
                 defaultFullValue={defaultFullValue}

@@ -9,8 +9,8 @@ export const HeaderTitleStrategy = styled.div.attrs({})<HeaderTitleStrategyProps
   align-items: center;
   border-bottom: 1px solid #e8e8e8;
   padding-bottom: 10px;
-  width: calc(100% - 20px);
-  i {
+  line-height: 25px;
+  i.anticon {
     font-size: ${(props) => (props.small ? '16px' : '22px')};
     color: #072074;
     margin-right: 10px;
@@ -34,7 +34,6 @@ export const StrategyTableContent = styled.div`
   color: #5f698d;
   max-height: 500px;
   overflow: overlay;
-  padding-right: 20px;
 `;
 export const StrategyTableItems = styled.div`
   display: flex;

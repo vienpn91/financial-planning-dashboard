@@ -33,6 +33,10 @@ export default class ClientReducer {
         return ClientReducer.updateEmpStatus(state, action);
       case ClientActionTypes.UPDATE_ASSETS:
         return ClientReducer.updateAssets(state, action);
+      case ClientActionTypes.TOGGLE_PROCESSING:
+        return state
+          .set('processingDraw', action.payload.processingDraw)
+          .set('tableProcessing', action.payload.tableProcessing);
       default:
         return state;
     }

@@ -1,14 +1,15 @@
 import React from 'react';
 import { get } from 'lodash';
-import StrategyHeader from './StrategyHeader';
-import StrategyContainer from './StrategyContainer';
-import { StrategyTypes } from '../../enums/strategies';
-import { StrategyPageWrapper } from './styled';
-import { StrategyEntry } from '../../reducers/client';
-import DrawerContainer from './Drawer/DrawerContainer';
 import { Form, Formik, FormikActions, FormikProps } from 'formik';
 import { Button, Icon } from 'antd';
+
+import { StrategyEntry } from '../../reducers/client';
+import { StrategyTypes } from '../../enums/strategies';
+import { StrategyPageWrapper } from './styled';
 import { ActionTableGeneral } from '../../pages/client/styled';
+import StrategyHeader from './StrategyHeader';
+import StrategyContainer from './StrategyContainer';
+import DrawerContainer from './Drawer/DrawerContainer';
 
 interface StrategyPageProps {
   clientId: number;
@@ -36,6 +37,12 @@ const StrategyPage = (props: StrategyPageProps) => {
 
   return (
     <StrategyPageWrapper>
+      <StrategyHeader
+        netAssets={netAssets}
+        cashflowComparisons={cashflowComparisons}
+        tax={tax}
+        retirementFunding={retirementFunding}
+      />
       <Formik
         onSubmit={(values: StrategyEntry, actions: FormikActions<StrategyEntry>) => {
           console.log('submitted', values);
@@ -60,12 +67,6 @@ const StrategyPage = (props: StrategyPageProps) => {
         enableReinitialize={true}
         render={(formikProps: FormikProps<StrategyEntry>) => (
           <Form>
-            <StrategyHeader
-              netAssets={formikProps.values.netAssets}
-              cashflowComparisons={formikProps.values.cashflowComparisons}
-              tax={formikProps.values.tax}
-              retirementFunding={formikProps.values.retirementFunding}
-            />
             {formikProps.values.superannuation && defaultFullValue && (
               <StrategyContainer type={StrategyTypes.Superannuation} defaultFullValue={defaultFullValue} />
             )}

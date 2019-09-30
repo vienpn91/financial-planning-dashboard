@@ -13,6 +13,7 @@ import {
   DataEntry,
   FetchDataEntryAction,
   FetchDataEntryPayload,
+  RedrawGraphs,
   Tag,
 } from '../../reducers/client';
 import { Tab } from '../../enums/client';

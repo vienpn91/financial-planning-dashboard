@@ -1,6 +1,6 @@
 import { Record } from 'immutable';
 import { map } from 'lodash';
-import { PayloadAction } from '../reducerTypes';
+import { PayloadAction, StandardAction } from '../reducerTypes';
 import { Product } from '../../components/ProductOptimizer/Drawer/DrawerProduct';
 
 export interface Table {
@@ -89,6 +89,8 @@ export interface Client {
 
 export interface ClientState {
   clients: Client[];
+  processingDraw: boolean;
+  tableProcessing: string | null;
   loading?: boolean;
   submitting?: boolean;
   error?: string;
@@ -131,6 +133,8 @@ export const defaultClientState: ClientState = {
   empStatus: '',
   loading: false,
   submitting: false,
+  processingDraw: false,
+  tableProcessing: null,
   error: '',
 };
 
@@ -155,6 +159,8 @@ export enum ClientActionTypes {
   UPDATE_MARITAL_STATE = 'client/UPDATE_MARITAL_STATE',
   UPDATE_EMP_STATUS = 'client/UPDATE_EMP_STATUS',
   UPDATE_ASSETS = 'client/UPDATE_ASSETS',
+  REDRAW_GRAPHS = 'client/REDRAW_GRAPHS',
+  TOGGLE_PROCESSING = 'client/TOGGLE_PROCESSING',
 }
 
 export interface FetchDataEntryPayload {
@@ -185,4 +191,8 @@ export type UpdateEmpStatus = PayloadAction<ClientActionTypes.UPDATE_EMP_STATUS,
 export type UpdateAssetsAction = PayloadAction<
   ClientActionTypes.UPDATE_ASSETS,
   Array<{ description: string; type: string; refId: number }>
+>;
+export type RedrawGraphs = PayloadAction<
+  ClientActionTypes.REDRAW_GRAPHS,
+  { type: string; shouldUpdateGraphs?: boolean }
 >;
