@@ -40,6 +40,7 @@ export interface GraphData {
   xAxis: string[];
   current: number[];
   proposed: number[];
+  title?: string;
 }
 export interface StrategyEntry {
   superannuation?: Strategy;
@@ -194,5 +195,5 @@ export type UpdateAssetsAction = PayloadAction<
 >;
 export type RedrawGraphs = PayloadAction<
   ClientActionTypes.REDRAW_GRAPHS,
-  { type: string; shouldUpdateGraphs?: boolean }
+  FetchDataEntryPayload & { type: string; shouldUpdateGraphs?: boolean }
 >;
