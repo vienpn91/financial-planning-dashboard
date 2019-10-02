@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components';
 import { Button } from 'antd';
 export const DocumentsWrapper = styled.section`
   padding: 20px;
-  
   .header-step-document{
     margin-bottom: 65px;
     .ant-steps-item-process{
@@ -20,8 +19,7 @@ export const DocumentsWrapper = styled.section`
         }
         & > .ant-steps-item-description{
           color: #616a8e;
-          font-size: 12px;
-          line-height: 14px;
+          max-width: 120px;
         }
       }
     }
@@ -76,4 +74,31 @@ export const BtnStepDocument = styled(Button).attrs({
     background-color: #192A6F;
     border-color: #192A6F;
   }
+`;
+export const StepWrapper = styled.section`
+  padding: 0 32px;
+`;
+
+
+export const TitleStep = styled.div.attrs({
+  className: 'document-title-step',
+})`
+  color: #515c83;
+  text-transform: capitalize;
+  font-weight: 600;
+  margin-bottom: 5px;
+  width: 100%;
+  display: inline-block;
+  font-size: 16px;
+`;
+
+export const TitleStepSmall = styled.div.attrs({
+  className: 'document-title-step-small',
+})`
+  color: #9096af;
+  text-transform: capitalize;
+  font-size: 13px;
+  margin-bottom: 20px;
+  width: 100%;
+  display: inline-block;
 `;

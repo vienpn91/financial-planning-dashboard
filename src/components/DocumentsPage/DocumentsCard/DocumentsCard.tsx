@@ -1,6 +1,10 @@
 import React from 'react';
-import { Card } from 'antd';
 
+import {
+  DocumentsCardWrapper,
+  CardBlock,
+  CardBlockText,
+} from './styled';
 export interface DocumentsCardProps {
   title?: string;
   extra?: string;
@@ -9,18 +13,34 @@ export interface DocumentsCardProps {
 class DocumentsCard extends React.PureComponent<DocumentsCardProps> {
   public render(): JSX.Element {
     return (
-      <div>
-        <Card title="Default size card" extra={<a href="#">More</a>} style={{ width: 300 }}>
-          <p>Card content</p>
-          <p>Card content</p>
-          <p>Card content</p>
-        </Card>
-        <Card size="small" title="Small size card" extra={<a href="#">More</a>} style={{ width: 300 }}>
-          <p>Card content</p>
-          <p>Card content</p>
-          <p>Card content</p>
-        </Card>
-    </div>
+      <DocumentsCardWrapper>
+        <CardBlock title="Contributions">
+          <CardBlockText>Contributions</CardBlockText>
+           <CardBlockText>Platform review </CardBlockText>
+           <CardBlockText>Portfolio review </CardBlockText>
+           <CardBlockText>SMSF </CardBlockText>
+        </CardBlock>
+        <CardBlock title="Retirement Income">
+           <CardBlockText>Income streams </CardBlockText>
+           <CardBlockText>Platform review </CardBlockText>
+           <CardBlockText>Portfolio review </CardBlockText>
+       </CardBlock>
+        <CardBlock title="Investment">
+           <CardBlockText>Direct shares </CardBlockText>
+           <CardBlockText>Portfolio review </CardBlockText>
+       </CardBlock>
+        <CardBlock title="Estate Planning">
+           <CardBlockText>Super death benefit nomination </CardBlockText>
+       </CardBlock>
+        <CardBlock title="Aged Care">
+           <CardBlockText>Home Care </CardBlockText>
+       </CardBlock>
+        <CardBlock title="New Title">
+           <CardBlockText>Card content </CardBlockText>
+           <CardBlockText>Card content </CardBlockText>
+           <CardBlockText>Card content </CardBlockText>
+       </CardBlock>
+    </DocumentsCardWrapper>
     );
   }
 }

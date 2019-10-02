@@ -1,6 +1,8 @@
 import React from 'react';
 import { Steps, Button, message } from 'antd';
 import DocumentsCard from './DocumentsCard/DocumentsCard';
+import DocumentsStep1 from './DocumentsStep1/DocumentsStep1';
+import DocumentsStep2 from './DocumentsStep2/DocumentsStep2';
 import DocumentsCarousel from './DocumentsCarousel/DocumentsCarousel';
 import { DocumentsWrapper,
   StepActionDocument,
@@ -10,12 +12,12 @@ const { Step } = Steps;
 const steps = [
   {
     title: 'Step 1',
-    content:'Step 1',
+    content: <DocumentsCarousel />,
     description: 'Reason for seeking advice',
   },
   {
     title: 'Step 2',
-    content: <DocumentsCarousel />,
+    content: <DocumentsStep2 />,
     description: 'What the advice cover',
   },
   {
