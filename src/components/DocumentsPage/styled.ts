@@ -20,10 +20,20 @@ export const DocumentsWrapper = styled.section`
         & > .ant-steps-item-description{
           color: #616a8e;
           max-width: 120px;
+          font-size: 12px;
+          line-height: 14px;
         }
       }
     }
-
+    .ant-steps-item-finish{
+      & > .ant-steps-item-content{
+        & > .ant-steps-item-description{
+          font-size: 12px;
+          line-height: 14px;
+          max-width: 120px;
+        }
+      }
+    }
     .ant-steps-item-wait {
       .ant-steps-item-icon{
         border-color: #9ba2b8;
@@ -77,9 +87,32 @@ export const BtnStepDocument = styled(Button).attrs({
 `;
 export const StepWrapper = styled.section`
   padding: 0 32px;
+  .documents-table {
+    margin-bottom: 50px;
+    .ant-table-thead {
+      background-color: #eceef1;
+      & > tr {
+        display: flex;
+        & > th{
+          background-color: #ebeef1;
+          color: #515c83;
+          flex: 1;
+          font-weight: 600;
+        }
+      }
+    }
+    .ant-table-tbody{
+      font-size: 13px;
+      & > tr {
+        display: flex;
+        & > td{
+          flex: 1;
+          color: #586388;
+        }
+      }
+    }
+  }
 `;
-
-
 export const TitleStep = styled.div.attrs({
   className: 'document-title-step',
 })`

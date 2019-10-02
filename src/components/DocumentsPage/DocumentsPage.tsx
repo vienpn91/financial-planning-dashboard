@@ -3,6 +3,12 @@ import { Steps, Button, message } from 'antd';
 import DocumentsCard from './DocumentsCard/DocumentsCard';
 import DocumentsStep1 from './DocumentsStep1/DocumentsStep1';
 import DocumentsStep2 from './DocumentsStep2/DocumentsStep2';
+import DocumentsStep3 from './DocumentsStep3/DocumentsStep3';
+import DocumentsStep4 from './DocumentsStep4/DocumentsStep4';
+import DocumentsStep5 from './DocumentsStep5/DocumentsStep5';
+import DocumentsStep6 from './DocumentsStep6/DocumentsStep6';
+import DocumentsStep7 from './DocumentsStep7/DocumentsStep7';
+import DocumentsStep8 from './DocumentsStep8/DocumentsStep8';
 import DocumentsCarousel from './DocumentsCarousel/DocumentsCarousel';
 import { DocumentsWrapper,
   StepActionDocument,
@@ -12,7 +18,7 @@ const { Step } = Steps;
 const steps = [
   {
     title: 'Step 1',
-    content: <DocumentsCarousel />,
+    content: <DocumentsStep1 />,
     description: 'Reason for seeking advice',
   },
   {
@@ -22,32 +28,32 @@ const steps = [
   },
   {
     title: 'Step 3',
-    content: 'Last-content',
+    content: <DocumentsStep3 />,
     description: 'What the advice does not cover',
   },
   {
     title: 'Step 4',
-    content: 'First-content',
+    content: <DocumentsStep4 />,
     description: 'Client is goals',
   },
   {
     title: 'Step 5',
-    content: 'Second-content',
+    content: <DocumentsStep5 />,
     description: 'Limitations of client is information',
   },
   {
     title: 'Step 6',
-    content: 'Last-content',
+    content: <DocumentsStep6 />,
     description: 'Summary of recommendation',
   },
   {
     title: 'Step 7',
-    content: 'Last-content',
+    content: <DocumentsStep7 />,
     description: 'Cost of advice',
   },
   {
     title: 'Step 8',
-    content: 'Last-content',
+    content: <DocumentsStep8 />,
     description: 'Cost of advice',
   },
 ];

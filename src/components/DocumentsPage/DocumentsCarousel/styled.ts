@@ -3,28 +3,7 @@ import styled from 'styled-components';
 export const CarouselWrapper = styled.section.attrs({
   className: 'carousel-wrapper',
   })`
-  .documents-table{
-    margin-bottom: 50px;
-    .ant-table-thead {
-      & > tr {
-          & > th{
-            background-color: #ebeef1;
-            color: #515c83;
-          }
-        }
-      }
-    }
-    .ant-table-tbody{
-      & > tr {
-          & > td{
-            color: #586388;
-          }
-        }
-      }
-    }
-  }
-  
-  .ant-carousel  {
+  .ant-carousel {
     .slick-dots {
       li{
         margin: 5px 2px;

@@ -39,6 +39,7 @@ export const CardBlockText = styled.p.attrs({
   color: #515c83;
   position: relative;
   padding-left: 15px;
+  margin-bottom: 5px;
   &::after{
     width: 6px;
     height: 6px;

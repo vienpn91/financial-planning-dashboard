@@ -3,19 +3,18 @@ import { Carousel, Table } from 'antd';
 import cn from 'classnames';
 
 export interface DocumentsCarouselProps {
+  slideNumber?: number;
   effect?: string;
   dotPosition?: string;
 }
-import {
-  CarouselItem,
-  CarouselWrapper,
-} from './styled';
+import { CarouselItem, CarouselWrapper } from './styled';
 class DocumentsCarousel extends React.PureComponent<DocumentsCarouselProps> {
   public dataSource = [
     {
       key: '1',
       insurance: 'Insurance Nominations',
-      reason: 'You have informed us that your estate planning arrangements are in place and you do not require it to be re-addressed',
+      reason:
+        'You have informed us that your estate planning arrangements are in place and you do not require it to be re-addressed',
     },
     {
       key: '2',
@@ -69,7 +68,6 @@ class DocumentsCarousel extends React.PureComponent<DocumentsCarouselProps> {
               dataSource={this.dataSource}
               pagination={false}
             />
-
           </CarouselItem>
           <CarouselItem>
             <Table
@@ -86,7 +84,6 @@ class DocumentsCarousel extends React.PureComponent<DocumentsCarouselProps> {
               dataSource={this.dataSource}
               pagination={false}
             />
-
           </CarouselItem>
         </Carousel>
       </CarouselWrapper>
