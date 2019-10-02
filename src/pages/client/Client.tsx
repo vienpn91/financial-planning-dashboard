@@ -23,6 +23,7 @@ import DataEntryComponent from '../../components/ClientDetailPage/DataEntry';
 import StrategyPage from '../../components/StrategyPage/StrategyPage';
 import ProductOptimizer from './productOptimizer';
 import Insurance from './insurance';
+import DocumentsPage from '../../components/DocumentsPage/DocumentsPage';
 
 export const getParams = (params: { clientId?: string; tagName?: string; tabName?: string }) => {
   return {
@@ -96,6 +97,9 @@ class Client extends React.PureComponent<RouteComponentProps & ClientProps> {
         }
         case Tab.Insurance: {
           return <Insurance clientId={clientId} pageData={pageData} />;
+        }
+        case Tab.Documents: {
+          return <DocumentsPage />;
         }
         default: {
           return (
