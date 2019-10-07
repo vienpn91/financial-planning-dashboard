@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Steps, message } from 'antd';
 
 import DocumentsStep1 from './DocumentsStep1/DocumentsStep1';
@@ -66,14 +66,20 @@ export interface Row {
   [key: string]: any;
 }
 
+interface Column {
+  dataIndex: string;
+  title: string;
+  type?: number;
+}
+
 interface Table {
-  columns: Array<string | { dataIndex: string; title: string }>;
+  columns: Array<string | Column>;
   data: Row[];
 }
 
 export interface Record {
   type?: string;
-  header: string;
+  header?: string;
   title: string;
   subtitle?: string;
   table: Table;

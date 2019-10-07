@@ -1,87 +1,65 @@
 import React from 'react';
-import { Table } from 'antd';
 import { connect } from 'formik';
 
-import {
-  TitleStep,
-  TitleStepSmall,
-  StepWrapper,
-} from '../styled';
-import {
-  DocumentsStep7WP,
-} from './styled';
+import { StepWrapper } from '../styled';
 import { DocumentData, FormikPartProps } from '../DocumentsPage';
+import CardDetails from '../DocumentsCarousel/CardDetails';
 
-class DocumentsStep7 extends React.PureComponent<FormikPartProps> {
-  public dataSource = [
-    {
-      key: '1',
-      description: 'Preparation fee',
-      cost: '',
-      amount: '',
-      pratice: '',
-      advisor: '',
-    },
-    {
-      key: '2',
-      description: 'Ongoing advisor service fee',
-      cost: '',
-      amount: '',
-      pratice: '',
-      advisor: '',
-    },
-    {
-      key: '3',
-      description: 'Enter Desciption',
-      cost: '',
-      amount: '',
-      pratice: '',
-      advisor: '',
-    },
-  ];
-  public columns = [
-    {
-      title: 'Description',
-      dataIndex: 'description',
-      key: 'description',
-    },
-    {
-      title: 'Cost to you',
-      dataIndex: 'cost',
-      key: 'cost',
-    },
-    {
-      title: 'Calculation of amount reviewed by us',
-      dataIndex: 'amount',
-      key: 'amount',
-    },
-    {
-      title: 'Practice retainer',
-      dataIndex: 'pratice',
-      key: 'pratice',
-    },
-    {
-      title: 'Advisor retainer',
-      dataIndex: 'advisor',
-      key: 'advisor',
-    },
-  ];
-  public render(): JSX.Element {
-    return (
-      <StepWrapper>
-        <TitleStep>Cost of advice</TitleStep>
-        <TitleStepSmall>List the costs to the client associated with preparing this advice</TitleStepSmall>
-        <DocumentsStep7WP>
-          <Table
-            className={`table-general documents-table`}
-            columns={this.columns}
-            dataSource={this.dataSource}
-            pagination={false}
-          />
-        </DocumentsStep7WP>
+const step7 = {
+  title: 'Cost of advice',
+  subtitle: 'List the costs to the client associated with preparing this advice',
+  table: {
+    columns: [
+      {
+        title: 'Description',
+        dataIndex: 'description',
+        width: 200,
+      },
+      {
+        title: 'Cost to you',
+        dataIndex: 'cost',
+      },
+      {
+        title: 'Calculation of amount reviewed by us',
+        dataIndex: 'amount',
+        width: 300,
+      },
+      {
+        title: 'Practice retainer',
+        dataIndex: 'practice',
+      },
+      {
+        title: 'Advisor retainer',
+        dataIndex: 'advisor',
+      },
+    ],
+    data: [
+      {
+        id: 1,
+        description: 'Preparation fee',
+        cost: '',
+        amount: '',
+        practice: '',
+        advisor: '',
+      },
+      {
+        id: 1,
+        description: 'Ongoing advisor service fee',
+        cost: '',
+        amount: '',
+        practice: '',
+        advisor: '',
+      },
+    ],
+  },
+};
+
+const DocumentsStep7 = (props: FormikPartProps) => {
+  return (
+    <StepWrapper>
+      <CardDetails record={step7} />
     </StepWrapper>
-    );
-  }
-}
+  );
+};
 
 export default connect<{}, DocumentData>(DocumentsStep7);

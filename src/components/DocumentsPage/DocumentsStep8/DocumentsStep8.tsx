@@ -2,11 +2,7 @@ import React from 'react';
 import { Icon } from 'antd';
 import { connect } from 'formik';
 
-import {
-  TitleStep,
-  TitleStepSmall,
-  StepWrapper,
-} from '../styled';
+import { StepWrapper, TitleStep, TitleStepSmall } from '../styled';
 import {
   DocumentsStep8WP,
   CardThumbnailCompleted,
@@ -44,15 +40,19 @@ class DocumentsStep8 extends React.PureComponent<FormikPartProps> {
             </CardThumbnailItem>
             <CardThumbnailChecked>
               <TitleCard>Insurance Optimizer</TitleCard>
-              <DoneCard><Icon type="check" /></DoneCard>
+              <DoneCard>
+                <Icon type="check" />
+              </DoneCard>
             </CardThumbnailChecked>
             <CardThumbnailChecked>
               <TitleCard>Document Builder</TitleCard>
-              <DoneCard><Icon type="check" /></DoneCard>
+              <DoneCard>
+                <Icon type="check" />
+              </DoneCard>
             </CardThumbnailChecked>
           </CardThumbnailCompleted>
         </DocumentsStep8WP>
-    </StepWrapper>
+      </StepWrapper>
     );
   }
 }
