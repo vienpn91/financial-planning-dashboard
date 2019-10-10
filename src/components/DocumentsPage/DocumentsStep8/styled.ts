@@ -6,13 +6,14 @@ export const DocumentsStep8WP = styled.div.attrs({
   margin-bottom: 50px;
 `;
 
-export const CardThumbnailCompleted = styled.div`
+export const ListCardThumbnails = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 `;
 
 export const CardThumbnailItem = styled.div`
+  cursor: pointer;
   flex: 0 0 27%;
   margin: 15px 10px;
   flex-direction: column;

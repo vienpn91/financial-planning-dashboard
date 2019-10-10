@@ -1,60 +1,58 @@
-import React from 'react';
-import { Icon } from 'antd';
+import React, { useContext, useEffect, useState } from 'react';
+import { get, map } from 'lodash';
 import { connect } from 'formik';
 
 import { StepWrapper, TitleStep, TitleStepSmall } from '../styled';
-import {
-  DocumentsStep8WP,
-  CardThumbnailCompleted,
-  CardThumbnailItem,
-  CardThumbnailChecked,
-  TitleCard,
-  NumberCard,
-  StatusCard,
-  DoneCard,
-} from './styled';
-import { DocumentData, FormikPartProps } from '../DocumentsPage';
+import { DocumentsStep8WP, ListCardThumbnails } from './styled';
+import { DocumentData, FormikPartProps, Record, SwitcherContext } from '../DocumentsPage';
+import CardStatistic from './CardStatistic';
+import DocumentsCarousel from '../DocumentsCarousel/DocumentsCarousel';
 
-class DocumentsStep8 extends React.PureComponent<FormikPartProps> {
-  public render(): JSX.Element {
-    return (
-      <StepWrapper>
-        <TitleStep>Regulatory compliance</TitleStep>
-        <TitleStepSmall>The following issues were flagged</TitleStepSmall>
-        <DocumentsStep8WP>
-          <CardThumbnailCompleted>
-            <CardThumbnailItem>
-              <TitleCard>Current Position</TitleCard>
-              <NumberCard>2</NumberCard>
-              <StatusCard>Open issues</StatusCard>
-            </CardThumbnailItem>
-            <CardThumbnailItem>
-              <TitleCard>Strategy</TitleCard>
-              <NumberCard>1</NumberCard>
-              <StatusCard>Open issues</StatusCard>
-            </CardThumbnailItem>
-            <CardThumbnailItem>
-              <TitleCard>Product Optimizer</TitleCard>
-              <NumberCard>2</NumberCard>
-              <StatusCard>Open issues</StatusCard>
-            </CardThumbnailItem>
-            <CardThumbnailChecked>
-              <TitleCard>Insurance Optimizer</TitleCard>
-              <DoneCard>
-                <Icon type="check" />
-              </DoneCard>
-            </CardThumbnailChecked>
-            <CardThumbnailChecked>
-              <TitleCard>Document Builder</TitleCard>
-              <DoneCard>
-                <Icon type="check" />
-              </DoneCard>
-            </CardThumbnailChecked>
-          </CardThumbnailCompleted>
-        </DocumentsStep8WP>
-      </StepWrapper>
-    );
+const DocumentsStep8 = (props: FormikPartProps) => {
+  const [slideNumber, setSlideNumber] = useState<number>(-1);
+  const context = useContext(SwitcherContext);
+  if (!context) {
+    return null;
   }
-}
+  const { switcherContext, setSwitcherContext } = context;
+  const updateSlideNumber = (slide: number) => () => {
+    setSlideNumber(slide);
+    setSwitcherContext(false);
+  };
+
+  useEffect(() => {
+    if (slideNumber > -1 && switcherContext) {
+      setSlideNumber(-1);
+      setSwitcherContext(false);
+    }
+  }, [switcherContext]);
+  const records = get(props, 'formik.values.step8.records', []);
+
+  return (
+    <StepWrapper>
+      <DocumentsStep8WP>
+        {slideNumber > -1 ? (
+          <DocumentsCarousel
+            slideNumber={slideNumber}
+            cards={records}
+            stepName="step8"
+            setFieldValue={props.formik.setFieldValue}
+            overwrite={true}
+          />
+        ) : (
+          <>
+            <TitleStep>{get(props, 'formik.values.step8.title')}</TitleStep>
+            <TitleStepSmall>{get(props, 'formik.values.step8.subtitle')}</TitleStepSmall>
+            <ListCardThumbnails>
+              {map(records, (record: Record, index: number) => (
+                <CardStatistic record={record} key={index} onClick={updateSlideNumber(index)} />
+              ))}
+            </ListCardThumbnails>
+          </>
+        )}
+      </DocumentsStep8WP>
+    </StepWrapper>
+  );
+};
 
 export default connect<{}, DocumentData>(DocumentsStep8);

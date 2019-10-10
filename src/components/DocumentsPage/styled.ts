@@ -5,6 +5,11 @@ export const DocumentsWrapper = styled.section`
   padding: 20px;
   .header-step-document {
     margin-bottom: 65px;
+    .ant-steps-item {
+      &:hover {
+        cursor: pointer;
+      }
+    }
     .ant-steps-item-process {
       .ant-steps-item-icon {
         background: #1790ff;
@@ -107,6 +112,25 @@ export const StepWrapper = styled.section`
         }
       }
     }
+    &.expanded-table {
+      // .ant-table-row-expand-icon-cell,
+      // .ant-table-expand-icon-th {
+      //   width: 0px;
+      // }
+      .ant-table-tbody > tr > td {
+        border-bottom: none;
+      }
+      tr.ant-table-expanded-row {
+        background-color: #fff;
+        td {
+          border-bottom: 1px solid #e8e8e8;
+          padding: 0;
+        }
+        .strategy-item {
+          margin: 16px;
+        }
+      }
+    }
   }
   .strategy-item {
     width: 100%;
@@ -116,6 +140,20 @@ export const StepWrapper = styled.section`
       font-weight: normal;
       padding: 0 10px;
       margin-left: -10px;
+    }
+  }
+  .strikethrough {
+    .strategy-item {
+      .ant-input.edit-cell {
+        text-decoration: line-through;
+      }
+    }
+  }
+  .underline {
+    .strategy-item {
+      .ant-input.edit-cell {
+        text-decoration: underline;
+      }
     }
   }
 `;

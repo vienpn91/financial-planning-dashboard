@@ -1,109 +1,61 @@
 import React from 'react';
 import { isFunction } from 'lodash';
 
-import { DocumentsCardWrapper, CardBlock, CardBlockText } from './styled';
+import { DocumentsCardWrapper } from './styled';
 import CardThumbnail from './CardThumbnail';
-import { StepWrapper, TitleStep, TitleStepSmall } from '../styled';
+import { TitleStep, TitleStepSmall } from '../styled';
+import { Record } from '../DocumentsPage';
+import { FieldArray, FieldArrayRenderProps } from 'formik';
 
 interface DocumentsCardProps {
-  setSlideNumber?: (slideNumber: number) => void;
-  title?: string;
-  extra?: string;
+  cards: Record[];
+  stepName: string;
+  title: string;
+  subtitle?: string;
+  setSlideNumber: (slideNumber: number) => void;
 }
 
-const fixedCard1 = {
-  type: 'fixed',
-  header: 'Super',
-  title: 'What the advice cover (Superannuation)',
-  subtitle: 'Record the Superannuation-related scope of advice, as agreed between you and the client.',
-  table: {
-    columns: ['Superannuation', 'Advice Limitations'],
-    data: [
-      {
-        id: 1,
-        value: 'Contributions',
-        description: 'No Limitations',
-      },
-      {
-        id: 2,
-        value: 'Platform Review',
-        description: 'No Limitations',
-      },
-      {
-        id: 3,
-        value: 'Portfolio Review',
-        description: 'No Limitations',
-      },
-      {
-        id: 4,
-        value: 'SMSF',
-        description: 'No Limitations',
-      },
-    ],
-  },
-};
-
-const fixedCard2 = {
-  type: 'fixed',
-  header: 'Retirement Income',
-  title: 'What the advice cover (Retirement Income)',
-  subtitle: 'Record the Retirement Income-related scope of advice, as agreed between you and the client.',
-  table: {
-    columns: ['Retirement Income', 'Advice Limitations'],
-    data: [
-      {
-        id: 1,
-        value: '',
-        description: 'No Limitations',
-      },
-    ],
-  },
-};
-
-const userCard = {
-  type: 'user',
-  header: 'Test',
-  title: 'What the advice cover (Test)',
-  subtitle: 'Record the Test-related scope of advice, as agreed between you and the client.',
-  table: {
-    columns: ['Test', 'Advice Limitations'],
-    data: [
-      {
-        id: 1,
-        value: 'Lorem',
-        description: 'Lorem ipsum dolor sit amet',
-      },
-      {
-        id: 2,
-        value: 'Some text',
-        description: 'Some description',
-      },
-    ],
-  },
-};
-
-class DocumentsCard extends React.PureComponent<DocumentsCardProps> {
-  public goToSlide = (slide: number) => () => {
-    const { setSlideNumber } = this.props;
+const DocumentsCard = (props: DocumentsCardProps) => {
+  const { stepName, cards, title, subtitle, setSlideNumber } = props;
+  const goToSlide = (slide: number) => () => {
     if (isFunction(setSlideNumber)) {
       setSlideNumber(slide);
     }
-  }
+  };
 
-  public render(): JSX.Element {
-    return (
-      <>
-        <TitleStep>What the advice covers</TitleStep>
-        <TitleStepSmall>Record the scope of advice, as agreed between you and the client.</TitleStepSmall>
-        <DocumentsCardWrapper>
-          <CardThumbnail record={fixedCard1} onClick={this.goToSlide(0)} />
-          <CardThumbnail record={fixedCard2} onClick={this.goToSlide(0)} />
-          <CardThumbnail record={userCard} onClick={this.goToSlide(0)} />
-          <CardThumbnail />
-        </DocumentsCardWrapper>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <TitleStep>{title}</TitleStep>
+      <TitleStepSmall>{subtitle}</TitleStepSmall>
+      <DocumentsCardWrapper>
+        <FieldArray
+          name={`${stepName}.records`}
+          render={(fieldArrayProps: FieldArrayRenderProps) => {
+            const onAddNewCard = (header: string) => {
+              const description = cards[0].table.columns[1];
+
+              fieldArrayProps.push({
+                type: 'user',
+                header,
+                title: header,
+                subtitle: '',
+                table: { columns: [header, description], data: [] },
+              });
+            };
+
+            return (
+              <>
+                {cards.map((card: Record, index: number) => (
+                  <CardThumbnail record={card} onClick={goToSlide(index)} key={index} />
+                ))}
+                <CardThumbnail onAdd={onAddNewCard} />
+              </>
+            );
+          }}
+        />
+      </DocumentsCardWrapper>
+    </>
+  );
+};
 
 export default DocumentsCard;

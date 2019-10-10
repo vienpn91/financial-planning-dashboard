@@ -17,12 +17,7 @@ export const CardBlock = styled(Card).attrs({
   margin-bottom: 20px !important;
   border-color: #9599a8 !important;
   border-radius: 5px !important;
-  ${(props) =>
-    props.isplaceholder &&
-    css`
-      border-color: #cecece !important;
-    `}
-  &:nth-child(3n+2) {
+  &:nth-child(3n + 2) {
     margin: 0px 20px 20px 20px;
   }
   .ant-card-body {
@@ -48,6 +43,7 @@ export const CardBlock = styled(Card).attrs({
         text-align: left;
         border: none;
         font-size: 15px;
+        font-weight: 600;
         color: #515c83;
 
         &:focus {
@@ -56,6 +52,16 @@ export const CardBlock = styled(Card).attrs({
       }
     }
   }
+  ${(props) =>
+    props.isplaceholder &&
+    css`
+      border-color: #cecece !important;
+      .ant-card-head {
+        .ant-card-head-title {
+          padding: 10px 0;
+        }
+      }
+    `}
 `;
 export const CardBlockText = styled.p.attrs({
   className: 'documents-card-text',
