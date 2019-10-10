@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import { Icon, Popconfirm, Table } from 'antd';
+import { get, find, map } from 'lodash';
 import cn from 'classnames';
-import uuidv1 from 'uuid/v1';
+import uuid from 'uuid';
 
 import { TableEntryContainer } from '../../pages/client/styled';
 import { Projections } from '../../components/Icons';
@@ -10,9 +11,12 @@ import { ProductTable } from '../../pages/client/productOptimizer/ProductOptimiz
 import { Product } from '../../components/ProductOptimizer/Drawer/DrawerProduct';
 import { components } from './CurrentProduct';
 import { EditCellType } from '../../components/StrategyPage/Drawer/EditCell';
+import { proposedChoices } from '../../enums/proposedChoices';
+import { formatString, Param, Text } from '../../components/StrategyPage/StandardText';
 
 interface ProposedProductState {
   loading: boolean;
+  count: number;
 }
 
 const currentProductsTree = [
@@ -58,9 +62,23 @@ const currentProductsTree = [
   },
 ];
 
-class ProposedProduct extends PureComponent<ProductTable, ProposedProductState> {
+interface ProductOpt extends Product {
+  key: number;
+}
+
+interface ProposedProductProps extends ProductTable {
+  tabKey: string;
+  client?: {
+    clientId: number;
+    clientName: string;
+  };
+  dataList: ProductOpt[];
+}
+
+class ProposedProduct extends PureComponent<ProposedProductProps, ProposedProductState> {
   public state = {
     loading: false,
+    count: 0,
   };
 
   private columns = [
@@ -71,9 +89,6 @@ class ProposedProduct extends PureComponent<ProductTable, ProposedProductState> 
       dataIndex: 'links',
       editable: true,
       type: EditCellType.linkCurrentProduct,
-      options: {
-        data: currentProductsTree,
-      },
       width: 30,
     },
     {
@@ -125,26 +140,92 @@ class ProposedProduct extends PureComponent<ProductTable, ProposedProductState> 
   ];
   private tableName = 'proposed-product';
 
+  public componentDidMount() {
+    const { dataList } = this.props;
+    this.setState({ count: dataList.length + 1 });
+  }
+
   public openDrawer = (record: any) => {
     const { openDrawer } = this.props;
     openDrawer(record);
   }
 
-  public onAdd = (productIds: number[]) => {
-    if (productIds && productIds.length > 0) {
-      let products: any[] = [];
-      currentProductsTree.map((parent) => {
-        if (parent.children && parent.children.length > 0) {
-          products = [...products, ...parent.children.filter((product) => productIds.includes(product.id))];
-        }
-      });
-      const { fieldArrayRenderProps, dataList } = this.props;
-      let lastIndex = dataList.length - 1;
-      products.map((product) => {
-        fieldArrayRenderProps.insert(lastIndex, product);
-        lastIndex += 1;
-      });
+  public cursorGoToProductField = () => {
+    // Ensure the new row has been added
+    setTimeout(() => {
+      const productInput: HTMLElement | null = document.querySelector('#proposedTable .ant-input');
+      if (productInput) {
+        productInput.focus();
+      }
+    }, 200);
+  }
+
+  public cursorGoToValueField = () => {
+    // Ensure the new row has been added
+    setTimeout(() => {
+      const productInput: HTMLElement | null = document.querySelector('#proposedTable .ant-input-number-input');
+      if (productInput) {
+        productInput.focus();
+      }
+    }, 200);
+  }
+
+  public increaseCount = () => {
+    this.setState((prevState) => ({ count: prevState.count + 1 }));
+  }
+
+  public onAdd = (values: string[]) => {
+    const [action, productId] = values;
+    const { fieldArrayRenderProps, client } = this.props;
+    const { count } = this.state;
+    let newProduct: { [key: string]: any } = {};
+    const clientName = get(client, 'clientName');
+
+    if (productId) {
+      const product = find(this.getCurrentProducts(), ['id', productId]);
+      const productDescription = get(product, 'description');
+      switch (action) {
+        case proposedChoices.retain.value:
+          newProduct = {
+            ...newProduct,
+            ...product,
+            links: [product],
+            note: {
+              text: `{{0}}, retain your existing product {{1}}`,
+              params: [clientName, productDescription],
+            },
+          };
+          break;
+        case proposedChoices.rebalance.value:
+          newProduct = {
+            ...newProduct,
+            ...product,
+            links: [product],
+            note: {
+              text: `{{0}}, rebalance your existing product {{1}}`,
+              params: [clientName, productDescription],
+            },
+          };
+          this.cursorGoToValueField();
+          break;
+        default:
+          break;
+      }
+    } else {
+      newProduct = {
+        ...newProduct,
+        description: '',
+        value: null,
+        note: {
+          text: `{{0}}, add a new investment product`,
+          params: [clientName],
+        },
+      };
+      this.cursorGoToProductField();
     }
+
+    fieldArrayRenderProps.unshift({ ...newProduct, key: count, id: uuid() });
+    this.increaseCount();
   }
 
   public onRemove = (record: any, index: number) => {
@@ -155,29 +236,57 @@ class ProposedProduct extends PureComponent<ProductTable, ProposedProductState> 
   }
 
   public handleAdd: (row?: Product) => void = (row = { description: '', value: '' }) => {
+    const { count } = this.state;
     const { fieldArrayRenderProps } = this.props;
-    fieldArrayRenderProps.push(row);
+
+    fieldArrayRenderProps.push({ ...row, key: count });
+    this.increaseCount();
   }
 
   public onEdit = (value: any, name: string, rowIndex: number) => {
-    const { fieldArrayRenderProps, dataList } = this.props;
+    const { fieldArrayRenderProps, dataList, client } = this.props;
     const rowName = `${fieldArrayRenderProps.name}[${rowIndex}]`;
     const fieldName = `${rowName}.${name}`;
     fieldArrayRenderProps.form.setFieldValue(fieldName, value);
 
     const record = dataList[rowIndex];
     const remainingFieldName = name === 'description' ? 'value' : 'description';
-    if (record && !record.id && value && record[remainingFieldName]) {
-      const id = uuidv1();
+    const isLastRow = rowIndex === dataList.length - 1;
+    if (record && isLastRow && !record.id && value && record[remainingFieldName]) {
+      const id = uuid();
+      const clientName = get(client, 'clientName');
+
       fieldArrayRenderProps.form.setFieldValue(`${rowName}.id`, id);
+      fieldArrayRenderProps.form.setFieldValue(`${rowName}.note`, {
+        text: `{{0}}, add a new investment product`,
+        params: [clientName],
+      });
+      this.increaseCount();
+
       setTimeout(() => {
         this.handleAdd();
-      }, 10);
+      }, 100);
     }
   }
 
   public getColumns = () => {
     return this.columns.map((col) => {
+      if (col.key === 'links') {
+        return {
+          ...col,
+          onCell: (record: any, rowIndex: number) => ({
+            ...col,
+            record,
+            rowIndex,
+            type: col.type || 'text',
+            onEdit: this.onEdit,
+            options: {
+              data: currentProductsTree,
+            },
+          }),
+        };
+      }
+
       if (col.editable) {
         return {
           ...col,
@@ -196,23 +305,39 @@ class ProposedProduct extends PureComponent<ProductTable, ProposedProductState> 
   }
 
   public getCurrentProducts = () => {
-    // TODO: Ensure that data ignores the selected products
-    return currentProductsTree;
+    const { fieldArrayRenderProps, tabKey } = this.props;
+    const currentProducts: Product[] = get(fieldArrayRenderProps.form.values, [tabKey, 'current'], []);
+    return currentProducts.filter((i) => i.id);
   }
 
   public render() {
     const { dataList } = this.props;
 
     return (
-      <TableEntryContainer smallPadding>
-        <NewProposedProduct onAdd={this.onAdd} data={this.getCurrentProducts()} />
+      <TableEntryContainer smallPadding id="proposedTable">
+        <NewProposedProduct onAdd={this.onAdd} currentProducts={this.getCurrentProducts()} />
         <Table
-          rowKey={(rowKey) => (rowKey.id ? rowKey.id.toString() : 'new')}
           className={`table-general optimizer-table ${this.tableName}-table`}
           columns={this.getColumns()}
           dataSource={dataList}
           pagination={false}
           components={components}
+          expandedRowRender={(row: Product, index: number, indent: number, expanded: boolean) => {
+            if (row.note) {
+              return (
+                <Text>
+                  {formatString(row.note.text, row.note.params, (value, i) => (
+                    <Param key={i}>{value}</Param>
+                  ))}
+                </Text>
+              );
+            }
+            return null;
+          }}
+          defaultExpandAllRows={true}
+          expandIconAsCell={true}
+          expandedRowKeys={map(dataList, 'key')}
+          expandIcon={() => null}
         />
       </TableEntryContainer>
     );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tabs, Button, Spin } from 'antd';
 import { Form, Formik, FormikProps, FieldArray, FieldArrayRenderProps } from 'formik';
-import { get, reduce } from 'lodash';
+import { get, map } from 'lodash';
 
 import { ProductOptimizerPage } from '../../../reducers/client';
 import { StrategyPageWrapper } from '../../../components/StrategyPage/styled';
@@ -19,6 +19,10 @@ export interface ProductTable {
 interface ProductOptimizerProps {
   loading: boolean;
   clientId: number;
+  client?: {
+    clientId: number;
+    clientName: string;
+  };
 
   pageData: ProductOptimizerPage;
 }
@@ -38,7 +42,10 @@ const addPlaceholder = (list: ProductOptimizerPage): FormData => {
       ...acc,
       [key]: Object.entries(values).reduce((temp, value: any[]) => {
         const [k, v] = value;
-        return { ...temp, [k]: [...v, { description: '', value: '' }] };
+        return {
+          ...temp,
+          [k]: [...map(v, (p, i: number) => ({ ...p, key: i })), { key: v.length, description: '', value: '' }],
+        };
       }, {}),
     }),
     {},
@@ -73,7 +80,8 @@ class ProductOptimizer extends React.PureComponent<ProductOptimizerProps, Produc
 
   public render() {
     const { isOpen, product } = this.state;
-    const { loading, pageData } = this.props;
+    const { loading, pageData, client } = this.props;
+    const formData = addPlaceholder(pageData);
 
     return (
       <StrategyPageWrapper>
@@ -87,7 +95,7 @@ class ProductOptimizer extends React.PureComponent<ProductOptimizerProps, Produc
                 actions.setSubmitting(false);
               }, 300);
             }}
-            initialValues={addPlaceholder(pageData)}
+            initialValues={formData}
             render={(formikProps: FormikProps<FormData>) => {
               return (
                 <Form>
@@ -115,6 +123,8 @@ class ProductOptimizer extends React.PureComponent<ProductOptimizerProps, Produc
                               openDrawer={this.openDrawer}
                               dataList={get(formikProps, 'values.client.proposed', [])}
                               fieldArrayRenderProps={fieldArrayRenderProps}
+                              tabKey="client"
+                              client={client}
                             />
                           );
                         }}
@@ -143,6 +153,8 @@ class ProductOptimizer extends React.PureComponent<ProductOptimizerProps, Produc
                               openDrawer={this.openDrawer}
                               dataList={get(formikProps, 'values.partner.proposed', [])}
                               fieldArrayRenderProps={fieldArrayRenderProps}
+                              tabKey="partner"
+                              client={client}
                             />
                           );
                         }}
