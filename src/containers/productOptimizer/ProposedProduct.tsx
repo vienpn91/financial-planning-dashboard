@@ -2,12 +2,13 @@ import React, { PureComponent } from 'react';
 import { Icon, Popconfirm, Table } from 'antd';
 import { get, find, map } from 'lodash';
 import cn from 'classnames';
+import { useDrop } from 'react-dnd';
 import uuid from 'uuid';
 
 import { TableEntryContainer } from '../../pages/client/styled';
 import { Projections } from '../../components/Icons';
 import NewProposedProduct from '../../components/ProductOptimizer/NewProposedProduct';
-import { ProductTable } from '../../pages/client/productOptimizer/ProductOptimizer';
+import { ItemTypes, ProductTable } from '../../pages/client/productOptimizer/ProductOptimizer';
 import { Product } from '../../components/ProductOptimizer/Drawer/DrawerProduct';
 import { components } from './CurrentProduct';
 import { EditCellType } from '../../components/StrategyPage/Drawer/EditCell';
@@ -81,6 +82,33 @@ class ProposedProduct extends PureComponent<ProposedProductProps, ProposedProduc
     count: 0,
   };
 
+  public proposedProduct = {
+    body: {
+      cell: components.body.cell,
+      wrapper: (props: any) => {
+        const { fieldArrayRenderProps } = this.props;
+        const [{ canDrop, isOver }, drop] = useDrop({
+          accept: ItemTypes.ROW,
+          drop: () => ({ name: 'Proposed Table', unshift: fieldArrayRenderProps.unshift }),
+          collect: (monitor) => ({
+            isOver: monitor.isOver(),
+            canDrop: monitor.canDrop(),
+          }),
+        });
+
+        const isActive = canDrop && isOver;
+        let backgroundColor = '#fff';
+        if (isActive) {
+          backgroundColor = '#e7e7ef';
+        } else if (canDrop) {
+          backgroundColor = '#f3f3f7';
+        }
+
+        return <tbody {...props} ref={drop} style={{ backgroundColor }} />;
+      },
+    },
+  };
+
   private columns = [
     {
       title: '',
@@ -138,7 +166,21 @@ class ProposedProduct extends PureComponent<ProposedProductProps, ProposedProduc
       width: 60,
     },
   ];
+
   private tableName = 'proposed-product';
+
+  public expandedRowRenderer = (row: Product, index: number, indent: number, expanded: boolean) => {
+    if (row.note) {
+      return (
+        <Text>
+          {formatString(row.note.text, row.note.params, (value, i) => (
+            <Param key={i}>{value}</Param>
+          ))}
+        </Text>
+      );
+    }
+    return null;
+  }
 
   public componentDidMount() {
     const { dataList } = this.props;
@@ -321,19 +363,8 @@ class ProposedProduct extends PureComponent<ProposedProductProps, ProposedProduc
           columns={this.getColumns()}
           dataSource={dataList}
           pagination={false}
-          components={components}
-          expandedRowRender={(row: Product, index: number, indent: number, expanded: boolean) => {
-            if (row.note) {
-              return (
-                <Text>
-                  {formatString(row.note.text, row.note.params, (value, i) => (
-                    <Param key={i}>{value}</Param>
-                  ))}
-                </Text>
-              );
-            }
-            return null;
-          }}
+          components={this.proposedProduct}
+          expandedRowRender={this.expandedRowRenderer}
           defaultExpandAllRows={true}
           expandIconAsCell={true}
           expandedRowKeys={map(dataList, 'key')}
