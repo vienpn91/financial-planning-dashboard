@@ -1,6 +1,7 @@
 export enum Advices {
   Superannuation = 'Superannuation',
   RetirementIncome = 'Retirement Income',
+  NonDeductibleDept = 'Non-deductible dept',
   EstatePlanning = 'Estate Planning',
   Investment = 'Investment',
   CashflowManagement = 'Cashflow Management',
@@ -13,6 +14,7 @@ export enum Advices {
 export const advices = {
   [Advices.Superannuation]: ['Contributions', 'Platform Review', 'Portfolio Review', 'SMSF'],
   [Advices.RetirementIncome]: ['Income Streams', 'Platform Review', 'Portfolio Review', 'Withdrawals'],
+  [Advices.NonDeductibleDept]: ['Dept'],
   [Advices.EstatePlanning]: [
     'Super Death Benefit Nominations',
     'Insurance Nominations',
