@@ -243,7 +243,7 @@ class CardDetails extends React.PureComponent<CardDetailsProps> {
             return (
               <>
                 {showAddButton && (
-                  <AddAdvice dropdown={record.dropdown || emptyArray} onAdd={this.onAdd(arrayHelpers)} />
+                  <AddAdvice header={record.header} onAdd={this.onAdd(arrayHelpers)} />
                 )}
 
                 <Table

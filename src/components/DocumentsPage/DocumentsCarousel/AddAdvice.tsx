@@ -1,14 +1,17 @@
 import React, { PureComponent } from 'react';
-import { map } from 'lodash';
+import { map, get } from 'lodash';
 import { Dropdown, Icon, Menu } from 'antd';
 const { Item } = Menu;
 
 import { HeaderTitleTable, TextTitle } from '../../../pages/client/styled';
+import { advices } from '../../../enums/advices';
 
 interface AddAdviceProps {
-  dropdown: string[];
+  header: string;
   onAdd: (text: string) => void;
 }
+
+const emptyArray: any[] = [];
 
 class AddAdvice extends PureComponent<AddAdviceProps> {
   public renderItems = (option: string, index: number) => {
@@ -25,8 +28,9 @@ class AddAdvice extends PureComponent<AddAdviceProps> {
   }
 
   public renderMenu = () => {
-    const { dropdown } = this.props;
-    return <Menu>{map(dropdown, (option, index) => this.renderItems(option, index))}</Menu>;
+    const { header } = this.props;
+    const options: string[] = get(advices, header, emptyArray);
+    return <Menu>{map(options, (option, index) => this.renderItems(option, index))}</Menu>;
   }
 
   public render() {
@@ -35,7 +39,7 @@ class AddAdvice extends PureComponent<AddAdviceProps> {
         <Dropdown overlay={this.renderMenu()} trigger={['click']}>
           <Icon type={'plus-square'} theme={'filled'} />
         </Dropdown>
-        <TextTitle small={true}>Proposed</TextTitle>
+        <TextTitle small={true}>Advice Area</TextTitle>
       </HeaderTitleTable>
     );
   }
