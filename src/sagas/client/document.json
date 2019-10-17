@@ -67,6 +67,22 @@
       },
       {
         "type": "fixed",
+        "header": "Non-deductible dept",
+        "title": "What the advice cover (Non-deductible dept)",
+        "subtitle": "Record the Non-deductible dept scope of advice, as agreed between you and the client.",
+        "table": {
+          "columns": ["Non-deductible dept", "Advice Limitations"],
+          "data": [
+            {
+              "id": 1,
+              "value": "Dept",
+              "description": "No Limitations"
+            }
+          ]
+        }
+      },
+      {
+        "type": "fixed",
         "header": "Investment",
         "title": "What the advice cover (Investment)",
         "subtitle": "Record the Investment scope of advice, as agreed between you and the client.",
@@ -81,6 +97,11 @@
             {
               "id": 2,
               "value": "Portfolio Review",
+              "description": "No Limitations"
+            },
+            {
+              "id": 3,
+              "value": "Investment review",
               "description": "No Limitations"
             }
           ]
@@ -98,6 +119,16 @@
               "id": 1,
               "value": "Super death benefit nomination",
               "description": "No Limitations"
+            },
+            {
+              "id": 2,
+              "value": "Wills",
+              "description": "No Limitations"
+            },
+            {
+              "id": 3,
+              "value": "Power of Attorney/Enduring Power of Attorney",
+              "description": "No Limitations"
             }
           ]
         }
@@ -113,6 +144,37 @@
             {
               "id": 1,
               "value": "Home care",
+              "description": "No Limitations"
+            }
+          ]
+        }
+      },
+      {
+        "type": "fixed",
+        "header": "Insurance",
+        "title": "What the advice cover (Insurance)",
+        "subtitle": "Record the Insurance scope of advice, as agreed between you and the client.",
+        "table": {
+          "columns": ["Insurance", "Advice Limitations"],
+          "data": [
+            {
+              "id": 1,
+              "value": "Life",
+              "description": "No Limitations"
+            },
+            {
+              "id": 2,
+              "value": "TPD",
+              "description": "No Limitations"
+            },
+            {
+              "id": 3,
+              "value": "Trauma",
+              "description": "No Limitations"
+            },
+            {
+              "id": 4,
+              "value": "Income Protection",
               "description": "No Limitations"
             }
           ]
@@ -195,7 +257,7 @@
       "data": [
         {
           "id": 1,
-          "description": "You would like to ensure that you maximise your superannuation within your SMSF in order to meet your retirement needs.",
+          "description": "You would like to know if your superannuation is on plan to retire by the age of 60 and would like to reduce fees and make contributions into super if necessary.",
           "priority": "high",
           "timeFrame": 2019,
           "links": [
@@ -206,6 +268,101 @@
             {
               "id": 2,
               "value": "Platform Review"
+            },
+            {
+              "id": 3,
+              "value": "Portfolio Review",
+              "description": "No Limitations"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "description": "You would like to retire by the age of 60",
+          "priority": "high",
+          "timeFrame": 2019,
+          "links": [
+            {
+              "id": 1,
+              "value": "Income streams",
+              "description": "No Limitations"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "description": "You would like to review your debt to determine if interest costs can be reduced.",
+          "priority": "high",
+          "timeFrame": 2019,
+          "links": [
+            {
+              "id": 1,
+              "value": "Dept",
+              "description": "No Limitations"
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "description": "You want your investment portfolio to be reviewed to determine if it is consistent with your risk profile and financial objectives.",
+          "priority": "medium",
+          "timeFrame": 2019,
+          "links": [
+            {
+              "id": 3,
+              "value": "Investment review",
+              "description": "No Limitations"
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "description": "You would like your estate planning arrangements to be reviewed to confirm they are in line with your wishes.",
+          "priority": "medium",
+          "timeFrame": 2019,
+          "links": [
+            {
+              "id": 1,
+              "value": "Super death benefit nomination",
+              "description": "No Limitations"
+            },
+            {
+              "id": 2,
+              "value": "Wills",
+              "description": "No Limitations"
+            },
+            {
+              "id": 3,
+              "value": "Power of Attorney/Enduring Power of Attorney",
+              "description": "No Limitations"
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "description": "You would like to review your existing insurance arrangements",
+          "priority": "medium",
+          "timeFrame": 2019,
+          "links": [
+            {
+              "id": 1,
+              "value": "Life",
+              "description": "No Limitations"
+            },
+            {
+              "id": 2,
+              "value": "TPD",
+              "description": "No Limitations"
+            },
+            {
+              "id": 3,
+              "value": "Trauma",
+              "description": "No Limitations"
+            },
+            {
+              "id": 4,
+              "value": "Income Protection",
+              "description": "No Limitations"
             }
           ]
         }
