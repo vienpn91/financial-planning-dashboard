@@ -37,7 +37,8 @@
               "description": "No Limitations"
             }
           ]
-        }
+        },
+        "dropdown": ["Contributions", "Platform Review", "Portfolio Review", "SMSF"]
       },
       {
         "type": "fixed",

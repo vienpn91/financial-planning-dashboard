@@ -8,7 +8,10 @@ import uuid from 'uuid';
 import { Record } from '../DocumentsPage';
 import EditCell, { EditCellType } from '../../StrategyPage/Drawer/EditCell';
 import TitleEditable from './TitleEditable';
+import AddAdvice from './AddAdvice';
 import { CarouselItem } from './styled';
+
+const emptyArray: any[] = [];
 
 const JustificationField = (props: {
   defaultValue: string | undefined;
@@ -133,6 +136,12 @@ class CardDetails extends React.PureComponent<CardDetailsProps> {
     }
   }
 
+  public onAdd = (arrayHelpers: FieldArrayRenderProps) => (text: string) => {
+    const { record } = this.props;
+    const dataList = record.table.data;
+    arrayHelpers.unshift({ id: uuid(), key: dataList.length, value: text });
+  }
+
   public render() {
     const { record, name, setFieldValue, overwrite } = this.props;
     const dataList = record.table.data;
@@ -233,7 +242,10 @@ class CardDetails extends React.PureComponent<CardDetailsProps> {
 
             return (
               <>
-                {showAddButton && <div>+ Advice Area</div>}
+                {showAddButton && (
+                  <AddAdvice dropdown={record.dropdown || emptyArray} onAdd={this.onAdd(arrayHelpers)} />
+                )}
+
                 <Table
                   className={cn('table-general documents-table')}
                   columns={columns}

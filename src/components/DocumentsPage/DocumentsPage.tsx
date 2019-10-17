@@ -84,6 +84,7 @@ export interface Record {
   header: string;
   table: Table;
   type?: string;
+  dropdown?: string[];
 }
 
 export interface StepProps {
