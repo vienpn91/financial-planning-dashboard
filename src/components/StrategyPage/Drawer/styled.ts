@@ -106,6 +106,11 @@ export const DrawerTableContent = styled.section<{ productOptimizer?: boolean }>
   @media (max-height: 450px) {
     height: auto;
   }
+  ${(props) => props.productOptimizer && css`
+    .drawer-title-sub-row {
+      margin-left: 5px;
+    }
+  `}
 `;
 export const DrawerTableWrapper = styled.div<{ productOptimizer?: boolean }>`
   .parent {
@@ -125,14 +130,20 @@ export const DrawerTableWrapper = styled.div<{ productOptimizer?: boolean }>`
   .values {
     text-align: right;
     padding-right: 6px;
+    display: flex;
+    flex: 1;
   }
   .cell {
     display: inline-block;
-    width: ${(props) => (props.productOptimizer ? '80px' : '60px')};
+    width: 60px;
     margin: 0 5px;
     text-align: center;
     color: #4e5d86;
     font-size: 13px;
+    ${(props) => props.productOptimizer && css `
+      min-width: 80px;
+      flex: 1 1 calc(100% / 3);
+    `}
   }
   .bold-text {
     .title {
@@ -332,7 +343,7 @@ export type TitleSize = 'medium' | 'small' | 'large';
 
 export const DrawerRowSubTitle = styled.span.attrs({
   className: 'drawer-title-sub-row',
-})<{ size?: TitleSize }>`
+})<{ size?: TitleSize;  }>`
   flex: 1;
   color: #4e5d86;
   text-align: left;
@@ -492,7 +503,9 @@ export const ProposedBlock = styled.div`
     display: flex;
     justify-content: space-between;
     &--text {
+      display: block;
       font-size: 13px;
+      line-height: 22px;
     }
   }
   .ant-checkbox-wrapper {

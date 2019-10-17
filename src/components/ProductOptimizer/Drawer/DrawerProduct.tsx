@@ -23,11 +23,11 @@ export interface Product {
   id?: number | string;
   key?: number | string;
   description: string;
-  value: number | string;
+  value?: number;
   links?: Product[];
   alternative?: boolean;
   details?: {
-    product: Option;
+    product?: Option;
     funds: Option[];
   };
   hasCurrent?: boolean;
@@ -36,6 +36,7 @@ export interface Product {
     text: string;
     params: string[];
   };
+  total?: number;
 }
 
 interface DrawerProductProps {
@@ -47,24 +48,13 @@ interface DrawerProductProps {
 const alternativeProduct: Product = {
   id: -1,
   description: 'RoP - alternative',
-  value: 100,
+  value: 400000,
   details: {
-    product: {
-      id: 100,
-      name: 'Product G',
-      value: 100,
-    },
-    funds: [
-      {
-        id: 100,
-        name: 'Sunsuper Balanced',
-        value: 10000,
-      },
-    ],
+    funds: [],
   },
 };
 
-export const getSumFunds = (funds: Option[]) =>
+export const getSumFunds = (funds: Option[]): number =>
   funds.reduce((acc: number, data: Option) => (acc += data.value ? data.value : 0), 0);
 
 export const addPercentage = (funds: Option[]) => {
@@ -80,7 +70,7 @@ export const addPercentage = (funds: Option[]) => {
 };
 
 const initFormValues = (value: Product) => {
-  const product = { ...value };
+  const product = { ...value, details: { ...get(value, 'details'), funds: get(value, 'details.funds', []) } };
   if (product.links && product.links.length > 0) {
     let links = product.links;
     if (links.length === 1) {
@@ -93,11 +83,11 @@ const initFormValues = (value: Product) => {
 
   if (product.details && product.details.funds) {
     const funds = addPercentage(product.details.funds);
-    const sum = getSumFunds(funds);
+    const sum = product.details.funds.length > 0 ? getSumFunds(funds) : product.value;
     funds.push({ id: -1, name: 'Total', value: sum, percentage: '100' });
 
     product.details = {
-      product: product.details.product,
+      product: get(product, 'details.product'),
       funds,
     };
   }
@@ -152,7 +142,9 @@ class DrawerProduct extends PureComponent<DrawerProductProps> {
   public renderLinkedProducts = () => {
     const { product } = this.props;
 
-    if (!product) { return null; }
+    if (!product) {
+      return null;
+    }
 
     return (
       <DrawerProductWrapper>
@@ -171,7 +163,7 @@ class DrawerProduct extends PureComponent<DrawerProductProps> {
           <TabPane tab="Fund" key="1">
             {this.renderFundTab()}
           </TabPane>
-          <TabPane tab="Assets Allocation" key="2">
+          <TabPane tab="Asset Type" key="2">
             <AssetsAllocation />
           </TabPane>
           <TabPane tab="Fees" key="3">
@@ -217,7 +209,7 @@ class DrawerProduct extends PureComponent<DrawerProductProps> {
     const { close, isOpen } = this.props;
 
     return (
-      <Drawer width={1100} onClose={close} visible={isOpen} destroyOnClose={true}>
+      <Drawer width={1150} onClose={close} visible={isOpen} destroyOnClose={true}>
         {this.renderDrawer()}
       </Drawer>
     );

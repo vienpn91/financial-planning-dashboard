@@ -175,7 +175,7 @@ class CurrentProduct extends PureComponent<ProductTable, CurrentProductState> {
   ];
   private tableName = 'current-product';
 
-  public handleAdd: (row?: Product) => void = (row = { description: '', value: '' }) => {
+  public handleAdd: (row?: Product) => void = (row = { description: '', value: undefined }) => {
     const { fieldArrayRenderProps } = this.props;
     fieldArrayRenderProps.push(row);
   }
@@ -233,6 +233,7 @@ class CurrentProduct extends PureComponent<ProductTable, CurrentProductState> {
     let newProposedProduct = {
       ...record,
       key: new Date().getTime(),
+      id: uuidv1(),
     };
     if (record.id) {
       newProposedProduct = {
@@ -246,7 +247,6 @@ class CurrentProduct extends PureComponent<ProductTable, CurrentProductState> {
     } else {
       newProposedProduct = {
         ...newProposedProduct,
-        id: uuidv1(),
         note: {
           text: `{{0}}, add a new investment product`,
           params: [clientPartnerName],

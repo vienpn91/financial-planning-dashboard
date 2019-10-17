@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { useEffect, useState } from 'react';
 import { isFunction } from 'lodash';
 import { Select, Icon } from 'antd';
 const { OptGroup } = Select;
@@ -7,91 +7,134 @@ import { TopSearch } from '../../../layouts/Header/styled';
 import { Filter } from '../../Icons';
 import { Option } from './DrawerProduct';
 
-export type CustomSearchType = 'product' | 'fund';
+export enum CustomSearchType {
+  Product = 'product',
+  Fund = 'fund',
+}
 
-interface Prop {
+export interface CustomSearchProp {
   placeholder: string;
   type?: CustomSearchType;
   onSelect?: (value: Option) => void;
   selectedOption?: Option;
+  productId?: number;
 }
 
 interface OptionData extends Option {
   children?: OptionData[];
 }
 
-const dummyProductForSearching: OptionData[] = [
+const defaultProducts: OptionData[] = [
   {
-    name: 'Recent',
+    name: 'Search Result',
     children: [
       {
         id: 1,
-        name: 'BlackRock Global Income',
-        code: 'AMP1995AU',
+        name: 'CFS FirstChoice Wholesale Personal Super',
       },
       {
         id: 2,
-        name: 'Product X',
-        code: 'AMP1707AU',
+        name: 'CFS FirstChoice Wholesale Pension',
       },
-    ],
-  },
-  {
-    name: 'Popular',
-    children: [
       {
         id: 3,
-        name: 'AMP Australian Share Index',
-        code: 'AMP1995AU',
+        name: 'OnePath OneAnswer Frontier Personal Super',
       },
       {
         id: 4,
-        name: 'Perpetual Industrial Share',
-        code: 'AMP0057AU',
+        name: 'OnePath OneAnswer Frontier Pension',
       },
       {
         id: 5,
-        name: 'Plato Australian Shares Income',
-        code: 'AMP0767AU',
+        name: 'BT Panorama Super Compact',
       },
-    ],
-  },
-  {
-    name: 'Model Portfolios',
-    children: [
       {
         id: 6,
-        name: 'Model Portpolio 1 (Growth)',
+        name: 'BT Panorama Super Full',
       },
       {
         id: 7,
-        name: 'Model Portpolio 2 (Defensive)',
+        name: 'BT Panorama Super Compact (Pension)',
       },
       {
         id: 8,
-        name: 'Model Portpolio 3 (Moderate)',
+        name: 'BT Panorama Super Full (Pension)',
       },
       {
         id: 9,
-        name: 'Model Portpolio 4 (Defensive)',
+        name: 'AMP MyNorth Super',
       },
       {
         id: 10,
-        name: 'Model Portpolio 5 (Growth)',
+        name: 'AMP MyNorth Pension',
       },
     ],
   },
 ];
 
-const dummyFundForSearching: OptionData[] = [
+const cfsFirstChoiceWholesaleFunds: OptionData[] = [
   {
-    name: 'Search Result',
+    name: 'Model Portfolios',
     children: [
-      { id: 1, name: 'Fund DE', value: 10000 },
-      { id: 2, name: 'Fund DF', value: 5000 },
-      { id: 3, name: 'Fund DG', value: 15000 },
-      { id: 4, name: 'Fund DH', value: 20000 },
-      { id: 5, name: 'Fund DI', value: 25000 },
+      { id: 9, name: 'CFS FirstChoice Low Cost Model Portfolio', value: 10000 },
+      { id: 10, name: 'CFS FirstChoice Accumulation Model Portfolio', value: 5000 },
+      { id: 11, name: 'CFS FirstChoice Retirement Model Portfolio', value: 15000 },
+    ],
+  },
+  {
+    name: 'Managed Funds',
+    children: [
+      { id: 1, name: 'Magellan Global Fund', value: 10000, code: 'FSF1788AU' },
+      { id: 2, name: 'Kapstream Absolute Return Income', value: 5000, code: 'FSF1636AU' },
+      { id: 3, name: 'Schroder Australian Equity', value: 15000, code: 'FSF1637AU' },
+      { id: 6, name: 'Platinum International Fund', value: 15000, code: 'FSF0648AU' },
+      { id: 7, name: 'MFS Global Equity', value: 15000, code: 'FSF0625AU' },
+      { id: 8, name: 'Perpetual Balanced Growth', value: 15000, code: 'FSF0631AU' },
+    ],
+  },
+];
+
+const onePathFunds: OptionData[] = [
+  {
+    name: 'Model Portfolios',
+    children: [
+      { id: 99, name: 'OneAnswer Frontier Low Cost Model Portfolio', value: 10000 },
+      { id: 10, name: 'OneAnswer Frontier Accumulation Model Portfolio', value: 5000 },
+      { id: 11, name: 'OneAnswer Frontier Retirement Model Portfolio', value: 15000 },
+    ],
+  },
+  {
+    name: 'Managed Funds',
+    children: [
+      { id: 1, name: 'Magellan Global Fund', value: 10000, code: 'MMF1802AU' },
+      { id: 2, name: 'Kapstream Absolute Return Income', value: 5000, code: 'MMF1713AU' },
+      { id: 3, name: 'Schroder Australian Equity', value: 15000, code: 'MMF1805AU' },
+      { id: 6, name: 'Platinum International Fund', value: 15000, code: 'MMF1803AU' },
+      { id: 7, name: 'MFS Global Equity', value: 15000, code: 'MMF1776AU' },
+      { id: 8, name: 'Perpetual Balanced Growth', value: 15000, code: 'MMF1800AU' },
+    ],
+  },
+];
+
+const defaultFunds: OptionData[] = [
+  {
+    name: 'Model Portfolios',
+    children: [
+      { id: 12, name: 'CFS FirstChoice Low Cost Model Portfolio', value: 10000 },
+      { id: 13, name: 'CFS FirstChoice Accumulation Model Portfolio', value: 5000 },
+    ],
+  },
+  {
+    name: 'Managed Funds',
+    children: [
+      { id: 1, name: 'FirstChoice Wholesale Multi-Index Diversified', value: 50000, code: 'FSF0472AU' },
+      { id: 2, name: 'FirstChoice Wholesale Multi-Index Balanced', value: 50000, code: 'FSF0476AU' },
+      { id: 3, name: 'FirstChoice Wholesale Moderate', value: 15000, code: 'FSF0500AU' },
+      { id: 6, name: 'Kapstream Absolute Return Income', value: 15000, code: 'FSF1615AU' },
+      { id: 7, name: 'Schroder Real Return (CPI + 5%)', value: 15000, code: 'FSF1614AU' },
+      { id: 8, name: 'Solaris Core Australian Equity', value: 15000, code: 'FSF0466AU' },
+      { id: 10, name: 'FirstChoice Growth', value: 15000, code: 'FSF0490AU' },
+      { id: 11, name: 'FirstChoice Global Property', value: 15000, code: 'FSF0713AU' },
     ],
   },
 ];
@@ -129,56 +172,61 @@ const findOptionObj = (data: OptionData[], value: number | string) =>
       return !!(i && i.id);
     });
 
-// TODO: implement Filter Search result by option ids
-const filterOption = () => {
-  console.log('TODO: implement Filter Search result by option ids');
-};
+const CustomSearch = (props: CustomSearchProp) => {
+  const { type, placeholder, selectedOption, productId } = props;
+  const [options, setOptions] = useState<OptionData[]>([]);
 
-class CustomSearch extends PureComponent<Prop> {
-  public renderResults = () => {
-    const { type } = this.props;
-
-    if (type === 'fund') {
-      return renderOptions(dummyFundForSearching);
-    }
-
-    return renderOptions(dummyProductForSearching);
-  }
-
-  public onSelect = (value: number | string) => {
-    const { onSelect, type } = this.props;
-    if (isFunction(onSelect)) {
-      const dictionary = type === 'fund' ? dummyFundForSearching : dummyProductForSearching;
-
-      const options = findOptionObj(dictionary, value);
-      if (options && options.length > 0) {
-        onSelect(options[0]);
+  const onSelect = (value: number | string) => {
+    const { onSelect: onSelectProp } = props;
+    if (isFunction(onSelectProp)) {
+      const selectedOptions = findOptionObj(options, value);
+      if (selectedOptions && selectedOptions.length > 0) {
+        onSelectProp(selectedOptions[0]);
       }
     }
-  }
+  };
 
-  public render() {
-    const { placeholder, selectedOption } = this.props;
+  // Load options base on productId
+  useEffect(() => {
+    let newOptions = type === CustomSearchType.Fund ? defaultFunds : defaultProducts;
 
-    return (
-      <TopSearch border>
-        <Icon type="search" />
-        <Select
-          showSearch
-          defaultValue={selectedOption && selectedOption.name}
-          onSelect={this.onSelect}
-          placeholder={placeholder}
-          className="custom-select"
-          showArrow={false}
-          dropdownClassName="custom-search-menu"
-          optionFilterProp="title"
-        >
-          {this.renderResults()}
-        </Select>
-        <Icon component={Filter} />
-      </TopSearch>
-    );
-  }
-}
+    // Fund options for the specific
+    if (type === CustomSearchType.Fund) {
+      switch (productId) {
+        // CFS FirstChoice Wholesale Personal Super
+        case 1:
+          newOptions = cfsFirstChoiceWholesaleFunds;
+          break;
+        // OnePath OneAnswer Frontier Personal Super
+        case 3:
+          newOptions = onePathFunds;
+          break;
+        default:
+          break;
+      }
+    }
+
+    setOptions(newOptions);
+  }, [productId]);
+
+  return (
+    <TopSearch border>
+      <Icon type="search" />
+      <Select
+        showSearch
+        defaultValue={selectedOption && selectedOption.name}
+        onSelect={onSelect}
+        placeholder={placeholder}
+        className="custom-select"
+        showArrow={false}
+        dropdownClassName="custom-search-menu"
+        optionFilterProp="title"
+      >
+        {renderOptions(options)}
+      </Select>
+      <Icon component={Filter} />
+    </TopSearch>
+  );
+};
 
 export default CustomSearch;
