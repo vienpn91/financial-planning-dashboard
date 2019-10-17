@@ -14,12 +14,14 @@ import {
 import { loadOptionsBaseOnCol } from '../../../utils/columnUtils';
 import { CurrentTypes } from '../../../enums/currents';
 import AddMenu from '../AddMenu';
+import { createEvent } from '../../../utils/GA';
 
 interface ExpenditureTableProps {
   data: object[];
   maritalStatus: string;
   dynamicCustomValue: object;
   loading?: boolean;
+  clientId: number;
 
   formProps?: FormikProps<any>;
   tableName?: string;
@@ -117,16 +119,16 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
   }
 
   public handleDelete = (key: number) => {
-    const { deleteRow } = this.props;
+    const { deleteRow, clientId } = this.props;
 
-    // update formik
     if (isFunction(deleteRow)) {
+      createEvent('current_position', 'delete', 'Expenditure', clientId);
       deleteRow(key);
     }
   }
 
   public handleAdd = (value: string[]) => {
-    const { addRow } = this.props;
+    const { addRow, clientId } = this.props;
     const [owner, type] = value;
     const newData = {
       key: Date.now(),
@@ -145,8 +147,8 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
       },
     };
 
-    // update formik
     if (isFunction(addRow)) {
+      createEvent('current_position', 'create', 'Expenditure', clientId);
       addRow(newData);
     }
   }

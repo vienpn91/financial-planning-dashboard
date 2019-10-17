@@ -16,11 +16,13 @@ import {
 import { loadOptionsBaseOnCol } from '../../../utils/columnUtils';
 import { CurrentTypes } from '../../../enums/currents';
 import AddMenu from '../AddMenu';
+import { createEvent } from '../../../utils/GA';
 
 interface IncomeTableProps {
   data: object[];
   maritalStatus: string;
   dynamicCustomValue: object;
+  clientId: number;
   loading?: boolean;
 
   formProps?: FormikProps<any>;
@@ -121,16 +123,16 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
   }
 
   public handleDelete = (key: number) => {
-    const { deleteRow } = this.props;
+    const { deleteRow, clientId } = this.props;
 
-    // update formik
     if (isFunction(deleteRow)) {
+      createEvent('current_position', 'delete', 'Income', clientId);
       deleteRow(key);
     }
   }
 
   public handleAdd = (value: string[]) => {
-    const { addRow } = this.props;
+    const { addRow, clientId } = this.props;
     const [owner, type] = value;
     const newData = {
       key: Date.now(),
@@ -149,8 +151,8 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
       },
     };
 
-    // update formik
     if (isFunction(addRow)) {
+      createEvent('current_position', 'create', 'Income', clientId);
       addRow(newData);
     }
   }

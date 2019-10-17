@@ -7,11 +7,13 @@ import GeneralTable from '../GeneralTable';
 import { FormikProps } from 'formik';
 import { ownerWithJointOptions } from '../../../enums/options';
 import { removePartnerOption } from '../../../utils/columnUtils';
+import { createEvent } from '../../../utils/GA';
 
 interface InsuranceTableProps {
   data: object[];
   maritalStatus: string;
   loading?: boolean;
+  clientId: number;
 
   formProps?: FormikProps<any>;
   tableName?: string;
@@ -69,16 +71,16 @@ class InsuranceTable extends PureComponent<InsuranceTableProps> {
   }
 
   public handleDelete = (key: number) => {
-    const { deleteRow } = this.props;
+    const { deleteRow, clientId } = this.props;
 
-    // update formik
     if (isFunction(deleteRow)) {
+      createEvent('current_position', 'delete', 'Insurance', clientId);
       deleteRow(key);
     }
   }
 
   public handleAdd = () => {
-    const { addRow } = this.props;
+    const { addRow, clientId } = this.props;
     const newData = {
       key: Date.now(),
       provider: 'ABC',
@@ -109,8 +111,8 @@ class InsuranceTable extends PureComponent<InsuranceTableProps> {
       ],
     };
 
-    // update formik
     if (isFunction(addRow)) {
+      createEvent('current_position', 'create', 'Insurance', clientId);
       addRow(newData);
     }
   }

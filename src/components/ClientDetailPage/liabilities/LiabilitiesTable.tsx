@@ -8,12 +8,14 @@ import { to2Options, liabilitiesTypes, ownerOptions, from2Options } from '../../
 import { removePartnerOption } from '../../../utils/columnUtils';
 import { CurrentTypes } from '../../../enums/currents';
 import AddMenu from '../AddMenu';
+import { createEvent } from '../../../utils/GA';
 
 interface LiabilitiesTableProps {
   data: object[];
   maritalStatus: string;
   assets: Array<{ refId: number; description: string; type: string }>;
   loading?: boolean;
+  clientId: number;
 
   setFieldValue: (field: string, value: any) => void;
   resetForm: (nextValues?: any) => void;
@@ -115,16 +117,16 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
   }
 
   public handleDelete = (key: number) => {
-    const { deleteRow } = this.props;
+    const { deleteRow, clientId } = this.props;
 
-    // update formik
     if (isFunction(deleteRow)) {
+      createEvent('current_position', 'delete', 'Liabilities', clientId);
       deleteRow(key);
     }
   }
 
   public handleAdd = (value: string[]) => {
-    const { addRow } = this.props;
+    const { addRow, clientId } = this.props;
     const [owner, type] = value;
     const newData = {
       key: Date.now(),
@@ -153,8 +155,8 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
       drawdowns: [],
     };
 
-    // update formik
     if (isFunction(addRow)) {
+      createEvent('current_position', 'create', 'Liabilities', clientId);
       addRow(newData);
     }
   }

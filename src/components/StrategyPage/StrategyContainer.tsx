@@ -1,19 +1,22 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
-import { Col, Collapse, Icon, Row } from 'antd';
+import { Col, Row } from 'antd';
 import { ArrayHelpers, FieldArray } from 'formik';
 import { bindActionCreators, Dispatch } from 'redux';
 import { isFunction } from 'lodash';
+import uuidv1 from 'uuid/v1';
 
 import { RootState, StandardAction } from '../../reducers/reducerTypes';
 import { ClientActions, FetchDataEntryPayload, RedrawGraphs } from '../../reducers/client';
 import { StrategyTypes } from '../../enums/strategies';
-import { StrategyWrapper, TitleStrategyBlock } from './styled';
+import { StrategyWrapper } from './styled';
 import StrategyInformation from './StrategyInformation';
 import StrategyTable from './StrategyTable/StrategyTable';
-import { StrategyItemI } from './StrategyTable/StrategyItem';
 import { getParams } from '../../pages/client/Client';
+import { createEvent } from '../../utils/GA';
+import { getStrategyTitle } from './StrategyPage';
+import { StrategyItemI } from './StrategyTable/StrategyItem';
 
 interface StrategyContainerProps {
   type: StrategyTypes;
@@ -24,16 +27,32 @@ interface StrategyContainerProps {
 }
 
 class StrategyContainer extends PureComponent<StrategyContainerProps & RouteComponentProps> {
-  public addItem = (arrayHelpers: ArrayHelpers) => (data: StrategyItemI) => {
-    arrayHelpers.unshift(data);
+  public addItem = (arrayHelpers: ArrayHelpers) => (values: string[]) => {
+    const { match, type } = this.props;
+    const label = `${getStrategyTitle(type)} - ${values.join('.')}`;
+    const data = { id: uuidv1(), check: true, sentence: values.join('.') };
+    const [owner, strategyType] = values;
+
+    createEvent('strategy', 'create', label, getParams(match.params).clientId);
+    // TODO integrate the API
+    if (strategyType === 'commenceAccount') {
+      this.redrawGraphs(true);
+    } else {
+      arrayHelpers.unshift(data);
+      this.redrawGraphs(false);
+    }
   }
 
-  public removeItem = (arrayHelpers: ArrayHelpers) => (index: number) => {
+  public removeItem = (arrayHelpers: ArrayHelpers) => (index: number, strategy: StrategyItemI) => {
+    const { match, type } = this.props;
+    const label = `${getStrategyTitle(type)} - ${strategy.sentence}`;
+
+    createEvent('strategy', 'delete', label, getParams(match.params).clientId);
     arrayHelpers.remove(index);
   }
 
-  public redrawGraphs = (type: string, shouldUpdateGraphs?: boolean) => {
-    const { redrawGraphs, match } = this.props;
+  public redrawGraphs = (shouldUpdateGraphs: boolean = false) => {
+    const { redrawGraphs, match, type } = this.props;
     const { clientId, tabName, tagName } = getParams(match.params);
 
     if (isFunction(redrawGraphs) && clientId && tagName && tabName) {
@@ -65,13 +84,13 @@ class StrategyContainer extends PureComponent<StrategyContainerProps & RouteComp
   }
 
   public render() {
-    const { type } = this.props;
+    const { type, match } = this.props;
 
     return (
       <StrategyWrapper>
         <Row gutter={24}>
           <Col span={12}>
-            <StrategyInformation type={type} />
+            <StrategyInformation type={type} clientId={getParams(match.params).clientId} />
           </Col>
           <Col span={12}>
             <FieldArray name={type + '.strategies'} render={this.renderStrategyTable} validateOnChange={false} />

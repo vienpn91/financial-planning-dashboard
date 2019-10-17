@@ -9,12 +9,14 @@ import { from2Options, ownerOptions, to2Options, assetTypes, investmentTypeOptio
 import { loadOptionsBaseOnCol } from '../../../utils/columnUtils';
 import { CurrentTypes } from '../../../enums/currents';
 import AddMenu from '../AddMenu';
+import { createEvent } from '../../../utils/GA';
 
 interface AssetsTableProps {
   data: object[];
   maritalStatus: string;
   dynamicCustomValue: object;
   empStatus: string;
+  clientId: number;
   loading?: boolean;
 
   formProps?: FormikProps<any>;
@@ -114,16 +116,16 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
   }
 
   public handleDelete = (key: number) => {
-    const { deleteRow } = this.props;
+    const { deleteRow, clientId } = this.props;
 
-    // update formik
     if (isFunction(deleteRow)) {
+      createEvent('current_position', 'delete', 'Assets', clientId);
       deleteRow(key);
     }
   }
 
   public handleAdd = (value: string[]) => {
-    const { addRow } = this.props;
+    const { addRow, clientId } = this.props;
     const [owner, type] = value;
     const newData = {
       key: Date.now(),
@@ -148,8 +150,8 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
       },
     };
 
-    // update formik
     if (isFunction(addRow)) {
+      createEvent('current_position', 'create', 'Assets', clientId);
       addRow(newData);
     }
   }
