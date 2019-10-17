@@ -3,10 +3,10 @@ import { Table } from 'antd';
 import { get, map, isString, debounce } from 'lodash';
 import cn from 'classnames';
 
-import { CarouselItem } from './styled';
 import { Record } from '../DocumentsPage';
 import EditCell, { EditCellType } from '../../StrategyPage/Drawer/EditCell';
 import TitleEditable from './TitleEditable';
+import { CarouselItem } from './styled';
 
 const JustificationField = (props: {
   defaultValue: string | undefined;
@@ -85,12 +85,16 @@ const components = {
   },
 };
 
-const CardDetails = (props: {
+interface CardDetailsProps {
   record: Record;
   name: string;
   setFieldValue: (field: string, val: any) => void;
+
   overwrite?: boolean;
-}) => {
+  showAddButton?: boolean;
+}
+
+const CardDetails = (props: CardDetailsProps) => {
   const { record, name, setFieldValue, overwrite } = props;
   const onEdit = (value: any, fieldName: string, rowIndex?: number) => {
     const field = `${name}.table.data.${rowIndex}.${fieldName}`;

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Carousel } from 'antd';
 
-import { CarouselWrapper } from './styled';
 import CardDetails from './CardDetails';
 import { Record } from '../DocumentsPage';
+import { CarouselWrapper } from './styled';
 import { BtnStepDocument, StepActionDocument } from '../styled';
 
 export interface DocumentsCarouselProps {
@@ -39,6 +39,7 @@ const DocumentsCarousel = (props: DocumentsCarouselProps) => {
             name={`${stepName}.records.${index}`}
             setFieldValue={setFieldValue}
             overwrite={overwrite}
+            showAddButton={stepName === 'step2' && card.type !== 'user'}
           />
         ))}
       </Carousel>
