@@ -156,6 +156,43 @@ export const StepWrapper = styled.section`
       }
     }
   }
+  .goal-table {
+    margin-top: 30px;
+    .ant-table-thead {
+      & > tr {
+        & > th {
+          padding: 12px;
+        }
+      }
+    }
+    .ant-table-tbody {
+      & > tr {
+        & > td {
+          vertical-align: baseline;
+          padding: 12px 5px;
+        }
+      }
+      .strategy-item {
+        .edit-cell {
+          margin-left: 0px;
+          padding: 0 8px;
+        }
+        .ant-select {
+          width: 100%;
+          font-weight: normal;
+          &-selection__rendered {
+            padding: 0 8px;
+          }
+        }
+        input {
+          font-weight: normal;
+        }
+      }
+    }
+    .tag-list {
+      padding-left: 8px;
+    }
+  }
 `;
 
 export const TitleStep = styled.div.attrs({
@@ -175,7 +212,7 @@ export const TitleStep = styled.div.attrs({
       font-size: 16px;
       font-weight: 600;
 
-      ${(props) =>
+      ${props =>
         props.editable &&
         css`
           &:hover {
@@ -210,7 +247,7 @@ export const TitleStepSmall = styled.div.attrs({
       margin: 0 0 10px -10px;
       color: #9096af;
 
-      ${(props) =>
+      ${props =>
         props.editable &&
         css`
           &:hover {
