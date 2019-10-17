@@ -15,7 +15,8 @@ const CardThumbnail = (props: { record?: Record; onClick?: () => void; onAdd?: (
       <CardBlock title={header} onClick={onClick}>
         {map(
           table.data,
-          (row: Row, index: number) => row && row.value && <CardBlockText key={index}>{row.value}</CardBlockText>,
+          (row: Row, index: number) =>
+            row.value && row.value.trim() !== '' && <CardBlockText key={index}>{row.value}</CardBlockText>,
         )}
       </CardBlock>
     );

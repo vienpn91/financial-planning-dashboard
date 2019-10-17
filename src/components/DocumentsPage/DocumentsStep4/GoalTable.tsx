@@ -110,10 +110,15 @@ class GoalTable extends React.Component<GoalTableProps> {
             const options = map(records, (record: Record) => ({
               value: record.header,
               label: record.header,
-              children: map(record.table.data, (row: Row) => ({
-                value: row.id && row.id.toString(),
-                label: row.value,
-              })),
+              children: map(record.table.data, (row: Row) => {
+                if (row.id && row.value && row.value.trim() !== '') {
+                  return ({
+                    value: row.id.toString(),
+                    label: row.value,
+                  });
+                }
+                return null;
+              }).filter((r) => !!r),
             }));
             const columns = map(this.columns, (col) => {
               if (col.type === EditCellType.linkCurrentProduct) {
