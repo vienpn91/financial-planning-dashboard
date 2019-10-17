@@ -1,5 +1,5 @@
 import React from 'react';
-import { every, filter, get } from 'lodash';
+import { filter, get } from 'lodash';
 
 import { Record } from '../DocumentsPage';
 import { CardThumbnailItem, StatusCard, TitleCard, NumberCard, DoneCard, CardThumbnailChecked } from './styled';
@@ -7,7 +7,8 @@ import { Icon } from 'antd';
 
 const CardStatistic = (props: { record: Record; onClick: () => void }) => {
   const { record, onClick } = props;
-  const checked = get(record, 'table.data.length') === 0 || every(get(record, 'table.data'), ['isOverwrite', true]);
+  const numberIssues = filter(record.table.data, (d) => d.id !== -1 && !d.isOverwrite).length;
+  const checked = get(record, 'table.data.length') === 0 || numberIssues === 0;
 
   if (checked) {
     return (
@@ -19,7 +20,6 @@ const CardStatistic = (props: { record: Record; onClick: () => void }) => {
       </CardThumbnailChecked>
     );
   }
-  const numberIssues = filter(record.table.data, (d) => !d.isOverwrite).length;
 
   return (
     <CardThumbnailItem onClick={onClick}>
