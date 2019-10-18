@@ -1,9 +1,27 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+  }
 
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+`;
 export const DocumentsStep8WP = styled.div.attrs({
   className: 'documents-step-8-wrapper',
 })`
   margin-bottom: 50px;
+  .fadeIn {
+    text-align: center;
+    animation-name: ${fadeIn};
+    animation-duration: 1s;
+    animation-fill-mode: both;
+  }
 `;
 
 export const ListCardThumbnails = styled.div`
@@ -20,7 +38,8 @@ export const CardThumbnailItem = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #fff;
+  background-color: #fff;
+  transition: all 300ms ease;
   height: 160px;
   border-radius: 0.35rem;
   box-shadow: 4px 4px 10px 3px rgba(100,100,101,0.21), 0 0 15px rgba(115,162,208,0.06);
@@ -51,6 +70,8 @@ export const DoneCard = styled.div`
 `;
 
 export const CardThumbnailChecked = styled(CardThumbnailItem)`
-  background: #e4fff3;
+  background-color: #e4fff3;
+  transition: background-color 1s ease;
+  transition-delay: 3s;
   border: 1px solid #97dec4;
 `;
