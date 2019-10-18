@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
-import { Table } from 'antd';
+import { Table, Icon } from 'antd';
 import { ExpandIconProps, TableProps } from 'antd/lib/table';
-import Icon from 'antd/es/icon';
 import { TweenOneGroup } from 'rc-tween-one';
+
 import EditableCell from './assets/EditableCell';
 
 const enterAnim = [
@@ -51,16 +51,11 @@ function CustomExpandIcon(props: ExpandIconProps<any>) {
   if (!props.expandable) {
     return null;
   }
-  let text;
-  if (props.expanded) {
-    text = 'right';
-  } else {
-    text = 'right';
-  }
+
   return (
     <Icon
       className={props.expanded ? 'collapse-open' : ''}
-      type={text}
+      type={'right'}
       // @ts-ignore
       onClick={(e) => props.onExpand(props.record, e)}
     />
