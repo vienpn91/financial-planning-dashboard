@@ -176,6 +176,14 @@ export const TableEntryContainer = styled.section.attrs({
   .table-general{
     table{
       table-layout: fixed;
+      .ant-table-row-expand-icon-cell{
+        .anticon {
+          transition: transform .24s ease;
+          &.collapse-open{
+            transform: rotate(90deg);
+          }
+        }
+      }
     }
     .ant-table{
       &.ant-table-small{

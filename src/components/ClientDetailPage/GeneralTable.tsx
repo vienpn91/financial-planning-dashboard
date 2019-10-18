@@ -53,12 +53,13 @@ function CustomExpandIcon(props: ExpandIconProps<any>) {
   }
   let text;
   if (props.expanded) {
-    text = 'down';
+    text = 'right';
   } else {
     text = 'right';
   }
   return (
     <Icon
+      className={props.expanded ? 'collapse-open' : ''}
       type={text}
       // @ts-ignore
       onClick={(e) => props.onExpand(props.record, e)}
