@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { isFunction, isBoolean, get } from 'lodash';
+import { isFunction, isBoolean } from 'lodash';
 import { Icon } from 'antd';
 import { connect } from 'react-redux';
 import { Bar, HorizontalBar, Line } from 'react-chartjs-2';
 import classNames from 'classnames';
+import numeral from 'numeral';
 
 import { GraphCard, GraphTitle, GraphWrapper, GraphGroup } from '../styled';
 import { RootState } from '../../../reducers/reducerTypes';
@@ -32,6 +33,39 @@ interface GraphProps {
   redraw?: boolean;
   onGraphClick?: (e: React.SyntheticEvent) => void;
 }
+
+const defaultOptions = {
+  maintainAspectRatio: false,
+  legend: {
+    display: false,
+  },
+  tooltips: {
+    titleFontFamily:
+      '-apple-system, BlinkMacSystemFont, \'Segoe UI\', \'Roboto\', \'Oxygen\', \'Ubuntu\', \'Cantarell\', ' +
+      '\'Fira Sans\', \'Droid Sans\', \'Helvetica Neue\', sans-serif',
+    bodyFontFamily:
+      '-apple-system, BlinkMacSystemFont, \'Segoe UI\', \'Roboto\', \'Oxygen\', \'Ubuntu\', \'Cantarell\', ' +
+      '\'Fira Sans\', \'Droid Sans\', \'Helvetica Neue\', sans-serif',
+    footerFontFamily:
+      '-apple-system, BlinkMacSystemFont, \'Segoe UI\', \'Roboto\', \'Oxygen\', \'Ubuntu\', \'Cantarell\', ' +
+      '\'Fira Sans\', \'Droid Sans\', \'Helvetica Neue\', sans-serif',
+    intersect: false,
+    callbacks: {
+      label(
+        tooltipItem: { datasetIndex: React.ReactText; yLabel: number },
+        data: { datasets: { [x: string]: { label: string } } },
+      ) {
+        let label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+        if (label) {
+          label += ': ';
+        }
+        label += numeral(Math.round(tooltipItem.yLabel * 100) / 100).format('$0,0.[00]');
+        return label;
+      },
+    },
+  },
+};
 
 const GraphContainer = (props: GraphProps) => {
   const { type, name, data, className, onGraphClick, redraw: redrawProp, dataList } = props;
@@ -62,10 +96,7 @@ const GraphContainer = (props: GraphProps) => {
               data={graphData}
               redraw={redraw}
               options={{
-                maintainAspectRatio: false,
-                legend: {
-                  display: false,
-                },
+                ...defaultOptions,
                 scales: {
                   yAxes: [
                     {
@@ -80,49 +111,19 @@ const GraphContainer = (props: GraphProps) => {
       case GraphType.Line:
         return (
           <GraphCard className={classNames({ active: index === activeIndex })} key={index}>
-            <Line
-              height={190}
-              data={graphData}
-              redraw={redraw}
-              options={{
-                maintainAspectRatio: false,
-                legend: {
-                  display: false,
-                },
-              }}
-            />
+            <Line height={190} data={graphData} redraw={redraw} options={defaultOptions} />
           </GraphCard>
         );
       case GraphType.Bar:
         return (
           <GraphCard className={classNames({ active: index === activeIndex })} key={index}>
-            <Bar
-              height={190}
-              data={graphData}
-              redraw={redraw}
-              options={{
-                maintainAspectRatio: false,
-                legend: {
-                  display: false,
-                },
-              }}
-            />
+            <Bar height={190} data={graphData} redraw={redraw} options={defaultOptions} />
           </GraphCard>
         );
       case GraphType.HorizontalBar:
         return (
           <GraphCard className={classNames({ active: index === activeIndex })} key={index}>
-            <HorizontalBar
-              height={190}
-              data={graphData}
-              redraw={redraw}
-              options={{
-                maintainAspectRatio: false,
-                legend: {
-                  display: false,
-                },
-              }}
-            />
+            <HorizontalBar height={190} data={graphData} redraw={redraw} options={defaultOptions} />
           </GraphCard>
         );
       default:
