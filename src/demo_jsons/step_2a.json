@@ -3724,7 +3724,20 @@
         "delta": "0%"
       }
     ],
-    "graph": [],
+    "graph": [
+      {
+        "title": "Insurance",
+        "xAxis": ["Life", "TPD", "Trauma"],
+        "current": [500000, 500000, 150000],
+        "proposed": [500000, 500000, 150000]
+      },
+      {
+        "title": "Insurance",
+        "xAxis": ["Income Protection (Per month)"],
+        "current": [7000],
+        "proposed": [7000]
+      }
+    ],
     "standardText": [
       {
         "text": "Text line one"
