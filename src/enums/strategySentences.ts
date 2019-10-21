@@ -32,6 +32,16 @@ export const paydownOptions = [
     label: 'eliminate',
   },
 ];
+export const varyOptions = [
+  {
+    value: 'increase',
+    label: 'increase',
+  },
+  {
+    value: 'reduce',
+    label: 'reduce',
+  },
+];
 
 const strategySentences: any = {
   salarySacrifice: {
@@ -215,6 +225,18 @@ const strategySentences: any = {
     statement: '{{0}}',
     types: [EditCellType.textarea],
     options: [{ placeholder: 'Enter custom strategy' }],
+  },
+  establish: {
+    custom: true,
+  },
+  retain: {
+    custom: true,
+  },
+  vary: {
+    custom: true,
+  },
+  cancel: {
+    custom: true,
   },
 };
 

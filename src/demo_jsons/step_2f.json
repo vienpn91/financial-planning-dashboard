@@ -200,7 +200,27 @@
         "renderedLabel": "pension income to meet your expenses"
       }
     ],
-    "funeralBond": []
+    "funeralBond": [],
+    "insurance": [
+      {
+        "id": 1,
+        "value": 1,
+        "label": "OnePath OneCare life and TPD",
+        "amount": 500000
+      },
+      {
+        "id": 2,
+        "value": 2,
+        "label": "OnePath OneCare Trauma",
+        "amount": 150000
+      },
+      {
+        "id": 3,
+        "value": 3,
+        "label": "OnePath OneCare income protection",
+        "amount": 7000
+      }
+    ]
   },
   "partner": {
     "name": "Susan Boyle",
@@ -258,6 +278,27 @@
         "id": "c86a0f80-aead-11e9-aa31-114c7337aa7a",
         "value": "c86a0f80-aead-11e9-aa31-114c7337aa7a",
         "label": "My funeral bond 1"
+      }
+    ],
+    "insurance": [
+      {
+        "id": 1,
+        "value": 1,
+        "label": "OnePath OneCare life and TPD",
+        "amount": 500000
+      },
+      {
+        "id": 2,
+        "value": 2,
+        "label": "OnePath OneCare Trauma",
+        "amount": 150000
+      },
+      {
+        "id": 3,
+        "value": 3,
+        "label": "OnePath OneCare income protection",
+        "amount": 7000,
+        "perMonth": true
       }
     ]
   },

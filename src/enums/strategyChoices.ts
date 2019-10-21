@@ -629,4 +629,50 @@ export const strategyChoices: StrategyChoice = {
       ],
     },
   ],
+  [StrategyTypes.Insurance]: [
+    {
+      value: 'client',
+      label: 'Client',
+      children: [
+        {
+          value: 'establish',
+          label: 'Establish',
+        },
+        {
+          value: 'retain',
+          label: 'Retain',
+        },
+        {
+          value: 'vary',
+          label: 'Vary',
+        },
+        {
+          value: 'cancel',
+          label: 'Cancel',
+        },
+      ],
+    },
+    {
+      value: 'partner',
+      label: 'Partner',
+      children: [
+        {
+          value: 'establish',
+          label: 'Establish',
+        },
+        {
+          value: 'retain',
+          label: 'Retain',
+        },
+        {
+          value: 'vary',
+          label: 'Vary',
+        },
+        {
+          value: 'cancel',
+          label: 'Cancel',
+        },
+      ],
+    },
+  ],
 };

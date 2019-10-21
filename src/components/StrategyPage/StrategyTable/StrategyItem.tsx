@@ -15,6 +15,7 @@ import CustomizedExistingInvestment from './CustomizedExistingInvestment';
 import CustomizedWithdrawFunds from './CustomizedWithdrawFunds';
 import { StrategyTypes } from '../../../enums/strategies';
 import CustomizedFuneralBond from './CustomizedFuneralBond';
+import EstablishInsurance from './EstablishInsurance';
 
 export interface StrategyItemI {
   id?: string;
@@ -223,6 +224,20 @@ class StrategyItem extends Component<StrategyItemProps> {
           />
         );
       }
+      case 'establish':
+      case 'retain':
+      case 'vary':
+      case 'cancel': {
+        return (
+          <EstablishInsurance
+            {...this.props}
+            name={getName()}
+            context={context}
+            sentenceKey={sentenceKey}
+            defaultFullValue={defaultFullValue}
+          />
+        );
+      }
       default:
         return null;
     }
@@ -235,7 +250,7 @@ class StrategyItem extends Component<StrategyItemProps> {
     const sentenceKey = slice(strategySentenceKeys, 1).join('.');
     const strategySentence: Sentence = get(strategySentences, sentenceKey);
 
-    if (context && strategySentence.custom) {
+    if (context && strategySentence && strategySentence.custom) {
       return this.renderCustom(context, sentenceKey);
     }
 
