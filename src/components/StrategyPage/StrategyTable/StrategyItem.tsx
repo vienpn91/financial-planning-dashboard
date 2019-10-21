@@ -5,7 +5,7 @@ import { Dropdown, Icon, Menu, Popconfirm } from 'antd';
 import { ClickParam } from 'antd/lib/menu';
 import { StrategyTableIcon, StrategyTableItems, StrategyTableText } from './styled';
 import { DynamicData } from '../../../reducers/client';
-import strategySentences from '../../../enums/strategySentences';
+import strategySentences, { clientPartnerOptions } from '../../../enums/strategySentences';
 import { formatString, Param } from '../StandardText';
 import EditCell, { EditCellType } from '../Drawer/EditCell';
 import CheckboxInput from '../Drawer/CheckboxInput';
@@ -266,23 +266,46 @@ class StrategyItem extends Component<StrategyItemProps> {
           switch (type) {
             case EditCellType.select: {
               if (isString(options)) {
-                if (options !== 'year') {
-                  let option = options;
-                  if (options[0] === '+') {
-                    option = options.slice(1);
-                    options = [...get(client, option), ...get(partner, option)];
-                  } else {
-                    options = getOptions(context, { client, partner }, options);
+                switch (options) {
+                  case 'year': {
+                    optionalProps.yearFi = true;
+                    options = [];
+                    const nowYear = moment().year();
+                    for (let i = nowYear; i < nowYear + 10; i++) {
+                      options.push({ value: i, label: `Year ${i}`, renderedLabel: `${i}/${i + 1} Financial Year` });
+                    }
+                    break;
                   }
-                  if (option === 'investments' && strategyType === StrategyTypes.Superannuation) {
-                    options = [...options, { value: 'cashflow', label: 'Cashflow' }];
+                  case clientPartnerOptions: {
+                    options = [
+                      {
+                        value: 'client',
+                        label: client.name,
+                      },
+                    ];
+                    if (partner && partner.name) {
+                      options.push({
+                        value: 'partner',
+                        label: partner.name,
+                      });
+                    }
+                    if (sentenceKey === 'superannuationBeneficiary') {
+                      options.push({ value: 'estate', label: 'estate' });
+                    }
+                    break;
                   }
-                } else {
-                  optionalProps.yearFi = true;
-                  options = [];
-                  const nowYear = moment().year();
-                  for (let i = nowYear; i < nowYear + 10; i++) {
-                    options.push({ value: i, label: `Year ${i}`, renderedLabel: `${i}/${i + 1} Financial Year` });
+                  default: {
+                    let option = options;
+                    if (options[0] === '+') {
+                      option = options.slice(1);
+                      options = [...get(client, option), ...get(partner, option)];
+                    } else {
+                      options = getOptions(context, { client, partner }, options);
+                    }
+                    if (option === 'investments' && strategyType === StrategyTypes.Superannuation) {
+                      options = [...options, { value: 'cashflow', label: 'Cashflow' }];
+                    }
+                    break;
                   }
                 }
               }

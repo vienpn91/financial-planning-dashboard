@@ -1,5 +1,6 @@
 import { EditCellType } from '../components/StrategyPage/Drawer/EditCell';
 
+export const clientPartnerOptions = 'clientPartnerOptions';
 export const specificOptions = [{ value: 'specific', label: 'Specific' }, { value: 'custom', label: 'Custom' }];
 export const ddFreeTextOptions = [
   {
@@ -40,6 +41,62 @@ export const varyOptions = [
   {
     value: 'reduce',
     label: 'reduce',
+  },
+];
+export const powerOfAttorneyOptions = [
+  {
+    value: 'enduring',
+    label: 'Enduring Power of Attorney',
+  },
+  {
+    value: 'medical',
+    label: 'Medical Power of Attorney',
+  },
+  {
+    value: 'guardianship',
+    label: 'Power of Guardianship',
+  },
+];
+export const periodTimeOptions = [
+  {
+    value: 'weekly',
+    label: 'weekly',
+  },
+  {
+    value: 'fortnightly',
+    label: 'fortnightly',
+  },
+  {
+    value: 'monthly',
+    label: 'monthly',
+  },
+  {
+    value: 'quarterly',
+    label: 'quarterly',
+  },
+];
+export const beneficiaryOptions = [
+  {
+    value: 'binding',
+    label: 'binding',
+  },
+  {
+    value: 'non-binding',
+    label: 'non-binding',
+  },
+  {
+    value: 'non-lapsing',
+    label: 'non-lapsing',
+  },
+];
+export const fundOptions = [
+  {
+    value: 'superannuation',
+    label: 'superannuation',
+  },
+  {
+    value: 'pensionProduct',
+    label: 'pension product',
   },
 ];
 
@@ -220,6 +277,16 @@ const strategySentences: any = {
       types: [EditCellType.date, EditCellType.select, EditCellType.select],
       options: ['', '+investments', 'funeralBond'],
     },
+    invest: {
+      statement: '%name%, arrange to invest a further {{0}} from your {{1}} on a {{2}} basis.',
+      types: [EditCellType.number, EditCellType.select, EditCellType.select],
+      options: ['', 'investments', periodTimeOptions],
+    },
+    arrange: {
+      statement: '%name%, arrange to invest a further {{0}} from your {{1}} on a {{2}} basis.',
+      types: [EditCellType.number, EditCellType.select, EditCellType.select],
+      options: ['', 'investments', periodTimeOptions],
+    },
   },
   customStrategy: {
     statement: '{{0}}',
@@ -237,6 +304,46 @@ const strategySentences: any = {
   },
   cancel: {
     custom: true,
+  },
+  powerOfAttorney: {
+    appoint: {
+      statement: '%name%, seek legal advice to appoint a {{0}}',
+      types: [EditCellType.select],
+      options: [powerOfAttorneyOptions],
+    },
+    review: {
+      statement: '%name%, seek legal advice to review a {{0}}',
+      types: [EditCellType.select],
+      options: [powerOfAttorneyOptions],
+    },
+  },
+  will: {
+    implement: {
+      statement: '%name%, seek legal advice to have your Will prepared',
+    },
+    review: {
+      statement: '%name%, seek legal advice to have your Will review',
+    },
+  },
+  superannuationBeneficiary: {
+    statement: '%name%, nominate {{0}} as {{1}} beneficiary of your {{2}} fund',
+    types: [EditCellType.select, EditCellType.select, EditCellType.select],
+    options: [clientPartnerOptions, beneficiaryOptions, fundOptions],
+  },
+  implementAdvanceCare: {
+    directive: {
+      statement: '%name%, arrange to invest a further {{0}} from your {{1}} on a {{2}} basis',
+      types: [EditCellType.number, EditCellType.select, EditCellType.select],
+      options: ['', 'investments', periodTimeOptions],
+    },
+    plan: {
+      statement: '%name%, speak to your doctor about implementing an Advance Care Plan',
+    },
+  },
+  changePension: {
+    statement: '%name%, change your beneficiary nomination on your pension account from {{0}} to reversionary',
+    types: [EditCellType.select],
+    options: [clientPartnerOptions],
   },
 };
 
