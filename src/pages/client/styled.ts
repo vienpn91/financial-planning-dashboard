@@ -295,7 +295,10 @@ export const TextTitle = styled.span<TextTitleProps>`
 `;
 
 export const Spinner = styled(Spin)`
-  text-align: right;
+  &.ant-spin {
+    position: absolute;
+    right: 10px;
+  }
 `;
 
 export const DivideLine = styled.span`
