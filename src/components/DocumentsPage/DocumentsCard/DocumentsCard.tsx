@@ -1,11 +1,11 @@
 import React from 'react';
 import { isFunction } from 'lodash';
+import { FieldArray, FieldArrayRenderProps } from 'formik';
 
 import { DocumentsCardWrapper } from './styled';
 import CardThumbnail from './CardThumbnail';
 import { TitleStep, TitleStepSmall } from '../styled';
 import { Record } from '../DocumentsPage';
-import { FieldArray, FieldArrayRenderProps } from 'formik';
 
 interface DocumentsCardProps {
   cards: Record[];

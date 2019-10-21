@@ -54,7 +54,7 @@ const steps = [
   {
     title: 'Step 8',
     content: DocumentsStep8,
-    description: 'Cost of advice',
+    description: 'Regulatory compliance',
   },
 ];
 
@@ -84,6 +84,7 @@ export interface Record {
   header: string;
   table: Table;
   type?: string;
+  dropdown?: string[];
 }
 
 export interface StepProps {

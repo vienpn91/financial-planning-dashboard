@@ -30,14 +30,12 @@ const cashflowConfig = {
       label: 'Current',
       fill: true,
       borderColor: '#FF5722',
-      backgroundColor: '#FF5722',
     },
     {
       dataIndex: 'proposed',
       label: 'Proposed',
       fill: true,
       borderColor: '#00BCD4',
-      backgroundColor: '#00BCD4',
     },
   ],
 };
@@ -107,6 +105,7 @@ export const loadGraphData = (config: GraphConfig) => (
     labels: get(data, 'xAxis', []),
     datasets: config.datasets.map((dataset) => {
       return {
+        backgroundColor: dataset.borderColor,
         ...dataset,
         data: get(data, dataset.dataIndex, []),
       };

@@ -1,8 +1,8 @@
 {
   "step1": {
-    "title": "Why did Ian & Deborah seek advice?",
+    "title": "Why did John seek advice?",
     "subtitle": "Your purpose for seeking advice",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Donec sollicitudin molestie malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n\nMauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Nulla quis lorem ut libero malesuada feugiat. Proin eget tortor risus. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus."
+    "description": "John is planning to retire at the age of 60 and would like to know how long will his retirement funds last and to have a considerable income to back his financial obligations and living expenses post retirement. He would also like to reduce his financial obligations to help his financial situation at retirement."
   },
   "step2": {
     "title": "What the advice cover",
@@ -30,11 +30,6 @@
               "id": 3,
               "value": "Portfolio Review",
               "description": "No Limitations"
-            },
-            {
-              "id": 4,
-              "value": "SMSF",
-              "description": "No Limitations"
             }
           ]
         }
@@ -51,16 +46,6 @@
               "id": 1,
               "value": "Income streams",
               "description": "No Limitations"
-            },
-            {
-              "id": 2,
-              "value": "Platform Review",
-              "description": "No Limitations"
-            },
-            {
-              "id": 3,
-              "value": "Portfolio Review",
-              "description": "No Limitations"
             }
           ]
         }
@@ -75,13 +60,8 @@
           "data": [
             {
               "id": 1,
-              "value": "Direct shares",
-              "description": "No Limitations"
-            },
-            {
-              "id": 2,
-              "value": "Portfolio Review",
-              "description": "No Limitations"
+              "value": "Investment review",
+              "description": "Portfolio review"
             }
           ]
         }
@@ -98,21 +78,62 @@
               "id": 1,
               "value": "Super death benefit nomination",
               "description": "No Limitations"
+            },
+            {
+              "id": 2,
+              "value": "Wills",
+              "description": "No Limitations"
+            },
+            {
+              "id": 3,
+              "value": "Power of Attorney/Enduring Power of Attorney",
+              "description": "No Limitations"
             }
           ]
         }
       },
       {
         "type": "fixed",
-        "header": "Aged Care",
-        "title": "What the advice cover (Aged Care)",
-        "subtitle": "Record the Aged Care scope of advice, as agreed between you and the client.",
+        "header": "Non-deductible dept",
+        "title": "What the advice cover (Non-deductible dept)",
+        "subtitle": "Record the Non-deductible dept scope of advice, as agreed between you and the client.",
         "table": {
-          "columns": ["Aged Care", "Advice Limitations"],
+          "columns": ["Non-deductible dept", "Advice Limitations"],
           "data": [
             {
               "id": 1,
-              "value": "Home care",
+              "value": "Dept",
+              "description": "No Limitations"
+            }
+          ]
+        }
+      },
+      {
+        "type": "fixed",
+        "header": "Insurance",
+        "title": "What the advice cover (Insurance)",
+        "subtitle": "Record the Insurance scope of advice, as agreed between you and the client.",
+        "table": {
+          "columns": ["Insurance", "Advice Limitations"],
+          "data": [
+            {
+              "id": 1,
+              "value": "Life",
+              "description": "No Limitations"
+            },
+            {
+              "id": 2,
+              "value": "TPD",
+              "description": "No Limitations"
+            },
+            {
+              "id": 3,
+              "value": "Trauma",
+              "description": "No Limitations"
+            },
+            {
+              "id": 4,
+              "value": "Income Protection",
               "description": "No Limitations"
             }
           ]
@@ -126,63 +147,32 @@
     "records": [
       {
         "type": "fixed",
-        "header": "Insurance",
-        "title": "What the advice cover doesn't cover (Insurance)",
-        "subtitle": "Supporting text goes here",
+        "header": "Aged Care",
+        "title": "What the advice cover doesn't cover (Aged Care)",
+        "subtitle": "Record the Aged Care-related items, that did not fall within the scope of advice.",
         "table": {
-          "columns": ["Insurance", "Reason for being scoped out"],
+          "columns": ["Aged Care", "Reason for being scoped out"],
           "data": [
             {
               "id": 1,
-              "value": "",
-              "description": "You have requested we cancel your insurance cover held within superannuation"
+              "value": "Aged Care",
+              "description": "Not applicable at this moment"
             }
           ]
         }
       },
       {
         "type": "fixed",
-        "header": "Estate Planning",
-        "title": "What the advice cover doesn't cover (Estate Planning)",
-        "subtitle": "Record the Estate planning-related items, that did not fall within the scope of advice.",
+        "header": "Social Security",
+        "title": "What the advice cover doesn't cover (Social Security)",
+        "subtitle": "Record the Social Security-related items, that did not fall within the scope of advice.",
         "table": {
-          "columns": ["Estate Planning", "Reason for being scoped out"],
+          "columns": ["Social Security", "Reason for being scoped out"],
           "data": [
             {
               "id": 1,
-              "value": "Insurance Nominations",
-              "description": "You have informed us that your estate planning arrangements are in place and you do not require it to be re-addressed"
-            },
-            {
-              "id": 2,
-              "value": "Sample text",
-              "description": "Unspecified"
-            },
-            {
-              "id": 3,
-              "value": "POA/EPOA",
-              "description": "Unspecified"
-            },
-            {
-              "id": 3,
-              "value": "Guardianship",
-              "description": "Unspecified"
-            }
-          ]
-        }
-      },
-      {
-        "type": "fixed",
-        "header": "Investment",
-        "title": "What the advice cover doesn't cover (Investment)",
-        "subtitle": "Record the Investment-related items, that did not fall within the scope of advice.",
-        "table": {
-          "columns": ["Investment", "Reason for being scoped out"],
-          "data": [
-            {
-              "id": 1,
-              "value": "Platform review",
-              "description": "Unspecified"
+              "value": "Age pension",
+              "description": "Not eligible based on the financial assets."
             }
           ]
         }
@@ -195,7 +185,7 @@
       "data": [
         {
           "id": 1,
-          "description": "You would like to ensure that you maximise your superannuation within your SMSF in order to meet your retirement needs.",
+          "description": "You would like to know if your superannuation is on plan to retire by the age of 60 and would like to reduce fees and make contributions into super if necessary.",
           "priority": "high",
           "timeFrame": 2019,
           "links": [
@@ -206,6 +196,101 @@
             {
               "id": 2,
               "value": "Platform Review"
+            },
+            {
+              "id": 3,
+              "value": "Portfolio Review",
+              "description": "No Limitations"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "description": "You would like to retire by the age of 60",
+          "priority": "high",
+          "timeFrame": 2019,
+          "links": [
+            {
+              "id": 1,
+              "value": "Income streams",
+              "description": "No Limitations"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "description": "You would like to review your debt to determine if interest costs can be reduced.",
+          "priority": "high",
+          "timeFrame": 2019,
+          "links": [
+            {
+              "id": 1,
+              "value": "Dept",
+              "description": "No Limitations"
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "description": "You want your investment portfolio to be reviewed to determine if it is consistent with your risk profile and financial objectives.",
+          "priority": "medium",
+          "timeFrame": 2019,
+          "links": [
+            {
+              "id": 1,
+              "value": "Investment review",
+              "description": "Portfolio review"
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "description": "You would like your estate planning arrangements to be reviewed to confirm they are in line with your wishes.",
+          "priority": "medium",
+          "timeFrame": 2019,
+          "links": [
+            {
+              "id": 1,
+              "value": "Super death benefit nomination",
+              "description": "No Limitations"
+            },
+            {
+              "id": 2,
+              "value": "Wills",
+              "description": "No Limitations"
+            },
+            {
+              "id": 3,
+              "value": "Power of Attorney/Enduring Power of Attorney",
+              "description": "No Limitations"
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "description": "You would like to review your existing insurance arrangements",
+          "priority": "medium",
+          "timeFrame": 2019,
+          "links": [
+            {
+              "id": 1,
+              "value": "Life",
+              "description": "No Limitations"
+            },
+            {
+              "id": 2,
+              "value": "TPD",
+              "description": "No Limitations"
+            },
+            {
+              "id": 3,
+              "value": "Trauma",
+              "description": "No Limitations"
+            },
+            {
+              "id": 4,
+              "value": "Income Protection",
+              "description": "No Limitations"
             }
           ]
         }
@@ -220,8 +305,13 @@
       "data": [
         {
           "id": 1,
-          "value": "Expenses",
-          "description": "You were unable to provide us with this information. Therefore, the supporting calculation provided in this Statement of Advice is based on the assumption that all personal cash flow is spent"
+          "value": "Share portfolio",
+          "description": "You have not disclosed any details regarding your CommSec share portfolio and stated that you would like to manage it on your own."
+        },
+        {
+          "id": 2,
+          "value": "Platform review",
+          "description": "You are happy with your existing CFS FirstChoice Wholesale Investments account and would only like to review the underlying investments."
         }
       ]
     }
@@ -236,28 +326,68 @@
         "title": "Summary of Recommendations (Superannuation)",
         "subtitle": "Supporting text goes here",
         "table": {
-          "columns": ["Advice", "Description"],
+          "columns": [
+            {
+              "title": "Advice",
+              "dataIndex": "value"
+            },
+            {
+              "title": "Description",
+              "dataIndex": "description"
+            },
+            {
+              "title": "Alternatives",
+              "dataIndex": "alternatives"
+            }
+          ],
           "data": [
             {
               "id": 1,
-              "value": "Salary Sacrifice of 200",
-              "description": ""
+              "value": "Salary Sacrifice $10,000 per annum until 2023",
+              "description": "",
+              "alternatives": ""
+            },
+            {
+              "id": 2,
+              "value": "Make a non concessional contribution of $60,000",
+              "description": "",
+              "alternatives": ""
+            },
+            {
+              "id": 3,
+              "value": "Rollover your existing super into a CFS FirstChoice Wholesale Super",
+              "description": "",
+              "alternatives": ""
             }
           ]
         }
       },
       {
         "type": "fixed",
-        "header": "Retirement Income",
-        "title": "Summary of Recommendations (Retirement Income)",
+        "header": "Retirement income",
+        "title": "Summary of Recommendations (Retirement income)",
         "subtitle": "Supporting text goes here",
         "table": {
-          "columns": ["Advice", "Description"],
+          "columns": [
+            {
+              "title": "Advice",
+              "dataIndex": "value"
+            },
+            {
+              "title": "Description",
+              "dataIndex": "description"
+            },
+            {
+              "title": "Alternatives",
+              "dataIndex": "alternatives"
+            }
+          ],
           "data": [
             {
               "id": 1,
-              "value": "Income Streams",
-              "description": ""
+              "value": "Commence an account based pension in 2023",
+              "description": "",
+              "alternatives": ""
             }
           ]
         }
@@ -268,33 +398,56 @@
         "title": "Summary of Recommendations (Investment)",
         "subtitle": "Supporting text goes here",
         "table": {
-          "columns": ["Advice", "Description"],
+          "columns": [
+            {
+              "title": "Advice",
+              "dataIndex": "value"
+            },
+            {
+              "title": "Description",
+              "dataIndex": "description"
+            },
+            {
+              "title": "Alternatives",
+              "dataIndex": "alternatives"
+            }
+          ],
           "data": [
             {
               "id": 1,
-              "value": "Direct Shares",
-              "description": ""
-            },
-            {
-              "id": 2,
-              "value": "Portfolio review",
-              "description": ""
+              "value": "Rebalance your existing CFS FirstChoice Wholesale Investments",
+              "description": "",
+              "alternatives": ""
             }
           ]
         }
       },
       {
         "type": "fixed",
-        "header": "Estate Planning",
-        "title": "Summary of Recommendations (Estate Planning)",
+        "header": "Debt",
+        "title": "Summary of Recommendations (Debt)",
         "subtitle": "Supporting text goes here",
         "table": {
-          "columns": ["Advice", "Description"],
+          "columns": [
+            {
+              "title": "Advice",
+              "dataIndex": "value"
+            },
+            {
+              "title": "Description",
+              "dataIndex": "description"
+            },
+            {
+              "title": "Alternatives",
+              "dataIndex": "alternatives"
+            }
+          ],
           "data": [
             {
               "id": 1,
-              "value": "Super death benefit nomination",
-              "description": ""
+              "value": "Make an additional payment of $70,000 to your non-deductible debt",
+              "description": "",
+              "alternatives": ""
             }
           ]
         }
@@ -305,27 +458,86 @@
         "title": "Summary of Recommendations (Insurance)",
         "subtitle": "Supporting text goes here",
         "table": {
-          "columns": ["Advice", "Description"],
+          "columns": [
+            {
+              "title": "Advice",
+              "dataIndex": "value"
+            },
+            {
+              "title": "Description",
+              "dataIndex": "description"
+            },
+            {
+              "title": "Alternatives",
+              "dataIndex": "alternatives"
+            }
+          ],
           "data": [
             {
               "id": 1,
-              "value": "TPP Cover of",
-              "description": ""
+              "value": "Retain your existing Life cover of $500,000",
+              "description": "",
+              "alternatives": ""
             },
             {
               "id": 2,
-              "value": "Sample text",
-              "description": ""
+              "value": "Retain your existing TPD cover of $500,000",
+              "description": "",
+              "alternatives": ""
             },
             {
               "id": 3,
-              "value": "POA/EPOA",
-              "description": ""
+              "value": "Retain your existing Trauma cover of $150,000",
+              "description": "",
+              "alternatives": ""
             },
             {
               "id": 4,
-              "value": "Guardianship",
-              "description": ""
+              "value": "Retain your existing Income Protection cover which pays $7,000 per month",
+              "description": "",
+              "alternatives": ""
+            }
+          ]
+        }
+      },
+      {
+        "type": "fixed",
+        "header": "Estate Planning",
+        "title": "Summary of Recommendations (Estate Planning)",
+        "subtitle": "Supporting text goes here",
+        "table": {
+          "columns": [
+            {
+              "title": "Advice",
+              "dataIndex": "value"
+            },
+            {
+              "title": "Description",
+              "dataIndex": "description"
+            },
+            {
+              "title": "Alternatives",
+              "dataIndex": "alternatives"
+            }
+          ],
+          "data": [
+            {
+              "id": 1,
+              "value": "Establish Super death benefit nomination",
+              "description": "",
+              "alternatives": ""
+            },
+            {
+              "id": 2,
+              "value": "Establish a Will",
+              "description": "",
+              "alternatives": ""
+            },
+            {
+              "id": 3,
+              "value": "Establish Power of Attorney/Enduring Power of Attorney",
+              "description": "",
+              "alternatives": ""
             }
           ]
         }
@@ -346,11 +558,11 @@
           "dataIndex": "cost"
         },
         {
-          "title": "Calculation of amount reviewed by us",
+          "title": "Calculation of amount received by us",
           "dataIndex": "amount"
         },
         {
-          "title": "Practice retainer",
+          "title": "Dealer Group retainer",
           "dataIndex": "practice"
         },
         {
@@ -362,18 +574,18 @@
         {
           "id": 1,
           "description": "Preparation fee",
-          "cost": "",
-          "amount": "",
-          "practice": "",
-          "advisor": ""
+          "cost": "$500",
+          "amount": "0.5% of Total Portfolio",
+          "practice": "20%",
+          "advisor": "80%"
         },
         {
           "id": 1,
           "description": "Ongoing advisor service fee",
-          "cost": "",
-          "amount": "",
-          "practice": "",
-          "advisor": ""
+          "cost": "$2,200",
+          "amount": "Fixed Fee",
+          "practice": "20%",
+          "advisor": "80%"
         }
       ]
     }
@@ -383,8 +595,8 @@
     "subtitle": "The following issues were flagged",
     "records": [
       {
-        "header": "Current Position",
-        "title": "Regulatory Compliance (Current Position)",
+        "header": "Current",
+        "title": "Regulatory Compliance (Current)",
         "subtitle": "Supporting text goes here",
         "table": {
           "columns": [
@@ -397,22 +609,7 @@
               "dataIndex": "issue"
             }
           ],
-          "data": [
-            {
-              "id": 1,
-              "subsection": "Assets",
-              "issue": "Client has 2 primary residences",
-              "isOverwrite": false,
-              "justification": null
-            },
-            {
-              "id": 2,
-              "subsection": "Liabilities",
-              "issue": "Liabilities don't add up",
-              "isOverwrite": false,
-              "justification": null
-            }
-          ]
+          "data": []
         }
       },
       {
@@ -430,20 +627,12 @@
               "dataIndex": "issue"
             }
           ],
-          "data": [
-            {
-              "id": 1,
-              "subsection": "Assets",
-              "issue": "Lorem ipsum dolor sit amet",
-              "isOverwrite": false,
-              "justification": null
-            }
-          ]
+          "data": []
         }
       },
       {
-        "header": "Product Optimizer",
-        "title": "Regulatory Compliance (Product Optimizer)",
+        "header": "Investment",
+        "title": "Regulatory Compliance (Investment)",
         "subtitle": "Supporting text goes here",
         "table": {
           "columns": [
@@ -459,15 +648,8 @@
           "data": [
             {
               "id": 1,
-              "subsection": "Assets",
-              "issue": "Lorem ipsum dolor sit amet",
-              "isOverwrite": false,
-              "justification": null
-            },
-            {
-              "id": 2,
-              "subsection": "Assets",
-              "issue": "Lorem ipsum dolor sit amet",
+              "subsection": "CFS FirstChoice Wholesale Investments",
+              "issue": "Recommended asset allocation is not inline with the John’s Balanced risk profile",
               "isOverwrite": false,
               "justification": null
             }
@@ -475,8 +657,8 @@
         }
       },
       {
-        "header": "Insurance Optimizer",
-        "title": "Regulatory Compliance (Insurance Optimizer)",
+        "header": "Insurance",
+        "title": "Regulatory Compliance (Insurance)",
         "subtitle": "Supporting text goes here",
         "table": {
           "columns": [
@@ -489,20 +671,12 @@
               "dataIndex": "issue"
             }
           ],
-          "data": [
-            {
-              "id": 1,
-              "subsection": "Assets",
-              "issue": "Lorem ipsum dolor sit amet",
-              "isOverwrite": true,
-              "justification": null
-            }
-          ]
+          "data": []
         }
       },
       {
-        "header": "Document Builder",
-        "title": "Regulatory Compliance (Document Builder)",
+        "header": "Document",
+        "title": "Regulatory Compliance (Document)",
         "subtitle": "Supporting text goes here",
         "table": {
           "columns": [
