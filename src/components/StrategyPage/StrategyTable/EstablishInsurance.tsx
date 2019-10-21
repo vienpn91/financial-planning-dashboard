@@ -80,7 +80,6 @@ const EstablishInsurance = (
   useEffect(() => {
     if (disableEditAmount) {
       const selectedInsurance = find(insuranceOptions, ['value', insurance]);
-      console.log({ insurance, selectedInsurance })
       if (selectedInsurance && selectedInsurance.amount !== undefined) {
         setFieldValue(`${strategyType}.strategies[${strategyIndex}].values[1]`, selectedInsurance.amount);
       }
