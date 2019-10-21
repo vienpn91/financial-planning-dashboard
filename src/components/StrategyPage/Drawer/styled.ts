@@ -142,6 +142,7 @@ export const DrawerTableWrapper = styled.div<{ productOptimizer?: boolean }>`
     font-size: 13px;
     ${(props) => props.productOptimizer && css `
       min-width: 80px;
+      text-align: right;
       flex: 1 1 calc(100% / 3);
     `}
   }

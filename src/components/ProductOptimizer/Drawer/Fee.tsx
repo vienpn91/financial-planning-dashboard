@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Icon, Popconfirm, Table } from 'antd';
+import { last, take } from 'lodash';
 import cn from 'classnames';
 
 import { AssetBlock, AssetSubTitle, AssetTitle, AssetTitleBlock } from './styled';
@@ -42,12 +43,12 @@ class Fee extends PureComponent<FeeProps> {
       dataIndex: 'value',
       key: '1',
       width: 80,
-      className: 'text-align-center',
+      className: 'text-align-right',
     },
     {
       title: '%',
       dataIndex: 'percentage',
-      className: 'text-align-center',
+      className: 'text-align-right',
       options: {
         min: 0,
         max: 100,
@@ -111,6 +112,25 @@ class Fee extends PureComponent<FeeProps> {
     });
   }
 
+  public renderFooter = (tableData: Row[]) => () => {
+    const totalRow = last(tableData);
+
+    if (totalRow) {
+      return (
+        <>
+          <div className="title">
+            {totalRow.name}
+          </div>
+          <div className="value">
+            {totalRow.value}
+          </div>
+        </>
+      );
+    }
+
+    return undefined;
+  }
+
   public render() {
     const { product } = this.props;
 
@@ -131,9 +151,11 @@ class Fee extends PureComponent<FeeProps> {
             rowKey={(rowKey) => (rowKey.id ? rowKey.id.toString() : 'new')}
             className={cn('table-general drawer-fund-table linked-product')}
             columns={this.getColumns('Ongoing Fee')()}
-            dataSource={ongoingFee}
+            dataSource={take(ongoingFee, ongoingFee.length - 1)}
             pagination={false}
+            scroll={{ y: 265 }}
             components={components}
+            footer={this.renderFooter(ongoingFee)}
           />
         </TableEntryContainer>
         <TableEntryContainer drawer>
@@ -143,6 +165,7 @@ class Fee extends PureComponent<FeeProps> {
             columns={this.getColumns('Transaction Fee')()}
             dataSource={transactionFee}
             pagination={false}
+            scroll={{ y: 265 }}
             components={components}
           />
         </TableEntryContainer>
@@ -154,6 +177,7 @@ class Fee extends PureComponent<FeeProps> {
               columns={this.getColumns('Other Balances')()}
               dataSource={otherBalances}
               pagination={false}
+              scroll={{ y: 265 }}
               components={components}
             />
           </TableEntryContainer>

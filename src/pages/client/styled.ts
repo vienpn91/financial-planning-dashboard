@@ -146,6 +146,9 @@ export const TableEntryContainer = styled.section.attrs({
   .text-align-center {
     text-align: center;
   }
+  .text-align-right {
+    text-align: right;
+  }
   .optimizer-table {
     .ant-table-thead > tr > th {
       text-align: left;
