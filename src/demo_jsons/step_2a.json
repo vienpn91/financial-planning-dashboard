@@ -3700,8 +3700,26 @@
   "insurance": {
     "kpi": [
       {
-        "title": "Life insurance",
-        "value": 0,
+        "title": "Total Life cover",
+        "value": 500000,
+        "isIncrease": null,
+        "delta": "0%"
+      },
+      {
+        "title": "Total TPD cover",
+        "value": 500000,
+        "isIncrease": null,
+        "delta": "0%"
+      },
+      {
+        "title": "Total Trauma cover",
+        "value": 150000,
+        "isIncrease": null,
+        "delta": "0%"
+      },
+      {
+        "title": "Total Income Protection cover",
+        "value": "$7,000 per month",
         "isIncrease": null,
         "delta": "0%"
       }
