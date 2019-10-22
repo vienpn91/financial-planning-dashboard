@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Checkbox, Icon, Popconfirm, Table } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { get, isFunction, isNumber, dropRight, head } from 'lodash';
 import cn from 'classnames';
-import { FieldArray, FieldArrayRenderProps, getIn } from 'formik';
+import { FieldArray, FieldArrayRenderProps } from 'formik';
 
 import { TableEntryContainer } from '../../../pages/client/styled';
 import { ActionDrawerGeneral, ProposedBlock } from '../../StrategyPage/Drawer/styled';
@@ -199,6 +199,7 @@ interface FundTableProps {
 const LinkProductAndFund = (props: FundTableProps) => {
   const { columns, values, setFieldValue, prefixField, linkedProduct, fieldArrayLinks, linkIndex, hasCurrent } = props;
   const funds: Option[] = get(values, 'details.funds', []);
+  const [loading, setLoading] = useState<boolean>(false);
   const onSelectProduct = (option: Option) => {
     if (option) {
       const field = (prefixField ? prefixField + '.' : '') + 'details.product';
@@ -207,26 +208,38 @@ const LinkProductAndFund = (props: FundTableProps) => {
   };
   const onSelectFund = (fieldArrayFunds: FieldArrayRenderProps) => (option: Option) => {
     if (option) {
+      setLoading(true);
       if (option.id === 99) {
         // OneAnswer Frontier Low Cost Model Portfolio
         // updates RoP Alternative funds
-        const totalRow = { id: -1, name: 'Total', value: getSumFunds(roPAlternativeFunds), percentage: 100 };
-        setFieldValue(fieldArrayFunds.name, [...roPAlternativeFunds, totalRow]);
+        setTimeout(() => {
+          const totalRow = { id: -1, name: 'Total', value: getSumFunds(roPAlternativeFunds), percentage: 100 };
+          setFieldValue(fieldArrayFunds.name, [...roPAlternativeFunds, totalRow]);
+          setLoading(false);
+        }, 3000);
         return;
       }
 
       if (!prefixField && option.id === 9) {
         // CFS FirstChoice Low Cost Model Portfolio
         // updates Proposed funds
-        setFieldValue(fieldArrayFunds.name, proposedFunds);
+        setTimeout(() => {
+          setFieldValue(fieldArrayFunds.name, proposedFunds);
 
-        // Update RoP Current funds
-        const totalRow = { id: -1, name: 'Total', value: getSumFunds(roPCurrentFunds), percentage: 100 };
-        setFieldValue('links.0.details.funds', [...roPCurrentFunds, totalRow]);
+          // Update RoP Current funds
+          const totalRow = { id: -1, name: 'Total', value: getSumFunds(roPCurrentFunds), percentage: 100 };
+          setFieldValue('links.0.details.funds', [...roPCurrentFunds, totalRow]);
+
+          setLoading(false);
+        }, 3000);
         return;
       }
 
-      fieldArrayFunds.unshift(option);
+      setTimeout(() => {
+        fieldArrayFunds.unshift(option);
+        setLoading(false);
+      }, 3000);
+      return;
     }
   };
   const detailProduct = values && values.details && values.details.product;
@@ -359,6 +372,7 @@ const LinkProductAndFund = (props: FundTableProps) => {
                   dataSource={funds}
                   pagination={false}
                   components={components}
+                  loading={loading}
                 />
               </TableEntryContainer>
             </>
