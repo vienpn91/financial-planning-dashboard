@@ -2,12 +2,12 @@
   "client": {
     "current": [
       {
-        "id": 1,
+        "id": 2,
         "description": "Hesta Personal Super",
         "value": 400000,
         "details": {
           "product": {
-            "id": 1,
+            "id": 2,
             "name": "Hesta Personal Super"
           },
           "funds": [
@@ -20,12 +20,12 @@
         }
       },
       {
-        "id": 2,
+        "id": 3,
         "description": "CFS FirstChoice Wholesale Investments",
         "value": 50000,
         "details": {
           "product": {
-            "id": 1,
+            "id": 3,
             "name": "CFS FirstChoice Wholesale Investments"
           },
           "funds": [
@@ -43,12 +43,12 @@
   "partner": {
     "current": [
       {
-        "id": 3,
+        "id": 4,
         "description": "Hesta Personal Super",
         "value": 400000,
         "details": {
           "product": {
-            "id": 3,
+            "id": 4,
             "name": "Hesta Personal Super"
           },
           "funds": [
@@ -61,12 +61,12 @@
         }
       },
       {
-        "id": 4,
+        "id": 5,
         "description": "CFS FirstChoice Wholesale Investments",
         "value": 50000,
         "details": {
           "product": {
-            "id": 4,
+            "id": 5,
             "name": "CFS FirstChoice Wholesale Investments"
           },
           "funds": [
