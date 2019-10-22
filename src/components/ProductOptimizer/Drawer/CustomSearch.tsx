@@ -193,14 +193,16 @@ const CustomSearch = (props: CustomSearchProp) => {
     // Fund options for the specific
     if (type === CustomSearchType.Fund) {
       switch (productId) {
-        // CFS FirstChoice Wholesale Personal Super
-        case 1:
+        case 1: {
+          // CFS FirstChoice Wholesale Personal Super
           newOptions = cfsFirstChoiceWholesaleFunds;
           break;
-        // OnePath OneAnswer Frontier Personal Super
-        case 3:
+        }
+        case 3: {
+          // OnePath OneAnswer Frontier Personal Super
           newOptions = onePathFunds;
           break;
+        }
         default:
           break;
       }
