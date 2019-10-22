@@ -98,6 +98,7 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
     },
   ];
 
+  private animationTime = 450;
   private tableName = 'expenditure';
 
   public componentDidUpdate(prevProps: Readonly<ExpenditureTableProps>, prevState: Readonly<{}>, snapshot?: any): void {
@@ -107,6 +108,20 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
       const newData = data.map((d) => ({ ...d, owner: 'client' }));
       setFieldValue(this.tableName, newData);
     }
+  }
+
+  public cursorGoToDescriptionField = (key: number) => {
+    // Ensure the animation is end
+    setTimeout(() => {
+      // The new row might be is added to randomly position if the table is applying sort function
+      // Make sure the cursor moves to the new row just added
+      const descriptionInput: HTMLElement | null = document.querySelector(
+        `.expenditure-table tr[data-row-key="${key}"] .ant-input`,
+      );
+      if (descriptionInput && descriptionInput.focus) {
+        descriptionInput.focus();
+      }
+    }, this.animationTime);
   }
 
   public resetForm = () => {
@@ -132,10 +147,10 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
     const [owner, type] = value;
     const newData = {
       key: Date.now(),
-      description: 'Living Expenses',
+      description: '',
       type,
       owner,
-      value: 25000.0,
+      value: null,
       indexation: 'inflationCPI',
       from: {
         type: 'start',
@@ -150,6 +165,7 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
     if (isFunction(addRow)) {
       createEvent('current_position', 'create', 'Expenditure', clientId);
       addRow(newData);
+      this.cursorGoToDescriptionField(newData.key);
     }
   }
 
