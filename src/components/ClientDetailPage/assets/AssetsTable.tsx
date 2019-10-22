@@ -87,10 +87,10 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
       options: to2Options,
     },
     {
-      title: 'Delete',
+      title: '',
       key: 'operation',
       editable: false,
-      width: 60,
+      width: 28,
       className: 'text-align-center',
     },
   ];
@@ -199,9 +199,7 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
       if (col.key === 'operation') {
         return {
           ...col,
-          title: 'Delete',
           key: 'operation',
-          width: 60,
           render: (text: any, record: any) => (
             <Popconfirm title="Really delete?" onConfirm={() => this.handleDelete(record.key)}>
               <Icon type="close-square" theme="twoTone" style={{ fontSize: '16px' }} />

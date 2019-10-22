@@ -90,11 +90,11 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
       options: to1Options,
     },
     {
-      title: 'Delete',
+      title: '',
       key: 'operation',
       className: 'text-align-center',
       editable: false,
-      width: 60,
+      width: 28,
     },
   ];
 
@@ -171,9 +171,7 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
       if (col.key === 'operation') {
         return {
           ...col,
-          title: 'Delete',
           key: 'operation',
-          width: 60,
           render: (text: any, record: any) => (
             <Popconfirm title="Really delete?" onConfirm={() => this.handleDelete(record.key)}>
               <Icon type="close-square" theme="twoTone" style={{ fontSize: '16px' }} />

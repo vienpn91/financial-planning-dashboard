@@ -88,11 +88,11 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
       options: to2Options,
     },
     {
-      title: 'Delete',
+      title: '',
       key: 'operation',
       editable: false,
       className: 'text-align-center',
-      width: 60,
+      width: 28,
     },
   ];
 
