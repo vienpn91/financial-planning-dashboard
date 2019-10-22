@@ -208,14 +208,16 @@ const LinkProductAndFund = (props: FundTableProps) => {
   const onSelectFund = (fieldArrayFunds: FieldArrayRenderProps) => (option: Option) => {
     if (option) {
       if (option.id === 99) {
-        // Update RoP Alternative funds
+        // OneAnswer Frontier Low Cost Model Portfolio
+        // updates RoP Alternative funds
         const totalRow = { id: -1, name: 'Total', value: getSumFunds(roPAlternativeFunds), percentage: 100 };
         setFieldValue(fieldArrayFunds.name, [...roPAlternativeFunds, totalRow]);
         return;
       }
 
       if (!prefixField && option.id === 9) {
-        // Update Proposed funds
+        // CFS FirstChoice Low Cost Model Portfolio
+        // updates Proposed funds
         setFieldValue(fieldArrayFunds.name, proposedFunds);
 
         // Update RoP Current funds

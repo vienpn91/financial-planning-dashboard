@@ -192,6 +192,7 @@ const CustomSearch = (props: CustomSearchProp) => {
 
     // Fund options for the specific
     if (type === CustomSearchType.Fund) {
+      console.log({ productId, type });
       switch (productId) {
         // CFS FirstChoice Wholesale Personal Super
         case 1:
