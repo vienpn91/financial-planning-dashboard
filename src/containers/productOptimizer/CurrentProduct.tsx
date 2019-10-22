@@ -147,6 +147,7 @@ class CurrentProduct extends PureComponent<ProductTable, CurrentProductState> {
       type: EditCellType.number,
       key: '1',
       editable: true,
+      width: '25%',
     },
     {
       title: '',
