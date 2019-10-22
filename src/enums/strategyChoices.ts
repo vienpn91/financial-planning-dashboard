@@ -629,4 +629,192 @@ export const strategyChoices: StrategyChoice = {
       ],
     },
   ],
+  [StrategyTypes.Insurance]: [
+    {
+      value: 'client',
+      label: 'Client',
+      children: [
+        {
+          value: 'establish',
+          label: 'Establish',
+        },
+        {
+          value: 'retain',
+          label: 'Retain',
+        },
+        {
+          value: 'vary',
+          label: 'Vary',
+        },
+        {
+          value: 'cancel',
+          label: 'Cancel',
+        },
+      ],
+    },
+    {
+      value: 'partner',
+      label: 'Partner',
+      children: [
+        {
+          value: 'establish',
+          label: 'Establish',
+        },
+        {
+          value: 'retain',
+          label: 'Retain',
+        },
+        {
+          value: 'vary',
+          label: 'Vary',
+        },
+        {
+          value: 'cancel',
+          label: 'Cancel',
+        },
+      ],
+    },
+  ],
+  [StrategyTypes.EstatePlanning]: [
+    {
+      value: 'client',
+      label: 'Client',
+      children: [
+        {
+          value: 'powerOfAttorney',
+          label: 'Power of Attorney',
+          children: [
+            {
+              value: 'appoint',
+              label: 'Appoint',
+            },
+            {
+              value: 'review',
+              label: 'Review',
+            },
+          ],
+        },
+        {
+          value: 'will',
+          label: 'Will',
+          children: [
+            {
+              value: 'implement',
+              label: 'Implement',
+            },
+            {
+              value: 'review',
+              label: 'Review',
+            },
+          ],
+        },
+        {
+          value: 'superannuationBeneficiary',
+          label: 'Superannuation beneficiary',
+        },
+        {
+          value: 'funeralBond',
+          label: 'Funeral Bond',
+          children: [
+            {
+              value: 'invest',
+              label: 'Invest',
+            },
+            {
+              value: 'arrange',
+              label: 'Arrange',
+            },
+          ],
+        },
+        {
+          value: 'implementAdvanceCare',
+          label: 'Implement an Advance Care',
+          children: [
+            {
+              value: 'directive',
+              label: 'Directive',
+            },
+            {
+              value: 'plan',
+              label: 'Plan',
+            },
+          ],
+        },
+        {
+          value: 'changePension',
+          label: 'Change pension beneficiary nomination',
+        },
+      ],
+    },
+    {
+      value: 'partner',
+      label: 'Partner',
+      children: [
+        {
+          value: 'powerOfAttorney',
+          label: 'Power of Attorney',
+          children: [
+            {
+              value: 'appoint',
+              label: 'Appoint',
+            },
+            {
+              value: 'review',
+              label: 'Review',
+            },
+          ],
+        },
+        {
+          value: 'will',
+          label: 'Will',
+          children: [
+            {
+              value: 'implement',
+              label: 'Implement',
+            },
+            {
+              value: 'review',
+              label: 'Review',
+            },
+          ],
+        },
+        {
+          value: 'superannuationBeneficiary',
+          label: 'Superannuation beneficiary',
+        },
+        {
+          value: 'funeralBond',
+          label: 'Funeral Bond',
+          children: [
+            {
+              value: 'invest',
+              label: 'Invest',
+            },
+            {
+              value: 'arrange',
+              label: 'Arrange',
+            },
+          ],
+        },
+        {
+          value: 'implementAdvanceCare',
+          label: 'Implement an Advance Care',
+          children: [
+            {
+              value: 'directive',
+              label: 'Directive',
+            },
+            {
+              value: 'plan',
+              label: 'Plan',
+            },
+          ],
+        },
+        {
+          value: 'changePension',
+          label: 'Change pension beneficiary nomination',
+        },
+      ],
+    },
+  ],
 };

@@ -208,7 +208,7 @@ class StrategyInformation extends PureComponent<FormikPartProps & StrategyInform
               </Col>
               <Col span={12}>
                 <GraphContainer
-                  type={GraphType.HorizontalBar}
+                  type={GraphType.Bar}
                   dataList={basicGraphData}
                   onGraphClick={this.onGraphClick}
                 />

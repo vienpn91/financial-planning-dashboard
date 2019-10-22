@@ -15,17 +15,35 @@ export const FeesWrapper = styled(AssetsAllocationWrapper)`
     margin-bottom: 20px;
     padding-top: 0;
   }
-  .drawer-fund-table .ant-table-tbody {
-    tr {
-      &:last-child {
-        .edit-cell {
-          // font-weight: normal;
+  .drawer-fund-table {
+    .ant-table-body {
+      height: 265px;
+    }
+    .ant-table-tbody {
+      tr {
+        &:last-child {
+          .edit-cell {
+            // font-weight: normal;
+          }
+        }
+      }
+      .strategy-item .edit-cell {
+        &.text {
+          text-align: left;
         }
       }
     }
-    .strategy-item .edit-cell {
-      &.text {
-        text-align: left;
+    .ant-table-footer {
+      display: flex;
+      background-color: #fff;
+      color: #4e5d86;
+      font-weight: 600;
+      .title {
+        flex: 1;
+      }
+      .value {
+        flex: 0 0 188px;
+        text-align: right;
       }
     }
   }

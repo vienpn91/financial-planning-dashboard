@@ -22,7 +22,7 @@ export const HeaderTitleStrategy = styled.div.attrs({})<HeaderTitleStrategyProps
 export const HeaderTitleMargin = styled.span`
   flex: 0 0 55px;
   text-align: center;
-  margin-right: 90px;
+  margin-right: 38px;
   font-size: 13px;
 `;
 export const HeaderTitleMark = styled.span`

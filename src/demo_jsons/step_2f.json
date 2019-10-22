@@ -200,7 +200,27 @@
         "renderedLabel": "pension income to meet your expenses"
       }
     ],
-    "funeralBond": []
+    "funeralBond": [],
+    "insurance": [
+      {
+        "id": 1,
+        "value": 1,
+        "label": "OnePath OneCare life and TPD",
+        "amount": 500000
+      },
+      {
+        "id": 2,
+        "value": 2,
+        "label": "OnePath OneCare Trauma",
+        "amount": 150000
+      },
+      {
+        "id": 3,
+        "value": 3,
+        "label": "OnePath OneCare income protection",
+        "amount": 7000
+      }
+    ]
   },
   "partner": {
     "name": "Susan Boyle",
@@ -258,6 +278,27 @@
         "id": "c86a0f80-aead-11e9-aa31-114c7337aa7a",
         "value": "c86a0f80-aead-11e9-aa31-114c7337aa7a",
         "label": "My funeral bond 1"
+      }
+    ],
+    "insurance": [
+      {
+        "id": 1,
+        "value": 1,
+        "label": "OnePath OneCare life and TPD",
+        "amount": 500000
+      },
+      {
+        "id": 2,
+        "value": 2,
+        "label": "OnePath OneCare Trauma",
+        "amount": 150000
+      },
+      {
+        "id": 3,
+        "value": 3,
+        "label": "OnePath OneCare income protection",
+        "amount": 7000,
+        "perMonth": true
       }
     ]
   },
@@ -3766,13 +3807,44 @@
   "insurance": {
     "kpi": [
       {
-        "title": "Life insurance",
-        "value": 0,
+        "title": "Total Life cover",
+        "value": 500000,
+        "isIncrease": null,
+        "delta": "0%"
+      },
+      {
+        "title": "Total TPD cover",
+        "value": 500000,
+        "isIncrease": null,
+        "delta": "0%"
+      },
+      {
+        "title": "Total Trauma cover",
+        "value": 150000,
+        "isIncrease": null,
+        "delta": "0%"
+      },
+      {
+        "title": "Total Income Protection cover",
+        "value": "$7,000 per month",
         "isIncrease": null,
         "delta": "0%"
       }
     ],
-    "graph": [],
+    "graph": [
+      {
+        "title": "Insurance",
+        "xAxis": ["Life", "TPD", "Trauma"],
+        "current": [500000, 500000, 150000],
+        "proposed": [500000, 500000, 150000]
+      },
+      {
+        "title": "Insurance",
+        "xAxis": ["Income Protection (Per month)"],
+        "current": [7000],
+        "proposed": [7000]
+      }
+    ],
     "standardText": [
       {
         "text": "Text line one"
@@ -3784,7 +3856,23 @@
         "text": "Text line three"
       }
     ],
-    "strategies": []
+    "strategies": [
+      {
+        "check": true,
+        "sentence": "client.retain",
+        "values": [1, 500000]
+      },
+      {
+        "check": true,
+        "sentence": "client.retain",
+        "values": [2, 150000]
+      },
+      {
+        "check": true,
+        "sentence": "client.retain",
+        "values": [3, 7000]
+      }
+    ]
   },
   "estatePlanning": {
     "kpi": [

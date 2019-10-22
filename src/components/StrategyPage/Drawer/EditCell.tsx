@@ -125,7 +125,10 @@ class EditCell extends Component<EditCellProps> {
   }
 
   public renderSelect = () => {
-    const { options, yearFi, value: propValue } = this.props;
+    const { options, yearFi, value: propValue, onChange, name } = this.props;
+    if (propValue === undefined && options && options.length > 0) {
+      onChange(options[0].value, name);
+    }
     const value = propValue ? propValue : get(options, [0, 'value']);
 
     return (

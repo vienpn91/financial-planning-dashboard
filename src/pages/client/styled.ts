@@ -146,6 +146,9 @@ export const TableEntryContainer = styled.section.attrs({
   .text-align-center {
     text-align: center;
   }
+  .text-align-right {
+    text-align: right;
+  }
   .optimizer-table {
     .ant-table-thead > tr > th {
       text-align: left;
@@ -295,7 +298,10 @@ export const TextTitle = styled.span<TextTitleProps>`
 `;
 
 export const Spinner = styled(Spin)`
-  text-align: right;
+  &.ant-spin {
+    position: absolute;
+    right: 10px;
+  }
 `;
 
 export const DivideLine = styled.span`

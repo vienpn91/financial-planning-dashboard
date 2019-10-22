@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from 'react';
 import numeral from 'numeral';
 import { Icon } from 'antd';
 import classNames from 'classnames';
-import { isBoolean } from 'lodash';
+import { isBoolean, isString } from 'lodash';
 
 import {
   StatisticWrapper,
@@ -42,7 +42,7 @@ const StatisticItem = (props: StatisticItemProps) => {
       {listOfKpi.map(({ title, value, isIncrease, delta, subTitle, subValue }, index) => (
         <StatisticGroup key={index} className={classNames({ active: index === activeIndex })}>
           <StatisticLabel>{title}:</StatisticLabel>
-          <StatisticValue>$ {numeral(value).format('0,0')}</StatisticValue>
+          <StatisticValue>{isString(value) ? value : `$ ${numeral(value).format('0,0')}`}</StatisticValue>
           <StatisticUpDown>
             {isBoolean(isIncrease) ? (
               isIncrease ? (
