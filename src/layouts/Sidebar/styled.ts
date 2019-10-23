@@ -37,6 +37,9 @@ export const SiderCollapsible = styled(Sider).attrs({
   className: 'client-side-collapsible',
 })<{ collapsed?: boolean }>`
   &.ant-layout-sider-collapsed {
+    input {
+      display: none
+    }
     .btn-sidebar {
       border-radius: 100%;
       width: 60px;
@@ -52,11 +55,9 @@ export const SiderCollapsible = styled(Sider).attrs({
       justify-content: center;
       height: 70px;
     }
-    .client-full-name {
+    > .ant-menu-submenu {
       display: none;
-    }
-    & > .ant-menu-submenu {
-      & > .ant-menu-submenu-title {
+       > .ant-menu-submenu-title {
         padding: 0px 5px !important;
       }
     }
