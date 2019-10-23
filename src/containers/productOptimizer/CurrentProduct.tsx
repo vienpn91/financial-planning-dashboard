@@ -138,7 +138,7 @@ class CurrentProduct extends PureComponent<ProductTable, CurrentProductState> {
       editable: true,
     },
     {
-      title: 'Value',
+      title: 'Value/$',
       dataIndex: 'value',
       options: {
         placeholder: 'Enter Value',

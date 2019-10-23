@@ -54,10 +54,17 @@ export const TableEntryContainer = styled.section.attrs({
     }
   }
   .drawer-fund-table {
-    .ant-table-thead {
-      tr {
-        th:first-child {
-          padding-left: 36px;
+    .ant-table {
+      .ant-table-thead {
+        > tr {
+          th {
+            &:first-child {
+              padding-left: 36px;
+            }
+            &.text-align-right {
+              padding-right: 10px;
+            }
+          }
         }
       }
     }
@@ -97,20 +104,33 @@ export const TableEntryContainer = styled.section.attrs({
         }
       }
     }
-    .ant-table-tbody .strategy-item {
-      width: 100%;
-      input {
-        padding: 4px 6px;
-      }
-
-      .edit-cell {
-        width: 100%;
-        font-weight: normal;
-        text-align: center;
-        .ant-input-number-input {
-          font-weight: normal;
-          text-align: center;
-          padding: 4px;
+    .ant-table-tbody {
+      td {
+        .strategy-item {
+          width: 100%;
+          input {
+            padding: 4px 6px;
+          }
+          .edit-cell {
+            width: 100%;
+            font-weight: normal;
+            text-align: center;
+            .ant-input-number-input {
+              font-weight: normal;
+              text-align: center;
+              padding: 4px;
+            }
+          }
+        }
+        &.text-align-right {
+          .strategy-item {
+            .edit-cell {
+              text-align: right;
+              .ant-input-number-input {
+                text-align: right;
+              }
+            }
+          }
         }
       }
     }
@@ -158,6 +178,7 @@ export const TableEntryContainer = styled.section.attrs({
       text-align: left;
       &.text-align-right {
         text-align: right;
+        padding-right: 18px !important;
       }
     }
     .ant-table-tbody > tr > td {

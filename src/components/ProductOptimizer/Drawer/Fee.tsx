@@ -39,11 +39,16 @@ class Fee extends PureComponent<FeeProps> {
       editable: true,
     },
     {
-      title: 'Value',
+      title: 'Value/$',
       dataIndex: 'value',
       key: '1',
       width: 80,
       className: 'text-align-right',
+      editable: true,
+      type: EditCellType.number,
+      options: {
+        precision: 2,
+      },
     },
     {
       title: '%',
@@ -54,9 +59,12 @@ class Fee extends PureComponent<FeeProps> {
         max: 100,
         formatter: (value: any) => `${value}%`,
         parser: (value: any) => value.replace('%', ''),
+        precision: 2,
       },
       key: '2',
       width: 80,
+      editable: true,
+      type: EditCellType.number,
     },
     {
       title: '',

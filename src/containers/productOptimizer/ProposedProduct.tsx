@@ -128,7 +128,7 @@ class ProposedProduct extends PureComponent<ProposedProductProps, ProposedProduc
       showLinks: true,
     },
     {
-      title: 'Value',
+      title: 'Value/$',
       dataIndex: 'value',
       options: {
         placeholder: 'Enter Value',
