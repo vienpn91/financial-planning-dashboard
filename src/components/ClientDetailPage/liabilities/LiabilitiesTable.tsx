@@ -9,6 +9,7 @@ import { removePartnerOption } from '../../../utils/columnUtils';
 import { CurrentTypes } from '../../../enums/currents';
 import AddMenu from '../AddMenu';
 import { createEvent } from '../../../utils/GA';
+import { sortAlphabetical } from '../../../utils/sort';
 
 interface LiabilitiesTableProps {
   data: object[];
@@ -41,6 +42,7 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
       width: 'calc(17% - 20px)',
       type: 'select',
       options: liabilitiesTypes,
+      sorter: sortAlphabetical('type'),
     },
     {
       title: 'Owner',
@@ -49,6 +51,7 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
       width: '10%',
       type: 'select',
       options: ownerOptions,
+      sorter: sortAlphabetical('owner'),
     },
     {
       title: 'Value/$',
@@ -209,11 +212,12 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
           ),
         };
       }
+      const { sorter, ...cellProps } = col;
 
       return {
         ...col,
         onCell: (record: any, rowIndex: number) => ({
-          ...col,
+          ...cellProps,
           options,
           rowIndex,
           tableName: this.tableName,

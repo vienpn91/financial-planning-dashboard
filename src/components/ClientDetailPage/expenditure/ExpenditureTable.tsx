@@ -15,6 +15,7 @@ import { loadOptionsBaseOnCol } from '../../../utils/columnUtils';
 import { CurrentTypes } from '../../../enums/currents';
 import AddMenu from '../AddMenu';
 import { createEvent } from '../../../utils/GA';
+import { sortAlphabetical } from '../../../utils/sort';
 
 interface ExpenditureTableProps {
   data: object[];
@@ -46,6 +47,7 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
       width: 'calc(12% - 20px)',
       type: 'select',
       options: expenditureTypeOptions,
+      sorter: sortAlphabetical('type'),
     },
     {
       title: 'Owner',
@@ -54,6 +56,7 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
       width: '10%',
       type: 'select',
       options: ownerWithJointOptions,
+      sorter: sortAlphabetical('owner'),
     },
     {
       title: 'Value/$',
@@ -199,9 +202,11 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
       return {
         ...col,
         onCell: (record: any, rowIndex: number) => {
+          const { sorter, ...cellProps } = col;
           const options = loadOptionsBaseOnCol(col, record, { maritalStatus, dynamicCustomValue });
+
           return {
-            ...col,
+            ...cellProps,
             options,
             rowIndex,
             tableName: this.tableName,

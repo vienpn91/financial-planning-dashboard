@@ -17,6 +17,7 @@ import { loadOptionsBaseOnCol } from '../../../utils/columnUtils';
 import { CurrentTypes } from '../../../enums/currents';
 import AddMenu from '../AddMenu';
 import { createEvent } from '../../../utils/GA';
+import { sortAlphabetical } from '../../../utils/sort';
 
 interface IncomeTableProps {
   data: object[];
@@ -50,6 +51,7 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
       width: 'calc(12% - 20px)',
       type: 'select',
       options: incomeTypeOptions,
+      sorter: sortAlphabetical('type'),
     },
     {
       title: 'Owner',
@@ -58,6 +60,7 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
       width: '10%',
       type: 'select',
       options: ownerOptions,
+      sorter: sortAlphabetical('owner'),
     },
     {
       title: 'Value/$',
@@ -187,10 +190,11 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
       return {
         ...col,
         onCell: (record: any, rowIndex: number) => {
+          const { sorter, ...cellProps } = col;
           const options = loadOptionsBaseOnCol(col, record, { maritalStatus, dynamicCustomValue });
 
           return {
-            ...col,
+            ...cellProps,
             options,
             rowIndex,
             tableName: this.tableName,

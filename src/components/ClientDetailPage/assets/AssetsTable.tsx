@@ -13,7 +13,7 @@ import { loadOptionsBaseOnCol } from '../../../utils/columnUtils';
 import { CurrentTypes } from '../../../enums/currents';
 import AddMenu from '../AddMenu';
 import { createEvent } from '../../../utils/GA';
-import { sortAlphabetical, sortNumeric } from '../../../utils/sort';
+import { sortAlphabetical } from '../../../utils/sort';
 
 interface AssetsTableProps {
   data: object[];
@@ -65,7 +65,6 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
       type: 'number',
       width: 'calc(16% - 20px)',
       className: 'text-align-right',
-      sorter: sortNumeric('value'),
     },
     {
       title: 'Investment',
@@ -74,6 +73,7 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
       width: '16%',
       type: 'select',
       options: investmentTypeOptions,
+      sorter: sortAlphabetical('investment'),
     },
     {
       title: 'From',
@@ -223,10 +223,11 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
       return {
         ...col,
         onCell: (record: any, rowIndex: number) => {
+          const { sorter, ...cellProps } = col;
           const options = loadOptionsBaseOnCol(col, record, { maritalStatus });
 
           return {
-            ...col,
+            ...cellProps,
             options,
             rowIndex,
             tableName: this.tableName,
