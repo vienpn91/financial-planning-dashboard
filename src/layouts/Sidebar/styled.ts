@@ -28,6 +28,9 @@ export const ClientInfo = styled.div.attrs({
   display: flex;
   align-items: center;
   cursor: pointer;
+  .ant-avatar-string{
+    line-height: 32px!important;
+  }
 `;
 
 export const SiderCollapsible = styled(Sider).attrs({
@@ -64,10 +67,10 @@ export const SiderCollapsible = styled(Sider).attrs({
 export const FullName = styled.span.attrs({
   className: 'client-full-name',
 })`
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   color: #515c83;
-  margin-left: 10px;
+  margin-left: 8px;
 `;
 export const ClientSide = styled(Menu).attrs({
   className: 'client-side-modify',
@@ -99,26 +102,29 @@ export const ClientRoot = styled(SubMenu).attrs({
 export const ClientItem = styled(SubMenu).attrs({
   className: 'client-item-modify',
 })`
-  margin-bottom: 15px;
+  margin-bottom: 5px;
   i.ant-menu-submenu-arrow {
     display: block;
   }
   .ant-menu-submenu-title {
-    height: 40px !important;
-    background: #f4f6fb;
-    padding-left: 24px !important;
-    line-height: 40px !important;
-    width: calc(100% - 40px) !important;
+    height: 35px !important;
+    /* background: #f4f6fb; */
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    line-height: 35px !important;
     margin: 0 auto !important;
-    box-shadow: 0px 2px 7px -2px #acacad;
     border-radius: 8px;
     position: relative;
     &:hover {
-      background-color: #e0e3e8;
+      /* background-color: #e0e3e8; */
+      span{
+        color: #515c83;
+        font-weight: 600;
+      }
     }
   }
   .ant-menu-sub {
-    width: calc(100% - 40px) !important;
+    width: calc(100% - 55px) !important;
     margin: 0 auto;
     background-color: transparent !important;
   }
@@ -161,20 +167,14 @@ export const StatusItem = styled.div`
   align-items: center;
 `;
 export const DateItem = styled.span`
-  font-size: 12px;
+  font-size: 15px;
   position: relative;
-  padding-left: 20px;
+  padding-left: 7px;
   color: #697396;
-  &:after {
-    content: '';
-    width: 10px;
-    height: 10px;
-    background: #d8d8d8;
-    display: inline-block;
-    border-radius: 100%;
-    position: absolute;
-    left: 0px;
-    top: calc(50% - 5px);
+  display: flex;
+  align-items: center;
+  .anticon {
+    font-size: 30px!important;
   }
 `;
 

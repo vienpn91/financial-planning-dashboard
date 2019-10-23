@@ -63,24 +63,27 @@ class Sidebar extends React.PureComponent<SidebarProps & RouteComponentProps> {
 
     history.push(`/client/${clientId}`);
   }
-
+ 
   public renderClientItem = (tag: Tag, clientId: number) => {
     const { name, date } = tag;
     const { loading } = this.state;
-
+    console.log( tag );
     return (
       <ClientItem
         key={name}
         title={
           <StatusItem>
-            <DateItem>{date}</DateItem>
-            <StatusTags tagName={name}>{name}</StatusTags>
+            <DateItem>
+              <Icon type={name == 'new' ? 'check-circle' : 'exclamation-circle'} />
+              {date}
+            </DateItem>
+            {/* <StatusTags tagName={name}>{name}</StatusTags> */}
           </StatusItem>
         }
       >
         {map(POSITIONS, (position: Position) => (
           <SubList key={name + position.value} onClick={() => this.showTable(tag, position, clientId)}>
-            <i className={position.icon} />
+            {/* <i className={position.icon} /> */}
             <span>{position.label}</span>
           </SubList>
         ))}
@@ -90,6 +93,8 @@ class Sidebar extends React.PureComponent<SidebarProps & RouteComponentProps> {
 
   public render(): JSX.Element {
     const { clients } = this.props;
+    const colors = ['#d57500', '#00aa55', '#e3bc01','#009fd4', '#b281b3', '#dd2929'];
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
     return (
       <SiderCollapsible width={295} trigger={null} collapsible collapsed={this.state.collapsed}>
         <Icon
@@ -107,7 +112,15 @@ class Sidebar extends React.PureComponent<SidebarProps & RouteComponentProps> {
               key={client.clientId}
               title={
                 <ClientInfo onClick={() => this.selectClient(client.clientId)}>
-                  <Avatar size={40} style={{ color: '#fff', backgroundColor: '#383f5b' }}>
+                  <Avatar
+                    size={38}
+                    style={{
+                      border: '3px solid #fff',
+                      boxShadow: `0px 0px 0px 2px ${randomColor}80`,
+                      color: randomColor,
+                      backgroundColor: `${randomColor}80`,
+                    }}
+                  >
                     JS
                   </Avatar>
                   <FullName>{client.clientName}</FullName>
