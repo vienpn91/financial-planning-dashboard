@@ -70,7 +70,6 @@ class Sidebar extends React.PureComponent<SidebarProps & RouteComponentProps> {
   public renderClientItem = (tag: Tag, clientId: number) => {
     const { name, date } = tag;
     const { loading } = this.state;
-    console.log(tag);
     return (
       <ClientItem
         key={name}
@@ -96,8 +95,6 @@ class Sidebar extends React.PureComponent<SidebarProps & RouteComponentProps> {
 
   public render(): JSX.Element {
     const { clients } = this.props;
-    const colors = ['#d57500', '#00aa55', '#e3bc01', '#009fd4', '#b281b3', '#dd2929', '#0433ff', '#00f900', '#795548'];
-    
     return (
       <SiderCollapsible width={295} trigger={null} collapsible collapsed={this.state.collapsed}>
         <Icon
@@ -111,7 +108,7 @@ class Sidebar extends React.PureComponent<SidebarProps & RouteComponentProps> {
         </TopSearch>
         <ClientSide mode="inline">
           {map(clients, (client: Client) => {
-            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            const randomColor = client.clientId > 5 ? '#31437d' : '#1790ff';
             return (
               <ClientRoot
                 key={client.clientId}
