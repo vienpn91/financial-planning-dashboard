@@ -53,12 +53,12 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
       width: 'calc(8% - 20px)',
     },
     {
-      title: 'Value',
+      title: 'Value/$',
       dataIndex: 'value',
       key: '3',
       type: 'number',
       width: 'calc(16% - 20px)',
-      sign: 'dollar',
+      className: 'text-align-right',
     },
     {
       title: 'Investment',
