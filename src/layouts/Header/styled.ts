@@ -4,7 +4,7 @@ import { Input } from 'antd';
 export const TopMenu = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   height: 46px;
   box-shadow: 0 2px 4px 0px rgba(0,0,0,0.23);
   padding: 0px 25px;
@@ -72,7 +72,7 @@ export const MenuItem = styled.div`
   height: 100%;
   align-items: center;
   .ant-avatar {
-    margin-right: 10px;
+    /* margin-right: 10px; */
   }
   .client-full-name {
     font-size: 14px;

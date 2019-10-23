@@ -14,6 +14,8 @@ import {
   StatusTags,
   ClientSide,
   ClientRoot,
+  InputSearch,
+  TopSearch,
   StickyStyle,
 } from './styled';
 import { default as ModalNameAndBirthDay } from '../../components/NameAndBirthDay/NameAndBirthDay';
@@ -95,13 +97,17 @@ class Sidebar extends React.PureComponent<SidebarProps & RouteComponentProps> {
           type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
           onClick={this.toggleCollapsed}
         />
+        <TopSearch>
+          <Icon type="search" />
+          <InputSearch placeholder="Search Here" />
+        </TopSearch>
         <ClientSide mode="inline">
           {map(clients, (client: Client) => (
             <ClientRoot
               key={client.clientId}
               title={
                 <ClientInfo onClick={() => this.selectClient(client.clientId)}>
-                  <Avatar size={56} style={{ color: '#fff', backgroundColor: '#383f5b' }}>
+                  <Avatar size={40} style={{ color: '#fff', backgroundColor: '#383f5b' }}>
                     JS
                   </Avatar>
                   <FullName>{client.clientName}</FullName>

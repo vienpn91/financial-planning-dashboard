@@ -1,5 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components';
-import { Menu, Button, Layout, Skeleton } from 'antd';
+import { Menu, Button, Layout, Skeleton, Input } from 'antd';
 import { get } from 'lodash';
 
 export const StickyStyle = createGlobalStyle<{ collapsed?: boolean }>`
@@ -26,10 +26,7 @@ export const ClientInfo = styled.div.attrs({
   className: 'client-Info',
 })`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  margin: 20px 0px 15px;
   cursor: pointer;
 `;
 
@@ -67,11 +64,10 @@ export const SiderCollapsible = styled(Sider).attrs({
 export const FullName = styled.span.attrs({
   className: 'client-full-name',
 })`
-  margin-top: 10px;
   font-size: 18px;
   font-weight: 500;
   color: #515c83;
-  // margin-left: 15px;
+  margin-left: 10px;
 `;
 export const ClientSide = styled(Menu).attrs({
   className: 'client-side-modify',
@@ -85,14 +81,12 @@ export const ClientSide = styled(Menu).attrs({
 export const ClientRoot = styled(SubMenu).attrs({
   className: 'client-item-root',
 })`
-  i.ant-menu-submenu-arrow {
-    display: none;
-  }
   & > .ant-menu-submenu-title {
-    height: 138px !important;
+    height: 60px!important;
     background: transparent;
-    line-height: 40px !important;
-    width: calc(100% - 40px) !important;
+    line-height: 60px !important;
+    padding-left: 10px !important;;
+    padding-right: 20px !important;;
     margin: 0 auto !important;
     box-shadow: none;
     border-radius: 0;
@@ -215,4 +209,57 @@ export const SkeletonClient = styled(Skeleton).attrs({
   className: 'Skeleton-Client',
 })`
   padding: 15px;
+`;
+
+export const InputSearch = styled(Input)`
+  border: none;
+  color: #515C83;
+  &:focus{
+    outline: none;
+    border: none;
+    box-shadow: none;
+  }
+`;
+
+export const TopSearch = styled.div<{ border?: boolean }>`
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  border: none;
+  padding-left: 30px;
+  max-width: 350px;
+  position: relative;
+  height: 46px;
+  box-shadow: 0 2px 4px 0px rgba(0,0,0,0.23);
+  .anticon {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    z-index: 3;
+
+    &.anticon-search {
+      left: 10px;
+      right: unset;
+      font-size: 18px;
+      cursor: default;
+    }
+  }
+  .custom-select {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    padding: 0 25px;
+    .ant-select-selection {
+      border: none;
+      box-shadow: none;
+      &__rendered {
+        line-height: 32px;
+      }
+    }
+    .ant-select-selection-selected-value {
+      .code {
+        display: none;
+      }
+    }
+  }
 `;
