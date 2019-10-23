@@ -54,7 +54,7 @@ const steps = [
   {
     title: 'Step 8',
     content: DocumentsStep8,
-    description: 'Regulatory compliance',
+    description: 'SOA compliance check',
   },
 ];
 
