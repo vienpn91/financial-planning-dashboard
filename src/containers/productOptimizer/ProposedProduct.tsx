@@ -137,6 +137,7 @@ class ProposedProduct extends PureComponent<ProposedProductProps, ProposedProduc
       type: EditCellType.number,
       key: '1',
       editable: true,
+      className: 'text-align-right',
     },
     {
       title: '',

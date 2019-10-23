@@ -156,6 +156,9 @@ export const TableEntryContainer = styled.section.attrs({
   .optimizer-table {
     .ant-table-thead > tr > th {
       text-align: left;
+      &.text-align-right {
+        text-align: right;
+      }
     }
     .ant-table-tbody > tr > td {
       vertical-align: baseline;
@@ -174,7 +177,6 @@ export const TableEntryContainer = styled.section.attrs({
         margin-left: -11px;
         .ant-input-number-input {
           font-weight: normal;
-          text-align: left;
         }
       }
     }

@@ -148,6 +148,7 @@ class CurrentProduct extends PureComponent<ProductTable, CurrentProductState> {
       key: '1',
       editable: true,
       width: '25%',
+      className: 'text-align-right',
     },
     {
       title: '',
