@@ -1,15 +1,19 @@
 import React, { PureComponent } from 'react';
 import { Button, Icon, Popconfirm } from 'antd';
-import ExpandedAssetsRow, { AssetProps } from './ExpandedAssetsRowWrapper';
-import { TableEntryContainer, HeaderTitleTable, TextTitle, ActionTableGeneral } from '../../../pages/client/styled';
-import GeneralTable from '../GeneralTable';
 import { FormikProps } from 'formik';
 import { isFunction, get } from 'lodash';
+import { PaginationConfig } from 'antd/lib/pagination';
+import { TableCurrentDataSource } from 'antd/lib/table';
+
+import GeneralTable from '../GeneralTable';
+import ExpandedAssetsRow, { AssetProps } from './ExpandedAssetsRowWrapper';
+import { TableEntryContainer, HeaderTitleTable, TextTitle, ActionTableGeneral } from '../../../pages/client/styled';
 import { from2Options, ownerOptions, to2Options, assetTypes, investmentTypeOptions } from '../../../enums/options';
 import { loadOptionsBaseOnCol } from '../../../utils/columnUtils';
 import { CurrentTypes } from '../../../enums/currents';
 import AddMenu from '../AddMenu';
 import { createEvent } from '../../../utils/GA';
+import { sortAlphabetical, sortNumeric } from '../../../utils/sort';
 
 interface AssetsTableProps {
   data: object[];
@@ -43,6 +47,7 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
       width: '17%',
       type: 'select',
       options: assetTypes,
+      sorter: sortAlphabetical('type'),
     },
     {
       title: 'Owner',
@@ -51,6 +56,7 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
       type: 'select',
       options: ownerOptions,
       width: 'calc(8% - 20px)',
+      sorter: sortAlphabetical('owner'),
     },
     {
       title: 'Value/$',
@@ -59,6 +65,7 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
       type: 'number',
       width: 'calc(16% - 20px)',
       className: 'text-align-right',
+      sorter: sortNumeric('value'),
     },
     {
       title: 'Investment',
@@ -192,6 +199,11 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
     setFieldValue(this.tableName, newData);
   }
 
+  public onChange = (pagination: PaginationConfig, filters: any, sorter: any, extra: TableCurrentDataSource<any>) => {
+    const { setFieldValue } = this.props;
+    setFieldValue(this.tableName, extra.currentDataSource);
+  }
+
   public render() {
     const { loading, data, maritalStatus, dynamicCustomValue, empStatus } = this.props;
     const columns = this.columns.map((col: any) => {
@@ -252,6 +264,7 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
             />
           )}
           className={`${this.tableName}-table`}
+          onChange={this.onChange}
         />
         <ActionTableGeneral>
           <Button htmlType={'button'} type={'default'} onClick={this.handleResetForm}>
