@@ -231,7 +231,9 @@ class CurrentProduct extends PureComponent<ProductTable, CurrentProductState> {
   }
 
   public moveRow = (record: any, dropResult: any) => {
-    const { clientPartnerName, client } = this.props;
+    const { client } = this.props;
+    const clientName = get(client, 'name', '');
+    const clientId = get(client, 'id');
     let newProposedProduct = {
       ...record,
       key: new Date().getTime(),
@@ -243,7 +245,7 @@ class CurrentProduct extends PureComponent<ProductTable, CurrentProductState> {
         links: [record],
         note: {
           text: `{{0}}, replace your existing product {{1}}`,
-          params: [clientPartnerName, get(record, 'description')],
+          params: [clientName, get(record, 'description')],
         },
       };
     } else {
@@ -251,12 +253,12 @@ class CurrentProduct extends PureComponent<ProductTable, CurrentProductState> {
         ...newProposedProduct,
         note: {
           text: `{{0}}, add a new investment product`,
-          params: [clientPartnerName],
+          params: [clientName],
         },
       };
     }
 
-    createEvent('investment', 'create_proposed', 'Replace', get(client, 'clientId'));
+    createEvent('investment', 'create_proposed', 'Replace', clientId);
     dropResult.unshift(newProposedProduct);
   }
 
