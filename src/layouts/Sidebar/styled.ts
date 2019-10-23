@@ -34,7 +34,7 @@ export const ClientInfo = styled.div.attrs({
 `;
 
 export const SiderCollapsible = styled(Sider).attrs({
-  className: 'client-side-collapsible',
+  className: 'client-side-collapsible dumoamay',
 })<{ collapsed?: boolean }>`
   &.ant-layout-sider-collapsed {
     input {
@@ -55,9 +55,11 @@ export const SiderCollapsible = styled(Sider).attrs({
       justify-content: center;
       height: 70px;
     }
-    > .ant-menu-submenu {
+    .client-full-name {
       display: none;
-       > .ant-menu-submenu-title {
+    }
+    .client-item-root {
+      .ant-menu-submenu-title {
         padding: 0px 5px !important;
       }
     }
