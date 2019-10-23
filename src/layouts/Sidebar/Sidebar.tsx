@@ -48,7 +48,7 @@ class Sidebar extends React.PureComponent<SidebarProps & RouteComponentProps> {
     this.setState({
       collapsed: !this.state.collapsed,
     });
-  }
+  };
 
   public showTable = (tag: Tag, position: Position, clientId: number) => {
     const { history } = this.props;
@@ -56,18 +56,21 @@ class Sidebar extends React.PureComponent<SidebarProps & RouteComponentProps> {
 
     createEvent('client_navigation', position.label, date, clientId);
     history.push(`/client/${clientId}/${tagName}/${position.slug}`);
-  }
+  };
 
   public selectClient = (clientId: number) => {
     const { history } = this.props;
 
     history.push(`/client/${clientId}`);
-  }
- 
+  };
+  public getTextAvatar = (name: any) => {
+    const newName = name.split(" ");
+    return `${newName[0][0]}${newName[1][0]}`;
+  };
   public renderClientItem = (tag: Tag, clientId: number) => {
     const { name, date } = tag;
     const { loading } = this.state;
-    console.log( tag );
+    console.log(tag);
     return (
       <ClientItem
         key={name}
@@ -89,12 +92,12 @@ class Sidebar extends React.PureComponent<SidebarProps & RouteComponentProps> {
         ))}
       </ClientItem>
     );
-  }
+  };
 
   public render(): JSX.Element {
     const { clients } = this.props;
-    const colors = ['#d57500', '#00aa55', '#e3bc01','#009fd4', '#b281b3', '#dd2929'];
-    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    const colors = ['#d57500', '#00aa55', '#e3bc01', '#009fd4', '#b281b3', '#dd2929', '#0433ff', '#00f900', '#795548'];
+    
     return (
       <SiderCollapsible width={295} trigger={null} collapsible collapsed={this.state.collapsed}>
         <Icon
@@ -107,29 +110,32 @@ class Sidebar extends React.PureComponent<SidebarProps & RouteComponentProps> {
           <InputSearch placeholder="Search Here" />
         </TopSearch>
         <ClientSide mode="inline">
-          {map(clients, (client: Client) => (
-            <ClientRoot
-              key={client.clientId}
-              title={
-                <ClientInfo onClick={() => this.selectClient(client.clientId)}>
-                  <Avatar
-                    size={38}
-                    style={{
-                      border: '3px solid #fff',
-                      boxShadow: `0px 0px 0px 2px ${randomColor}80`,
-                      color: randomColor,
-                      backgroundColor: `${randomColor}80`,
-                    }}
-                  >
-                    JS
-                  </Avatar>
-                  <FullName>{client.clientName}</FullName>
-                </ClientInfo>
-              }
-            >
-              {map(client.tagList, (tag: Tag) => this.renderClientItem(tag, client.clientId))}
-            </ClientRoot>
-          ))}
+          {map(clients, (client: Client) => {
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            return (
+              <ClientRoot
+                key={client.clientId}
+                title={
+                  <ClientInfo onClick={() => this.selectClient(client.clientId)}>
+                    <Avatar
+                      size={38}
+                      style={{
+                        border: '3px solid #fff',
+                        boxShadow: `0px 0px 0px 2px ${randomColor}80`,
+                        color: randomColor,
+                        backgroundColor: `${randomColor}80`,
+                      }}
+                    >
+                      { this.getTextAvatar(client.clientName) }
+                    </Avatar>
+                    <FullName>{client.clientName}</FullName>
+                  </ClientInfo>
+                }
+              >
+                {map(client.tagList, (tag: Tag) => this.renderClientItem(tag, client.clientId))}
+              </ClientRoot>
+            );
+          })}
         </ClientSide>
         <ModalNameAndBirthDay />
         <StickyStyle collapsed={this.state.collapsed} />
