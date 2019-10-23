@@ -76,9 +76,9 @@ const cfsFirstChoiceWholesaleFunds: OptionData[] = [
   {
     name: 'Model Portfolios',
     children: [
-      { id: 9, name: 'CFS FirstChoice Low Cost Model Portfolio', value: 10000 },
       { id: 10, name: 'CFS FirstChoice Accumulation Model Portfolio', value: 5000 },
       { id: 11, name: 'CFS FirstChoice Retirement Model Portfolio', value: 15000 },
+      { id: 9, name: 'CFS FirstChoice Low Cost Model Portfolio', value: 10000 },
     ],
   },
   {

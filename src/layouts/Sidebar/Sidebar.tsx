@@ -14,6 +14,8 @@ import {
   StatusTags,
   ClientSide,
   ClientRoot,
+  InputSearch,
+  TopSearch,
   StickyStyle,
 } from './styled';
 import { default as ModalNameAndBirthDay } from '../../components/NameAndBirthDay/NameAndBirthDay';
@@ -46,7 +48,7 @@ class Sidebar extends React.PureComponent<SidebarProps & RouteComponentProps> {
     this.setState({
       collapsed: !this.state.collapsed,
     });
-  }
+  };
 
   public showTable = (tag: Tag, position: Position, clientId: number) => {
     const { history } = this.props;
@@ -54,63 +56,83 @@ class Sidebar extends React.PureComponent<SidebarProps & RouteComponentProps> {
 
     createEvent('client_navigation', position.label, date, clientId);
     history.push(`/client/${clientId}/${tagName}/${position.slug}`);
-  }
+  };
 
   public selectClient = (clientId: number) => {
     const { history } = this.props;
 
     history.push(`/client/${clientId}`);
-  }
-
+  };
+  public getTextAvatar = (name: any) => {
+    const newName = name.split(" ");
+    return `${newName[0][0]}${newName[1][0]}`;
+  };
   public renderClientItem = (tag: Tag, clientId: number) => {
     const { name, date } = tag;
     const { loading } = this.state;
-
     return (
       <ClientItem
         key={name}
         title={
           <StatusItem>
-            <DateItem>{date}</DateItem>
-            <StatusTags tagName={name}>{name}</StatusTags>
+            <DateItem>
+              <Icon type={name == 'new' ? 'check-circle' : 'exclamation-circle'} />
+              {date}
+            </DateItem>
+            {/* <StatusTags tagName={name}>{name}</StatusTags> */}
           </StatusItem>
         }
       >
         {map(POSITIONS, (position: Position) => (
           <SubList key={name + position.value} onClick={() => this.showTable(tag, position, clientId)}>
-            <i className={position.icon} />
+            {/* <i className={position.icon} /> */}
             <span>{position.label}</span>
           </SubList>
         ))}
       </ClientItem>
     );
-  }
+  };
 
   public render(): JSX.Element {
     const { clients } = this.props;
     return (
       <SiderCollapsible width={295} trigger={null} collapsible collapsed={this.state.collapsed}>
-        <Icon
-          className="trigger IconSider"
-          type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-          onClick={this.toggleCollapsed}
-        />
+        <TopSearch>
+          <Icon type="search" />
+          <InputSearch placeholder="Search Here" />
+          <Icon
+            className="trigger IconSider"
+            type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
+            onClick={this.toggleCollapsed}
+          />
+        </TopSearch>
         <ClientSide mode="inline">
-          {map(clients, (client: Client) => (
-            <ClientRoot
-              key={client.clientId}
-              title={
-                <ClientInfo onClick={() => this.selectClient(client.clientId)}>
-                  <Avatar size={56} style={{ color: '#fff', backgroundColor: '#383f5b' }}>
-                    JS
-                  </Avatar>
-                  <FullName>{client.clientName}</FullName>
-                </ClientInfo>
-              }
-            >
-              {map(client.tagList, (tag: Tag) => this.renderClientItem(tag, client.clientId))}
-            </ClientRoot>
-          ))}
+          {map(clients, (client: Client) => {
+            const randomColor = client.clientId > 5 ? '#31437d' : '#1790ff';
+            return (
+              <ClientRoot
+                key={client.clientId}
+                title={
+                  <ClientInfo onClick={() => this.selectClient(client.clientId)}>
+                    <Avatar
+                      size={38}
+                      style={{
+                        border: '3px solid #fff',
+                        boxShadow: `0px 0px 0px 2px ${randomColor}80`,
+                        color: randomColor,
+                        backgroundColor: `${randomColor}80`,
+                      }}
+                    >
+                      { this.getTextAvatar(client.clientName) }
+                    </Avatar>
+                    <FullName>{client.clientName}</FullName>
+                  </ClientInfo>
+                }
+              >
+                {map(client.tagList, (tag: Tag) => this.renderClientItem(tag, client.clientId))}
+              </ClientRoot>
+            );
+          })}
         </ClientSide>
         <ModalNameAndBirthDay />
         <StickyStyle collapsed={this.state.collapsed} />
