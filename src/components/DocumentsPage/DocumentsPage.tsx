@@ -12,7 +12,7 @@ import DocumentsStep6 from './DocumentsStep6/DocumentsStep6';
 import DocumentsStep7 from './DocumentsStep7/DocumentsStep7';
 import DocumentsStep8 from './DocumentsStep8/DocumentsStep8';
 
-import { DocumentsWrapper, StepActionDocument, BtnStepDocument } from './styled';
+import { DocumentsWrapper, StepActionDocument, BtnDoneDocument } from './styled';
 
 const { Step } = Steps;
 const steps = [
@@ -163,9 +163,9 @@ const DocumentsPage = (props: DocumentsPageProps) => {
 
         <StepActionDocument style={{ paddingRight: 32 }}>
           {currentStep === steps.length - 1 && (
-            <BtnStepDocument type="primary" onClick={onClickSubmit}>
-              Submit
-            </BtnStepDocument>
+            <BtnDoneDocument type="primary" onClick={onClickSubmit}>
+              Generate SOA
+            </BtnDoneDocument>
           )}
         </StepActionDocument>
       </>

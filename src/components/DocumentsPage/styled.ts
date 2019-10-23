@@ -90,6 +90,12 @@ export const BtnStepDocument = styled(Button).attrs({
     border-color: #192a6f;
   }
 `;
+export const BtnDoneDocument = styled(BtnStepDocument).attrs({
+  className: 'btn-done-document',
+})`
+  width: 135px;
+`;
+
 export const StepWrapper = styled.section`
   padding: 0 32px;
   .documents-table {
