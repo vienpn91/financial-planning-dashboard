@@ -5,7 +5,7 @@ export const LayoutMain = styled(Layout)`
   .IconSider{
     position: absolute;
     top: 17px;
-    right: -30px;
+    right: 10px;
   }
 `;
 export const MainLayoutContent = styled(Layout)`

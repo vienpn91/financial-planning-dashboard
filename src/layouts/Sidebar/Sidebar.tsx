@@ -97,14 +97,14 @@ class Sidebar extends React.PureComponent<SidebarProps & RouteComponentProps> {
     const { clients } = this.props;
     return (
       <SiderCollapsible width={295} trigger={null} collapsible collapsed={this.state.collapsed}>
-        <Icon
-          className="trigger IconSider"
-          type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-          onClick={this.toggleCollapsed}
-        />
         <TopSearch>
           <Icon type="search" />
           <InputSearch placeholder="Search Here" />
+          <Icon
+            className="trigger IconSider"
+            type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
+            onClick={this.toggleCollapsed}
+          />
         </TopSearch>
         <ClientSide mode="inline">
           {map(clients, (client: Client) => {
