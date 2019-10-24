@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { get, map } from 'lodash';
+import { filter, get, map } from 'lodash';
 import { connect } from 'formik';
+import { message } from 'antd';
 
-import { StepWrapper, TitleStep, TitleStepSmall } from '../styled';
+import { StepWrapper, TitleStep, TitleStepSmall, BtnDoneDocument, StepActionDocument } from '../styled';
 import { DocumentsStep8WP, ListCardThumbnails } from './styled';
 import { DocumentData, FormikPartProps, Record, SwitcherContext } from '../DocumentsPage';
 import CardStatistic from './CardStatistic';
@@ -26,8 +27,16 @@ const DocumentsStep8 = (props: FormikPartProps) => {
       setSwitcherContext(false);
     }
   }, [switcherContext]);
+  const onClickSubmit = () => {
+    props.formik.submitForm();
+    message.success('Processing complete!');
+  };
   const records = get(props, 'formik.values.step8.records', []);
-
+  let checked;
+  map(records, (record: Record, index: number) => {
+    const numberIssues = filter(record.table.data, (d) => d.id !== -1 && !d.isOverwrite).length;
+    checked = get(record, 'table.data.length') === 0 || numberIssues === 0;
+  })
   return (
     <StepWrapper>
       <DocumentsStep8WP>
@@ -48,6 +57,17 @@ const DocumentsStep8 = (props: FormikPartProps) => {
                 <CardStatistic record={record} key={index} onClick={updateSlideNumber(index)} />
               ))}
             </ListCardThumbnails>
+            <StepActionDocument style={{ paddingRight: 32 }}>
+              <BtnDoneDocument
+                type="primary"
+                onClick={onClickSubmit}
+                style={{
+                  opacity: checked ? 1 : 0.6,
+                }}
+                >
+                Generate SOA
+              </BtnDoneDocument>
+            </StepActionDocument>
           </>
         )}
       </DocumentsStep8WP>
