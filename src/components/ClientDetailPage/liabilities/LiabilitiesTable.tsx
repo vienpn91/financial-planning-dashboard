@@ -9,6 +9,7 @@ import { removePartnerOption } from '../../../utils/columnUtils';
 import { CurrentTypes } from '../../../enums/currents';
 import AddMenu from '../AddMenu';
 import { createEvent } from '../../../utils/GA';
+import { sortAlphabetical } from '../../../utils/sort';
 
 interface LiabilitiesTableProps {
   data: object[];
@@ -41,22 +42,24 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
       width: 'calc(17% - 20px)',
       type: 'select',
       options: liabilitiesTypes,
+      sorter: sortAlphabetical('type'),
     },
     {
       title: 'Owner',
       dataIndex: 'owner',
       key: '2',
-      width: '11%',
+      width: '10%',
       type: 'select',
       options: ownerOptions,
+      sorter: sortAlphabetical('owner'),
     },
     {
-      title: 'Value',
+      title: 'Value/$',
       dataIndex: 'value',
       key: '3',
-      width: '13%',
+      width: '14%',
       type: 'number',
-      sign: 'dollar',
+      className: 'text-align-right',
     },
     {
       title: 'Interest',
@@ -88,11 +91,11 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
       options: to2Options,
     },
     {
-      title: 'Delete',
+      title: '',
       key: 'operation',
       editable: false,
       className: 'text-align-center',
-      width: 60,
+      width: 28,
     },
   ];
 
@@ -209,11 +212,12 @@ class LiabilitiesTable extends PureComponent<LiabilitiesTableProps> {
           ),
         };
       }
+      const { sorter, ...cellProps } = col;
 
       return {
         ...col,
         onCell: (record: any, rowIndex: number) => ({
-          ...col,
+          ...cellProps,
           options,
           rowIndex,
           tableName: this.tableName,

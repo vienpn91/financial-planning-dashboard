@@ -20,10 +20,9 @@ export interface ProductTable {
   dataList: Product[];
   openDrawer: (record?: any) => void;
   fieldArrayRenderProps: FieldArrayRenderProps;
-  clientPartnerName: string;
-  client?: {
-    clientId: number;
-    clientName: string;
+  client: {
+    id: number;
+    name: string;
   };
 }
 
@@ -44,24 +43,31 @@ interface ProductOptimizerStates {
 }
 
 interface FormData {
-  [p: string]: {};
+  [p: string]: any;
 }
 
-const addPlaceholder = (list: ProductOptimizerPage): FormData => {
-  return Object.entries(list).reduce(
+const addPlaceholder = (list: ProductOptimizerPage): FormData =>
+  Object.entries(list).reduce(
     (acc, [key, values]) => ({
       ...acc,
       [key]: Object.entries(values).reduce((temp, value: any[]) => {
         const [k, v] = value;
+
+        if (k === 'current' || k === 'proposed') {
+          return {
+            ...temp,
+            [k]: [...map(v, (p, i: number) => ({ ...p, key: i })), { key: v.length, description: '', value: '' }],
+          };
+        }
+
         return {
           ...temp,
-          [k]: [...map(v, (p, i: number) => ({ ...p, key: i })), { key: v.length, description: '', value: '' }],
+          [k]: v,
         };
       }, {}),
     }),
     {},
   );
-};
 
 class ProductOptimizer extends React.PureComponent<ProductOptimizerProps, ProductOptimizerStates> {
   constructor(props: ProductOptimizerProps) {
@@ -91,7 +97,7 @@ class ProductOptimizer extends React.PureComponent<ProductOptimizerProps, Produc
 
   public render() {
     const { isOpen, product } = this.state;
-    const { loading, pageData, client } = this.props;
+    const { loading, pageData } = this.props;
     const formData = addPlaceholder(pageData);
 
     return (
@@ -108,6 +114,8 @@ class ProductOptimizer extends React.PureComponent<ProductOptimizerProps, Produc
             }}
             initialValues={formData}
             render={(formikProps: FormikProps<FormData>) => {
+              const { values } = formikProps;
+
               return (
                 <Form>
                   <Tabs defaultActiveKey="1">
@@ -122,8 +130,7 @@ class ProductOptimizer extends React.PureComponent<ProductOptimizerProps, Produc
                                 openDrawer={this.openDrawer}
                                 dataList={get(formikProps, 'values.client.current', [])}
                                 fieldArrayRenderProps={fieldArrayRenderProps}
-                                clientPartnerName={get(client, 'clientName', '')}
-                                client={client}
+                                client={values.client}
                               />
                             );
                           }}
@@ -138,49 +145,48 @@ class ProductOptimizer extends React.PureComponent<ProductOptimizerProps, Produc
                                 dataList={get(formikProps, 'values.client.proposed', [])}
                                 fieldArrayRenderProps={fieldArrayRenderProps}
                                 tabKey="client"
-                                client={client}
-                                clientPartnerName={get(client, 'clientName', '')}
+                                client={values.client}
                               />
                             );
                           }}
                         />
                       </DndProvider>
                     </TabPanStyled>
-                    <TabPanStyled tab="Partner" key="2">
-                      <DndProvider backend={HTML5Backend}>
-                        <FieldArray
-                          name="partner.current"
-                          validateOnChange={false}
-                          render={(fieldArrayRenderProps: FieldArrayRenderProps) => {
-                            return (
-                              <CurrentProduct
-                                openDrawer={this.openDrawer}
-                                dataList={get(formikProps, 'values.partner.current', [])}
-                                fieldArrayRenderProps={fieldArrayRenderProps}
-                                clientPartnerName={get(client, 'clientName', '')}
-                                client={client}
-                              />
-                            );
-                          }}
-                        />
-                        <FieldArray
-                          name="partner.proposed"
-                          validateOnChange={false}
-                          render={(fieldArrayRenderProps: FieldArrayRenderProps) => {
-                            return (
-                              <ProposedProduct
-                                openDrawer={this.openDrawer}
-                                dataList={get(formikProps, 'values.partner.proposed', [])}
-                                fieldArrayRenderProps={fieldArrayRenderProps}
-                                tabKey="partner"
-                                client={client}
-                                clientPartnerName={get(client, 'clientName', '')}
-                              />
-                            );
-                          }}
-                        />
-                      </DndProvider>
-                    </TabPanStyled>
+                    {values.partner && (
+                      <TabPanStyled tab="Partner" key="2">
+                        <DndProvider backend={HTML5Backend}>
+                          <FieldArray
+                            name="partner.current"
+                            validateOnChange={false}
+                            render={(fieldArrayRenderProps: FieldArrayRenderProps) => {
+                              return (
+                                <CurrentProduct
+                                  openDrawer={this.openDrawer}
+                                  dataList={get(formikProps, 'values.partner.current', [])}
+                                  fieldArrayRenderProps={fieldArrayRenderProps}
+                                  client={values.partner}
+                                />
+                              );
+                            }}
+                          />
+                          <FieldArray
+                            name="partner.proposed"
+                            validateOnChange={false}
+                            render={(fieldArrayRenderProps: FieldArrayRenderProps) => {
+                              return (
+                                <ProposedProduct
+                                  openDrawer={this.openDrawer}
+                                  dataList={get(formikProps, 'values.partner.proposed', [])}
+                                  fieldArrayRenderProps={fieldArrayRenderProps}
+                                  tabKey="partner"
+                                  client={values.partner}
+                                />
+                              );
+                            }}
+                          />
+                        </DndProvider>
+                      </TabPanStyled>
+                    )}
                   </Tabs>
                   <ActionDrawerGeneral visible>
                     <Button

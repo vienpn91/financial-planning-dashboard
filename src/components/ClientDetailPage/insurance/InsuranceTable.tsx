@@ -42,9 +42,9 @@ class InsuranceTable extends PureComponent<InsuranceTableProps> {
       options: ownerWithJointOptions,
     },
     {
-      title: 'Delete',
+      title: '',
       key: 'operation',
-      width: 60,
+      width: 28,
       className: 'text-align-center',
       editable: false,
     },

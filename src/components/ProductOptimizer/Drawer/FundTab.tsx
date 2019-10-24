@@ -31,11 +31,11 @@ class FundTab extends React.PureComponent<FundTabProps, FundTabStates> {
       key: '0',
     },
     {
-      title: 'Value',
+      title: 'Value/$',
       dataIndex: 'value',
       key: '1',
       width: 100,
-      className: 'text-align-center',
+      className: 'text-align-right',
       editable: true,
       type: EditCellType.number,
     },

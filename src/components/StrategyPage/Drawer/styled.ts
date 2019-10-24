@@ -137,7 +137,7 @@ export const DrawerTableWrapper = styled.div<{ productOptimizer?: boolean }>`
     display: inline-block;
     width: 60px;
     margin: 0 5px;
-    text-align: center;
+    text-align: right;
     color: #4e5d86;
     font-size: 13px;
     ${(props) => props.productOptimizer && css `
@@ -204,7 +204,7 @@ export const DrawerTableRows = styled.div<{ noBorder?: boolean; maximumWidth?: b
       }
     }
     &-input {
-      text-align: center;
+      text-align: right;
       font-weight: 600;
       padding: 0 5px;
       color: #4e5d86;
@@ -237,7 +237,6 @@ export const DrawerTableRows = styled.div<{ noBorder?: boolean; maximumWidth?: b
       font-weight: 600;
       font-size: 13px;
       color: #4e5d86;
-      padding: 0px;
     }
     .ant-calendar-picker {
       .ant-calendar-picker-input {

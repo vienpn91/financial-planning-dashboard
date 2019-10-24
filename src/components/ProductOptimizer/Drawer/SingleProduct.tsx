@@ -23,12 +23,13 @@ class SingleProduct extends PureComponent<SingleProductProps> {
       key: '0',
     },
     {
-      title: 'Value',
+      title: 'Value/$',
       dataIndex: 'value',
       key: '1',
-      className: 'text-align-center',
+      className: 'text-align-right',
       editable: true,
       type: EditCellType.number,
+      width: '30%',
     },
     {
       title: 'Percentage',
@@ -43,6 +44,7 @@ class SingleProduct extends PureComponent<SingleProductProps> {
         parser: (value: any) => value.replace('%', ''),
       },
       key: '2',
+      width: '20%',
     },
   ];
   public onEdit = (value: any, name: string, rowIndex: number) => {

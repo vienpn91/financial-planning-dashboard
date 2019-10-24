@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 interface HeaderTitleStrategyProps {
   small?: boolean;
 }
@@ -35,7 +35,7 @@ export const StrategyTableContent = styled.div`
   max-height: 500px;
   overflow: overlay;
 `;
-export const StrategyTableItems = styled.div`
+export const StrategyTableItems = styled.div<{ unchecked?: boolean }>`
   display: flex;
   align-items: center;
   padding: 10px 0px;
@@ -43,6 +43,14 @@ export const StrategyTableItems = styled.div`
   &:first-child {
     padding-top: 5px;
   }
+  ${(props) => props.unchecked && css`
+    color: #888;
+    .strategy-item {
+      .ant-select, .ant-input, .ant-input-number-input {
+        color: #888 !important;
+      }
+    }
+  `}
 `;
 export const CheckboxCustomize = styled.div`
   margin-left: 1px;

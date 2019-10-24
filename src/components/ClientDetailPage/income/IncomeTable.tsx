@@ -17,6 +17,7 @@ import { loadOptionsBaseOnCol } from '../../../utils/columnUtils';
 import { CurrentTypes } from '../../../enums/currents';
 import AddMenu from '../AddMenu';
 import { createEvent } from '../../../utils/GA';
+import { sortAlphabetical } from '../../../utils/sort';
 
 interface IncomeTableProps {
   data: object[];
@@ -41,31 +42,33 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
       dataIndex: 'description',
       type: 'text',
       key: '0',
-      width: 'calc(18% - 20px)',
+      width: 'calc(23% - 20px)',
     },
     {
       title: 'Type',
       dataIndex: 'type',
       key: '1',
-      width: 'calc(16% - 20px)',
+      width: 'calc(12% - 20px)',
       type: 'select',
       options: incomeTypeOptions,
+      sorter: sortAlphabetical('type'),
     },
     {
       title: 'Owner',
       dataIndex: 'owner',
       key: '2',
-      width: '11%',
+      width: '10%',
       type: 'select',
       options: ownerOptions,
+      sorter: sortAlphabetical('owner'),
     },
     {
-      title: 'Value',
+      title: 'Value/$',
       dataIndex: 'value',
       key: '3',
-      width: '13%',
+      width: '14%',
       type: 'number',
-      sign: 'dollar',
+      className: 'text-align-right',
     },
     {
       title: 'Indexation',
@@ -94,11 +97,11 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
       options: to1Options,
     },
     {
-      title: 'Delete',
+      title: '',
       key: 'operation',
       className: 'text-align-center',
       editable: false,
-      width: 60,
+      width: 28,
     },
   ];
 
@@ -175,9 +178,7 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
       if (col.key === 'operation') {
         return {
           ...col,
-          title: 'Delete',
           key: 'operation',
-          width: 60,
           render: (text: any, record: any) => (
             <Popconfirm title="Really delete?" onConfirm={() => this.handleDelete(record.key)}>
               <Icon type="close-square" theme="twoTone" style={{ fontSize: '16px' }} />
@@ -189,10 +190,11 @@ class IncomeTable extends PureComponent<IncomeTableProps> {
       return {
         ...col,
         onCell: (record: any, rowIndex: number) => {
+          const { sorter, ...cellProps } = col;
           const options = loadOptionsBaseOnCol(col, record, { maritalStatus, dynamicCustomValue });
 
           return {
-            ...col,
+            ...cellProps,
             options,
             rowIndex,
             tableName: this.tableName,

@@ -1,5 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components';
-import { Menu, Button, Layout, Skeleton } from 'antd';
+import { Menu, Button, Layout, Skeleton, Input } from 'antd';
 import { get } from 'lodash';
 
 export const StickyStyle = createGlobalStyle<{ collapsed?: boolean }>`
@@ -26,17 +26,20 @@ export const ClientInfo = styled.div.attrs({
   className: 'client-Info',
 })`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  margin: 20px 0px 15px;
   cursor: pointer;
+  .ant-avatar-string{
+    line-height: 32px!important;
+  }
 `;
 
 export const SiderCollapsible = styled(Sider).attrs({
-  className: 'client-side-collapsible',
+  className: 'client-side-collapsible dumoamay',
 })<{ collapsed?: boolean }>`
   &.ant-layout-sider-collapsed {
+    input {
+      display: none
+    }
     .btn-sidebar {
       border-radius: 100%;
       width: 60px;
@@ -55,8 +58,8 @@ export const SiderCollapsible = styled(Sider).attrs({
     .client-full-name {
       display: none;
     }
-    & > .ant-menu-submenu {
-      & > .ant-menu-submenu-title {
+    .client-item-root {
+      .ant-menu-submenu-title {
         padding: 0px 5px !important;
       }
     }
@@ -67,11 +70,10 @@ export const SiderCollapsible = styled(Sider).attrs({
 export const FullName = styled.span.attrs({
   className: 'client-full-name',
 })`
-  margin-top: 10px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   color: #515c83;
-  // margin-left: 15px;
+  margin-left: 8px;
 `;
 export const ClientSide = styled(Menu).attrs({
   className: 'client-side-modify',
@@ -85,14 +87,12 @@ export const ClientSide = styled(Menu).attrs({
 export const ClientRoot = styled(SubMenu).attrs({
   className: 'client-item-root',
 })`
-  i.ant-menu-submenu-arrow {
-    display: none;
-  }
   & > .ant-menu-submenu-title {
-    height: 138px !important;
+    height: 60px!important;
     background: transparent;
-    line-height: 40px !important;
-    width: calc(100% - 40px) !important;
+    line-height: 60px !important;
+    padding-left: 10px !important;;
+    padding-right: 20px !important;;
     margin: 0 auto !important;
     box-shadow: none;
     border-radius: 0;
@@ -105,26 +105,29 @@ export const ClientRoot = styled(SubMenu).attrs({
 export const ClientItem = styled(SubMenu).attrs({
   className: 'client-item-modify',
 })`
-  margin-bottom: 15px;
+  margin-bottom: 5px;
   i.ant-menu-submenu-arrow {
     display: block;
   }
   .ant-menu-submenu-title {
-    height: 40px !important;
-    background: #f4f6fb;
-    padding-left: 24px !important;
-    line-height: 40px !important;
-    width: calc(100% - 40px) !important;
+    height: 35px !important;
+    /* background: #f4f6fb; */
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    line-height: 35px !important;
     margin: 0 auto !important;
-    box-shadow: 0px 2px 7px -2px #acacad;
     border-radius: 8px;
     position: relative;
     &:hover {
-      background-color: #e0e3e8;
+      /* background-color: #e0e3e8; */
+      span{
+        color: #515c83;
+        font-weight: 600;
+      }
     }
   }
   .ant-menu-sub {
-    width: calc(100% - 40px) !important;
+    width: calc(100% - 55px) !important;
     margin: 0 auto;
     background-color: transparent !important;
   }
@@ -167,20 +170,14 @@ export const StatusItem = styled.div`
   align-items: center;
 `;
 export const DateItem = styled.span`
-  font-size: 12px;
+  font-size: 15px;
   position: relative;
-  padding-left: 20px;
+  padding-left: 7px;
   color: #697396;
-  &:after {
-    content: '';
-    width: 10px;
-    height: 10px;
-    background: #d8d8d8;
-    display: inline-block;
-    border-radius: 100%;
-    position: absolute;
-    left: 0px;
-    top: calc(50% - 5px);
+  display: flex;
+  align-items: center;
+  .anticon {
+    font-size: 30px!important;
   }
 `;
 
@@ -215,4 +212,57 @@ export const SkeletonClient = styled(Skeleton).attrs({
   className: 'Skeleton-Client',
 })`
   padding: 15px;
+`;
+
+export const InputSearch = styled(Input)`
+  border: none;
+  color: #515C83;
+  &:focus{
+    outline: none;
+    border: none;
+    box-shadow: none;
+  }
+`;
+
+export const TopSearch = styled.div<{ border?: boolean }>`
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  border: none;
+  padding-left: 30px;
+  max-width: 350px;
+  position: relative;
+  height: 46px;
+  box-shadow: 0 2px 4px 0px rgba(0,0,0,0.23);
+  .anticon {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    z-index: 3;
+
+    &.anticon-search {
+      left: 10px;
+      right: unset;
+      font-size: 18px;
+      cursor: default;
+    }
+  }
+  .custom-select {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    padding: 0 25px;
+    .ant-select-selection {
+      border: none;
+      box-shadow: none;
+      &__rendered {
+        line-height: 32px;
+      }
+    }
+    .ant-select-selection-selected-value {
+      .code {
+        display: none;
+      }
+    }
+  }
 `;

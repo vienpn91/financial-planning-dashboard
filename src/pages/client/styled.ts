@@ -12,8 +12,8 @@ interface TextTitleProps {
 
 export const TableEntryContainer = styled.section.attrs({
   className: 'table-entry-container',
-})<{ drawer?: boolean; linkedProduct?: boolean; smallPadding?: boolean; }>`
-  padding: ${(props) => props.smallPadding ? '10px' : '20px'};
+})<{ drawer?: boolean; linkedProduct?: boolean; smallPadding?: boolean }>`
+  padding: ${(props) => (props.smallPadding ? '10px' : '20px')};
   ${(props) =>
     props.drawer &&
     css`
@@ -21,49 +21,56 @@ export const TableEntryContainer = styled.section.attrs({
       padding: 20px 0;
     `}
   .expenditure-table,
-  .income-table{
-    .ant-table-thead{
-      tr{
-        th:first-child{
-          padding-left: 20px
+  .income-table {
+    .ant-table-thead {
+      tr {
+        th:first-child {
+          padding-left: 20px;
         }
       }
     }
-    .ant-table-tbody{
-      tr{
-        td:first-child{
-          padding-left: 20px
+    .ant-table-tbody {
+      tr {
+        td:first-child {
+          padding-left: 20px;
         }
       }
     }
   }
-  .current-product-table{
-    .ant-table-thead{
-      tr{
-        th:first-child{
-          padding-left: 24px
+  .current-product-table {
+    .ant-table-thead {
+      tr {
+        th:first-child {
+          padding-left: 24px;
         }
       }
     }
-    .ant-table-tbody{
-      tr{
-        td:first-child{
+    .ant-table-tbody {
+      tr {
+        td:first-child {
           padding-left: 24px;
         }
       }
     }
   }
   .drawer-fund-table {
-    .ant-table-thead{
-      tr{
-        th:first-child{
-          padding-left: 36px
+    .ant-table {
+      .ant-table-thead {
+        > tr {
+          th {
+            &:first-child {
+              padding-left: 36px;
+            }
+            &.text-align-right {
+              padding-right: 10px;
+            }
+          }
         }
       }
     }
-    .ant-table-tbody{
-      tr{
-        td:first-child{
+    .ant-table-tbody {
+      tr {
+        td:first-child {
           padding-left: 36px;
         }
         &:last-child {
@@ -82,48 +89,62 @@ export const TableEntryContainer = styled.section.attrs({
       }
     }
     &.linked-product {
-      .ant-table-thead{
-        tr{
-          th:first-child{
+      .ant-table-thead {
+        tr {
+          th:first-child {
             padding-left: 18px;
           }
         }
       }
-      .ant-table-tbody{
-        tr{
-          td:first-child{
+      .ant-table-tbody {
+        tr {
+          td:first-child {
             padding-left: 6px;
           }
         }
       }
     }
-    .ant-table-tbody .strategy-item {
-      width: 100%;
-      input {
-        padding: 4px 6px;
-      }
-
-      .edit-cell {
-        width: 100%;
-        font-weight: normal;
-        text-align: center;
-        .ant-input-number-input {
-          font-weight: normal;
-          text-align: center;
-          padding: 4px;
+    .ant-table-tbody {
+      td {
+        .strategy-item {
+          width: 100%;
+          input {
+            padding: 4px 6px;
+          }
+          .edit-cell {
+            width: 100%;
+            font-weight: normal;
+            text-align: center;
+            .ant-input-number-input {
+              font-weight: normal;
+              text-align: center;
+              padding: 4px;
+            }
+          }
+        }
+        &.text-align-right {
+          .strategy-item {
+            .edit-cell {
+              text-align: right;
+              .ant-input-number-input {
+                text-align: right;
+              }
+            }
+          }
         }
       }
     }
   }
-  .proposed-product-table{
-    .ant-table-expand-icon-th, .ant-table-row-expand-icon-cell {
+  .proposed-product-table {
+    .ant-table-expand-icon-th,
+    .ant-table-row-expand-icon-cell {
       width: 0px !important;
       min-width: 0px !important;
       padding: 0px !important;
     }
-    .ant-table-thead{
-      tr{
-        th:first-child{
+    .ant-table-thead {
+      tr {
+        th:first-child {
           // padding-left: 36px
           padding: 0px !important;
         }
@@ -148,12 +169,19 @@ export const TableEntryContainer = styled.section.attrs({
   }
   .text-align-right {
     text-align: right;
+    .ant-input-number-input {
+      text-align: right;
+    }
   }
   .optimizer-table {
     .ant-table-thead > tr > th {
       text-align: left;
+      &.text-align-right {
+        text-align: right;
+        padding-right: 18px !important;
+      }
     }
-    .ant-table-tbody > tr > td{
+    .ant-table-tbody > tr > td {
       vertical-align: baseline;
       line-height: 33px;
     }
@@ -170,28 +198,27 @@ export const TableEntryContainer = styled.section.attrs({
         margin-left: -11px;
         .ant-input-number-input {
           font-weight: normal;
-          text-align: left;
         }
       }
     }
   }
   /* table layout here */
-  .table-general{
-    table{
+  .table-general {
+    table {
       table-layout: fixed;
-      .ant-table-row-expand-icon-cell{
+      .ant-table-row-expand-icon-cell {
         .anticon {
-          transition: transform .24s ease;
-          &.collapse-open{
+          transition: transform 0.24s ease;
+          &.collapse-open {
             transform: rotate(90deg);
           }
         }
       }
     }
-    .ant-table{
-      &.ant-table-small{
+    .ant-table {
+      &.ant-table-small {
         font-size: 13px;
-        .ant-select{
+        .ant-select {
           font-size: 13px;
         }
       }
@@ -208,46 +235,50 @@ export const TableEntryContainer = styled.section.attrs({
         cursor: default;
       }
     }
-    .ant-row.ant-form-item{
+    .ant-row.ant-form-item {
       margin: 0px;
       width: 100%;
-      .ant-form-item-children{
-        .picker-date{
+      .ant-form-item-children {
+        .picker-date {
           margin: 0px;
           width: 100%;
-          .ant-calendar-picker{
+          .ant-calendar-picker {
             width: 100%;
           }
         }
-        & > div{
+        & > div {
           margin: 0px;
         }
       }
     }
-  .ant-select{
-    margin-left: -10px;
-  }
-  .ant-table-expand-icon-col{
-    width: 40px;
-  }
-  .ant-form-item-control{
-    line-height: 35px;
-  }
-  .ant-table-expand-icon-th,
-  .ant-table-row-expand-icon-cell{
-    width: 40px;
-    padding: 16px 0px;
-    min-width: 40px;
-  }
-  .ant-table-tbody > tr > td{
-    padding: 10px 5px;
-    color: #4e5d86;
-  }
-  .ant-table-thead > tr > th{
-    background-color: #eaedef;
-    color: #505c84;
-    padding: 16px 5px;
-    font-weight: 600;
+    .ant-select {
+      margin-left: -10px;
+    }
+    .ant-table-expand-icon-col {
+      width: 40px;
+    }
+    .ant-form-item-control {
+      line-height: 35px;
+    }
+    .ant-table-expand-icon-th,
+    .ant-table-row-expand-icon-cell {
+      width: 40px;
+      padding: 16px 0px;
+      min-width: 40px;
+    }
+    .ant-table-tbody > tr > td {
+      padding: 10px 5px;
+      color: #4e5d86;
+    }
+    .ant-table-thead > tr > th {
+      background-color: #eaedef;
+      color: #505c84;
+      padding: 16px 5px;
+      font-weight: 600;
+      &.text-align-right {
+        padding-right: 27px;
+      }
+    }
   }
 `;
 export const ActionTableGeneral = styled.section<{ visible?: boolean }>`

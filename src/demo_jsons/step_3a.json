@@ -1,5 +1,7 @@
 {
   "client": {
+    "id": 5,
+    "name": "John Samual",
     "current": [
       {
         "id": 2,
@@ -26,47 +28,6 @@
         "details": {
           "product": {
             "id": 4,
-            "name": "CFS FirstChoice Wholesale Investments"
-          },
-          "funds": [
-            {
-              "id": 1,
-              "name": "FirstChoice Wholesale Moderate",
-              "value": 50000
-            }
-          ]
-        }
-      }
-    ],
-    "proposed": []
-  },
-  "partner": {
-    "current": [
-      {
-        "id": 5,
-        "description": "Hesta Personal Super",
-        "value": 400000,
-        "details": {
-          "product": {
-            "id": 5,
-            "name": "Hesta Personal Super"
-          },
-          "funds": [
-            {
-              "id": 1,
-              "name": "Conservative Pool",
-              "value": 400000
-            }
-          ]
-        }
-      },
-      {
-        "id": 6,
-        "description": "CFS FirstChoice Wholesale Investments",
-        "value": 50000,
-        "details": {
-          "product": {
-            "id": 6,
             "name": "CFS FirstChoice Wholesale Investments"
           },
           "funds": [

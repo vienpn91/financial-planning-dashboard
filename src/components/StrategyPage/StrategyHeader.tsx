@@ -124,12 +124,12 @@ const StrategyHeader = (props: StrategyHeaderProps) => {
       <Col span={6}>
         <GraphContainer
           type={GraphType.Bar}
-          name="Cashflow comparisons"
+          name="Cashflow"
           data={loadGraphData(cashflowConfig)(cashflowComparisons)}
         />
       </Col>
       <Col span={6}>
-        <GraphContainer type={GraphType.Line} name="Net Income after tax" data={loadGraphData(taxConfig)(tax)} />
+        <GraphContainer type={GraphType.Bar} name="Net tax" data={loadGraphData(taxConfig)(tax)} />
       </Col>
       <Col span={6}>
         <GraphContainer

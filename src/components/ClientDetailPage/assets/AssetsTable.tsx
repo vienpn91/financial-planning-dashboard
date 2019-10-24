@@ -1,15 +1,19 @@
 import React, { PureComponent } from 'react';
 import { Button, Icon, Popconfirm } from 'antd';
-import ExpandedAssetsRow, { AssetProps } from './ExpandedAssetsRowWrapper';
-import { TableEntryContainer, HeaderTitleTable, TextTitle, ActionTableGeneral } from '../../../pages/client/styled';
-import GeneralTable from '../GeneralTable';
 import { FormikProps } from 'formik';
 import { isFunction, get } from 'lodash';
+import { PaginationConfig } from 'antd/lib/pagination';
+import { TableCurrentDataSource } from 'antd/lib/table';
+
+import GeneralTable from '../GeneralTable';
+import ExpandedAssetsRow, { AssetProps } from './ExpandedAssetsRowWrapper';
+import { TableEntryContainer, HeaderTitleTable, TextTitle, ActionTableGeneral } from '../../../pages/client/styled';
 import { from2Options, ownerOptions, to2Options, assetTypes, investmentTypeOptions } from '../../../enums/options';
 import { loadOptionsBaseOnCol } from '../../../utils/columnUtils';
 import { CurrentTypes } from '../../../enums/currents';
 import AddMenu from '../AddMenu';
 import { createEvent } from '../../../utils/GA';
+import { sortAlphabetical } from '../../../utils/sort';
 
 interface AssetsTableProps {
   data: object[];
@@ -43,6 +47,7 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
       width: '17%',
       type: 'select',
       options: assetTypes,
+      sorter: sortAlphabetical('type'),
     },
     {
       title: 'Owner',
@@ -51,14 +56,15 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
       type: 'select',
       options: ownerOptions,
       width: 'calc(8% - 20px)',
+      sorter: sortAlphabetical('owner'),
     },
     {
-      title: 'Value',
+      title: 'Value/$',
       dataIndex: 'value',
       key: '3',
       type: 'number',
       width: 'calc(16% - 20px)',
-      sign: 'dollar',
+      className: 'text-align-right',
     },
     {
       title: 'Investment',
@@ -67,6 +73,7 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
       width: '16%',
       type: 'select',
       options: investmentTypeOptions,
+      sorter: sortAlphabetical('investment'),
     },
     {
       title: 'From',
@@ -87,10 +94,10 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
       options: to2Options,
     },
     {
-      title: 'Delete',
+      title: '',
       key: 'operation',
       editable: false,
-      width: 60,
+      width: 28,
       className: 'text-align-center',
     },
   ];
@@ -192,6 +199,11 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
     setFieldValue(this.tableName, newData);
   }
 
+  public onChange = (pagination: PaginationConfig, filters: any, sorter: any, extra: TableCurrentDataSource<any>) => {
+    const { setFieldValue } = this.props;
+    setFieldValue(this.tableName, extra.currentDataSource);
+  }
+
   public render() {
     const { loading, data, maritalStatus, dynamicCustomValue, empStatus } = this.props;
     const columns = this.columns.map((col: any) => {
@@ -199,9 +211,7 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
       if (col.key === 'operation') {
         return {
           ...col,
-          title: 'Delete',
           key: 'operation',
-          width: 60,
           render: (text: any, record: any) => (
             <Popconfirm title="Really delete?" onConfirm={() => this.handleDelete(record.key)}>
               <Icon type="close-square" theme="twoTone" style={{ fontSize: '16px' }} />
@@ -213,10 +223,11 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
       return {
         ...col,
         onCell: (record: any, rowIndex: number) => {
+          const { sorter, ...cellProps } = col;
           const options = loadOptionsBaseOnCol(col, record, { maritalStatus });
 
           return {
-            ...col,
+            ...cellProps,
             options,
             rowIndex,
             tableName: this.tableName,
@@ -254,6 +265,7 @@ class AssetsTable extends PureComponent<AssetsTableProps> {
             />
           )}
           className={`${this.tableName}-table`}
+          onChange={this.onChange}
         />
         <ActionTableGeneral>
           <Button htmlType={'button'} type={'default'} onClick={this.handleResetForm}>

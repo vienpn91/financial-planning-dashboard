@@ -15,6 +15,7 @@ import { loadOptionsBaseOnCol } from '../../../utils/columnUtils';
 import { CurrentTypes } from '../../../enums/currents';
 import AddMenu from '../AddMenu';
 import { createEvent } from '../../../utils/GA';
+import { sortAlphabetical } from '../../../utils/sort';
 
 interface ExpenditureTableProps {
   data: object[];
@@ -46,28 +47,30 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
       width: 'calc(12% - 20px)',
       type: 'select',
       options: expenditureTypeOptions,
+      sorter: sortAlphabetical('type'),
     },
     {
       title: 'Owner',
       dataIndex: 'owner',
       key: '2',
-      width: '11%',
+      width: '10%',
       type: 'select',
       options: ownerWithJointOptions,
+      sorter: sortAlphabetical('owner'),
     },
     {
-      title: 'Value',
+      title: 'Value/$',
       dataIndex: 'value',
       key: '3',
-      width: '13%',
+      width: '14%',
       type: 'number',
-      sign: 'dollar',
+      className: 'text-align-right',
     },
     {
       title: 'Indexation',
       dataIndex: 'indexation',
       key: '4',
-      width: '14%',
+      width: '15%',
       type: 'select',
       options: indexationOptions,
     },
@@ -90,14 +93,15 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
       options: to1Options,
     },
     {
-      title: 'Delete',
+      title: '',
       key: 'operation',
       className: 'text-align-center',
       editable: false,
-      width: 60,
+      width: 28,
     },
   ];
 
+  private animationTime = 450;
   private tableName = 'expenditure';
 
   public componentDidUpdate(prevProps: Readonly<ExpenditureTableProps>, prevState: Readonly<{}>, snapshot?: any): void {
@@ -107,6 +111,20 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
       const newData = data.map((d) => ({ ...d, owner: 'client' }));
       setFieldValue(this.tableName, newData);
     }
+  }
+
+  public cursorGoToDescriptionField = (key: number) => {
+    // Ensure the animation is end
+    setTimeout(() => {
+      // The new row might be is added to randomly position if the table is applying sort function
+      // Make sure the cursor moves to the new row just added
+      const descriptionInput: HTMLElement | null = document.querySelector(
+        `.expenditure-table tr[data-row-key="${key}"] .ant-input`,
+      );
+      if (descriptionInput && descriptionInput.focus) {
+        descriptionInput.focus();
+      }
+    }, this.animationTime);
   }
 
   public resetForm = () => {
@@ -132,10 +150,10 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
     const [owner, type] = value;
     const newData = {
       key: Date.now(),
-      description: 'Living Expenses',
+      description: '',
       type,
       owner,
-      value: 25000.0,
+      value: null,
       indexation: 'inflationCPI',
       from: {
         type: 'start',
@@ -150,6 +168,7 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
     if (isFunction(addRow)) {
       createEvent('current_position', 'create', 'Expenditure', clientId);
       addRow(newData);
+      this.cursorGoToDescriptionField(newData.key);
     }
   }
 
@@ -171,9 +190,7 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
       if (col.key === 'operation') {
         return {
           ...col,
-          title: 'Delete',
           key: 'operation',
-          width: 60,
           render: (text: any, record: any) => (
             <Popconfirm title="Really delete?" onConfirm={() => this.handleDelete(record.key)}>
               <Icon type="close-square" theme="twoTone" style={{ fontSize: '16px' }} />
@@ -185,9 +202,11 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
       return {
         ...col,
         onCell: (record: any, rowIndex: number) => {
+          const { sorter, ...cellProps } = col;
           const options = loadOptionsBaseOnCol(col, record, { maritalStatus, dynamicCustomValue });
+
           return {
-            ...col,
+            ...cellProps,
             options,
             rowIndex,
             tableName: this.tableName,
