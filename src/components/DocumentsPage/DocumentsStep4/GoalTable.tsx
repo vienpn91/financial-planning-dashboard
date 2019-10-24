@@ -43,7 +43,7 @@ class GoalTable extends React.Component<GoalTableProps> {
       options: {
         placeholder: 'Enter description',
       },
-      type: EditCellType.text,
+      type: EditCellType.textarea,
       key: '0',
       editable: true,
       showLinks: true,

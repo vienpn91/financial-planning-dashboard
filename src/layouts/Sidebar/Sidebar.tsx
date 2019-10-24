@@ -64,11 +64,11 @@ class Sidebar extends React.PureComponent<SidebarProps & RouteComponentProps> {
     history.push(`/client/${clientId}`);
   };
   public getTextAvatar = (name: any) => {
-    const newName = name.split(" ");
+    const newName = name.split(' ');
     return `${newName[0][0]}${newName[1][0]}`;
   };
   public renderClientItem = (tag: Tag, clientId: number) => {
-    const { name, date } = tag;
+    const { name, date, icon } = tag;
     const { loading } = this.state;
     return (
       <ClientItem
@@ -76,7 +76,7 @@ class Sidebar extends React.PureComponent<SidebarProps & RouteComponentProps> {
         title={
           <StatusItem>
             <DateItem>
-              <Icon type={name == 'new' ? 'check-circle' : 'exclamation-circle'} />
+              <Icon type={icon} />
               {date}
             </DateItem>
             {/* <StatusTags tagName={name}>{name}</StatusTags> */}
@@ -117,13 +117,11 @@ class Sidebar extends React.PureComponent<SidebarProps & RouteComponentProps> {
                     <Avatar
                       size={38}
                       style={{
-                        border: '3px solid #fff',
-                        boxShadow: `0px 0px 0px 2px ${randomColor}80`,
                         color: randomColor,
                         backgroundColor: `${randomColor}80`,
                       }}
                     >
-                      { this.getTextAvatar(client.clientName) }
+                      {this.getTextAvatar(client.clientName)}
                     </Avatar>
                     <FullName>{client.clientName}</FullName>
                   </ClientInfo>

@@ -66,6 +66,7 @@ export const DocumentsWrapper = styled.section`
 export const StepActionDocument = styled.div.attrs({
   className: 'steps-action',
 })`
+  margin-top: 20px
   display: flex;
   justify-content: flex-end;
 `;

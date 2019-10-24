@@ -80,6 +80,7 @@ export interface DataEntry {
 export interface Tag {
   name: string;
   date: string;
+  icon: string;
   dataEntries?: DataEntry[];
 }
 
@@ -87,6 +88,7 @@ export interface Client {
   clientId: number;
   clientName: string;
   tagList?: Tag[];
+  dateList?: Tag[];
 }
 
 export interface ClientState {
@@ -104,12 +106,16 @@ export interface ClientState {
 }
 
 export const getDefaultTagList = () => {
-  const tagList = ['new', 'position', 'strategy', 'products', 'advice', 'done'];
+  // const tagList = ['new', 'position', 'strategy', 'products', 'advice', 'done'];
+  const tagList = [
+    { name: 'new', date: '10/11/2019', icon: 'exclamation'},
+    { name: 'position', date: '22/05/2019', icon: 'check'}];
   const tabList = values(Tab);
 
   return map(tagList, (tag) => ({
-    name: tag,
-    date: '20/03/2019',
+    name: tag.name,
+    date: tag.date,
+    icon: tag.icon,
     dataEntries: map(tabList, (tab) => ({
       tabName: tab,
       pageData: {},

@@ -29,7 +29,7 @@ export const ClientInfo = styled.div.attrs({
   align-items: center;
   cursor: pointer;
   .ant-avatar-string{
-    line-height: 32px!important;
+    transform: scale(1) translateX(-50%)!important;
   }
 `;
 
@@ -62,7 +62,7 @@ export const SiderCollapsible = styled(Sider).attrs({
       .ant-menu-submenu-title {
         padding: 0px 5px !important;
       }
-    }
+    }   
   }
 `;
 // ant-menu-submenu-open ant-menu-submenu-active
@@ -177,7 +177,8 @@ export const DateItem = styled.span`
   display: flex;
   align-items: center;
   .anticon {
-    font-size: 30px!important;
+    font-size: 18px!important;
+    margin-right: 20px!important;
   }
 `;
 
