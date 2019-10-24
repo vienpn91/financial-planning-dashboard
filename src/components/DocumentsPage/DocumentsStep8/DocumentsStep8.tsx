@@ -32,11 +32,9 @@ const DocumentsStep8 = (props: FormikPartProps) => {
     message.success('Processing complete!');
   };
   const records = get(props, 'formik.values.step8.records', []);
-  let checked;
-  map(records, (record: Record, index: number) => {
-    const numberIssues = filter(record.table.data, (d) => d.id !== -1 && !d.isOverwrite).length;
-    checked = get(record, 'table.data.length') === 0 || numberIssues === 0;
-  })
+  const checked = !records.find((record: Record) => {
+    return record.table.data.find(r => r.isOverwrite === false && r.id !== -1)
+  }) ;
   return (
     <StepWrapper>
       <DocumentsStep8WP>
