@@ -136,7 +136,6 @@ const GraphContainer = (props: GraphProps) => {
     <GraphWrapper className={className}>
       {name && (
         <GraphTitle>
-          <Icon type="info-circle" theme="filled" />
           {name}
         </GraphTitle>
       )}
