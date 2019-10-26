@@ -19,12 +19,12 @@ const steps = [
   {
     title: 'Step 1',
     content: DocumentsStep1,
-    description: 'Reason for seeking advice',
+    description: 'Reasons for seeking advice',
   },
   {
     title: 'Step 2',
     content: DocumentsStep2,
-    description: 'What the advice cover',
+    description: 'What the advice covers',
   },
   {
     title: 'Step 3',
@@ -39,7 +39,7 @@ const steps = [
   {
     title: 'Step 5',
     content: DocumentsStep5,
-    description: 'Limitations of client is information',
+    description: 'Limitations of Client\'s advice',
   },
   {
     title: 'Step 6',

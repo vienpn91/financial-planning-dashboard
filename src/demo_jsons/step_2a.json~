@@ -2,17 +2,17 @@
   "netAssets": {
     "xAxis": ["19", "20", "21", "22", "23", "24", "25", "26", "27", "28"],
     "current": [1026393, 1070343, 1115340, 1161982, 1212468, 1172768, 1134078, 1096392, 1059620, 1022343],
-    "proposed": [1026393, 1071804, 1128637, 1187891, 1249658, 1238657, 1212398, 1185092, 1156704, 1127199]
+    "proposed": [1026393, 1071804, 1128637, 1187891, 1249658, 1235624, 1207217, 1178064, 1148151, 1117456]
   },
   "cashflowComparisons": {
     "xAxis": ["19", "20", "21", "22", "23", "24", "25", "26", "27", "28"],
     "current": [83108, 85425, 87905, 92894, 128, 135, 143, 151, 159, 167],
-    "proposed": [88279, 90775, 93357, 98387, 69361, 70620, 71909, 73227, 74575, 75955]
+    "proposed": [88279, 90775, 93357, 98387, 188, 200, 213, 227, 241, 257]
   },
   "tax": {
     "xAxis": ["19", "20", "21", "22", "23", "24", "25", "26", "27", "28"],
     "current": [39011, 41029, 43039, 42703, 2554, 2652, 2754, 2837, 2540, 2226],
-    "proposed": [34533, 36483, 38511, 38264, -188, -200, -213, -227, -241, -257]
+    "proposed": [34533, 36483, 38511, 38264, 3653, 3540, 3285, 3009, 2713, 2393]
   },
   "retirementFunding": {
     "xAxis": [
@@ -39,8 +39,7 @@
       "39",
       "40",
       "41",
-      "42",
-      "43"
+      "42"
     ],
     "current": [
       600000,
@@ -66,7 +65,6 @@
       13659,
       0,
       0,
-      0,
       0
     ],
     "proposed": [
@@ -75,31 +73,30 @@
       593614,
       627494,
       662995,
-      620853,
-      577664,
-      533387,
-      487982,
-      441405,
-      393613,
-      355100,
-      320555,
-      288007,
-      257355,
-      227978,
-      198528,
-      168463,
-      137607,
-      106285,
-      77234,
-      51953,
-      26651,
-      558,
+      598521,
+      571461,
+      525274,
+      478284,
+      430468,
+      381802,
+      343276,
+      309050,
+      277017,
+      247068,
+      218412,
+      189503,
+      160247,
+      130405,
+      99924,
+      70420,
+      44886,
+      19406,
       0
     ]
   },
   "clientId": 5,
   "soaId": 1,
-  "defaultFullValue": 640818,
+  "defaultFullValue": 2210,
   "client": {
     "name": "John Samual",
     "superannuation": [
@@ -218,7 +215,8 @@
         "id": 3,
         "value": 3,
         "label": "OnePath OneCare income protection",
-        "amount": 7000
+        "amount": 7000,
+        "perMonth": true
       }
     ]
   },
@@ -310,17 +308,17 @@
     "kpi": [
       {
         "title": "Accumulation balance",
-        "value": 0,
-        "isIncrease": null,
-        "delta": "0%",
+        "value": 640818,
+        "isIncrease": true,
+        "delta": "25%",
         "subTitle": "At retirement",
         "subValue": 60
       },
       {
         "title": "Total retirement balance",
-        "value": 377923,
+        "value": 516367,
         "isIncrease": false,
-        "delta": "29%",
+        "delta": "4%",
         "subTitle": "In 10 years",
         "subValue": 66
       }
@@ -330,13 +328,13 @@
         "title": "Superannuation (PV)",
         "xAxis": ["19", "20", "21", "22", "23", "24", "25", "26", "27", "28"],
         "current": [400000, 425587, 452524, 481434, 512445, 532567, 553478, 575211, 593246, 535977],
-        "proposed": [460000, 500709, 544024, 590653, 640818, 0, 0, 0, 0, 0]
+        "proposed": [460000, 500709, 544024, 590653, 640818, 671580, 653906, 611497, 565714, 516367]
       },
       {
-        "title": "Retirement",
+        "title": "Total retirement balance",
         "xAxis": ["19", "20", "21", "22", "23", "24", "25", "26", "27", "28"],
         "current": [400000, 425587, 452524, 481434, 512445, 532567, 553478, 575211, 593246, 535977],
-        "proposed": [500709, 544024, 590653, 640818, 605883, 567693, 526034, 480681, 431395, 377923]
+        "proposed": [460000, 500709, 544024, 590653, 640818, 671580, 653906, 611497, 565714, 516367]
       }
     ],
     "standardText": [
@@ -387,12 +385,12 @@
                 {
                   "key": "taxable",
                   "title": "Taxable Component",
-                  "values": [400000, 440709, 484024, 530653, 580818, 0, 0, 0, 0, 0]
+                  "values": [400000, 440709, 484024, 530653, 580818, 611580, 598162, 561755, 521805, 478123]
                 },
                 {
                   "key": "taxFree",
                   "title": "Tax Free Component",
-                  "values": [60000, 60000, 60000, 60000, 60000, 0, 0, 0, 0, 0]
+                  "values": [60000, 60000, 60000, 60000, 60000, 60000, 55745, 49742, 43910, 38243]
                 }
               ]
             },
@@ -445,17 +443,17 @@
                 {
                   "key": "growth",
                   "title": "Growth",
-                  "values": [10410, 11320, 12295, 13343, 0, 0, 0, 0, 0, 0]
+                  "values": [10410, 11320, 12295, 13343, 14220, 13846, 12948, 11979, 10934, 9809]
                 },
                 {
                   "key": "income",
                   "title": "Income",
-                  "values": [14922, 16227, 17624, 19127, 0, 0, 0, 0, 0, 0]
+                  "values": [14922, 16227, 17624, 19127, 20384, 19848, 18560, 17171, 15673, 14061]
                 },
                 {
                   "key": "frankingCredits",
                   "title": "Franking Credits",
-                  "values": [1162, 1264, 1372, 1489, 0, 0, 0, 0, 0, 0]
+                  "values": [1162, 1264, 1372, 1489, 1587, 1546, 1445, 1337, 1220, 1095]
                 }
               ]
             },
@@ -466,7 +464,7 @@
                 {
                   "key": "investmentCosts",
                   "title": "Investment Costs",
-                  "values": [2300, 2503.545, 2720.12, 2953.265, null, 0, 0, 0, 0, 0]
+                  "values": [2300, 2503.545, 2720.12, 2953.265, 3204.09, 3357.9, 3269.53, 3057.485, 2828.57, 2581.835]
                 },
                 {
                   "key": "adviserFees",
@@ -501,7 +499,7 @@
                 {
                   "key": "pensionRollover",
                   "title": "Pension rollover",
-                  "values": [0, 0, 0, 0, 640818, 0, 0, 0, 0, 0],
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   "editable": true
                 }
               ]
@@ -545,12 +543,12 @@
                 {
                   "key": "taxOnInvestmentEarnings",
                   "title": "Tax on investment earnings",
-                  "values": [2812, 3058, 3321, 3605, 0, 0, 0, 0, 0, 0]
+                  "values": [2238.3, 2434.05, 2643.6, 2869.05, 3057.6, 2977.2, 2784, 2575.65, 2350.95, 2109.15]
                 },
                 {
                   "key": "taxOnContributions",
                   "title": "Tax on contributions",
-                  "values": [3210, 3322, 3535, 3759, 0, 0, 0, 0, 0, 0]
+                  "values": [3210, 3322.35, 3535.05, 3758.55, 0, 0, 0, 0, 0, 0]
                 },
                 {
                   "key": "contributionsSurcharge",
@@ -572,19 +570,19 @@
                 {
                   "key": "taxableComponent",
                   "title": "Taxable Component",
-                  "values": [440709, 484024, 530653, 580818, 0, 0, 0, 0, 0, 0]
+                  "values": [440709, 484024, 530653, 580818, 611580, 598162, 561755, 521805, 478123, 430514]
                 },
                 {
                   "key": "taxFreeComponent",
                   "title": "Tax Free Component",
-                  "values": [60000, 60000, 60000, 60000, 0, 0, 0, 0, 0, 0]
+                  "values": [60000, 60000, 60000, 60000, 60000, 55745, 49742, 43910, 38243, 32738]
                 }
               ]
             },
             {
               "key": "closingValuePV",
               "title": "Closing Value (PV)",
-              "values": [489452, 519837, 551704, 585102, 0, 0, 0, 0, 0, 0],
+              "values": [489452, 519837, 551704, 585102, 599404, 570508, 521512, 471620, 420802, 369030],
               "editable": true
             }
           ],
@@ -596,12 +594,12 @@
                 {
                   "key": "taxable",
                   "title": "Taxable Component",
-                  "values": [400000, 440709, 484024, 530653, 580818, 0, 0, 0, 0, 0]
+                  "values": [400000, 440709, 484024, 530653, 580818, 611580, 598162, 561755, 521805, 478123]
                 },
                 {
                   "key": "taxFree",
                   "title": "Tax Free Component",
-                  "values": [60000, 60000, 60000, 60000, 60000, 0, 0, 0, 0, 0]
+                  "values": [60000, 60000, 60000, 60000, 60000, 60000, 55745, 49742, 43910, 38243]
                 }
               ]
             },
@@ -654,17 +652,17 @@
                 {
                   "key": "growth",
                   "title": "Growth",
-                  "values": [10410, 11320, 12295, 13343, 0, 0, 0, 0, 0, 0]
+                  "values": [10410, 11320, 12295, 13343, 14220, 13846, 12948, 11979, 10934, 9809]
                 },
                 {
                   "key": "income",
                   "title": "Income",
-                  "values": [14922, 16227, 17624, 19127, 0, 0, 0, 0, 0, 0]
+                  "values": [14922, 16227, 17624, 19127, 20384, 19848, 18560, 17171, 15673, 14061]
                 },
                 {
                   "key": "frankingCredits",
                   "title": "Franking Credits",
-                  "values": [1162, 1264, 1372, 1489, 0, 0, 0, 0, 0, 0]
+                  "values": [1162, 1264, 1372, 1489, 1587, 1546, 1445, 1337, 1220, 1095]
                 }
               ]
             },
@@ -675,7 +673,7 @@
                 {
                   "key": "investmentCosts",
                   "title": "Investment Costs",
-                  "values": [2300, 2503.545, 2720.12, 2953.265, null, 0, 0, 0, 0, 0]
+                  "values": [2300, 2503.545, 2720.12, 2953.265, 3204.09, 3357.9, 3269.53, 3057.485, 2828.57, 2581.835]
                 },
                 {
                   "key": "adviserFees",
@@ -710,7 +708,7 @@
                 {
                   "key": "pensionRollover",
                   "title": "Pension rollover",
-                  "values": [0, 0, 0, 0, 640818, 0, 0, 0, 0, 0],
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   "editable": true
                 }
               ]
@@ -754,12 +752,12 @@
                 {
                   "key": "taxOnInvestmentEarnings",
                   "title": "Tax on investment earnings",
-                  "values": [2812, 3058, 3321, 3605, 0, 0, 0, 0, 0, 0]
+                  "values": [2238.3, 2434.05, 2643.6, 2869.05, 3057.6, 2977.2, 2784, 2575.65, 2350.95, 2109.15]
                 },
                 {
                   "key": "taxOnContributions",
                   "title": "Tax on contributions",
-                  "values": [3210, 3322, 3535, 3759, 0, 0, 0, 0, 0, 0]
+                  "values": [3210, 3322.35, 3535.05, 3758.55, 0, 0, 0, 0, 0, 0]
                 },
                 {
                   "key": "contributionsSurcharge",
@@ -781,19 +779,19 @@
                 {
                   "key": "taxableComponent",
                   "title": "Taxable Component",
-                  "values": [440709, 484024, 530653, 580818, 0, 0, 0, 0, 0, 0]
+                  "values": [440709, 484024, 530653, 580818, 611580, 598162, 561755, 521805, 478123, 430514]
                 },
                 {
                   "key": "taxFreeComponent",
                   "title": "Tax Free Component",
-                  "values": [60000, 60000, 60000, 60000, 0, 0, 0, 0, 0, 0]
+                  "values": [60000, 60000, 60000, 60000, 60000, 55745, 49742, 43910, 38243, 32738]
                 }
               ]
             },
             {
               "key": "closingValuePV",
               "title": "Closing Value (PV)",
-              "values": [489452, 519837, 551704, 585102, 0, 0, 0, 0, 0, 0],
+              "values": [489452, 519837, 551704, 585102, 599404, 570508, 521512, 471620, 420802, 369030],
               "editable": true
             }
           ]
@@ -824,12 +822,12 @@
                 {
                   "key": "taxable",
                   "title": "Taxable Component",
-                  "values": [400000, 440709, 484024, 530653, 580818, 0, 0, 0, 0, 0]
+                  "values": [400000, 440709, 484024, 530653, 580818, 611580, 598162, 561755, 521805, 478123]
                 },
                 {
                   "key": "taxFree",
                   "title": "Tax Free Component",
-                  "values": [60000, 60000, 60000, 60000, 60000, 0, 0, 0, 0, 0]
+                  "values": [60000, 60000, 60000, 60000, 60000, 60000, 55745, 49742, 43910, 38243]
                 }
               ]
             },
@@ -882,17 +880,17 @@
                 {
                   "key": "growth",
                   "title": "Growth",
-                  "values": [10410, 11320, 12295, 13343, 0, 0, 0, 0, 0, 0]
+                  "values": [10410, 11320, 12295, 13343, 14220, 13846, 12948, 11979, 10934, 9809]
                 },
                 {
                   "key": "income",
                   "title": "Income",
-                  "values": [14922, 16227, 17624, 19127, 0, 0, 0, 0, 0, 0]
+                  "values": [14922, 16227, 17624, 19127, 20384, 19848, 18560, 17171, 15673, 14061]
                 },
                 {
                   "key": "frankingCredits",
                   "title": "Franking Credits",
-                  "values": [1162, 1264, 1372, 1489, 0, 0, 0, 0, 0, 0]
+                  "values": [1162, 1264, 1372, 1489, 1587, 1546, 1445, 1337, 1220, 1095]
                 }
               ]
             },
@@ -903,7 +901,7 @@
                 {
                   "key": "investmentCosts",
                   "title": "Investment Costs",
-                  "values": [2300, 2503.545, 2720.12, 2953.265, null, 0, 0, 0, 0, 0]
+                  "values": [2300, 2503.545, 2720.12, 2953.265, 3204.09, 3357.9, 3269.53, 3057.485, 2828.57, 2581.835]
                 },
                 {
                   "key": "adviserFees",
@@ -938,7 +936,7 @@
                 {
                   "key": "pensionRollover",
                   "title": "Pension rollover",
-                  "values": [0, 0, 0, 0, 640818, 0, 0, 0, 0, 0],
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   "editable": true
                 }
               ]
@@ -982,12 +980,12 @@
                 {
                   "key": "taxOnInvestmentEarnings",
                   "title": "Tax on investment earnings",
-                  "values": [2812, 3058, 3321, 3605, 0, 0, 0, 0, 0, 0]
+                  "values": [2238.3, 2434.05, 2643.6, 2869.05, 3057.6, 2977.2, 2784, 2575.65, 2350.95, 2109.15]
                 },
                 {
                   "key": "taxOnContributions",
                   "title": "Tax on contributions",
-                  "values": [3210, 3322, 3535, 3759, 0, 0, 0, 0, 0, 0]
+                  "values": [3210, 3322.35, 3535.05, 3758.55, 0, 0, 0, 0, 0, 0]
                 },
                 {
                   "key": "contributionsSurcharge",
@@ -1009,19 +1007,19 @@
                 {
                   "key": "taxableComponent",
                   "title": "Taxable Component",
-                  "values": [440709, 484024, 530653, 580818, 0, 0, 0, 0, 0, 0]
+                  "values": [440709, 484024, 530653, 580818, 611580, 598162, 561755, 521805, 478123, 430514]
                 },
                 {
                   "key": "taxFreeComponent",
                   "title": "Tax Free Component",
-                  "values": [60000, 60000, 60000, 60000, 0, 0, 0, 0, 0, 0]
+                  "values": [60000, 60000, 60000, 60000, 60000, 55745, 49742, 43910, 38243, 32738]
                 }
               ]
             },
             {
               "key": "closingValuePV",
               "title": "Closing Value (PV)",
-              "values": [489452, 519837, 551704, 585102, 0, 0, 0, 0, 0, 0],
+              "values": [489452, 519837, 551704, 585102, 599404, 570508, 521512, 471620, 420802, 369030],
               "editable": true
             }
           ],
@@ -1033,12 +1031,12 @@
                 {
                   "key": "taxable",
                   "title": "Taxable Component",
-                  "values": [400000, 440709, 484024, 530653, 580818, 0, 0, 0, 0, 0]
+                  "values": [400000, 440709, 484024, 530653, 580818, 611580, 598162, 561755, 521805, 478123]
                 },
                 {
                   "key": "taxFree",
                   "title": "Tax Free Component",
-                  "values": [60000, 60000, 60000, 60000, 60000, 0, 0, 0, 0, 0]
+                  "values": [60000, 60000, 60000, 60000, 60000, 60000, 55745, 49742, 43910, 38243]
                 }
               ]
             },
@@ -1091,17 +1089,17 @@
                 {
                   "key": "growth",
                   "title": "Growth",
-                  "values": [10410, 11320, 12295, 13343, 0, 0, 0, 0, 0, 0]
+                  "values": [10410, 11320, 12295, 13343, 14220, 13846, 12948, 11979, 10934, 9809]
                 },
                 {
                   "key": "income",
                   "title": "Income",
-                  "values": [14922, 16227, 17624, 19127, 0, 0, 0, 0, 0, 0]
+                  "values": [14922, 16227, 17624, 19127, 20384, 19848, 18560, 17171, 15673, 14061]
                 },
                 {
                   "key": "frankingCredits",
                   "title": "Franking Credits",
-                  "values": [1162, 1264, 1372, 1489, 0, 0, 0, 0, 0, 0]
+                  "values": [1162, 1264, 1372, 1489, 1587, 1546, 1445, 1337, 1220, 1095]
                 }
               ]
             },
@@ -1112,7 +1110,7 @@
                 {
                   "key": "investmentCosts",
                   "title": "Investment Costs",
-                  "values": [2300, 2503.545, 2720.12, 2953.265, null, 0, 0, 0, 0, 0]
+                  "values": [2300, 2503.545, 2720.12, 2953.265, 3204.09, 3357.9, 3269.53, 3057.485, 2828.57, 2581.835]
                 },
                 {
                   "key": "adviserFees",
@@ -1147,7 +1145,7 @@
                 {
                   "key": "pensionRollover",
                   "title": "Pension rollover",
-                  "values": [0, 0, 0, 0, 640818, 0, 0, 0, 0, 0],
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   "editable": true
                 }
               ]
@@ -1191,12 +1189,12 @@
                 {
                   "key": "taxOnInvestmentEarnings",
                   "title": "Tax on investment earnings",
-                  "values": [2812, 3058, 3321, 3605, 0, 0, 0, 0, 0, 0]
+                  "values": [2238.3, 2434.05, 2643.6, 2869.05, 3057.6, 2977.2, 2784, 2575.65, 2350.95, 2109.15]
                 },
                 {
                   "key": "taxOnContributions",
                   "title": "Tax on contributions",
-                  "values": [3210, 3322, 3535, 3759, 0, 0, 0, 0, 0, 0]
+                  "values": [3210, 3322.35, 3535.05, 3758.55, 0, 0, 0, 0, 0, 0]
                 },
                 {
                   "key": "contributionsSurcharge",
@@ -1218,19 +1216,19 @@
                 {
                   "key": "taxableComponent",
                   "title": "Taxable Component",
-                  "values": [440709, 484024, 530653, 580818, 0, 0, 0, 0, 0, 0]
+                  "values": [440709, 484024, 530653, 580818, 611580, 598162, 561755, 521805, 478123, 430514]
                 },
                 {
                   "key": "taxFreeComponent",
                   "title": "Tax Free Component",
-                  "values": [60000, 60000, 60000, 60000, 0, 0, 0, 0, 0, 0]
+                  "values": [60000, 60000, 60000, 60000, 60000, 55745, 49742, 43910, 38243, 32738]
                 }
               ]
             },
             {
               "key": "closingValuePV",
               "title": "Closing Value (PV)",
-              "values": [489452, 519837, 551704, 585102, 0, 0, 0, 0, 0, 0],
+              "values": [489452, 519837, 551704, 585102, 599404, 570508, 521512, 471620, 420802, 369030],
               "editable": true
             }
           ]
@@ -1242,7 +1240,7 @@
     "kpi": [
       {
         "title": "Pension balance",
-        "value": 377923,
+        "value": 0,
         "isIncrease": null,
         "delta": "0%",
         "subTitle": "In 10 years",
@@ -1250,9 +1248,9 @@
       },
       {
         "title": "Total retirement balance",
-        "value": 377923,
+        "value": 516367,
         "isIncrease": false,
-        "delta": "29%",
+        "delta": "4%",
         "subTitle": "In 10 years",
         "subValue": 66
       }
@@ -1262,35 +1260,30 @@
         "title": "Pension",
         "xAxis": ["19", "20", "21", "22", "23", "24", "25", "26", "27", "28"],
         "current": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        "proposed": [0, 0, 0, 0, 605883, 567693, 526034, 480681, 431395, 377923]
+        "proposed": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
       },
       {
         "title": "Retirement",
         "xAxis": ["19", "20", "21", "22", "23", "24", "25", "26", "27", "28"],
         "current": [400000, 425587, 452524, 481434, 512445, 532567, 553478, 575211, 593246, 535977],
-        "proposed": [500709, 544024, 590653, 640818, 605883, 567693, 526034, 480681, 431395, 377923]
+        "proposed": [460000, 500709, 544024, 590653, 640818, 671580, 653906, 611497, 565714, 516367]
       }
     ],
     "standardText": [
       {
         "text": "Pension funds will be invested in line with {{0}} risk profile",
-        "params": ["Balanced"]
+        "params": ["xx"]
       },
       {
         "text": "Product fees of {{0}} factored in pension value",
-        "params": ["1%"]
+        "params": ["xx%"]
       },
       {
-        "text": "Pension drawdowns set to meet required expenses"
+        "text": "Income set to meet required expenses of {{0}} per annum",
+        "params": ["$xx,xx"]
       }
     ],
-    "strategies": [
-      {
-        "check": true,
-        "sentence": "client.commenceAccount",
-        "values": ["CFS FirstChoice Wholesale Pension", "2019-07-09T12:00:00", 1, "full_value", [], ["meetExpenses"]]
-      }
-    ],
+    "strategies": [],
     "drawer": {
       "client": {
         "title": "Client Title of Drawer for Pension section",
@@ -1313,19 +1306,16 @@
             {
               "key": "openingValue",
               "title": "Opening Value",
-              "values": [0, 0, 0, 0, 0, 605883, 567693, 526034, 480681, 431395],
               "children": [
                 {
                   "key": "taxable",
                   "title": "Taxable Component",
-                  "values": [100.0, 100.0, 100.0, 100.0, 100.0, 90.64, 90.64, 90.64, 90.64, 90.64],
-                  "percent": true
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 },
                 {
                   "key": "taxFree",
                   "title": "Tax Free Component",
-                  "values": [0.0, 0.0, 0.0, 0.0, 0.0, 9.36, 9.36, 9.36, 9.36, 9.36],
-                  "percent": true
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 }
               ]
             },
@@ -1336,19 +1326,19 @@
                 {
                   "key": "minimumIncome",
                   "title": "Minimum Income",
-                  "values": [0, 0, 0, 0, 25630, 24240, 22710, 21040, 19230, 21570],
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   "editable": true
                 },
                 {
                   "key": "maximumIncome",
                   "title": "Maximum Income",
-                  "values": [0, 0, 0, 0, 640818, 605883, 567693, 526034, 480681, 431395],
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   "editable": true
                 },
                 {
                   "key": "electedIncome",
                   "title": "Elected Income",
-                  "values": [0, 0, 0, 0, 69173, 70420, 71696, 73000, 74334, 75698],
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   "editable": true
                 },
                 {
@@ -1371,7 +1361,7 @@
                 {
                   "key": "taxExemptIncomeAmount",
                   "title": "Tax Exempt Income Amount",
-                  "values": [0, 0, 0, 0, 69173, 70420, 71696, 73000, 74334, 75698],
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   "editable": true
                 }
               ]
@@ -1383,22 +1373,22 @@
                 {
                   "key": "growth",
                   "title": "Growth",
-                  "values": [0, 0, 0, 0, 34238, 32230, 30037, 27647, 25048, 22226]
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 },
                 {
                   "key": "income",
                   "title": "Income",
-                  "values": [0, 0, 0, 0, 19284, 18153, 16918, 15572, 14108, 12518]
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 },
                 {
                   "key": "imputationCredits",
                   "title": "Imputation Credits",
-                  "values": [0, 0, 0, 0, 13453, 12664, 11802, 10863, 9842, 8733]
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 },
                 {
                   "key": "lessEarningTax",
                   "title": "Less Earning Tax",
-                  "values": [0, 0, 0, 0, 1502, 1414, 1317, 1213, 1099, 975]
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 }
               ]
             },
@@ -1409,7 +1399,7 @@
                 {
                   "key": "investmentCosts",
                   "title": "Investment Costs",
-                  "values": [0, 0, 0, 0, 3204.09, 3029.415, 2838.465, 2630.17, 2403.405, 2156.975]
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 },
                 {
                   "key": "adviserFees",
@@ -1444,7 +1434,7 @@
                 {
                   "key": "rolloverFromAccumulation",
                   "title": "Rollover from Accumulation",
-                  "values": [0, 0, 0, 0, 640818, 0, 0, 0, 0, 0],
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   "editable": true
                 },
                 {
@@ -1458,26 +1448,23 @@
             {
               "key": "closingValue",
               "title": "Closing Value",
-              "values": [0, 0, 0, 0, 605883, 567693, 526034, 480681, 431395, 377923],
               "children": [
                 {
                   "key": "taxableComponent",
                   "title": "Taxable Component",
-                  "values": [100.0, 100.0, 100.0, 100.0, 90.64, 90.64, 90.64, 90.64, 90.64, 90.64],
-                  "percent": true
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 },
                 {
                   "key": "taxFreeComponent",
                   "title": "Tax Free Component",
-                  "values": [0.0, 0.0, 0.0, 0.0, 9.36, 9.36, 9.36, 9.36, 9.36, 9.36],
-                  "percent": true
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 }
               ]
             },
             {
               "key": "closingValuePV",
               "title": "Closing Value (PV)",
-              "values": [0, 0, 0, 0, 540767, 495290, 448626, 400730, 351556, 301055],
+              "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               "editable": true
             }
           ],
@@ -1485,19 +1472,16 @@
             {
               "key": "openingValue",
               "title": "Opening Value",
-              "values": [0, 0, 0, 0, 0, 605883, 567693, 526034, 480681, 431395],
               "children": [
                 {
                   "key": "taxable",
                   "title": "Taxable Component",
-                  "values": [100.0, 100.0, 100.0, 100.0, 100.0, 90.64, 90.64, 90.64, 90.64, 90.64],
-                  "percent": true
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 },
                 {
                   "key": "taxFree",
                   "title": "Tax Free Component",
-                  "values": [0.0, 0.0, 0.0, 0.0, 0.0, 9.36, 9.36, 9.36, 9.36, 9.36],
-                  "percent": true
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 }
               ]
             },
@@ -1508,19 +1492,19 @@
                 {
                   "key": "minimumIncome",
                   "title": "Minimum Income",
-                  "values": [0, 0, 0, 0, 25630, 24240, 22710, 21040, 19230, 21570],
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   "editable": true
                 },
                 {
                   "key": "maximumIncome",
                   "title": "Maximum Income",
-                  "values": [0, 0, 0, 0, 640818, 605883, 567693, 526034, 480681, 431395],
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   "editable": true
                 },
                 {
                   "key": "electedIncome",
                   "title": "Elected Income",
-                  "values": [0, 0, 0, 0, 69173, 70420, 71696, 73000, 74334, 75698],
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   "editable": true
                 },
                 {
@@ -1543,7 +1527,7 @@
                 {
                   "key": "taxExemptIncomeAmount",
                   "title": "Tax Exempt Income Amount",
-                  "values": [0, 0, 0, 0, 69173, 70420, 71696, 73000, 74334, 75698],
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   "editable": true
                 }
               ]
@@ -1555,22 +1539,22 @@
                 {
                   "key": "growth",
                   "title": "Growth",
-                  "values": [0, 0, 0, 0, 34238, 32230, 30037, 27647, 25048, 22226]
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 },
                 {
                   "key": "income",
                   "title": "Income",
-                  "values": [0, 0, 0, 0, 19284, 18153, 16918, 15572, 14108, 12518]
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 },
                 {
                   "key": "imputationCredits",
                   "title": "Imputation Credits",
-                  "values": [0, 0, 0, 0, 13453, 12664, 11802, 10863, 9842, 8733]
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 },
                 {
                   "key": "lessEarningTax",
                   "title": "Less Earning Tax",
-                  "values": [0, 0, 0, 0, 1502, 1414, 1317, 1213, 1099, 975]
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 }
               ]
             },
@@ -1581,7 +1565,7 @@
                 {
                   "key": "investmentCosts",
                   "title": "Investment Costs",
-                  "values": [0, 0, 0, 0, 3204.09, 3029.415, 2838.465, 2630.17, 2403.405, 2156.975]
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 },
                 {
                   "key": "adviserFees",
@@ -1616,7 +1600,7 @@
                 {
                   "key": "rolloverFromAccumulation",
                   "title": "Rollover from Accumulation",
-                  "values": [0, 0, 0, 0, 640818, 0, 0, 0, 0, 0],
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   "editable": true
                 },
                 {
@@ -1630,26 +1614,23 @@
             {
               "key": "closingValue",
               "title": "Closing Value",
-              "values": [0, 0, 0, 0, 605883, 567693, 526034, 480681, 431395, 377923],
               "children": [
                 {
                   "key": "taxableComponent",
                   "title": "Taxable Component",
-                  "values": [100.0, 100.0, 100.0, 100.0, 90.64, 90.64, 90.64, 90.64, 90.64, 90.64],
-                  "percent": true
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 },
                 {
                   "key": "taxFreeComponent",
                   "title": "Tax Free Component",
-                  "values": [0.0, 0.0, 0.0, 0.0, 9.36, 9.36, 9.36, 9.36, 9.36, 9.36],
-                  "percent": true
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 }
               ]
             },
             {
               "key": "closingValuePV",
               "title": "Closing Value (PV)",
-              "values": [0, 0, 0, 0, 540767, 495290, 448626, 400730, 351556, 301055],
+              "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               "editable": true
             }
           ]
@@ -1676,19 +1657,16 @@
             {
               "key": "openingValue",
               "title": "Opening Value",
-              "values": [0, 0, 0, 0, 0, 605883, 567693, 526034, 480681, 431395],
               "children": [
                 {
                   "key": "taxable",
                   "title": "Taxable Component",
-                  "values": [100.0, 100.0, 100.0, 100.0, 100.0, 90.64, 90.64, 90.64, 90.64, 90.64],
-                  "percent": true
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 },
                 {
                   "key": "taxFree",
                   "title": "Tax Free Component",
-                  "values": [0.0, 0.0, 0.0, 0.0, 0.0, 9.36, 9.36, 9.36, 9.36, 9.36],
-                  "percent": true
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 }
               ]
             },
@@ -1699,19 +1677,19 @@
                 {
                   "key": "minimumIncome",
                   "title": "Minimum Income",
-                  "values": [0, 0, 0, 0, 25630, 24240, 22710, 21040, 19230, 21570],
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   "editable": true
                 },
                 {
                   "key": "maximumIncome",
                   "title": "Maximum Income",
-                  "values": [0, 0, 0, 0, 640818, 605883, 567693, 526034, 480681, 431395],
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   "editable": true
                 },
                 {
                   "key": "electedIncome",
                   "title": "Elected Income",
-                  "values": [0, 0, 0, 0, 69173, 70420, 71696, 73000, 74334, 75698],
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   "editable": true
                 },
                 {
@@ -1734,7 +1712,7 @@
                 {
                   "key": "taxExemptIncomeAmount",
                   "title": "Tax Exempt Income Amount",
-                  "values": [0, 0, 0, 0, 69173, 70420, 71696, 73000, 74334, 75698],
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   "editable": true
                 }
               ]
@@ -1746,39 +1724,22 @@
                 {
                   "key": "growth",
                   "title": "Growth",
-                  "values": [0, 0, 0, 0, 34238, 32230, 30037, 27647, 25048, 22226]
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 },
                 {
                   "key": "income",
                   "title": "Income",
-                  "values": [0, 0, 0, 0, 19284, 18153, 16918, 15572, 14108, 12518]
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 },
                 {
                   "key": "imputationCredits",
                   "title": "Imputation Credits",
-                  "values": [0, 0, 0, 0, 13453, 12664, 11802, 10863, 9842, 8733]
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 },
                 {
                   "key": "lessEarningTax",
                   "title": "Less Earning Tax",
-                  "values": [0, 0, 0, 0, 1502, 1414, 1317, 1213, 1099, 975]
-                }
-              ]
-            },
-            {
-              "key": "ongoingCosts",
-              "title": "Ongoing Costs",
-              "children": [
-                {
-                  "key": "investmentCosts",
-                  "title": "Investment Costs",
-                  "values": [0, 0, 0, 0, 3204.09, 3029.415, 2838.465, 2630.17, 2403.405, 2156.975]
-                },
-                {
-                  "key": "adviserFees",
-                  "title": "Adviser Fees",
-                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                  "editable": true
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 }
               ]
             },
@@ -1807,7 +1768,7 @@
                 {
                   "key": "rolloverFromAccumulation",
                   "title": "Rollover from Accumulation",
-                  "values": [0, 0, 0, 0, 640818, 0, 0, 0, 0, 0],
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   "editable": true
                 },
                 {
@@ -1821,26 +1782,23 @@
             {
               "key": "closingValue",
               "title": "Closing Value",
-              "values": [0, 0, 0, 0, 605883, 567693, 526034, 480681, 431395, 377923],
               "children": [
                 {
                   "key": "taxableComponent",
                   "title": "Taxable Component",
-                  "values": [100.0, 100.0, 100.0, 100.0, 90.64, 90.64, 90.64, 90.64, 90.64, 90.64],
-                  "percent": true
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 },
                 {
                   "key": "taxFreeComponent",
                   "title": "Tax Free Component",
-                  "values": [0.0, 0.0, 0.0, 0.0, 9.36, 9.36, 9.36, 9.36, 9.36, 9.36],
-                  "percent": true
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 }
               ]
             },
             {
               "key": "closingValuePV",
               "title": "Closing Value (PV)",
-              "values": [0, 0, 0, 0, 540767, 495290, 448626, 400730, 351556, 301055],
+              "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               "editable": true
             }
           ],
@@ -1848,19 +1806,16 @@
             {
               "key": "openingValue",
               "title": "Opening Value",
-              "values": [0, 0, 0, 0, 0, 605883, 567693, 526034, 480681, 431395],
               "children": [
                 {
                   "key": "taxable",
                   "title": "Taxable Component",
-                  "values": [100.0, 100.0, 100.0, 100.0, 100.0, 90.64, 90.64, 90.64, 90.64, 90.64],
-                  "percent": true
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 },
                 {
                   "key": "taxFree",
                   "title": "Tax Free Component",
-                  "values": [0.0, 0.0, 0.0, 0.0, 0.0, 9.36, 9.36, 9.36, 9.36, 9.36],
-                  "percent": true
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 }
               ]
             },
@@ -1871,19 +1826,19 @@
                 {
                   "key": "minimumIncome",
                   "title": "Minimum Income",
-                  "values": [0, 0, 0, 0, 25630, 24240, 22710, 21040, 19230, 21570],
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   "editable": true
                 },
                 {
                   "key": "maximumIncome",
                   "title": "Maximum Income",
-                  "values": [0, 0, 0, 0, 640818, 605883, 567693, 526034, 480681, 431395],
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   "editable": true
                 },
                 {
                   "key": "electedIncome",
                   "title": "Elected Income",
-                  "values": [0, 0, 0, 0, 69173, 70420, 71696, 73000, 74334, 75698],
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   "editable": true
                 },
                 {
@@ -1906,7 +1861,7 @@
                 {
                   "key": "taxExemptIncomeAmount",
                   "title": "Tax Exempt Income Amount",
-                  "values": [0, 0, 0, 0, 69173, 70420, 71696, 73000, 74334, 75698],
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   "editable": true
                 }
               ]
@@ -1918,39 +1873,22 @@
                 {
                   "key": "growth",
                   "title": "Growth",
-                  "values": [0, 0, 0, 0, 34238, 32230, 30037, 27647, 25048, 22226]
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 },
                 {
                   "key": "income",
                   "title": "Income",
-                  "values": [0, 0, 0, 0, 19284, 18153, 16918, 15572, 14108, 12518]
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 },
                 {
                   "key": "imputationCredits",
                   "title": "Imputation Credits",
-                  "values": [0, 0, 0, 0, 13453, 12664, 11802, 10863, 9842, 8733]
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 },
                 {
                   "key": "lessEarningTax",
                   "title": "Less Earning Tax",
-                  "values": [0, 0, 0, 0, 1502, 1414, 1317, 1213, 1099, 975]
-                }
-              ]
-            },
-            {
-              "key": "ongoingCosts",
-              "title": "Ongoing Costs",
-              "children": [
-                {
-                  "key": "investmentCosts",
-                  "title": "Investment Costs",
-                  "values": [0, 0, 0, 0, 3204.09, 3029.415, 2838.465, 2630.17, 2403.405, 2156.975]
-                },
-                {
-                  "key": "adviserFees",
-                  "title": "Adviser Fees",
-                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                  "editable": true
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 }
               ]
             },
@@ -1979,7 +1917,7 @@
                 {
                   "key": "rolloverFromAccumulation",
                   "title": "Rollover from Accumulation",
-                  "values": [0, 0, 0, 0, 640818, 0, 0, 0, 0, 0],
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   "editable": true
                 },
                 {
@@ -1993,26 +1931,23 @@
             {
               "key": "closingValue",
               "title": "Closing Value",
-              "values": [0, 0, 0, 0, 605883, 567693, 526034, 480681, 431395, 377923],
               "children": [
                 {
                   "key": "taxableComponent",
                   "title": "Taxable Component",
-                  "values": [100.0, 100.0, 100.0, 100.0, 90.64, 90.64, 90.64, 90.64, 90.64, 90.64],
-                  "percent": true
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 },
                 {
                   "key": "taxFreeComponent",
                   "title": "Tax Free Component",
-                  "values": [0.0, 0.0, 0.0, 0.0, 9.36, 9.36, 9.36, 9.36, 9.36, 9.36],
-                  "percent": true
+                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 }
               ]
             },
             {
               "key": "closingValuePV",
               "title": "Closing Value (PV)",
-              "values": [0, 0, 0, 0, 540767, 495290, 448626, 400730, 351556, 301055],
+              "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               "editable": true
             }
           ]
@@ -2024,9 +1959,9 @@
     "kpi": [
       {
         "title": "Investments balance",
-        "value": 116190,
+        "value": 92979,
         "isIncrease": true,
-        "delta": "37%",
+        "delta": "9.4%",
         "subTitle": "In 10 years",
         "subValue": 66
       }
@@ -2036,7 +1971,7 @@
         "title": "Investments (Non Super)",
         "xAxis": ["19", "20", "21", "22", "23", "24", "25", "26", "27", "28"],
         "current": [52725, 55599, 58629, 61824, 65193, 68746, 72493, 76444, 80610, 85003],
-        "proposed": [73500, 77210, 81142, 85309, 89729, 94416, 99387, 104660, 110255, 116190]
+        "proposed": [73500, 77210, 81142, 85309, 89729, 72547, 77190, 82130, 87387, 92979]
       }
     ],
     "standardText": [
@@ -2080,7 +2015,7 @@
             {
               "key": "openingValue",
               "title": "Opening Value",
-              "values": [70000, 73500, 77210, 81142, 85309, 89729, 94416, 99387, 104660, 110255]
+              "values": [70000, 73500, 77210, 81142, 85309, 89729, 72547, 77190, 82130, 87387]
             },
             {
               "key": "investments",
@@ -2124,7 +2059,7 @@
                 {
                   "key": "income",
                   "title": "Income",
-                  "values": [2185, 2311, 2443, 2585, 2734, 2894, 3063, 3243, 3434, 3637]
+                  "values": [2185, 2311, 2443, 2585, 2734, 2571, 2735, 2910, 3096, 3294]
                 },
                 {
                   "key": "imputationCredits",
@@ -2155,7 +2090,7 @@
                 {
                   "key": "investmentCosts",
                   "title": "Investment Costs",
-                  "values": [700, 735, 772.1, 811.42, 853.09, 897.29, 944.16, 993.87, 1046.6, 1102.55]
+                  "values": [700, 735, 772.1, 811.42, 853.09, 897.29, 725.47, 771.9, 821.3, 873.87]
                 },
                 {
                   "key": "adviserFees",
@@ -2178,7 +2113,7 @@
                 {
                   "key": "cashLumpSumCashflowDeficit",
                   "title": "Cash Lump Sum - Cashflow Deficit",
-                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                  "values": [0, 0, 0, 0, 0, 21546, 0, 0, 0, 0],
                   "editable": true
                 }
               ]
@@ -2186,12 +2121,12 @@
             {
               "key": "closingValue",
               "title": "Closing Value",
-              "values": [73500, 77210, 81142, 85309, 89729, 94416, 99387, 104660, 110255, 116190]
+              "values": [73500, 77210, 81142, 85309, 89729, 94093, 77190, 82130, 87387, 92979]
             },
             {
               "key": "closingValuePV",
               "title": "Closing Value (PV)",
-              "values": [71848, 73776, 75790, 77893, 80086, 82374, 84762, 87252, 89850, 92558],
+              "values": [71848, 73776, 75790, 77893, 80086, 63294, 65831, 68470, 71214, 74068],
               "editable": true
             },
             {
@@ -2209,7 +2144,7 @@
             {
               "key": "openingValue",
               "title": "Opening Value",
-              "values": [70000, 73500, 77210, 81142, 85309, 89729, 94416, 99387, 104660, 110255]
+              "values": [70000, 73500, 77210, 81142, 85309, 89729, 72547, 77190, 82130, 87387]
             },
             {
               "key": "investments",
@@ -2253,7 +2188,7 @@
                 {
                   "key": "income",
                   "title": "Income",
-                  "values": [2185, 2311, 2443, 2585, 2734, 2894, 3063, 3243, 3434, 3637]
+                  "values": [2185, 2311, 2443, 2585, 2734, 2571, 2735, 2910, 3096, 3294]
                 },
                 {
                   "key": "imputationCredits",
@@ -2284,7 +2219,7 @@
                 {
                   "key": "investmentCosts",
                   "title": "Investment Costs",
-                  "values": [700, 735, 772.1, 811.42, 853.09, 897.29, 944.16, 993.87, 1046.6, 1102.55]
+                  "values": [700, 735, 772.1, 811.42, 853.09, 897.29, 725.47, 771.9, 821.3, 873.87]
                 },
                 {
                   "key": "adviserFees",
@@ -2307,7 +2242,7 @@
                 {
                   "key": "cashLumpSumCashflowDeficit",
                   "title": "Cash Lump Sum - Cashflow Deficit",
-                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                  "values": [0, 0, 0, 0, 0, 21546, 0, 0, 0, 0],
                   "editable": true
                 }
               ]
@@ -2315,12 +2250,12 @@
             {
               "key": "closingValue",
               "title": "Closing Value",
-              "values": [73500, 77210, 81142, 85309, 89729, 94416, 99387, 104660, 110255, 116190]
+              "values": [73500, 77210, 81142, 85309, 89729, 94093, 77190, 82130, 87387, 92979]
             },
             {
               "key": "closingValuePV",
               "title": "Closing Value (PV)",
-              "values": [71848, 73776, 75790, 77893, 80086, 82374, 84762, 87252, 89850, 92558],
+              "values": [71848, 73776, 75790, 77893, 80086, 63294, 65831, 68470, 71214, 74068],
               "editable": true
             },
             {
@@ -2357,7 +2292,7 @@
             {
               "key": "openingValue",
               "title": "Opening Value",
-              "values": [70000, 73500, 77210, 81142, 85309, 89729, 94416, 99387, 104660, 110255]
+              "values": [70000, 73500, 77210, 81142, 85309, 89729, 72547, 77190, 82130, 87387]
             },
             {
               "key": "investments",
@@ -2401,7 +2336,7 @@
                 {
                   "key": "income",
                   "title": "Income",
-                  "values": [2185, 2311, 2443, 2585, 2734, 2894, 3063, 3243, 3434, 3637]
+                  "values": [2185, 2311, 2443, 2585, 2734, 2571, 2735, 2910, 3096, 3294]
                 },
                 {
                   "key": "imputationCredits",
@@ -2432,7 +2367,7 @@
                 {
                   "key": "investmentCosts",
                   "title": "Investment Costs",
-                  "values": [700, 735, 772.1, 811.42, 853.09, 897.29, 944.16, 993.87, 1046.6, 1102.55]
+                  "values": [700, 735, 772.1, 811.42, 853.09, 897.29, 725.47, 771.9, 821.3, 873.87]
                 },
                 {
                   "key": "adviserFees",
@@ -2455,7 +2390,7 @@
                 {
                   "key": "cashLumpSumCashflowDeficit",
                   "title": "Cash Lump Sum - Cashflow Deficit",
-                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                  "values": [0, 0, 0, 0, 0, 21546, 0, 0, 0, 0],
                   "editable": true
                 }
               ]
@@ -2463,12 +2398,12 @@
             {
               "key": "closingValue",
               "title": "Closing Value",
-              "values": [73500, 77210, 81142, 85309, 89729, 94416, 99387, 104660, 110255, 116190]
+              "values": [73500, 77210, 81142, 85309, 89729, 94093, 77190, 82130, 87387, 92979]
             },
             {
               "key": "closingValuePV",
               "title": "Closing Value (PV)",
-              "values": [71848, 73776, 75790, 77893, 80086, 82374, 84762, 87252, 89850, 92558],
+              "values": [71848, 73776, 75790, 77893, 80086, 63294, 65831, 68470, 71214, 74068],
               "editable": true
             },
             {
@@ -2486,7 +2421,7 @@
             {
               "key": "openingValue",
               "title": "Opening Value",
-              "values": [70000, 73500, 77210, 81142, 85309, 89729, 94416, 99387, 104660, 110255]
+              "values": [70000, 73500, 77210, 81142, 85309, 89729, 72547, 77190, 82130, 87387]
             },
             {
               "key": "investments",
@@ -2530,7 +2465,7 @@
                 {
                   "key": "income",
                   "title": "Income",
-                  "values": [2185, 2311, 2443, 2585, 2734, 2894, 3063, 3243, 3434, 3637]
+                  "values": [2185, 2311, 2443, 2585, 2734, 2571, 2735, 2910, 3096, 3294]
                 },
                 {
                   "key": "imputationCredits",
@@ -2561,7 +2496,7 @@
                 {
                   "key": "investmentCosts",
                   "title": "Investment Costs",
-                  "values": [700, 735, 772.1, 811.42, 853.09, 897.29, 944.16, 993.87, 1046.6, 1102.55]
+                  "values": [700, 735, 772.1, 811.42, 853.09, 897.29, 725.47, 771.9, 821.3, 873.87]
                 },
                 {
                   "key": "adviserFees",
@@ -2584,7 +2519,7 @@
                 {
                   "key": "cashLumpSumCashflowDeficit",
                   "title": "Cash Lump Sum - Cashflow Deficit",
-                  "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                  "values": [0, 0, 0, 0, 0, 21546, 0, 0, 0, 0],
                   "editable": true
                 }
               ]
@@ -2592,12 +2527,12 @@
             {
               "key": "closingValue",
               "title": "Closing Value",
-              "values": [73500, 77210, 81142, 85309, 89729, 94416, 99387, 104660, 110255, 116190]
+              "values": [73500, 77210, 81142, 85309, 89729, 94093, 77190, 82130, 87387, 92979]
             },
             {
               "key": "closingValuePV",
               "title": "Closing Value (PV)",
-              "values": [71848, 73776, 75790, 77893, 80086, 82374, 84762, 87252, 89850, 92558],
+              "values": [71848, 73776, 75790, 77893, 80086, 63294, 65831, 68470, 71214, 74068],
               "editable": true
             },
             {
@@ -2642,7 +2577,7 @@
         "proposed": [230000, 226535, 211684, 195117, 176701, 153815, 146541, 138903, 130883, 122463]
       },
       {
-        "title": "Accumulated interest Cost",
+        "title": "Accumulated interest",
         "xAxis": ["19", "20", "21", "22", "23", "24", "25", "26", "27", "28"],
         "current": [14524, 28822, 42883, 56694, 70244, 83519, 96506, 109190, 121557, 133589],
         "proposed": [11135, 21563, 31202, 39964, 47636, 54962, 61924, 68504, 74683, 80441]
@@ -2651,7 +2586,7 @@
     "standardText": [
       {
         "text": "Interest rate of {{0}} assumed for {{1}}, with a maximum period of {{2}}",
-        "params": ["5%", "Primary Residence mortgage", "30 years"]
+        "params": ["5%", "Primary Residense mortgage", "30 years"]
       }
     ],
     "strategies": [

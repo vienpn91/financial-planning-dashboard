@@ -191,7 +191,7 @@
   "liabilities": [
     {
       "id": 1,
-      "description": "Primary Residence mortgage",
+      "description": "Primary Residense mortgage",
       "type": "nonDeductible",
       "owner": "client",
       "value": 300000,

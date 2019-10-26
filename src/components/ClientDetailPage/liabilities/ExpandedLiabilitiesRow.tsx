@@ -192,7 +192,7 @@ const ExpandedLiabilitiesRow = (props: {
             expandedField={true}
           />
         </PrefixSingleGroup>
-        <ExpandedAssetsText> with an associate asset of</ExpandedAssetsText>
+        <ExpandedAssetsText> with an associated asset of</ExpandedAssetsText>
         <ExpandedSelectGroup>
           <EditableCell
             record={record}
