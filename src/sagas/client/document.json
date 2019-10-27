@@ -558,7 +558,7 @@
           "dataIndex": "cost"
         },
         {
-          "title": "Calculation of amount received by us",
+          "title": "Amount received by us",
           "dataIndex": "amount"
         },
         {
