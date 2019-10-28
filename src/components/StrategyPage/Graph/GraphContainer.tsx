@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { isFunction, isBoolean } from 'lodash';
-import { Icon } from 'antd';
+import { isFunction, isBoolean, isNumber } from 'lodash';
 import { connect } from 'react-redux';
 import { Bar, HorizontalBar, Line } from 'react-chartjs-2';
 import classNames from 'classnames';
@@ -50,7 +49,15 @@ const defaultOptions = {
       '-apple-system, BlinkMacSystemFont, \'Segoe UI\', \'Roboto\', \'Oxygen\', \'Ubuntu\', \'Cantarell\', ' +
       '\'Fira Sans\', \'Droid Sans\', \'Helvetica Neue\', sans-serif',
     intersect: false,
+    mode: 'label',
     callbacks: {
+      title(
+        tooltipItem: Array<{ label: string }>,
+      ) {
+        const label = tooltipItem[0].label;
+        const numberLabel = parseInt(label, 10);
+        return (!isNaN(numberLabel) && isNumber(numberLabel)) ? '20' + label : label;
+      },
       label(
         tooltipItem: { datasetIndex: React.ReactText; yLabel: number },
         data: { datasets: { [x: string]: { label: string } } },
@@ -136,7 +143,6 @@ const GraphContainer = (props: GraphProps) => {
     <GraphWrapper className={className}>
       {name && (
         <GraphTitle>
-          <Icon type="info-circle" theme="filled" />
           {name}
         </GraphTitle>
       )}

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Table } from 'antd';
+import { Popconfirm, Table } from 'antd';
 import { get, map, isString, debounce, last } from 'lodash';
 import { FieldArray, FieldArrayRenderProps } from 'formik';
 import cn from 'classnames';
@@ -204,11 +204,12 @@ class CardDetails extends React.PureComponent<CardDetailsProps> {
                     const field = `${arrayHelpers.name}.${index}.isOverwrite`;
                     setFieldValue(field, !row.isOverwrite);
                   };
+                  const warningMessage = row.isOverwrite ? 'Remove override?' : 'Really override?';
 
                   return (
-                    <div onClick={overwriteRow} style={{ cursor: 'pointer' }}>
-                      Overwrite
-                    </div>
+                    <Popconfirm title={warningMessage} onConfirm={overwriteRow}>
+                      <span style={{ cursor: 'pointer' }}>Override</span>
+                    </Popconfirm>
                   );
                 },
               });
@@ -242,9 +243,7 @@ class CardDetails extends React.PureComponent<CardDetailsProps> {
 
             return (
               <>
-                {showAddButton && (
-                  <AddAdvice header={record.header} onAdd={this.onAdd(arrayHelpers)} />
-                )}
+                {showAddButton && <AddAdvice header={record.header} onAdd={this.onAdd(arrayHelpers)} />}
 
                 <Table
                   className={cn('table-general documents-table')}

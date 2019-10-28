@@ -28,8 +28,8 @@ export const ClientInfo = styled.div.attrs({
   display: flex;
   align-items: center;
   cursor: pointer;
-  .ant-avatar-string{
-    transform: scale(1) translateX(-50%)!important;
+  .ant-avatar-string {
+    transform: scale(1) translateX(-50%) !important;
   }
 `;
 
@@ -37,13 +37,27 @@ export const SiderCollapsible = styled(Sider).attrs({
   className: 'client-side-collapsible dumoamay',
 })<{ collapsed?: boolean }>`
   &.ant-layout-sider-collapsed {
+    flex: 0 0 60px !important;
+    max-width: 60px !important;
+    min-width: 60px !important;
+    width: 60px !important;
+    .IconSider {
+      right: 23px;
+    }
+    .anticon-search {
+      display: none;
+    }
     input {
-      display: none
+      display: none;
+    }
+    .birtday-name-fixed {
+      left: 10px;
     }
     .btn-sidebar {
       border-radius: 100%;
-      width: 60px;
-      height: 60px;
+      width: 40px;
+      height: 40px;
+      padding: 0 10px;
       transition: all ease 200ms;
       span {
         display: none;
@@ -62,7 +76,7 @@ export const SiderCollapsible = styled(Sider).attrs({
       .ant-menu-submenu-title {
         padding: 0px 5px !important;
       }
-    }   
+    }
   }
 `;
 // ant-menu-submenu-open ant-menu-submenu-active
@@ -78,21 +92,24 @@ export const FullName = styled.span.attrs({
 export const ClientSide = styled(Menu).attrs({
   className: 'client-side-modify',
 })`
-  height: calc(100vh - 90px);
-  overflow-y: overlay;
+  height: calc(100vh - 160px);
+  overflow-y: scroll;
   overflow-x: hidden;
   border-right: none !important;
+  &.ant-menu-inline-collapsed {
+    width: 60px;
+  }
 `;
 
 export const ClientRoot = styled(SubMenu).attrs({
   className: 'client-item-root',
 })`
   & > .ant-menu-submenu-title {
-    height: 60px!important;
+    height: 60px !important;
     background: transparent;
     line-height: 60px !important;
-    padding-left: 10px !important;;
-    padding-right: 20px !important;;
+    padding-left: 10px !important;
+    padding-right: 20px !important;
     margin: 0 auto !important;
     box-shadow: none;
     border-radius: 0;
@@ -120,7 +137,7 @@ export const ClientItem = styled(SubMenu).attrs({
     position: relative;
     &:hover {
       /* background-color: #e0e3e8; */
-      span{
+      span {
         color: #515c83;
         font-weight: 600;
       }
@@ -175,10 +192,11 @@ export const DateItem = styled.span`
   padding-left: 7px;
   color: #697396;
   display: flex;
+  padding-right: 25px;
   align-items: center;
   .anticon {
-    font-size: 18px!important;
-    margin-right: 20px!important;
+    font-size: 18px !important;
+    margin-right: 20px !important;
   }
 `;
 
@@ -217,8 +235,8 @@ export const SkeletonClient = styled(Skeleton).attrs({
 
 export const InputSearch = styled(Input)`
   border: none;
-  color: #515C83;
-  &:focus{
+  color: #515c83;
+  &:focus {
     outline: none;
     border: none;
     box-shadow: none;
@@ -234,7 +252,7 @@ export const TopSearch = styled.div<{ border?: boolean }>`
   max-width: 350px;
   position: relative;
   height: 46px;
-  box-shadow: 0 2px 4px 0px rgba(0,0,0,0.23);
+  box-shadow: 0 2px 4px 0px rgba(0, 0, 0, 0.23);
   .anticon {
     position: absolute;
     right: 10px;

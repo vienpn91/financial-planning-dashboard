@@ -1,10 +1,15 @@
 import React, { useEffect } from 'react';
 import numeral from 'numeral';
+import moment from 'moment';
+import { dropRight, find, get, map, random, findIndex, filter } from 'lodash';
+
 import { FullyCustomized } from '../Drawer/styled';
 import EditCell, { EditCellType } from '../Drawer/EditCell';
-import { dropRight, find, get, map, random, findIndex, filter } from 'lodash';
 import { getOptions, StrategyItemProps } from './StrategyItem';
 import { periodTypes } from '../../../enums/strategySentences';
+import { notification } from 'antd';
+
+const defaultTime = '2023-07-09T12:00:00';
 
 const CustomizedPension = (
   props: StrategyItemProps & { name: string; context: string; sentenceKey: string; defaultFullValue: number },
@@ -78,6 +83,29 @@ const CustomizedPension = (
   useEffect(() => {
     setPensionIncome(get(strategy, 'values[5][0]'));
   }, [strategy]);
+  const onChange = (val: any, fieldName: string) => setFieldValue(fieldName, val);
+  const onChangeTime = (val: any, fieldName: string) => {
+    const shouldWarning = moment(defaultTime).isAfter(val);
+
+    setFieldValue(fieldName, val);
+    setFieldValue(`${strategyType}.strategies[${strategyIndex}].invalid`, shouldWarning);
+    if (shouldWarning) {
+      const dob = context === 'client' ? client.dob : partner.dob;
+      const aged = moment(val).diff(dob, 'year');
+
+      notification.warning({
+        message: 'Warning',
+        description: (
+          <>
+            <p>Condition of release not met.</p>
+            <p>
+              Client aged <b>{aged}</b> and <b>employed</b>
+            </p>
+          </>
+        ),
+      });
+    }
+  };
 
   return (
     <FullyCustomized>
@@ -98,7 +126,7 @@ const CustomizedPension = (
         name={`${strategyType}.strategies[${strategyIndex}].values[1]`}
         type={EditCellType.date}
         value={get(strategy, 'values[1]')}
-        onChange={(val, fieldName) => setFieldValue(fieldName, val)}
+        onChange={onChangeTime}
       />
       <span>{isCustomisedRollover ? 'as a' : 'from your'}</span>
       <EditCell
@@ -117,7 +145,7 @@ const CustomizedPension = (
             name={`${strategyType}.strategies[${strategyIndex}].values[3]`}
             value={get(strategy, 'values[3]')}
             type={EditCellType.dropdownFreeText}
-            onChange={(val, fieldName) => setFieldValue(fieldName, val)}
+            onChange={onChange}
             defaultFullValue={fullValue}
           />
         )}
@@ -162,7 +190,7 @@ const CustomizedPension = (
                 name={`${strategyType}.strategies[${strategyIndex}].values[5][1]`}
                 value={get(strategy, 'values[5][1]')}
                 type={EditCellType.number}
-                onChange={(val, fieldName) => setFieldValue(fieldName, val)}
+                onChange={onChange}
                 dollar={true}
                 calculateWidth={true}
               />
@@ -171,7 +199,7 @@ const CustomizedPension = (
             <EditCell
               name={`${strategyType}.strategies[${strategyIndex}].values[6]`}
               value={get(strategy, 'values[6]')}
-              onChange={(val, fieldName) => setFieldValue(fieldName, val)}
+              onChange={onChange}
               type={EditCellType.select}
               options={periodTypes}
             />

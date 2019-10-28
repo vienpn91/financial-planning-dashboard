@@ -1,13 +1,14 @@
 import React, { PureComponent } from 'react';
 import { Button, Icon } from 'antd';
+import { bindActionCreators, Dispatch } from 'redux';
+import { FormikProps } from 'formik';
+import { connect } from 'react-redux';
+import { isFunction, get } from 'lodash';
+
 import ExpandedBasicInformationRow from './ExpandedBasicInformationRow';
 import { ActionTableGeneral, HeaderTitleTable, TableEntryContainer, TextTitle } from '../../../pages/client/styled';
 import GeneralTable from '../GeneralTable';
-import { FormikProps } from 'formik';
-import { isFunction } from 'lodash';
-import { connect } from 'react-redux';
 import { StandardAction } from '../../../reducers/reducerTypes';
-import { bindActionCreators, Dispatch } from 'redux';
 import { ClientActions, UpdateEmpStatus, UpdateMaritalStatusAction } from '../../../reducers/client';
 import { empStatusOptions, genderOptions, maritalStatusOptions } from '../../../enums/options';
 
@@ -113,24 +114,32 @@ class BasicInformationTable extends PureComponent<BasicInformationProps> {
       const newData = {
         key: 1,
         description: 'Partner',
-        firstName: 'Susane',
-        lastName: 'Diaz',
-        dob: '1978-05-27T00:00:00',
-        empStatus: 'unemployed',
-        gender: 'female',
+        firstName: '',
+        lastName: get(data, [0, 'lastName'], ''),
+        dob: '',
+        empStatus: 'employed',
+        gender: '',
         maritalStatus: 'married',
         expandable: {
-          riskProfile: 'highGrowth',
+          riskProfile: 'balanced',
           hasPrivateHealthInsurance: true,
-          jointRiskProfile: 'defensive',
-          retirementYear: null,
+          jointRiskProfile: 'balanced',
+          retirementYear: 2023,
           isSmoker: false,
         },
       };
 
-      // update formik
       if (isFunction(addRow)) {
         addRow(newData);
+        setTimeout(() => {
+          const nodeList: NodeListOf<HTMLElement> = document.querySelectorAll(
+            `.basicInformation-table tr[data-row-key="${newData.key}"] input.ant-input`,
+          );
+          if (nodeList && nodeList[1] && nodeList[1].focus) {
+            // First name input
+            nodeList[1].focus();
+          }
+        }, 450);
       }
     }
   }

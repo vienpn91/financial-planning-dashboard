@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Icon, Popconfirm, Table } from 'antd';
-import { get, find, map } from 'lodash';
+import { get, find, map, take, last } from 'lodash';
 import cn from 'classnames';
 import { useDrop } from 'react-dnd';
 import uuid from 'uuid';
@@ -15,6 +15,7 @@ import { EditCellType } from '../../components/StrategyPage/Drawer/EditCell';
 import { proposedChoices } from '../../enums/proposedChoices';
 import { formatString, Param, Text } from '../../components/StrategyPage/StandardText';
 import { createEvent } from '../../utils/GA';
+import { listenerCount } from 'cluster';
 
 interface ProposedProductState {
   loading: boolean;
@@ -72,6 +73,10 @@ interface ProposedProductProps extends ProductTable {
   tabKey: string;
   dataList: ProductOpt[];
 }
+
+const newText = '{{0}}, add a new investment product';
+const retainText = '{{0}}, retain your existing product {{1}}';
+const rebalanceText = '{{0}}, rebalance your existing product {{1}}';
 
 class ProposedProduct extends PureComponent<ProposedProductProps, ProposedProductState> {
   public state = {
@@ -219,7 +224,7 @@ class ProposedProduct extends PureComponent<ProposedProductProps, ProposedProduc
     const { fieldArrayRenderProps, client } = this.props;
     const { count } = this.state;
     let newProduct: { [key: string]: any } = {};
-    const clientName = get(client, 'clientName');
+    const clientName = get(client, 'name');
 
     if (productId) {
       const product = find(this.getCurrentProducts(), ['id', productId]);
@@ -231,7 +236,7 @@ class ProposedProduct extends PureComponent<ProposedProductProps, ProposedProduc
             ...product,
             links: [product],
             note: {
-              text: `{{0}}, retain your existing product {{1}}`,
+              text: retainText,
               params: [clientName, productDescription],
             },
           };
@@ -242,7 +247,7 @@ class ProposedProduct extends PureComponent<ProposedProductProps, ProposedProduc
             ...product,
             links: [product],
             note: {
-              text: `{{0}}, rebalance your existing product {{1}}`,
+              text: rebalanceText,
               params: [clientName, productDescription],
             },
           };
@@ -257,14 +262,14 @@ class ProposedProduct extends PureComponent<ProposedProductProps, ProposedProduc
         description: '',
         value: null,
         note: {
-          text: `{{0}}, add a new investment product`,
+          text: newText,
           params: [clientName],
         },
       };
       this.cursorGoToProductField();
     }
 
-    createEvent('investment', 'create_proposed', action, get(client, 'clientId'));
+    createEvent('investment', 'create_proposed', action, get(client, 'id'));
     fieldArrayRenderProps.unshift({ ...newProduct, key: count, id: uuid() });
     this.increaseCount();
   }
@@ -295,11 +300,11 @@ class ProposedProduct extends PureComponent<ProposedProductProps, ProposedProduc
     const isLastRow = rowIndex === dataList.length - 1;
     if (record && isLastRow && !record.id && value && record[remainingFieldName]) {
       const id = uuid();
-      const clientName = get(client, 'clientName');
+      const clientName = get(client, 'name');
 
       fieldArrayRenderProps.form.setFieldValue(`${rowName}.id`, id);
       fieldArrayRenderProps.form.setFieldValue(`${rowName}.note`, {
-        text: `{{0}}, add a new investment product`,
+        text: newText,
         params: [clientName],
       });
       this.increaseCount();
@@ -309,7 +314,7 @@ class ProposedProduct extends PureComponent<ProposedProductProps, ProposedProduc
       }, 100);
     }
     if (isRemove) {
-      createEvent('investment', 'unlink', undefined, get(client, 'clientId'));
+      createEvent('investment', 'unlink', undefined, get(client, 'id'));
     }
   }
 
@@ -319,7 +324,15 @@ class ProposedProduct extends PureComponent<ProposedProductProps, ProposedProduc
     const fieldName = `${rowName}.${name}`;
 
     fieldArrayRenderProps.form.setFieldValue(fieldName, value);
-    createEvent('investment', 'link', undefined, get(client, 'clientId'));
+    const listProducts = map(value, 'description');
+    const head = take(listProducts, listProducts.length - 1);
+    const lastProduct = last(listProducts);
+
+    fieldArrayRenderProps.form.setFieldValue(`${rowName}.note`, {
+      text: `{{0}}, replace your existing product${head.length ? 's' : ''} {{1}}`,
+      params: [get(client, 'name'), head.length ? `${head.join(', ')} and ${lastProduct}` : lastProduct],
+    });
+    createEvent('investment', 'link', undefined, get(client, 'id'));
   }
 
   public getColumns = () => {
