@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { notification } from 'antd';
 import numeral from 'numeral';
 import moment from 'moment';
 import { dropRight, find, get, map, random, findIndex, filter } from 'lodash';
@@ -7,12 +8,17 @@ import { FullyCustomized } from '../Drawer/styled';
 import EditCell, { EditCellType } from '../Drawer/EditCell';
 import { getOptions, StrategyItemProps } from './StrategyItem';
 import { periodTypes } from '../../../enums/strategySentences';
-import { notification } from 'antd';
 
 const defaultTime = '2023-07-09T12:00:00';
 
 const CustomizedPension = (
-  props: StrategyItemProps & { name: string; context: string; sentenceKey: string; defaultFullValue: number },
+  props: StrategyItemProps & {
+    name: string;
+    context: string;
+    sentenceKey: string;
+    defaultFullValue: number;
+    setLoading: () => void;
+  },
 ) => {
   const {
     name,
@@ -25,6 +31,7 @@ const CustomizedPension = (
     strategyType,
     defaultFullValue,
     setFieldValue,
+    setLoading,
   } = props;
   const id = strategy.id || `${strategyIndex}-superannuation`;
   const pensionIncomeOptions = map(getOptions(context, { client, partner }, 'pensionIncome'), (option) => ({
@@ -85,6 +92,8 @@ const CustomizedPension = (
   }, [strategy]);
   const onChange = (val: any, fieldName: string) => setFieldValue(fieldName, val);
   const onChangeTime = (val: any, fieldName: string) => {
+    // fade out this strategy item for 3s
+    setLoading();
     const shouldWarning = moment(defaultTime).isAfter(val);
 
     setFieldValue(fieldName, val);
@@ -97,7 +106,7 @@ const CustomizedPension = (
         message: 'Warning',
         description: (
           <>
-            <p>Condition of release not met.</p>
+            <span>Condition of release not met.</span>
             <p>
               Client aged <b>{aged}</b> and <b>employed</b>
             </p>
@@ -121,14 +130,14 @@ const CustomizedPension = (
           quotationMark: true,
         }}
       />
-      in
+      {' '}in
       <EditCell
         name={`${strategyType}.strategies[${strategyIndex}].values[1]`}
         type={EditCellType.date}
         value={get(strategy, 'values[1]')}
         onChange={onChangeTime}
       />
-      <span>{isCustomisedRollover ? 'as a' : 'from your'}</span>
+      <span>{isCustomisedRollover ? 'as a' : ' from your '}</span>
       <EditCell
         name={`${strategyType}.strategies[${strategyIndex}].values[2]`}
         value={superValue}
@@ -137,7 +146,7 @@ const CustomizedPension = (
         onChange={updateFullValue}
       />
       <span>
-        with{' '}
+        {' '}with{' '}
         {isCustomisedRollover ? (
           <b>${numeral(fullValue).format('0,0')}</b>
         ) : (
@@ -195,7 +204,7 @@ const CustomizedPension = (
                 calculateWidth={true}
               />
             )}
-            per
+            per{' '}
             <EditCell
               name={`${strategyType}.strategies[${strategyIndex}].values[6]`}
               value={get(strategy, 'values[6]')}

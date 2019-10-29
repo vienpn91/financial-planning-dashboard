@@ -4,7 +4,7 @@ import { FieldArrayRenderProps, FieldArray } from 'formik';
 import { Table } from 'antd';
 import uuid from 'uuid';
 
-import { Record, Row, StepProps } from '../DocumentsPage';
+import { Record, Row, StepProps } from '../PresentationPage';
 import { TitleStep } from '../styled';
 import { EditCellType } from '../../StrategyPage/Drawer/EditCell';
 import GoalEdit from './GoalEdit';
@@ -112,10 +112,10 @@ class GoalTable extends React.Component<GoalTableProps> {
               label: record.header,
               children: map(record.table.data, (row: Row) => {
                 if (row.id && row.value && row.value.trim() !== '') {
-                  return {
+                  return ({
                     value: row.id.toString(),
                     label: row.value,
-                  };
+                  });
                 }
                 return null;
               }).filter((r) => !!r),

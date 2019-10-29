@@ -164,7 +164,6 @@ export const DrawerTableRows = styled.div<{ noBorder?: boolean; maximumWidth?: b
     `}
   .edit-cell {
     width: 69px;
-    margin-right: 1px;
     border: 1px solid;
     border-color: transparent;
     &:hover {
@@ -206,7 +205,7 @@ export const DrawerTableRows = styled.div<{ noBorder?: boolean; maximumWidth?: b
     &-input {
       text-align: right;
       font-weight: 600;
-      padding: 0 5px;
+      padding: 0 2px;
       color: #4e5d86;
     }
   }
@@ -241,8 +240,8 @@ export const DrawerTableRows = styled.div<{ noBorder?: boolean; maximumWidth?: b
     .ant-calendar-picker {
       .ant-calendar-picker-input {
         border-color: transparent;
-        width: 78px;
-        padding: 4px;
+        width: 62px;
+        padding: 0px;
         text-align: center;
         &:hover {
           border-color: #dcdcdc;
@@ -285,7 +284,8 @@ export const DrawerTableRows = styled.div<{ noBorder?: boolean; maximumWidth?: b
         &__rendered {
           line-height: 30px;
           margin: 0px;
-          padding: 0 2px;
+          // padding: 0 2px;
+          padding: 0;
         }
       }
     }
@@ -464,6 +464,11 @@ export const QuotationMark = styled.span<{ hideQuotationMark?: boolean }>`
       css`
         display: none;
       `}
+  }
+  .ant-input {
+    &.edit-cell.text {
+      padding: 0 5px;
+    }
   }
 `;
 
