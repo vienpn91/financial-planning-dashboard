@@ -105,7 +105,7 @@ const ExpandedBasicInformationRow = (
                 disabledYear={true}
               />
             </ExpandedSelectGroup>
-            <ExpandedAssetsText>({retirementAge})</ExpandedAssetsText>
+            <ExpandedAssetsText>(Age {retirementAge})</ExpandedAssetsText>
           </ExpandedAssetsInlineGroups>
 
           <ExpandedAssetsInlineGroups>
