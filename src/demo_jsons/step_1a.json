@@ -47,7 +47,7 @@
       "refId": 0,
       "description": "Primary Residence",
       "type": "lifestyle",
-      "owner": "client",
+      "owner": "joint",
       "value": 750000,
       "investment": "primaryResidence",
       "from": {
@@ -124,7 +124,7 @@
     },
     {
       "refId": 3,
-      "description": "Home Content",
+      "description": "Home Contents",
       "type": "lifestyle",
       "owner": "client",
       "value": 10000,
@@ -145,7 +145,7 @@
     },
     {
       "refId": 4,
-      "description": "Motor Vehicle",
+      "description": "Motor Vehicles",
       "type": "lifestyle",
       "owner": "client",
       "value": 30000,
@@ -191,9 +191,9 @@
   "liabilities": [
     {
       "id": 1,
-      "description": "Primary Residence mortgage",
+      "description": "Primary Residence Mortgage",
       "type": "nonDeductible",
-      "owner": "client",
+      "owner": "joint",
       "value": 300000,
       "interest": 5,
       "from": {

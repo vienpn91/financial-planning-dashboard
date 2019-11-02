@@ -191,7 +191,7 @@ const ExpandedAssetsRow = (props: {
       return (
         <ExpandedAssetsGroups>
           <ExpandedAssetsInlineGroups>
-            <ExpandedAssetsText>Rate terms of the (Direct Investment) are:</ExpandedAssetsText>
+            <ExpandedAssetsText>Returns of the (Direct Investment) are:</ExpandedAssetsText>
             <PrefixSingleGroup percent={true}>
               <EditableCell
                 record={record}
@@ -373,7 +373,7 @@ const ExpandedAssetsRow = (props: {
       return (
         <ExpandedAssetsGroups>
           <ExpandedAssetsInlineGroups>
-            <ExpandedAssetsText>Rate terms of the (Super) are:</ExpandedAssetsText>
+            <ExpandedAssetsText>Returns of the (Super) are:</ExpandedAssetsText>
             <PrefixSingleGroup percent={true}>
               <EditableCell
                 record={record}
@@ -565,7 +565,7 @@ const ExpandedAssetsRow = (props: {
       return (
         <ExpandedAssetsGroups>
           <ExpandedAssetsInlineGroups>
-            <ExpandedAssetsText>Rate terms of the (Pension) are:</ExpandedAssetsText>
+            <ExpandedAssetsText>Returns of the (Pension) are:</ExpandedAssetsText>
             <PrefixSingleGroup percent={true}>
               <EditableCell
                 record={record}

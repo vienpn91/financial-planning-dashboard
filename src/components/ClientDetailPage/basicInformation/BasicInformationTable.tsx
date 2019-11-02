@@ -71,7 +71,7 @@ class BasicInformationTable extends PureComponent<BasicInformationProps> {
       options: genderOptions,
     },
     {
-      title: 'Marital State',
+      title: 'Marital Status',
       dataIndex: 'maritalStatus',
       type: 'select',
       width: 'calc(9% - 20px)',
