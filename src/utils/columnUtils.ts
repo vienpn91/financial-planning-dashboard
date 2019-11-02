@@ -87,12 +87,12 @@ function loadInvestmentOptions(record: { type: string }) {
         { value: 'property', label: 'Property' },
         { value: 'growthAlternatives', label: 'Growth Alternatives' },
         { value: 'defensiveAlternatives', label: 'Defensive Alternatives' },
-        { value: 'preservationProfile', label: 'Preservation profile' },
-        { value: 'defensiveProfile', label: 'Defensive profile' },
-        { value: 'moderateProfile', label: 'Moderate profile' },
-        { value: 'balancedProfile', label: 'Balanced profile' },
-        { value: 'growthProfile', label: 'Growth profile' },
-        { value: 'highGrowthProfile', label: 'High Growth profile' },
+        { value: 'preservationProfile', label: 'Preservation Profile' },
+        { value: 'defensiveProfile', label: 'Defensive Profile' },
+        { value: 'moderateProfile', label: 'Moderate Profile' },
+        { value: 'balancedProfile', label: 'Balanced Profile' },
+        { value: 'growthProfile', label: 'Growth Profile' },
+        { value: 'highGrowthProfile', label: 'High Growth Profile' },
       ];
     }
     case ASSET_TYPES.super:

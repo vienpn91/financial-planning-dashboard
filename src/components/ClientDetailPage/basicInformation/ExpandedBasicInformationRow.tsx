@@ -58,7 +58,7 @@ const ExpandedBasicInformationRow = (
                 expandedField={true}
               />
             </ExpandedSelectGroup>
-            <ExpandedAssetsText>and they</ExpandedAssetsText>
+            <ExpandedAssetsText>and</ExpandedAssetsText>
             <ExpandedSelectGroup>
               <EditableCell
                 record={record}
@@ -91,7 +91,7 @@ const ExpandedBasicInformationRow = (
           </ExpandedAssetsInlineGroups>
 
           <ExpandedAssetsInlineGroups>
-            <ExpandedAssetsText>The client will retire in</ExpandedAssetsText>
+            <ExpandedAssetsText>Client will retire in</ExpandedAssetsText>
             <ExpandedSelectGroup>
               <EditableCell
                 record={record}
@@ -109,7 +109,7 @@ const ExpandedBasicInformationRow = (
           </ExpandedAssetsInlineGroups>
 
           <ExpandedAssetsInlineGroups>
-            <ExpandedAssetsText>The client</ExpandedAssetsText>
+            <ExpandedAssetsText>Client</ExpandedAssetsText>
             <ExpandedSelectGroup>
               <EditableCell
                 record={record}
@@ -144,7 +144,7 @@ const ExpandedBasicInformationRow = (
               expandedField={true}
             />
           </ExpandedSelectGroup>
-          <ExpandedAssetsText>profile and they</ExpandedAssetsText>
+          <ExpandedAssetsText>profile and</ExpandedAssetsText>
           <ExpandedSelectGroup>
             <EditableCell
               record={record}
@@ -177,7 +177,7 @@ const ExpandedBasicInformationRow = (
         </ExpandedAssetsInlineGroups>
 
         <ExpandedAssetsInlineGroups>
-          <ExpandedAssetsText>The partner will retire in</ExpandedAssetsText>
+          <ExpandedAssetsText>Partner will retire in</ExpandedAssetsText>
           <ExpandedSelectGroup>
             <EditableCell
               record={record}
@@ -195,7 +195,7 @@ const ExpandedBasicInformationRow = (
         </ExpandedAssetsInlineGroups>
 
         <ExpandedAssetsInlineGroups>
-          <ExpandedAssetsText>The partner</ExpandedAssetsText>
+          <ExpandedAssetsText>Partner</ExpandedAssetsText>
           <ExpandedSelectGroup>
             <EditableCell
               record={record}
