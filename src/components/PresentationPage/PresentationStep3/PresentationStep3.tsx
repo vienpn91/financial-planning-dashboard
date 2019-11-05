@@ -265,10 +265,16 @@ export const chartsDataResources = {
 };
 
 const PresentationStep3 = (props: FormikPartProps) => {
+  const [retirementYrs, setRetirementYrs] = useState(60);
   const [chartsData, setChartsData] = useState(chartsDataResources['60']);
   const onChangeRetirementYear = (retirementYear: SliderValue) => {
     if (retirementYear === 65) {
+      setRetirementYrs(65);
       setChartsData(chartsDataResources['65']);
+    }
+    if (retirementYear === 60) {
+      setRetirementYrs(60);
+      setChartsData(chartsDataResources['60']);
     }
   };
 
@@ -280,7 +286,7 @@ const PresentationStep3 = (props: FormikPartProps) => {
           <EventsBlock />
         </StepPositionLeft>
         <StepPositionRight>
-          <ChartsBlock chartsData={chartsData} />
+          <ChartsBlock chartsData={chartsData} retirementYear={retirementYrs} />
         </StepPositionRight>
       </StepCurrentPosition>
     </StepWrapper>

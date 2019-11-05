@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const EventWrapper = styled.div`
   margin-bottom: 20px;
@@ -46,7 +46,7 @@ export const ValueWrapper = styled.div<{ marks?: boolean }>`
   display: flex;
   align-items: center;
   .ant-slider {
-    margin: ${(props) => (props.marks ? '14px 6px 10px' : '14px 0 10px')};
+    margin: ${props => (props.marks ? '14px 6px 10px' : '14px 0 10px')};
   }
 `;
 export const ValueStyled = styled.div`
@@ -72,10 +72,17 @@ export const ChartBlock = styled.div`
   text-align: center;
   border-radius: 5px;
   padding: 30px 15px;
+  ${(props: { hidden?: boolean }) =>
+    props.hidden &&
+    css`
+      visibility: hidden;
+    `};
+
   &:hover {
     cursor: pointer;
   }
 `;
+
 export const ChartBlockLeft = styled(ChartBlock)`
   margin-right: 10px;
   margin-bottom: 20px;
@@ -85,7 +92,13 @@ export const ChartBlockRight = styled(ChartBlock)`
   margin-left: 10px;
   margin-bottom: 20px;
 `;
+
+export const ChartBlockDrillDown = styled(ChartBlock)`
+  margin-top: 10px;
+`;
+
 export const DrilldownChartWrapper = styled.div`
+  height: 100%;
   .anticon.anticon-arrow-left {
     font-size: 24px;
     padding: 8px;
@@ -94,7 +107,9 @@ export const DrilldownChartWrapper = styled.div`
 export const DrilldownHeader = styled.div`
   display: flex;
 `;
-export const DrilldownContent = styled.div``;
+export const DrilldownContent = styled.div`
+  height: 100%;
+`;
 export const ButtonGroup = styled(ChartsBlockWrapper)``;
 export const DrilldownButton = styled.button`
   min-width: 180px;
@@ -106,8 +121,9 @@ export const DrilldownButton = styled.button`
   border-radius: 4px;
   outline: none;
 
-  &:hover, &.active {
+  &:hover,
+  &.active {
     cursor: pointer;
-    border-color: #03A9F4;
+    border-color: #03a9f4;
   }
 `;
