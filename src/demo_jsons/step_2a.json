@@ -1608,7 +1608,7 @@
     "standardText": [
       {
         "text": "Interest rate of {{0}} assumed for {{1}}, with a maximum period of {{2}}",
-        "params": ["5%", "Primary Residence mortgage", "30 years"]
+        "params": ["5%", "Primary Residence Mortgage", "30 years"]
       }
     ],
     "strategies": [
