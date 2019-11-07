@@ -14,7 +14,7 @@ const configNetAssets = {
       label: 'Current',
       fill: false,
       lineTension: 0.2,
-      borderColor: '#FF5722', // #FF5722
+      borderColor: '#FF5722',
     },
     {
       dataIndex: 'proposed',
@@ -182,7 +182,7 @@ const ChartsBlock = (props: { chartsData: any; retirementYear?: number; hasLifeE
     calmPVConfigFinal = calmPVConfigWithoutSalarySarisfy;
   }
 
-  if (!(checkList as any)['Salary Sacrifice'] && !(checkList as any)['Insurance'] && hasLifeEvent) {
+  if (!(checkList as any)['Salary Sacrifice'] && !(checkList as any).Insurance && hasLifeEvent) {
     calmPVConfigFinal = calmPVConfigWithoutSalarySarisfyNInsuranceWithLifeEvent;
   }
 

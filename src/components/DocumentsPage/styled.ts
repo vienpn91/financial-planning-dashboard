@@ -98,7 +98,7 @@ export const BtnDoneDocument = styled(BtnStepDocument).attrs({
 `;
 
 export const StepWrapper = styled.section`
-  padding: 0 32px;
+  padding: 0 33px;
   .documents-table {
     margin-bottom: 50px;
     .ant-table-thead {

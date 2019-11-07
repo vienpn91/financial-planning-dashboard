@@ -26,6 +26,5 @@ export const CarouselWrapper = styled.section.attrs({
 export const CarouselItem = styled.div.attrs({
   className: 'carousel-item',
 })`
-  padding: 0 20px 0px 30px;
   height: 500px;
 `;

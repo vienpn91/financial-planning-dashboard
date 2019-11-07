@@ -136,14 +136,14 @@ export const DrawerTableWrapper = styled.div<{ productOptimizer?: boolean }>`
   }
   .cell {
     display: inline-block;
-    width: 72px;
+    width: 75px;
     padding: 0 2px;
     border: 1px solid transparent;
     text-align: right;
     color: #4e5d86;
     font-size: 13px;
     ${(props) => props.productOptimizer && css `
-      min-width: 80px;
+      min-width: 85px;
       text-align: right;
       flex: 1 1 calc(100% / 3);
     `}
@@ -165,7 +165,7 @@ export const DrawerTableRows = styled.div<{ noBorder?: boolean; maximumWidth?: b
       width: 100%;
     `}
   .edit-cell {
-    width: 72px;
+    width: 75px;
     border: 1px solid;
     border-color: transparent;
     &:hover {
@@ -238,7 +238,7 @@ export const DrawerTableRows = styled.div<{ noBorder?: boolean; maximumWidth?: b
       font-weight: 600;
       font-size: 13px;
       color: #4e5d86;
-      padding: 0 5px;
+      padding: 0 2px;
     }
     .ant-calendar-picker {
       .ant-calendar-picker-input {

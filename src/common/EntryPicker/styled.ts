@@ -6,6 +6,7 @@ export const EntryPickerTable = styled.section`
   display: flex;
   &.picker-year{
     width: 42px;
+    margin-top: -2px;
     &:hover {
       width: 60px;
     }

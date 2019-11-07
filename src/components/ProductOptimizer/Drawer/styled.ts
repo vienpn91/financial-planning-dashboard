@@ -18,12 +18,20 @@ export const FeesWrapper = styled(AssetsAllocationWrapper)`
   }
   .table-entry-container {
     margin-top: 0;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     padding-top: 0;
+  }
+  .horizontal-scrollable{
+    .drawer-fund-table {
+      .ant-table-body {
+        height: 280px;
+      }
+    }
   }
   .drawer-fund-table {
     .ant-table-body {
-      height: 265px;
+      min-height: 110px;
+      height: auto
     }
     .ant-table-tbody {
       tr {

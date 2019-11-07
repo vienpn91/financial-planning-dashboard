@@ -82,6 +82,10 @@ export const SiderCollapsible = styled(Sider).attrs({
       }
     }
   }
+  .ant-layout-sider-children{
+    position: fixed;
+    width: inherit;
+  }
 `;
 // ant-menu-submenu-open ant-menu-submenu-active
 // aria-owns="sub"
@@ -97,6 +101,10 @@ export const ClientSide = styled(Menu).attrs({
   className: 'client-side-modify',
 })`
   border-right: 0px !important;
+  height: calc(100vh - 125px);
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding-top: 10px!important;
   &.ant-menu-inline-collapsed {
     width: 0px;
     visibility: hidden;
@@ -251,7 +259,6 @@ export const InputSearch = styled(Input)`
 export const TopSearch = styled.div<{ border?: boolean, className?: string }>`
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
   border: none;
   padding-left: 30px;
   max-width: 350px;

@@ -32,6 +32,8 @@ const getDefaultOptions = (config?: any) => ({
     display: false,
   },
   tooltips: {
+    bodyFontStyle: 'normal',
+    titleFontStyle: 'normal',
     titleFontFamily: `-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
       'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif`,
     bodyFontFamily: `-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',

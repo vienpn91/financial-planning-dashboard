@@ -98,7 +98,13 @@ export const ChartBlockRight = styled(ChartBlock)`
   margin-bottom: 20px;
 `;
 
-export const ChartBlockDrillDown = styled(ChartBlock)`
+export const ChartBlockDrillDown = styled(ChartBlock).attrs({
+  className: 'chart-block-drill-down'
+})`
+  width: 100%;
+  flex: 0 0 100%;
+  max-width: 100%;
+  margin-right: 0px;
   margin-top: 10px;
 `;
 
@@ -129,7 +135,7 @@ export const DrilldownButton = styled.button`
   min-width: 180px;
   text-align: center;
   padding: 5px 20px;
-  margin: 0 20px;
+  margin: 0 15px;
   font-weight: 600;
   border: 1px solid #dedede;
   border-radius: 4px;

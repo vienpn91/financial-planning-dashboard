@@ -73,7 +73,9 @@ export const FundBlock = styled.div`
   }
 `;
 
-export const HorizontalScrollable = styled.div`
+export const HorizontalScrollable = styled.div.attrs({
+  className: 'horizontal-scrollable'
+})`
   flex: 1;
   flex-wrap: nowrap;
   flex-direction: row;

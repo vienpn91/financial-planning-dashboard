@@ -8,7 +8,9 @@ export const LayoutMain = styled(Layout)`
     right: 10px;
   }
 `;
-export const MainLayoutContent = styled(Layout)`
+export const MainLayoutContent = styled(Layout).attrs({
+  className: 'main-layout-content-home'
+})`
   border-left: 1px solid #e8e8e8;
   .topmenu{
     padding-left: 45px;

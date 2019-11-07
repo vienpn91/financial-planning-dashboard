@@ -33,9 +33,9 @@ const TableHeader = ({ showTitle }: TableHeaderProps) => (
   <DrawerTableHeader productOptimizer>
     {showTitle && <DrawerRowSubTitle size={'large'}>Asset Type</DrawerRowSubTitle>}
     <div style={{ flex: 1, display: 'flex' }}>
-      <span className={'cell'}>Proposed %</span>
-      <span className={'cell'}>Balanced %</span>
-      <span className={'cell'}>Variance %</span>
+      <span className={'cell cell-asset-allocation'}>Proposed %</span>
+      <span className={'cell cell-asset-allocation'}>Balanced %</span>
+      <span className={'cell cell-asset-allocation'}>Variance %</span>
     </div>
   </DrawerTableHeader>
 );
