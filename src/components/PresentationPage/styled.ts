@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 import { Button } from 'antd';
 
 export const DocumentsWrapper = styled.section`
+  color: #4e5b86;
   padding: 20px;
   .header-step-document {
     margin-bottom: 65px;
@@ -98,7 +99,6 @@ export const BtnDoneDocument = styled(BtnStepDocument).attrs({
 `;
 
 export const StepWrapper = styled.section`
-  padding: 0 32px;
   .documents-table {
     margin-bottom: 50px;
     .ant-table-thead {

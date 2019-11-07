@@ -7,9 +7,11 @@ import numeral from 'numeral';
 
 import { GraphCard, GraphTitle, GraphWrapper, GraphGroup } from '../styled';
 import { RootState } from '../../../reducers/reducerTypes';
+import { GRAPH_FREQUENCY } from '../../../enums/timer';
 
 export enum GraphType {
   Line,
+  Doughnut,
   Area,
   Bar,
   HorizontalBar,
@@ -22,10 +24,10 @@ interface GraphProps {
     labels?: any[];
     datasets: object[];
   };
-  dataList?: Array<{
+  dataList?: {
     labels?: any[];
     datasets: object[];
-  }>;
+  }[];
   processingDraw: boolean;
   options?: object;
   className?: string;
@@ -34,29 +36,39 @@ interface GraphProps {
 }
 
 const defaultOptions = {
+  scales: {
+    yAxes: [
+      {
+        ticks: {
+          // Include a dollar sign in the ticks
+          callback: (value: any, index: any, values: any) => {
+            return numeral(Math.round(value * 100) / 100).format('$0,0.[00]');
+          },
+        },
+      },
+    ],
+  },
   maintainAspectRatio: false,
   legend: {
     display: false,
   },
   tooltips: {
     titleFontFamily:
-      '-apple-system, BlinkMacSystemFont, \'Segoe UI\', \'Roboto\', \'Oxygen\', \'Ubuntu\', \'Cantarell\', ' +
-      '\'Fira Sans\', \'Droid Sans\', \'Helvetica Neue\', sans-serif',
+      "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', " +
+      "'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
     bodyFontFamily:
-      '-apple-system, BlinkMacSystemFont, \'Segoe UI\', \'Roboto\', \'Oxygen\', \'Ubuntu\', \'Cantarell\', ' +
-      '\'Fira Sans\', \'Droid Sans\', \'Helvetica Neue\', sans-serif',
+      "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', " +
+      "'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
     footerFontFamily:
-      '-apple-system, BlinkMacSystemFont, \'Segoe UI\', \'Roboto\', \'Oxygen\', \'Ubuntu\', \'Cantarell\', ' +
-      '\'Fira Sans\', \'Droid Sans\', \'Helvetica Neue\', sans-serif',
+      "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', " +
+      "'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
     intersect: false,
     mode: 'label',
     callbacks: {
-      title(
-        tooltipItem: Array<{ label: string }>,
-      ) {
+      title(tooltipItem: { label: string }[]) {
         const label = tooltipItem[0].label;
         const numberLabel = parseInt(label, 10);
-        return (!isNaN(numberLabel) && isNumber(numberLabel)) ? '20' + label : label;
+        return !isNaN(numberLabel) && isNumber(numberLabel) ? '20' + label : label;
       },
       label(
         tooltipItem: { datasetIndex: React.ReactText; yLabel: number },
@@ -82,8 +94,8 @@ const GraphContainer = (props: GraphProps) => {
   const [listOfData, setListOfData] = useState(defaultListOfData);
   useEffect(() => {
     const id = setInterval(() => {
-      setActiveIndex((index) => (index + 1 >= listOfData.length ? 0 : index + 1));
-    }, 6000);
+      setActiveIndex(index => (index + 1 >= listOfData.length ? 0 : index + 1));
+    }, GRAPH_FREQUENCY);
     return () => clearInterval(id);
   }, []);
   const redraw = isBoolean(redrawProp) ? redrawProp : true;
@@ -91,7 +103,7 @@ const GraphContainer = (props: GraphProps) => {
   // redraw graph
   useEffect(() => {
     setListOfData([...defaultListOfData]);
-  }, [data]);
+  }, [data, dataList]);
 
   const renderGraph = (graphData: any, index: number) => {
     switch (type) {
@@ -141,11 +153,7 @@ const GraphContainer = (props: GraphProps) => {
 
   return (
     <GraphWrapper className={className}>
-      {name && (
-        <GraphTitle>
-          {name}
-        </GraphTitle>
-      )}
+      {name && <GraphTitle>{name}</GraphTitle>}
       <GraphGroup onClick={onGraphClick} className={classNames({ hasOnClick })}>
         {listOfData.map(renderGraph)}
       </GraphGroup>

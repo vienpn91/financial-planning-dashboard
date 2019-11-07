@@ -1,11 +1,18 @@
 import React, { useMemo, useState } from 'react';
 import { Formik, FormikActions, FormikContext, FormikProps } from 'formik';
-import { get, isEmpty } from 'lodash';
-import { Steps, message, Spin } from 'antd';
+import { get } from 'lodash';
+import { Steps, message } from 'antd';
+import { createGlobalStyle } from 'styled-components';
 
-import PresentationStep1 from './DocumentsStep1/PresentationStep1';
-
-import { DocumentsWrapper, StepActionDocument } from './styled';
+import { DocumentsWrapper } from './styled';
+import PresentationStep1 from './PresentationStep1/PresentationStep1';
+import PresentationStep2 from './PresentationStep2/PresentationStep2';
+import PresentationStep3 from './PresentationStep3/PresentationStep3';
+import PresentationStep4 from './PresentationStep4/PresentationStep4';
+import PresentationStep5 from './PresentationStep5/PresentationStep5';
+import PresentationStep6 from './PresentationStep6/PresentationStep6';
+import PresentationStep7 from './PresentationStep7/PresentationStep7';
+import PresentationStep8 from './PresentationStep8/PresentationStep8';
 
 const { Step } = Steps;
 const steps = [
@@ -16,37 +23,37 @@ const steps = [
   },
   {
     title: 'Step 2',
-    content: PresentationStep1,
+    content: PresentationStep2,
     description: 'Current Position',
   },
   {
     title: 'Step 3',
-    content: PresentationStep1,
+    content: PresentationStep3,
     description: 'Current Projection',
   },
   {
     title: 'Step 4',
-    content: PresentationStep1,
+    content: PresentationStep4,
     description: 'Strategies',
   },
   {
     title: 'Step 5',
-    content: PresentationStep1,
+    content: PresentationStep5,
     description: 'Proposed Projection',
   },
   {
     title: 'Step 6',
-    content: PresentationStep1,
+    content: PresentationStep6,
     description: 'Investment Product Comparison',
   },
   {
     title: 'Step 7',
-    content: PresentationStep1,
+    content: PresentationStep7,
     description: 'Fees',
   },
   {
     title: 'Step 8',
-    content: PresentationStep1,
+    content: PresentationStep8,
     description: 'Thank you and Goodbye',
   },
 ];
@@ -108,7 +115,17 @@ export interface DocumentsPageProps {
   className?: string;
 }
 
-export const SwitcherContext = React.createContext<{
+const CrispClientStyled = createGlobalStyle<{ hideCrisp?: boolean }>`
+  ${(props) =>
+    props.hideCrisp &&
+    `
+    .crisp-client {
+      display: none;
+    }
+  `}
+`;
+
+export const PresentationSwitcherContext = React.createContext<{
   switcherContext: boolean;
   setSwitcherContext: React.Dispatch<React.SetStateAction<boolean>>;
 } | null>(null);
@@ -134,7 +151,7 @@ const PresentationPage = (props: DocumentsPageProps) => {
 
     return (
       <>
-        <SwitcherContext.Provider value={value}>
+        <PresentationSwitcherContext.Provider value={value}>
           <Steps
             size="small"
             current={currentStep}
@@ -153,7 +170,7 @@ const PresentationPage = (props: DocumentsPageProps) => {
           </Steps>
           {/* <div className="steps-content">{!loading && !isEmpty(formikProps.values) ? <StepComponent /> : <Spin />}</div> */}
           <div className="steps-content">{<StepComponent />}</div>
-        </SwitcherContext.Provider>
+        </PresentationSwitcherContext.Provider>
       </>
     );
   };
@@ -169,6 +186,7 @@ const PresentationPage = (props: DocumentsPageProps) => {
         enableReinitialize={true}
         render={renderForm}
       />
+      <CrispClientStyled hideCrisp={true} />
     </DocumentsWrapper>
   );
 };

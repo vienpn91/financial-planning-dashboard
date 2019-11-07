@@ -3,6 +3,7 @@ import { Button, Icon, Popconfirm } from 'antd';
 import { FormikProps } from 'formik';
 import { isFunction } from 'lodash';
 import { ActionTableGeneral, HeaderTitleTable, TableEntryContainer, TextTitle } from '../../../pages/client/styled';
+import { CURRENT_COLUMN_WIDTH } from '../../../enums/currents';
 import GeneralTable from '../GeneralTable';
 import {
   from1Options,
@@ -38,13 +39,13 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
     {
       title: 'Description',
       dataIndex: 'description',
-      width: 'calc(23% - 20px)',
+      width: CURRENT_COLUMN_WIDTH.Description,
     },
     {
       title: 'Type',
       dataIndex: 'type',
       key: '1',
-      width: 'calc(8% - 20px)',
+      width: CURRENT_COLUMN_WIDTH.Type,
       type: 'select',
       options: expenditureTypeOptions,
       sorter: sortAlphabetical('type'),
@@ -53,24 +54,25 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
       title: 'Owner',
       dataIndex: 'owner',
       key: '2',
-      width: '9%',
+      width: CURRENT_COLUMN_WIDTH.Owner,
       type: 'select',
       options: ownerWithJointOptions,
       sorter: sortAlphabetical('owner'),
     },
     {
-      title: 'Value/$',
+      title: 'Value',
       dataIndex: 'value',
       key: '3',
-      width: '14%',
+      width: CURRENT_COLUMN_WIDTH.Value,
       type: 'number',
+      sign: 'dollar',
       className: 'text-align-right',
     },
     {
       title: 'Indexation',
       dataIndex: 'indexation',
       key: '4',
-      width: '26%',
+      width: CURRENT_COLUMN_WIDTH.Indexation,
       type: 'select',
       options: indexationOptions,
     },
@@ -79,7 +81,7 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
       dataIndex: 'from',
       key: '5',
       type: 'date',
-      width: '10%',
+      width: CURRENT_COLUMN_WIDTH.From,
       pickerType: 'custom',
       options: from1Options,
     },
@@ -87,7 +89,7 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
       title: 'To',
       dataIndex: 'to',
       key: '6',
-      width: '10%',
+      width: CURRENT_COLUMN_WIDTH.To,
       type: 'date',
       pickerType: 'custom',
       options: to1Options,
@@ -97,7 +99,7 @@ class ExpenditureTable extends PureComponent<ExpenditureTableProps> {
       key: 'operation',
       className: 'text-align-center',
       editable: false,
-      width: 28,
+      width: CURRENT_COLUMN_WIDTH.Delete,
     },
   ];
 

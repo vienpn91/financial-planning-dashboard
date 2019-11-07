@@ -25,14 +25,14 @@ export const TableEntryContainer = styled.section.attrs({
     .ant-table-thead {
       tr {
         th:first-child {
-          padding-left: 20px;
+          padding-left: 45px;
         }
       }
     }
     .ant-table-tbody {
       tr {
         td:first-child {
-          padding-left: 20px;
+          padding-left: 45px;
         }
       }
     }
@@ -78,7 +78,7 @@ export const TableEntryContainer = styled.section.attrs({
           .edit-cell {
             font-weight: 600;
             .ant-input-number-input {
-              font-weight: 600;
+              font-weight: 600!important;
             }
             &.ant-input-number-disabled {
               background-color: #fff;

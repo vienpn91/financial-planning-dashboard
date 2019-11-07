@@ -6,3 +6,26 @@ export enum CurrentTypes {
   Liabilities = 'liabilities',
   Insurance = 'insurance',
 }
+
+export enum CURRENT_COLUMN_WIDTH {
+  Default = 'calc(70% / 6)',
+  Dynamic = 'auto',
+  DOB = '15%',
+  firstName = '12%',
+  lastName = '12%',
+  empStatus = '12%',
+  gender = '12%',
+  maritalStatus= '12%',
+  Indexation = '17%',
+  To = '13%',
+  Double = '15%',
+  DescriptionIcon = '12%',
+  Description = '15%',
+  Type = '12%',
+  Owner = '8%',
+  Value = '10%',
+  Investment = '15%',
+  Provider = '12%',
+  From = '10%',
+  Delete = '40px',
+}
