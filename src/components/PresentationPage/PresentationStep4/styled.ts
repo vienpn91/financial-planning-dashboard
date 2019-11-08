@@ -68,6 +68,7 @@ export const CardItemStyled = styled(Card).attrs({
 
 export const TemplateWrapper = styled.div`
   padding: 0 32px;
+  padding-right: 45px;
   .ant-skeleton.ant-skeleton-with-avatar {
     margin-bottom: 50px;
     .ant-skeleton-header {
@@ -113,6 +114,7 @@ export const TemplateHeader = styled.div`
     }
     &--content {
       font-size: 16px;
+      padding-left: 10px;
     }
   }
 `;
@@ -124,4 +126,10 @@ export const TemplateContent = styled.div`
       margin-bottom: 15px;
     }
   }
+`;
+
+export const TemplateImg = styled.img`
+  width: 120px;
+  height: 120px;
+  margin-left: 25px;
 `;
