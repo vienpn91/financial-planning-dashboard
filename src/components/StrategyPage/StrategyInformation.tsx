@@ -35,6 +35,7 @@ interface StrategyInformationProps {
   openDrawer: (tabActive: string) => OpenDrawerAction;
   fetchDrawerData: (type: string) => FetchDrawerDataAction;
   fetchDrawerSuccess: (drawerData: DrawerPayload) => FetchDrawerDataSuccessAction;
+  tableProcessing: string | null;
 }
 
 const generalConfig = {
@@ -94,7 +95,7 @@ class StrategyInformation extends PureComponent<FormikPartProps & StrategyInform
   }
 
   public render() {
-    const { type } = this.props;
+    const { type, tableProcessing } = this.props;
     const kpi = get(this.props, ['formik', 'values', type, 'kpi'], []);
     const graph = get(this.props, ['formik', 'values', type, 'graph'], []);
     const standardText = get(this.props, ['formik', 'values', type, 'standardText'], []);
@@ -130,7 +131,12 @@ class StrategyInformation extends PureComponent<FormikPartProps & StrategyInform
                 <GraphContainer type={GraphType.Line} dataList={basicGraphData} onGraphClick={this.onGraphClick} />
               </Col>
             </Row>
-            <StandardText data={standardText} />
+            <StandardText
+              data={standardText}
+              tableProcessing={tableProcessing}
+              loading={tableProcessing === StrategyTypes.Pensions}
+              className="pension-text-item"
+            />
           </StrategyInfoWrapper>
         );
       }

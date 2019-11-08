@@ -96,7 +96,6 @@ export const TemplateWrapper = styled.div`
     animation-duration: 0.5s;
     animation-fill-mode: both;
   }
-
 `;
 
 export const TemplateHeader = styled.div`
