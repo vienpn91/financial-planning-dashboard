@@ -5,6 +5,23 @@ import { ChartBlockDrillDown } from './styled';
 import GraphPresentation from '../../StrategyPage/Graph/GraphPresentation';
 import { GraphType } from '../../StrategyPage/Graph/GraphContainer';
 
+const ticks = {
+  min: 0,
+  callback: (value: any, index: any, values: any) => {
+    return numeral(Math.round(value * 100) / 100).format('$0,0.[00]');
+  },
+};
+
+const startWithZeroConfig = {
+  scales: {
+    yAxes: [
+      {
+        ticks,
+      },
+    ],
+  },
+};
+
 const NetAssetsDrilldownCharts = (props: {
   retirementYear: number;
   currentDrilldown: number;
@@ -41,6 +58,7 @@ const NetAssetsDrilldownCharts = (props: {
               yAxes: [
                 {
                   ticks: {
+                    min: 0,
                     // Include a dollar sign in the ticks
                     callback: (value: any, index: any, values: any) => {
                       return numeral(Math.round(value * 100) / 100).format('$0,0.[00]');
@@ -55,7 +73,7 @@ const NetAssetsDrilldownCharts = (props: {
       </ChartBlockDrillDown>
       <ChartBlockDrillDown hidden={currentDrilldown !== 1}>
         <GraphPresentation
-          type={GraphType.Line}
+          type={GraphType.Bar}
           data={data.liabilities}
           redraw
           height={470}
@@ -64,12 +82,13 @@ const NetAssetsDrilldownCharts = (props: {
               display: true,
               position: 'bottom',
             },
+            ...startWithZeroConfig,
           }}
         />
       </ChartBlockDrillDown>
       <ChartBlockDrillDown hidden={currentDrilldown !== 2}>
         <GraphPresentation
-          type={GraphType.Line}
+          type={GraphType.Bar}
           data={data.netAssets}
           redraw
           height={470}
@@ -78,6 +97,7 @@ const NetAssetsDrilldownCharts = (props: {
               display: true,
               position: 'bottom',
             },
+            ...startWithZeroConfig,
           }}
         />
       </ChartBlockDrillDown>
