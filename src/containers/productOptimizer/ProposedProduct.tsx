@@ -114,6 +114,7 @@ class ProposedProduct extends PureComponent<ProposedProductProps, ProposedProduc
         placeholder: 'Enter Value',
         allowEmpty: true,
       },
+      width: 100,
       dollar: true,
       type: EditCellType.number,
       key: '1',
@@ -414,7 +415,7 @@ class ProposedProduct extends PureComponent<ProposedProductProps, ProposedProduc
           </HeaderTitleTable>
         )}
         <Table
-          className={`table-general optimizer-table ${this.tableName}-table`}
+          className={`table-general proposed-table optimizer-table ${this.tableName}-table`}
           columns={this.getColumns()}
           dataSource={dataList}
           pagination={false}

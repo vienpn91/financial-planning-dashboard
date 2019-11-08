@@ -15,14 +15,14 @@ const configNetAssets = {
       label: 'Current',
       fill: false,
       lineTension: 0.2,
-      borderColor: '#FF5722',
+      borderColor: '#00BCD4',
     },
     {
       dataIndex: 'proposed',
       label: 'Proposed',
       fill: false,
       lineTension: 0.2,
-      borderColor: '#00BCD4',
+      borderColor: '#FF5722',
     },
   ],
 };
@@ -32,13 +32,13 @@ const cashflowConfig = {
       dataIndex: 'current',
       label: 'Current',
       fill: true,
-      borderColor: '#FF5722',
+      borderColor: '#00BCD4',
     },
     {
       dataIndex: 'proposed',
       label: 'Proposed',
       fill: true,
-      borderColor: '#00BCD4',
+      borderColor: '#FF5722',
     },
   ],
 };
@@ -48,13 +48,13 @@ const taxConfig = {
       dataIndex: 'current',
       label: 'Current',
       fill: true,
-      borderColor: '#FF5722',
+      borderColor: '#00BCD4',
     },
     {
       dataIndex: 'proposed',
       label: 'Proposed',
       fill: true,
-      borderColor: '#00BCD4',
+      borderColor: '#FF5722',
     },
   ],
 };

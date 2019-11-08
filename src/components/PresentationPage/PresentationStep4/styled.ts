@@ -110,11 +110,10 @@ export const TemplateHeader = styled.div`
     &--title {
       font-size: 40px;
       font-weight: 600;
-      padding: 0 0 10px 10px;
+      padding: 0 0 10px 0px;
     }
     &--content {
-      font-size: 16px;
-      padding-left: 10px;
+      font-size: 18px;
     }
   }
 `;
@@ -122,8 +121,10 @@ export const TemplateHeader = styled.div`
 export const TemplateContent = styled.div`
   ul {
     list-style-type: disc;
+    padding-left: 22px;
     li {
       margin-bottom: 15px;
+      font-size: 16px
     }
   }
 `;
@@ -131,5 +132,5 @@ export const TemplateContent = styled.div`
 export const TemplateImg = styled.img`
   width: 120px;
   height: 120px;
-  margin-left: 25px;
+  margin-left: -3px;
 `;

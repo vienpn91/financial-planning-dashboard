@@ -4,6 +4,8 @@ import { Dispatch, bindActionCreators } from 'redux';
 import { connect as connectFormik, FormikContext } from 'formik';
 import { get, map } from 'lodash';
 import { Col, Icon, Row } from 'antd';
+import numeral from 'numeral';
+
 import StatisticItem from './StatisticItem';
 import { StrategyTypes } from '../../enums/strategies';
 import StandardText from './StandardText';
@@ -41,14 +43,14 @@ const generalConfig = {
       dataIndex: 'current',
       label: 'Current',
       fill: false,
-      borderColor: '#FF5722',
+      borderColor: '#00BCD4',
       lineTension: 0,
     },
     {
       dataIndex: 'proposed',
       label: 'Proposed',
       fill: false,
-      borderColor: '#00BCD4',
+      borderColor: '#FF5722',
       lineTension: 0,
     },
   ],
@@ -178,6 +180,25 @@ class StrategyInformation extends PureComponent<FormikPartProps & StrategyInform
         );
       }
       case StrategyTypes.Insurance: {
+        const optionInsurance = {
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  // Include a dollar sign in the ticks
+                  callback: (value: any, index: any, values: any) => {
+                    return numeral(Math.round(value * 100) / 100).format('$0,0.[00]');
+                  },
+                },
+              },
+            ],
+            xAxes: [{
+              ticks: {
+                fontSize: 10,
+              },
+            }],
+          },
+        };
         const insuranceConfig = {
           datasets: [
             {
@@ -208,7 +229,12 @@ class StrategyInformation extends PureComponent<FormikPartProps & StrategyInform
                 <StatisticItem listOfKpi={kpi} />
               </Col>
               <Col span={12}>
-                <GraphContainer type={GraphType.Bar} dataList={insuranceGraphData} onGraphClick={this.onGraphClick} />
+                <GraphContainer
+                  options={optionInsurance}
+                  type={GraphType.Bar}
+                  dataList={insuranceGraphData}
+                  onGraphClick={this.onGraphClick}
+                />
               </Col>
             </Row>
             <StandardText data={standardText} />
@@ -235,7 +261,7 @@ class StrategyInformation extends PureComponent<FormikPartProps & StrategyInform
                     </KeyPointItem>
                     <KeyPointItem>
                       <Icon type="check" />
-                      Death Benefit nomination
+                      <span>Death Benefit nomination</span>
                     </KeyPointItem>
                     <KeyPointItem>
                       <Icon type="exclamation" />

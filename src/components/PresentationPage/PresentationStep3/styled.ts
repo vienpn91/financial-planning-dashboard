@@ -96,6 +96,7 @@ export const ChartBlockLeft = styled(ChartBlock)`
 export const ChartBlockRight = styled(ChartBlock)`
   margin-left: 10px;
   margin-bottom: 20px;
+
 `;
 
 export const ChartBlockDrillDown = styled(ChartBlock).attrs({

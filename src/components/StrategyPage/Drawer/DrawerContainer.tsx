@@ -67,7 +67,7 @@ class DrawerContainer extends PureComponent<DrawerContainerProps> {
         />
 
         <DrawerFooter>
-          <DrawerNote>{footnote}</DrawerNote>
+          {/* <DrawerNote>{footnote}</DrawerNote> */}
           <Pagination current={page} total={total} onChange={this.onPageChange} />
         </DrawerFooter>
         <ActionDrawerGeneral>

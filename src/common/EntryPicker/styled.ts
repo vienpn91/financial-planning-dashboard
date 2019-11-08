@@ -38,12 +38,13 @@ export const EntryPickerTable = styled.section`
     }
     color: #5f698d;
     .readOnly.ant-calendar-picker{
-      width: calc(100% - 62px)!important;
+      width: 94px!important;
     }
   }
   .dob-age{
     display: inline-block;
-    width: 60px;
+    width: 67px;
+    margin-left: -8px;
   }
   &.text-small{
     .ant-input{

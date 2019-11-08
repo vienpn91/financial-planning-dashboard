@@ -119,9 +119,6 @@ class Client extends React.PureComponent<RouteComponentProps & ClientProps> {
               <Content>
                 <Heading level={2} className="subHeading" titleText={`Welcome to client: ${client.clientName}`} />
                 <HomeDesc>Select a section to get started</HomeDesc>
-                <ButtonModalFixed size="large" shape="circle" type="primary">
-                  <Icon type="plus" />
-                </ButtonModalFixed>
               </Content>
             </HomePage>
           );
@@ -134,9 +131,6 @@ class Client extends React.PureComponent<RouteComponentProps & ClientProps> {
         <Content>
           <Heading level={2} className="subHeading" titleText={`Welcome to client: ${client && client.clientName}`} />
           <HomeDesc>Select a section to get started</HomeDesc>
-          <ButtonModalFixed size="large" shape="circle" type="primary">
-            <Icon type="plus" />
-          </ButtonModalFixed>
         </Content>
       </HomePage>
     );

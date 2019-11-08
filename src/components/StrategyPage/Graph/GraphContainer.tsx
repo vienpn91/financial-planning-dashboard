@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { isFunction, isBoolean, isNumber } from 'lodash';
+import { isFunction, isBoolean, isNumber, merge, keyBy, values } from 'lodash';
 import { connect } from 'react-redux';
 import { Bar, HorizontalBar, Line } from 'react-chartjs-2';
 import classNames from 'classnames';
@@ -17,6 +17,11 @@ export enum GraphType {
   HorizontalBar,
 }
 
+const deepMerged = (original: any, updated: any) => values(merge(
+  keyBy(original, 'label'),
+  keyBy(updated, 'label'),
+ ));
+ 
 interface GraphProps {
   type: GraphType;
   name?: string;
@@ -125,6 +130,7 @@ const GraphContainer = (props: GraphProps) => {
                     },
                   ],
                 },
+                ...options,
               }}
             />
           </GraphCard>

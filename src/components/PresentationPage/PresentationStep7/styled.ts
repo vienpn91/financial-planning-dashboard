@@ -11,6 +11,9 @@ export const FeesTable = styled.div`
     color: #515c83;
     font-size: 16px;
   }
+  .documents-table{
+    margin-bottom: 30px;
+  }
   .fees-col-fee{
     color: #515c83;
     font-size: 16px;
@@ -32,7 +35,7 @@ export const CardListStep7 = styled.div.attrs({
 })`
   display: flex;
   justify-content: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   .card-item-step7 {
     margin: 0 10px;
     flex: 1;

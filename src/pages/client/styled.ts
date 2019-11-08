@@ -139,6 +139,25 @@ export const TableEntryContainer = styled.section.attrs({
     }
   }
   .proposed-product-table {
+    &.proposed-table{
+      .ant-table-tbody {
+        .ant-table-row {
+          .strategy-item {
+            .edit-cell{
+              .ant-input-number-input{
+                padding: 0 5px;
+              }
+            }
+          }
+        }
+      }
+      .ant-table-thead > tr > th {
+        
+        &.text-align-right {
+          padding-right: 12px !important;
+        }
+      }
+    }
     .ant-table-expand-icon-th,
     .ant-table-row-expand-icon-cell {
       width: 0px !important;
@@ -429,7 +448,7 @@ export const InnerTableContainer = styled.section`
   .ant-table-small {
     border: none;
     table {
-      margin-left: -24px;
+      margin-left: -18px;
       .table-expand-datepicker {
         .dropdown-value {
           border: 1px solid #d9d9d9;
@@ -467,6 +486,9 @@ export const InnerTableContainer = styled.section`
       border-bottom: none;
       padding: 0;
       padding: 2px 0;
+      &.special-table-small{
+        padding-right: 25px;
+      }
     }
     & > .ant-table-content > .ant-table-body > table > .ant-table-tbody > tr {
       position: relative;

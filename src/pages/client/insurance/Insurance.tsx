@@ -178,7 +178,7 @@ class Insurance extends PureComponent<InsuranceProps> {
       title: 'Provider',
       dataIndex: 'provider',
       key: '0',
-      width: 160,
+      width: 150,
     },
     {
       title: 'Type',
@@ -190,7 +190,7 @@ class Insurance extends PureComponent<InsuranceProps> {
       title: 'Cover',
       dataIndex: 'cover',
       key: '2',
-      width: 90,
+      width: 100,
       editable: true,
       dollar: true,
       type: EditCellType.number,

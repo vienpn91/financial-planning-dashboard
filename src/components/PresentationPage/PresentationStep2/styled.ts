@@ -117,7 +117,7 @@ export const KeyPointList = styled.div`
 `;
 export const KeyPointItem = styled.div`
  font-size: 16px;
- margin-bottom: 10px;
+ margin-bottom: 24px;
  .anticon {
   font-size: 18px ;
   margin-right: 20px;

@@ -5,7 +5,7 @@ export const DocumentsWrapper = styled.section`
   color: #4e5b86;
   padding: 20px;
   .header-step-document {
-    margin-bottom: 65px;
+    margin-bottom: 20px;
     .ant-steps-item {
       &:hover {
         cursor: pointer;

@@ -4,7 +4,7 @@ export const PresentationStep8WP = styled.div.attrs({
   className: 'presentation-step-8-wrapper',
 })`
   display: flex;
-  min-height: 600px;
+  min-height: 500px;
   align-items: center;
   color: #515c83;
   justify-content: center;

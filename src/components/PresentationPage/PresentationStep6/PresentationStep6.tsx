@@ -16,14 +16,14 @@ import { currentProducts, proposedProducts } from './investmentProducts';
 const chartConfig = {
   datasets: [
     {
-      dataIndex: 'proposed',
-      label: 'Proposed',
-      fill: true,
-      borderColor: '#00BCD4',
-    },
-    {
       dataIndex: 'balanced',
       label: 'Balanced',
+      fill: true,
+      borderColor: '#70ad47',
+    },
+    {
+      dataIndex: 'proposed',
+      label: 'Proposed',
       fill: true,
       borderColor: '#FF5722',
     },
@@ -31,7 +31,7 @@ const chartConfig = {
       dataIndex: 'current',
       label: 'Current',
       fill: true,
-      borderColor: '#70ad47',
+      borderColor: '#00BCD4',
     },
   ],
 };
@@ -92,6 +92,11 @@ const PresentationStep6 = (props: FormikPartProps) => {
                   },
                 },
               ],
+              xAxes: [{
+                ticks: {
+                  fontSize: 10,
+                },
+              }],
             },
             legend: {
               display: true,
