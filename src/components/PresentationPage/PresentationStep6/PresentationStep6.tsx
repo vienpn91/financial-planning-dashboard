@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'formik';
-import { get } from 'lodash';
-
 import numeral from 'numeral';
+
 import { StepWrapper } from '../styled';
 import { DocumentData, FormikPartProps } from '../PresentationPage';
 import { GraphType } from '../../StrategyPage/Graph/GraphContainer';
 import { loadGraphData } from '../../StrategyPage/StrategyHeader';
 import GraphPresentation from '../../StrategyPage/Graph/GraphPresentation';
+import DrawerProduct, { Product } from '../../ProductOptimizer/Drawer/DrawerProduct';
+import { TextTitle } from '../../../pages/client/styled';
+import { CurrentProduct, ProposedProduct } from '../../../containers/productOptimizer';
+import { AssetAllocationComparison, InvestmentProducts } from './styled';
+import { currentProducts, proposedProducts } from './investmentProducts';
 
 const chartConfig = {
   datasets: [
@@ -51,59 +55,80 @@ const chartData = {
 };
 
 const PresentationStep6 = (props: FormikPartProps) => {
+  const [product, setProduct] = useState<Product>();
+  const [isOpen, setDrawerToggle] = useState(false);
+  const openDrawer = (record: Product) => {
+    setDrawerToggle(true);
+    setProduct(record);
+  };
+  const closeDrawer = () => {
+    setDrawerToggle(false);
+    setProduct(undefined);
+  };
+
   return (
     <StepWrapper>
-      <GraphPresentation
-        type={GraphType.Bar}
-        height={300}
-        data={loadGraphData(chartConfig)(chartData)}
-        options={{
-          scales: {
-            yAxes: [
-              {
-                ticks: {
-                  // Include a dollar sign in the ticks
-                  callback: (value: any, index: any, values: any) => {
-                    return value + '%';
+      <TextTitle>Investment Products</TextTitle>
+      <InvestmentProducts>
+        <CurrentProduct dataList={currentProducts} openDrawer={openDrawer} readOnly={true} />
+        <ProposedProduct dataList={proposedProducts} openDrawer={openDrawer} readOnly={true} tabKey={'client'} />
+      </InvestmentProducts>
+
+      <TextTitle>Asset Allocation comparison</TextTitle>
+      <AssetAllocationComparison>
+        <GraphPresentation
+          type={GraphType.Bar}
+          height={300}
+          data={loadGraphData(chartConfig)(chartData)}
+          options={{
+            scales: {
+              yAxes: [
+                {
+                  ticks: {
+                    // Include a dollar sign in the ticks
+                    callback: (value: any, index: any, values: any) => {
+                      return value + '%';
+                    },
                   },
                 },
-              },
-            ],
-          },
-          legend: {
-            display: true,
-            position: 'bottom',
-          },
-          tooltips: {
-            bodyFontStyle: 'normal',
-            titleFontFamily:
-              '-apple-system, BlinkMacSystemFont, \'Segoe UI\', \'Roboto\', \'Oxygen\', \'Ubuntu\', \'Cantarell\', ' +
-              '\'Fira Sans\', \'Droid Sans\', \'Helvetica Neue\', sans-serif',
-            bodyFontFamily:
-              '-apple-system, BlinkMacSystemFont, \'Segoe UI\', \'Roboto\', \'Oxygen\', \'Ubuntu\', \'Cantarell\', ' +
-              '\'Fira Sans\', \'Droid Sans\', \'Helvetica Neue\', sans-serif',
-            footerFontFamily:
-              '-apple-system, BlinkMacSystemFont, \'Segoe UI\', \'Roboto\', \'Oxygen\', \'Ubuntu\', \'Cantarell\', ' +
-              '\'Fira Sans\', \'Droid Sans\', \'Helvetica Neue\', sans-serif',
-            intersect: false,
-            mode: 'label',
-            callbacks: {
-              label(
-                tooltipItem: { datasetIndex: React.ReactText; yLabel: number },
-                data: { datasets: { [x: string]: { label: string } } },
-              ) {
-                let label = data.datasets[tooltipItem.datasetIndex].label || '';
+              ],
+            },
+            legend: {
+              display: true,
+              position: 'bottom',
+            },
+            tooltips: {
+              bodyFontStyle: 'normal',
+              titleFontStyle: 'normal',
+              titleFontFamily: `-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+              'Cantarell',
+      'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif`,
+              bodyFontFamily: `-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
+      ''Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif`,
+              footerFontFamily: `-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+              'Cantarell',
+      'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif`,
+              intersect: false,
+              mode: 'label',
+              callbacks: {
+                label(
+                  tooltipItem: { datasetIndex: React.ReactText; yLabel: number },
+                  data: { datasets: { [x: string]: { label: string } } },
+                ) {
+                  let label = data.datasets[tooltipItem.datasetIndex].label || '';
 
-                if (label) {
-                  label += ': ';
-                }
-                label += numeral(Math.round(tooltipItem.yLabel * 100) / 100).format('0,0.[00]') + '%';
-                return label;
+                  if (label) {
+                    label += ': ';
+                  }
+                  label += numeral(Math.round(tooltipItem.yLabel * 100) / 100).format('0,0.[00]') + '%';
+                  return label;
+                },
               },
             },
-          },
-        }}
-      />
+          }}
+        />
+      </AssetAllocationComparison>
+      <DrawerProduct isOpen={isOpen} close={closeDrawer} product={product} readOnly={true} />
     </StepWrapper>
   );
 };

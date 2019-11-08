@@ -20,6 +20,9 @@ export const TableEntryContainer = styled.section.attrs({
       margin-top: ${props.linkedProduct ? '0px' : '40px'};
       padding: 20px 0;
     `}
+  .ant-input-disabled, .ant-input-number-disabled {
+    background-color: #fff;
+  }
   .expenditure-table,
   .income-table {
     .ant-table-thead {
@@ -196,6 +199,7 @@ export const TableEntryContainer = styled.section.attrs({
         font-weight: normal;
         text-align: left;
         margin-left: -11px;
+        background-color: #fff;
         .ant-input-number-input {
           font-weight: normal;
         }
