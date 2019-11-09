@@ -217,7 +217,7 @@ class CardDetails extends React.PureComponent<CardDetailsProps> {
 
               return (
                 <Table
-                  className={cn('table-general documents-table expanded-table')}
+                  className={cn('table-general documents-table-soa documents-table expanded-table')}
                   columns={columns}
                   dataSource={dataList}
                   pagination={false}
@@ -247,7 +247,7 @@ class CardDetails extends React.PureComponent<CardDetailsProps> {
                 {showAddButton && <AddAdvice header={record.header} onAdd={this.onAdd(arrayHelpers)} />}
 
                 <Table
-                  className={cn('table-general documents-table')}
+                  className={cn('table-general documents-table documents-table-soa')}
                   columns={columns}
                   dataSource={dataList}
                   pagination={false}
