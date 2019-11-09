@@ -103,15 +103,15 @@ export const BtnDoneDocument = styled(BtnStepDocument).attrs({
   className: 'btn-done-document',
 })`
   width: 135px;
-  //position: fixed;
-  //bottom: 30px;
-  //right: 100px;
-  //z-index: 999;
-  //
-  //@media (max-height: 600px) {
-  //  bottom: 25px;
-  //  right: 80px;
-  //}
+  position: fixed;
+  bottom: 30px;
+  right: 100px;
+  z-index: 999;
+
+  @media (max-height: 600px) {
+    bottom: 25px;
+    right: 80px;
+  }
 `;
 
 export const StepWrapper = styled.section`
@@ -129,6 +129,9 @@ export const StepWrapper = styled.section`
             padding: 16px 30px 16px 0;
             text-align: right;
           }
+          &.text-align-center {
+            text-align: center;
+          }
         }
       }
     }
@@ -143,6 +146,17 @@ export const StepWrapper = styled.section`
                 text-align: right;
                 .ant-input-number-input {
                   text-align: right;
+                }
+              }
+            }
+          }
+          &.text-align-center {
+            text-align: center;
+            .strategy-item {
+              .edit-cell {
+                text-align: center;
+                .ant-input-number-input {
+                  text-align: center;
                 }
               }
             }
@@ -182,7 +196,7 @@ export const StepWrapper = styled.section`
   }
   .strikethrough {
     .strategy-item {
-      .ant-input.edit-cell {
+      .ant-input {
         text-decoration: line-through;
       }
     }
