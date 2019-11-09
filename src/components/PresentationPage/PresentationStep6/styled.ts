@@ -5,5 +5,7 @@ export const InvestmentProducts = styled.div`
   max-height: 330px;
 `;
 
-export const AssetAllocationComparison = styled(InvestmentProducts)`
+export const AssetAllocationComparison = styled(InvestmentProducts)``;
+export const AssetAllocationGraph = styled.div`
+  flex: 50%;
 `;
